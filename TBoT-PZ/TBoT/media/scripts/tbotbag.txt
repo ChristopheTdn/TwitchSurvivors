@@ -1,0 +1,31 @@
+    module TBoT
+    {
+        imports
+        {
+            Base
+        }
+
+        item Bag_TBoT
+        {
+            DisplayCategory         =   Bag,
+            Type                    =   Container,
+            DisplayName             =   TBoT Bag,
+            ClothingItem            =   Bag_MedicalBag,
+            CanBeEquipped           =   Back,
+            WeightReduction         =   65,
+            Weight	                =   200,
+            Capacity	            =   100,
+            Icon	                =   DuffelbagMedical,
+            OpenSound               =   OpenBag,
+            CloseSound              =   CloseBag,
+            PutInSound              =   PutItemInBag,
+            RunSpeedModifier        =   0.95,
+            CanHaveHoles            =   false,
+            ReplaceInSecondHand     =   Bag_DuffelBag_LHandMedical holdingbagleft,
+            ReplaceInPrimaryHand    =  Bag_DuffelBag_RHandMedical holdingbagright,
+            WorldStaticModel        =   DuffelBag_Ground,
+           /*ColorRed = 159,
+            ColorGreen = 38,
+            ColorBlue = 38,*/
+         }
+    }
