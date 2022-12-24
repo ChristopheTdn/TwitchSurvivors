@@ -1,8 +1,17 @@
+import json
 import twitchio
 from twitchio.ext import commands, sounds
 
+with open('./config.json', 'r') as fichier:
+    data = json.load(fichier)
+    BOT_TOKEN = data["BOT-TWITCH"]["TOKEN"]
+    BOT_CLIENT_ID = data["BOT-TWITCH"]["CLIENT_ID"]
+    BOT_PREFIX = data["BOT-TWITCH"]["BOT_PREFIX"]
+    BOT_CHANNEL = data["BOT-TWITCH"]["BOT_CHANNEL"]
+    URLMOD = data["URLMOD"]
+    
 ligne_overlay=[]
-URLMOD = "D:\Christophe\Documents\GitHub\TBOTLua\TBoT\\"
+
 
 class Bot(commands.Bot):
 
@@ -10,7 +19,7 @@ class Bot(commands.Bot):
         # Initialise our Bot with our access token, prefix and a list of channels to join on boot...
         # prefix can be a callable, which returns a list of strings or a string...
         # initial_channels can also be a callable which returns a list of strings...
-        super().__init__(token='2teao1hl20zyxksuws7f39x7ype9xl', prefix='!', initial_channels=['GToF_'])
+        super().__init__(token=BOT_TOKEN, prefix=BOT_PREFIX, initial_channels=BOT_CHANNEL)
         self.event_player = sounds.AudioPlayer(callback=self.sound_done)
         
     async def event_ready(self):
@@ -49,9 +58,7 @@ class Bot(commands.Bot):
             for ligne in ligne_overlay:
                 fichier.write ("<p>"+ligne+"</p>\n")
             fichier.write("</body>")
-        
-        
-          
+
     @commands.command()
     async def generate(self, ctx: commands.Context):
         message = f"Le joueur {ctx.author.name} vient d'apparaitre sur le serveur PZOMBOID !"
@@ -60,10 +67,10 @@ class Bot(commands.Bot):
         self.creation_HTML(messagehtml)
         sound = sounds.Sound(source='blague.mp3')
         self.event_player.play(sound)
-        
+            
     @commands.command()
     async def parle(self, ctx: commands.Context):
-        messagehtml = f"Le joueur <strong>{ctx.author.display_name}</strong> vient d'apparaitre sur le serveur PZOMBOID !"
+        messagehtml = f"Le joueur <strong>{ctx.author.display_name}</strong> envois un message radio"
         self.creation_HTML(messagehtml)
         sound = sounds.Sound(source='blague.mp3')
         self.event_player.play(sound)
