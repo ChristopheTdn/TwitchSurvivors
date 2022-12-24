@@ -45,19 +45,26 @@ class Bot(commands.Bot):
         pass
       
     def creation_HTML(self, str):
-        template = '''<html>
-    <head>
-    <link rel="stylesheet" href="style.css">
-    <script>
-        setTimeout(function(){location.reload()},2000);
-    </script>
-    </head>'''
+        template = '''
+        <!doctype html>
+        <html lang="fr">
+        <head>
+            <meta charset="utf-8">
+            <title>Overlay TBOT</title>
+            <link rel="stylesheet" href="style.css">
+            <script>
+                setTimeout(function(){location.reload()},2000);
+            </script>
+        </head>'''
         ligne_overlay.insert(0,str)
         with open('tbot.html',"w") as fichier:
             fichier.write(template)
             for ligne in ligne_overlay:
                 fichier.write ("<p>"+ligne+"</p>\n")
-            fichier.write("</body>")
+            fichier.write('''
+            </body>
+            </html>
+            ''')
 
     @commands.command()
     async def generate(self, ctx: commands.Context):
