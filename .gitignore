@@ -13,10 +13,11 @@ TBoT-PZ/TBoT/build/
 TBoT-PZ/TBoT/images/
 TBoT-PZ/TBoT/logs/
 TBoT-PZ/TBoT/src/
-
 TBoT-PZ/TBoT/lib/zdoc-lua-41.78.jar
 TBoT-PZ/TBoT/lib/zdoc-lua.jar
 TBoT-PZ/TBoT/lib/zomboid-41.78-sources.jar
 TBoT-PZ/TBoT/lib/zomboid-41.78.jar
 TBoT-PZ/TBoT/lib/zomboid-sources.jar
 TBoT-PZ/TBoT/lib/zomboid.jar
+config.json
+TBoT-PZ/TBoT/texte.txt
