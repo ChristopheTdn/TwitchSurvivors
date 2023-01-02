@@ -1,6 +1,6 @@
 import json
 import twitchio
-from twitchio.ext import commands, sounds
+from twitchio.ext import commands, sounds,pubsub
 
 with open('./config.json', 'r') as fichier:
     data = json.load(fichier)
