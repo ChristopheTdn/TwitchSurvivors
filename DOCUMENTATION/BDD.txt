@@ -1,0 +1,10 @@
+BDD SQLITE :
+
+Tables :
+
+PLAYER :
+  |
+  |
+  |----  ID       >>>>   KEY
+  |----  Pseudo   >>>>   STR
+  |---   Health   >>>>   INT
