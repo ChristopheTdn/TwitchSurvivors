@@ -1,6 +1,8 @@
 import json
 import twitchio
-from twitchio.ext import commands, sounds,pubsub
+from twitchio.ext import commands, sounds
+import sqlite3
+import os
 
 with open('./config.json', 'r') as fichier:
     data = json.load(fichier)
@@ -9,7 +11,7 @@ with open('./config.json', 'r') as fichier:
     BOT_PREFIX = data["BOT-TWITCH"]["BOT_PREFIX"]
     BOT_CHANNEL = data["BOT-TWITCH"]["BOT_CHANNEL"]
     URLMOD = data["URLMOD"]
-    
+TBOTPATH, filename = os.path.split(__file__)    
 ligne_overlay=[]
 
 
@@ -21,6 +23,7 @@ class Bot(commands.Bot):
         # initial_channels can also be a callable which returns a list of strings...
         super().__init__(token=BOT_TOKEN, prefix=BOT_PREFIX, initial_channels=BOT_CHANNEL)
         self.event_player = sounds.AudioPlayer(callback=self.sound_done)
+        self.initTableSql()
         
     async def event_ready(self):
         # Notify us when everything is ready!
@@ -65,6 +68,21 @@ class Bot(commands.Bot):
             </body>
             </html>
             ''')
+    def initTableSql(self):
+        """
+                Initialise la base de donnée si elle n'existe pas
+        """
+        self.connexionSQL = sqlite3.connect(os.path.join(TBOTPATH, "TBOT.BDD.sqlite"))
+        curseur = self.connexionSQL.cursor()
+        curseur.execute('''CREATE TABLE IF NOT EXISTS MEMBRES(
+            id INTEGER PRIMARY KEY AUTOINCREMENT UNIQUE,
+            pseudo TEXT,
+            pointDeVie INT)''')
+        curseur.execute('''INSERT OR REPLACE INTO TBoT (pseudo, pointDeVie) VALUES (?,?)''', "vide", 100)
+        self.connexionSQL.commit()
+        self.connexionSQL.close()
+
+
 
     @commands.command()
     async def generate(self, ctx: commands.Context):
