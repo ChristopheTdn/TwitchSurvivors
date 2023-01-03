@@ -78,7 +78,7 @@ class Bot(commands.Bot):
             id INTEGER PRIMARY KEY AUTOINCREMENT UNIQUE,
             pseudo TEXT,
             pointDeVie INT)''')
-        curseur.execute('''INSERT OR REPLACE INTO TBoT (pseudo, pointDeVie) VALUES (?,?)''', "vide", 100)
+        #curseur.execute('''INSERT OR REPLACE INTO TBoT (pseudo, pointDeVie) VALUES (?,?)''', "vide", 100)
         self.connexionSQL.commit()
         self.connexionSQL.close()
 
@@ -90,14 +90,17 @@ class Bot(commands.Bot):
         messagehtml = f"Le joueur <strong>{ctx.author.display_name}</strong> vient d'apparaitre sur le serveur PZOMBOID !"
         await ctx.send(message)
         self.creation_HTML(messagehtml)
-        sound = sounds.Sound(source='blague.mp3')
+        sound = sounds.Sound(source=os.path.join(TBOTPATH, "sound/radio1.mp3"))
         self.event_player.play(sound)
+        message=f"<RADIO> : je m'appelle {ctx.author.display_name}... Je suis un survivant mainten... Pret a aider.... D'autres messages suivront..."
+        with open(URLMOD+"texte.txt","w") as fichier:
+            fichier.write(f"RADIO ({ctx.author.display_name}) : {message}")
             
     @commands.command()
     async def parle(self, ctx: commands.Context):
         messagehtml = f"Le joueur <strong>{ctx.author.display_name}</strong> envois un message radio"
         self.creation_HTML(messagehtml)
-        sound = sounds.Sound(source='blague.mp3')
+        sound = sounds.Sound(source=(os.path.join(TBOTPATH, "sound\\radio2.mp3")))
         self.event_player.play(sound)
         message = ctx.message.content
         message=message.replace('!parle',"")

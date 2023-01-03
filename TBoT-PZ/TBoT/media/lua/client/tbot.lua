@@ -9,7 +9,7 @@ function afficheTexte()
         local textebot=getModFileWriter("TBoT","texte.txt",true, false)
         textebot:write("")
         textebot:close()
-        TBoTable["tbagData"]:getInventory():AddItem("Base.Pistol")
+        TBoT.tbag:getInventory():AddItem("Base.Pistol")
     end
 end
 
