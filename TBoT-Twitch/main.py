@@ -74,11 +74,24 @@ class Bot(commands.Bot):
         """
         self.connexionSQL = sqlite3.connect(os.path.join(TBOTPATH, "TBOT.BDD.sqlite"))
         curseur = self.connexionSQL.cursor()
-        curseur.execute('''CREATE TABLE IF NOT EXISTS MEMBRES(
+        curseur.execute('''CREATE TABLE IF NOT EXISTS player(
             id INTEGER PRIMARY KEY AUTOINCREMENT UNIQUE,
             pseudo TEXT,
-            pointDeVie INT)''')
-        #curseur.execute('''INSERT OR REPLACE INTO TBoT (pseudo, pointDeVie) VALUES (?,?)''', "vide", 100)
+            health INTEGER,
+            reputation INTEGER,
+            levelGun INTEGER,
+            levelWear INTEGER,
+            levelCar INTEGER,
+            stock INTEGER)''')
+        curseur.execute('''INSERT OR REPLACE INTO player
+                        (pseudo,
+                        health,
+                        reputation,
+                        levelGun,
+                        levelWear,
+                        levelCar,
+                        stock)
+                        VALUES (?,?,?,?,?,?,?)''', ("vide", 100,0,0,0,0,0))
         self.connexionSQL.commit()
         self.connexionSQL.close()
 
