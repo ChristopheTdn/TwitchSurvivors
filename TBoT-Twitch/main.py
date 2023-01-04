@@ -83,14 +83,14 @@ class Bot(commands.Bot):
         curseur = self.connexionSQL.cursor()
         curseur.execute('''CREATE TABLE IF NOT EXISTS player(
             id INTEGER PRIMARY KEY AUTOINCREMENT UNIQUE,
-            pseudo TEXT,
+            pseudo TEXT UNIQUE,
             health INTEGER,
             reputation INTEGER,
             levelGun INTEGER,
             levelWear INTEGER,
             levelCar INTEGER,
             stock INTEGER)''')
-        curseur.execute('''INSERT OR REPLACE INTO player
+        curseur.execute('''INSERT OR IGNORE INTO player
                         (pseudo,
                         health,
                         reputation,
