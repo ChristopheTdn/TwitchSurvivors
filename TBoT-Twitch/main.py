@@ -31,7 +31,7 @@ class Bot(commands.Bot):
         print(f'Logged in as | {self.nick}')
         print(f'User id is | {self.user_id}')
 
-    async def event_message(self, message):
+    async def event_message(self,message: str):
         # Messages with echo set to True are messages sent by the bot...
         # For now we just want to ignore them...
         if message.echo:
@@ -47,7 +47,13 @@ class Bot(commands.Bot):
     async def sound_done(self):
         pass
       
-    def creation_HTML(self, str):
+    def creation_HTML(self, message: str):
+        """
+        Genere un fichier HTML utilisable comme OVERLAY dans OBS
+
+        Args:
+            message (str): message a ajouté a la page html
+        """        
         template = '''
         <!doctype html>
         <html lang="fr">
@@ -59,7 +65,7 @@ class Bot(commands.Bot):
                 setTimeout(function(){location.reload()},2000);
             </script>
         </head>'''
-        ligne_overlay.insert(0,str)
+        ligne_overlay.insert(0,message)
         with open('tbot.html',"w") as fichier:
             fichier.write(template)
             for ligne in ligne_overlay:
@@ -68,6 +74,7 @@ class Bot(commands.Bot):
             </body>
             </html>
             ''')
+            
     def initTableSql(self):
         """
                 Initialise la base de donnée si elle n'existe pas
@@ -95,20 +102,37 @@ class Bot(commands.Bot):
         self.connexionSQL.commit()
         self.connexionSQL.close()
 
+    def createPlayer(self,pseudo: str)->bool:
+        """
+        Genere un nouveau survivant et l ajoute a la base de données
 
+        Args:
+            pseudo (str): le pseudo du survivant.
+        """        
+        return True
 
     @commands.command()
-    async def generate(self, ctx: commands.Context):
-        message = f"Le joueur {ctx.author.name} vient d'apparaitre sur le serveur PZOMBOID !"
-        messagehtml = f"Le joueur <strong>{ctx.author.display_name}</strong> vient d'apparaitre sur le serveur PZOMBOID !"
-        await ctx.send(message)
-        self.creation_HTML(messagehtml)
-        sound = sounds.Sound(source=os.path.join(TBOTPATH, "sound/radio1.mp3"))
-        self.event_player.play(sound)
-        message=f"<RADIO> : je m'appelle {ctx.author.display_name}... Je suis un survivant mainten... Pret a aider.... D'autres messages suivront..."
-        with open(URLMOD+"texte.txt","w") as fichier:
-            fichier.write(f"RADIO ({ctx.author.display_name}) : {message}")
-            
+    async def new_survivant(self, ctx: commands.Context):
+        """
+        Commande !new_survivant
+        -----------
+        Traite la commande twitch !new_survivant
+        """
+
+        if self.createPlayer(ctx.author.name) :
+            message = f"Le joueur {ctx.author.name} vient d'apparaitre sur le serveur!"
+            messagehtml = f"Le joueur <strong>{ctx.author.display_name}</strong> vient d'apparaitre sur le serveur PZOMBOID !"
+            await ctx.send(message)
+            self.creation_HTML(messagehtml)
+            sound = sounds.Sound(source=os.path.join(TBOTPATH, "sound/radio1.mp3"))
+            self.event_player.play(sound)
+            message=f"<RADIO> : ...allo ! je m'appelle {ctx.author.display_name}... Je suis un surviva....pret a aider....d'autres messages suivront..."
+            with open(URLMOD+"texte.txt","w") as fichier:
+                fichier.write(f"RADIO ({ctx.author.display_name}) : {message}")
+        else :
+            message = f"Echec tentative de création du joueur {ctx.author.name} sur le serveur ! Le survivant existe déjà. Tapes !info_survivant"
+            await ctx.send(message)   
+             
     @commands.command()
     async def parle(self, ctx: commands.Context):
         messagehtml = f"Le joueur <strong>{ctx.author.display_name}</strong> envois un message radio"
