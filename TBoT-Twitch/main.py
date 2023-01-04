@@ -108,7 +108,21 @@ class Bot(commands.Bot):
 
         Args:
             pseudo (str): le pseudo du survivant.
-        """        
+        """   
+        self.connexionSQL = sqlite3.connect(os.path.join(TBOTPATH, "TBOT.BDD.sqlite"))
+        curseur = self.connexionSQL.cursor()   
+        curseur.execute('''INSERT OR IGNORE INTO player
+                        (pseudo,
+                        health,
+                        reputation,
+                        levelGun,
+                        levelWear,
+                        levelCar,
+                        stock)
+                        VALUES (?,?,?,?,?,?,?)''', (pseudo, 100,0,0,0,0,0))
+        self.connexionSQL.commit()
+        self.connexionSQL.close()
+          
         return True
 
     @commands.command()
