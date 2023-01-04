@@ -2,9 +2,15 @@ BDD SQLITE :
 
 Tables :
 
-PLAYER :
+player :
   |
   |
-  |----  ID       >>>>   KEY
-  |----  Pseudo   >>>>   STR
-  |---   Health   >>>>   INT
+  |----  id         >>>>   KEY
+  |----  pseudo     >>>>   STR
+  |---   health     >>>>   INT
+  |---   reputation >>>>   INT
+  |---   levelGun   >>>>   int
+  |---   levelWear  >>>>   int
+  |---   levelCar   >>>>   int
+  |---   stock      >>>>   int
+  
