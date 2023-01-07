@@ -1,13 +1,13 @@
-!new-survivant
+!new_survivant
 Génère un survivant pour un viewer
 
-!mon-survivant
+!mon_survivant
 Indiques les statistiques du survivant du viewer : réputation, niveau arme, niveau vêtement, niveau voiture, niveau stockage
 
-!raid-arme (ou !raid-outils etc...)
+!raid_arme (ou !raid-outils etc...)
 Lance un Raid avec le survivant du viewer
 
-!upgrade-arme (ou !upgrade-vetement etc...)
+!upgrade_arme (ou !upgrade-vetement etc...)
 Améliore la caractéristique du survivant du viewer
 
 (🚧 projet 🚧 )

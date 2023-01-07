@@ -103,7 +103,7 @@ class TBoT(commands.Bot):
             self.creation_HTML(messagehtml)
             sound = sounds.Sound(source=os.path.join(TBOTPATH, "sound/radio1.mp3"))
             self.event_player.play(sound)
-            message=f"<RADIO> : ...allo ! je m'appelle {ctx.author.display_name}... Je suis un surviva....pret a aider....d'autres messages suivront..."
+            message=f"<radio> : ...allo ! je m'appelle {ctx.author.display_name}... Je suis un surviva....pret a aider....d'autres messages suivront..."
             with open(URLMOD+"texte.txt","w") as fichier:
                 fichier.write(f"RADIO ({ctx.author.display_name}) : {message}")
         else :
@@ -113,6 +113,11 @@ class TBoT(commands.Bot):
              
     @commands.command()
     async def parle(self, ctx: commands.Context):
+        """
+        Commande !parle <message>
+        -----------
+        Traite la commande twitch !parle. Envois in game le message passé en parametre avec un son radio
+        """
         messagehtml = f"Le joueur <strong>{ctx.author.display_name}</strong> envois un message radio"
         self.creation_HTML(messagehtml)
         sound = sounds.Sound(source=(os.path.join(TBOTPATH, "sound\\radio2.mp3")))
@@ -120,7 +125,16 @@ class TBoT(commands.Bot):
         message = ctx.message.content
         message=message.replace('!parle',"")
         with open(URLMOD+"texte.txt","w") as fichier:
-            fichier.write(f"RADIO ({ctx.author.display_name}) : {message}")
+            fichier.write(f"<radio> ({ctx.author.display_name}) : {message}")
+
+    @commands.command()
+    async def mon_survivant(self, ctx: commands.Context):
+        """
+        Commande !mon_survivant 
+        -----------
+        Traite la commande twitch !mon_survivant. retourne les stats du joueurs dans le chat Twitch
+        """
+        if self.createPlayer(ctx.author.name) :
 
 if __name__ == '__main__': 
     print('Ne peut etre lancé directement')
