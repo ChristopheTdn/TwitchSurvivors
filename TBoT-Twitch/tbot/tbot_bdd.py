@@ -36,7 +36,7 @@ class TBOT_BDD():
         self.connexionSQL.commit()
         self.connexionSQL.close()
         
-    def create_survivant (self,pseudo):
+    def create_player(self,pseudo):
         self.connexionSQL = sqlite3.connect(os.path.join(self.TBOTPATH, self.NAMEBDD))
         cur = self.connexionSQL.cursor()
         cur.execute('''INSERT OR IGNORE INTO player
@@ -50,6 +50,28 @@ class TBOT_BDD():
                         VALUES (?,?,?,?,?,?,?)''', (pseudo , 100,0,0,0,0,0))
         self.connexionSQL.commit()
         self.connexionSQL.close()
+    
+    def get_stats_player(self,pseudo: str)->dict:
+        self.connexionSQL = sqlite3.connect(os.path.join(self.TBOTPATH, self.NAMEBDD))
+        cur = self.connexionSQL.cursor()
+        cur.execute(f'''SELECT pseudo,
+                        health,
+                        reputation,
+                        levelGun,
+                        levelWear,
+                        levelCar,
+                        stock FROM 'player' WHERE pseudo='{pseudo}' ''')
+        listeStat = cur.fetchone()
+        self.connexionSQL.close()
+        reponse ={"pseudo": listeStat[0],
+                "health": listeStat[1],
+                "reputation": listeStat[2],
+                "levelGun": listeStat[3],
+                "levelWear": listeStat[4],
+                "levelCar": listeStat[5],
+                "stock": listeStat[6]
+                }
+        return reponse
     
     def player_exist(self,pseudo):
         self.connexionSQL = sqlite3.connect(os.path.join(self.TBOTPATH, self.NAMEBDD))
