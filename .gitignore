@@ -25,3 +25,6 @@ TBoT-PZ/TBoT/texte.txt
 TBoT-Twitch/TBOT.BDD.sqlite
 tbot.html
 TBoT-PZ/TBoT/texte.txt
+TBoT-Twitch/tbot/__pycache__
+TBoT-Twitch/__pycache__/tbot.cpython-311.pyc
+TBoT-Twitch/tbot/tbot_bdd.sqlite
