@@ -18,7 +18,9 @@ TBOTBDD= TBOT_BDD(TBOTPATH)
 
 
 class TBoT(commands.Bot):
+    """Bot Twitch basé sur le package TWITCH IO
 
+    """
     def __init__(self):
         # Initialise our Bot with our access token, prefix and a list of channels to join on boot...
         # prefix can be a callable, which returns a list of strings or a string...
@@ -52,8 +54,7 @@ class TBoT(commands.Bot):
         pass
     
     def affichage_Overlay(self,message: str):
-        """
-        Genere un fichier HTML utilisable comme OVERLAY dans OBS
+        """Genere un fichier HTML utilisable comme OVERLAY dans OBS
 
         Args:
             message (str): message a ajouté à la page html
@@ -70,7 +71,7 @@ class TBoT(commands.Bot):
             </script>
         </head>'''
         ligne_overlay.insert(0,message)
-        with open('tbot.html',"w") as fichier:
+        with open('tbot.html',"w",encoding="utf-8") as fichier:
             fichier.write(template)
             for ligne in ligne_overlay:
                 fichier.write ("<p>"+ligne+"</p>\n")
@@ -90,13 +91,13 @@ class TBoT(commands.Bot):
         
         if TBOTBDD.player_exist(pseudo)!=None : #le pseudo existe deja dans la base de donnée
             message = f"Echec de tentative de création du joueur {pseudo} sur le serveur ! Le survivant existe déjà. Tapes !info_survivant"
-            messagehtml = f"Echec de tentative de création du joueur {pseudo} sur le serveur !"
+            messagehtml = f"❌ Echec de tentative de création du joueur {pseudo} sur le serveur !"
             self.affichage_Overlay(messagehtml)
             await ctx.send(message) 
         else :
             TBOTBDD.create_player(pseudo)
-            message = f"Le joueur {pseudo} vient d'apparaitre sur le serveur!"
-            messagehtml = f"Le joueur <strong>{pseudo}</strong> vient d'apparaitre sur le serveur PZOMBOID !"
+            message = f" Le joueur {pseudo} vient d'apparaitre sur le serveur!"
+            messagehtml = f"⛹Le joueur <strong>{pseudo}</strong> vient d'apparaitre sur le serveur PZOMBOID !"
             await ctx.send(message)
             self.affichage_Overlay(messagehtml)
             sound = sounds.Sound(source=os.path.join(TBOTPATH, "sound/radio1.mp3"))
@@ -120,7 +121,7 @@ class TBoT(commands.Bot):
         self.event_player.play(sound)
         message = ctx.message.content
         message=message.replace('!parle',"")
-        with open(URLMOD+"texte.txt","w") as fichier:
+        with open(URLMOD+"texte.txt","w",encoding="utf-8") as fichier:
             fichier.write(f"<radio> ({pseudo}) : {message}")
 
     @commands.command()
@@ -131,17 +132,19 @@ class TBoT(commands.Bot):
         Traite la commande twitch !mon_survivant. retourne les stats du joueurs dans le chat Twitch
         """
         pseudo = ctx.author.display_name
+
         if TBOTBDD.player_exist(pseudo)!=None :
             dictStat=TBOTBDD.get_stats_player(pseudo)
-            message = f'''stat {dictStat['pseudo']} : vie > {dictStat['health']} ; reputation > {dictStat['reputation']},
-                levelgun > {dictStat['levelGun']} ; vetement > {dictStat['levelWear']}, vehicule = {dictStat['levelCar']},
-                Stock > {dictStat['stock']}'''
+            message = f"stat {dictStat['pseudo']} : vie = {dictStat['health']} ; reputation = {dictStat['reputation']},\
+                levelgun = {dictStat['levelGun']} ; vetement = {dictStat['levelWear']}, vehicule = {dictStat['levelCar']},\
+                Stock = {dictStat['stock']}"
             await ctx.send(message)      
         else :
             message = f"le survivant {pseudo} n'existe pas sur le serveur ! Tapes !new_survivant pour en creer un."
-            messagehtml = f"le survivant {pseudo} n'existe pas sur le serveur ! Tapes !new_survivant pour en creer un."
+            messagehtml = f"le survivant <strong>{pseudo}</strong> n'existe pas sur le serveur ! Tapes !new_survivant pour en creer un."
             self.affichage_Overlay(messagehtml)
-            await ctx.send(message) 
+            await ctx.send(message)
+
 
 if __name__ == '__main__': 
     print('Ne peut etre lancé directement')
