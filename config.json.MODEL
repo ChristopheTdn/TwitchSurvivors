@@ -1,0 +1,13 @@
+{
+    "BOT-TWITCH":
+    {
+        "TOKEN":"",
+        "REFRESH":"",
+        "VALID":"",
+        "CLIENT_ID":"",
+        "BOT_NICK":"tbot_terror",
+        "BOT_PREFIX":"!",
+        "BOT_CHANNEL":[""]
+    },
+    "URLMOD" : ""
+}
