@@ -128,7 +128,7 @@ class TBoT(commands.Bot):
         self.event_player.play(sound)
         with open(URLMOD+"texte.txt","w",encoding="utf-8") as fichier:
             fichier.write(f"⚡<radio {pseudo}> : {message}")
-        messagehtml = f"⚡&ltradio {pseudo}&rt : {message}"
+        messagehtml = f"⚡&ltradio {pseudo}> : {message}"
         self.affichage_Overlay(messagehtml)
     @commands.command()
     async def mon_survivant(self, ctx: commands.Context):
