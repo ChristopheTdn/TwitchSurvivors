@@ -1,6 +1,6 @@
 import json
 import twitchio
-from twitchio.ext import commands, sounds
+from twitchio.ext import commands, sounds,pubsub
 import sqlite3
 import os
 from  tbot.tbot_bdd import TBOT_BDD
@@ -17,6 +17,8 @@ ligne_overlay=[]
 TBOTBDD= TBOT_BDD(TBOTPATH)
 
 
+
+
 class TBoT(commands.Bot):
     """Bot Twitch basé sur le package TWITCH IO
 
@@ -29,11 +31,14 @@ class TBoT(commands.Bot):
         self.event_player = sounds.AudioPlayer(callback=self.sound_done)
         TBOTBDD.initTableSql()
         
+        
     async def event_ready(self):
         # Notify us when everything is ready!
         # We are logged in and ready to chat and use commands...
         print(f'Logged in as | {self.nick}')
         print(f'User id is | {self.user_id}')
+
+            
 
     async def event_message(self,message: twitchio.Message):
         
@@ -67,9 +72,11 @@ class TBoT(commands.Bot):
             <title>Overlay TBOT</title>
             <link rel="stylesheet" href="style.css">
             <script>
-                setTimeout(function(){location.reload()},2000);
+                setTimeout(function(){location.reload()},4000);
             </script>
-        </head>'''
+        </head>
+        <body>
+        '''
         ligne_overlay.insert(0,message)
         with open('tbot.html',"w",encoding="utf-8") as fichier:
             fichier.write(template)
@@ -96,8 +103,8 @@ class TBoT(commands.Bot):
             await ctx.send(message) 
         else :
             TBOTBDD.create_player(pseudo)
-            message = f" Le joueur {pseudo} vient d'apparaitre sur le serveur!"
-            messagehtml = f"⛹Le joueur <strong>{pseudo}</strong> vient d'apparaitre sur le serveur PZOMBOID !"
+            message = f"⛹ Le joueur {pseudo} vient d'apparaitre sur le serveur!"
+            messagehtml = f"⛹Le joueur <strong>{pseudo}</strong> vient d'apparaitre sur le serveur."
             await ctx.send(message)
             self.affichage_Overlay(messagehtml)
             sound = sounds.Sound(source=os.path.join(TBOTPATH, "sound/radio1.mp3"))
@@ -115,15 +122,14 @@ class TBoT(commands.Bot):
         Traite la commande twitch !parle. Envois in game le message passé en parametre avec un son radio
         """
         pseudo = ctx.author.display_name
-        messagehtml = f"Le joueur <strong>{pseudo}</strong> envois un message radio"
-        self.affichage_Overlay(messagehtml)
-        sound = sounds.Sound(source=(os.path.join(TBOTPATH, "sound\\radio2.mp3")))
-        self.event_player.play(sound)
         message = ctx.message.content
         message=message.replace('!parle',"")
+        sound = sounds.Sound(source=(os.path.join(TBOTPATH, "sound\\radio2.mp3")))
+        self.event_player.play(sound)
         with open(URLMOD+"texte.txt","w",encoding="utf-8") as fichier:
-            fichier.write(f"<radio> ({pseudo}) : {message}")
-
+            fichier.write(f"⚡<radio {pseudo}> : {message}")
+        messagehtml = f"⚡&ltradio {pseudo}&rt : {message}"
+        self.affichage_Overlay(messagehtml)
     @commands.command()
     async def mon_survivant(self, ctx: commands.Context):
         """
@@ -140,10 +146,11 @@ class TBoT(commands.Bot):
                 Stock = {dictStat['stock']}"
             await ctx.send(message)      
         else :
-            message = f"le survivant {pseudo} n'existe pas sur le serveur ! Tapes !new_survivant pour en creer un."
-            messagehtml = f"le survivant <strong>{pseudo}</strong> n'existe pas sur le serveur ! Tapes !new_survivant pour en creer un."
+            message = f"❌-le survivant {pseudo} n'existe pas sur le serveur ! Tapes !new_survivant pour en creer un."
+            messagehtml = f"❌-le survivant <strong>{pseudo}</strong> n'existe pas sur le serveur ! Tapes !new_survivant pour en creer un."
             self.affichage_Overlay(messagehtml)
             await ctx.send(message)
+            
 
 
 if __name__ == '__main__': 
