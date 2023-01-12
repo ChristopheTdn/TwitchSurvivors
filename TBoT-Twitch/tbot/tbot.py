@@ -7,17 +7,33 @@ from  tbot.tbot_bdd import TBOT_BDD
 
 with open('./config.json', 'r') as fichier:
     data = json.load(fichier)
-    BOT_TOKEN = data["BOT-TWITCH"]["TOKEN"]
-    BOT_CLIENT_ID = data["BOT-TWITCH"]["CLIENT_ID"]
+    URLMOD = data["URLMOD"]
+
+    BOT_USERNAME = data["BOT-TWITCH"]["BOT_USERNAME"]
+    BOT_TOKEN = data["BOT-TWITCH"]["BOT_TOKEN"]
+    BOT_REFRESH = data["BOT-TWITCH"]["BOT_REFRESH"]
+    BOT_VALID = data["BOT-TWITCH"]["BOT_VALID"]
+    BOT_USER_ID = data["BOT-TWITCH"]["BOT_USER_ID"]
+    BOT_ID = data["BOT-TWITCH"]["BOT_ID"]
+    BOT_NICK = data["BOT-TWITCH"]["BOT_NICK"]
     BOT_PREFIX = data["BOT-TWITCH"]["BOT_PREFIX"]
     BOT_CHANNEL = data["BOT-TWITCH"]["BOT_CHANNEL"]
-    URLMOD = data["URLMOD"]
+
+    CLIENT_USERNAME = data["BOT-TWITCH"]["CLIENT_USERNAME"]
+    CLIENT_TOKEN = data["BOT-TWITCH"]["CLIENT_TOKEN"]
+    CLIENT_REFRESH = data["BOT-TWITCH"]["CLIENT_REFRESH"]
+    CLIENT_USER_ID = data["BOT-TWITCH"]["CLIENT_USER_ID"]
+    CLIENT_VALID = data["BOT-TWITCH"]["CLIENT_VALID"]
+    CLIENT_ID = data["BOT-TWITCH"]["CLIENT_ID"]
+    CLIENT_NICK = data["BOT-TWITCH"]["CLIENT_NICK"]
+    CLIENT_PREFIX = data["BOT-TWITCH"]["CLIENT_PREFIX"]
+    CLIENT_CHANNEL = data["BOT-TWITCH"]["CLIENT_CHANNEL"]
+    
+    
+    
 TBOTPATH, filename = os.path.split(__file__)    
 ligne_overlay=[]
 TBOTBDD= TBOT_BDD(TBOTPATH)
-
-
-
 
 class TBoT(commands.Bot):
     """Bot Twitch basé sur le package TWITCH IO
@@ -37,6 +53,8 @@ class TBoT(commands.Bot):
         # We are logged in and ready to chat and use commands...
         print(f'Logged in as | {self.nick}')
         print(f'User id is | {self.user_id}')
+
+
 
             
 
