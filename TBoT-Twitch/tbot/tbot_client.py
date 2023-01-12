@@ -36,8 +36,10 @@ client = twitchio.Client("7avqdwvhfq48n3511t21px7e7rjmjy",  initial_channels=["G
 client.pubsub = pubsub.PubSubPool(client)
 
 async def event_pubsub_channel_points2(event: pubsub.PubSubChannelPointsMessage):
-    print('Redemption by ', event.user.name, 'of reward', event.reward.title, 'with text', event.reward.prompt,
-          'done')
+    message = f"{event.user.name} a utilisé '{event.reward.title}' pour un cout de {str(event.reward.cost)} point de chaine."
+    print(message)
+    channel = client.get_channel("GToF_")
+    await channel.send(message)
      
 @client.event()
 async def event_ready():
@@ -49,9 +51,6 @@ async def event_ready():
 
 @client.event()
 async def event_pubsub_channel_points(event: pubsub.PubSubChannelPointsMessage):
-    print (event.reward.title, ": Pour un cout de ", event.reward.cost)
-    channel = event.channel_id
-    
     await event_pubsub_channel_points2(event)
 
 client.run()
