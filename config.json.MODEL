@@ -1,13 +1,24 @@
 {
     "BOT-TWITCH":
     {
-        "TOKEN":"",
-        "REFRESH":"",
-        "VALID":"",
+        "BOT_USERNAME":"",
+        "BOT_TOKEN":"",
+        "BOT_REFRESH":"",
+        "BOT_VALID":"",
+
+        "BOT_ID":"",
+        "BOT_NICK":"",
+        "BOT_PREFIX":"",
+        "BOT_CHANNEL":[""],
+
+        "CLIENT_USERNAME":"",
+        "CLIENT_TOKEN":"",
+        "CLIENT_REFRESH":"",
+        "CLIENT_VALID":"",
         "CLIENT_ID":"",
-        "BOT_NICK":"tbot_terror",
-        "BOT_PREFIX":"!",
-        "BOT_CHANNEL":[""]
+        "CLIENT_NICK":"",
+        "CLIENT_PREFIX":"!",
+        "CLIENT_CHANNEL":[""]
     },
     "URLMOD" : ""
 }
