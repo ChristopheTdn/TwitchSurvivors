@@ -1,7 +1,9 @@
 import twitchio
 import asyncio
-from twitchio.ext import pubsub
+from twitchio.ext import pubsub,sounds,commands
 import json
+import os
+import pygame
 
 with open('./config.json', 'r') as fichier:
     data = json.load(fichier)
@@ -27,30 +29,36 @@ with open('./config.json', 'r') as fichier:
     CLIENT_PREFIX = data["BOT-TWITCH"]["CLIENT_PREFIX"]
     CLIENT_CHANNEL = data["BOT-TWITCH"]["CLIENT_CHANNEL"]
 
-import twitchio
-from twitchio.ext import pubsub
+TBOTPATH, filename = os.path.split(__file__)    
+ligne_overlay=[]
 
 users_oauth_token = CLIENT_TOKEN
 users_channel_id = CLIENT_USER_ID
-client = twitchio.Client("7avqdwvhfq48n3511t21px7e7rjmjy",  initial_channels=["GToF_"])
-client.pubsub = pubsub.PubSubPool(client)
 
-async def event_pubsub_channel_points2(event: pubsub.PubSubChannelPointsMessage):
-    message = f"{event.user.name} a utilisé '{event.reward.title}' pour un cout de {str(event.reward.cost)} point de chaine."
-    print(message)
-    channel = client.get_channel("GToF_")
-    await channel.send(message)
-     
-@client.event()
-async def event_ready():
-    print(f"Ready | {client.nick}")
-    topics = [
-    pubsub.channel_points(users_oauth_token)[users_channel_id],
-    pubsub.bits(users_oauth_token)[users_channel_id],]
-    await client.pubsub.subscribe_topics(topics)
 
-@client.event()
-async def event_pubsub_channel_points(event: pubsub.PubSubChannelPointsMessage):
-    await event_pubsub_channel_points2(event)
+class TBoT_Client(commands.Cog):
+    def __init__(self, bot):
+        self.bot = bot
+        self.bot.pubsub = pubsub.PubSubPool(bot)
 
-client.run()
+    @commands.Cog.event()
+    async def event_ready(self):
+        topics = [
+        pubsub.channel_points(users_oauth_token)[users_channel_id],
+        pubsub.bits(users_oauth_token)[users_channel_id],]
+        await self.bot.pubsub.subscribe_topics(topics)
+
+    async def event_pubsub_channel_points2(self, event: pubsub.PubSubChannelPointsMessage):
+        # You could do this direct in the event if you wanted to
+        message = f"{event.user.name} a utilisé '{event.reward.title}' pour un cout de {str(event.reward.cost)} point de chaine."     
+        channel = bot.get_channel()
+        #await channel.send(message)
+
+
+    @commands.Cog.event()
+    async def event_pubsub_channel_points(self, event: pubsub.PubSubChannelPointsMessage):
+        await self.event_pubsub_channel_points2(event)
+
+
+def prepare(bot):
+    bot.add_cog(TBoT_Client(bot))
