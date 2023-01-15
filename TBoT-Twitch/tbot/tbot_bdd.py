@@ -17,7 +17,7 @@ class TBOT_BDD():
         curseur = self.connexionSQL.cursor()
         curseur.execute('''CREATE TABLE IF NOT EXISTS player(
             id INTEGER PRIMARY KEY AUTOINCREMENT UNIQUE,
-            pseudo TEXT UNIQUE,
+            name TEXT UNIQUE,
             health INTEGER,
             reputation INTEGER,
             levelGun INTEGER,
@@ -25,7 +25,7 @@ class TBOT_BDD():
             levelCar INTEGER,
             stock INTEGER)''')
         curseur.execute('''INSERT OR IGNORE INTO player
-                        (pseudo,
+                        (name,
                         health,
                         reputation,
                         levelGun,
@@ -40,7 +40,7 @@ class TBOT_BDD():
         self.connexionSQL = sqlite3.connect(os.path.join(self.TBOTPATH, self.NAMEBDD))
         cur = self.connexionSQL.cursor()
         cur.execute('''INSERT OR IGNORE INTO player
-                        (pseudo,
+                        (name,
                         health,
                         reputation,
                         levelGun,
@@ -54,16 +54,16 @@ class TBOT_BDD():
     def get_stats_player(self,pseudo: str)->dict:
         self.connexionSQL = sqlite3.connect(os.path.join(self.TBOTPATH, self.NAMEBDD))
         cur = self.connexionSQL.cursor()
-        cur.execute(f'''SELECT pseudo,
+        cur.execute(f'''SELECT name,
                         health,
                         reputation,
                         levelGun,
                         levelWear,
                         levelCar,
-                        stock FROM 'player' WHERE pseudo='{pseudo}' ''')
+                        stock FROM 'player' WHERE name='{name}' ''')
         listeStat = cur.fetchone()
         self.connexionSQL.close()
-        reponse ={"pseudo": listeStat[0],
+        reponse ={"name": listeStat[0],
                 "health": listeStat[1],
                 "reputation": listeStat[2],
                 "levelGun": listeStat[3],
@@ -73,10 +73,10 @@ class TBOT_BDD():
                 }
         return reponse
     
-    def player_exist(self,pseudo):
+    def player_exist(self,name):
         self.connexionSQL = sqlite3.connect(os.path.join(self.TBOTPATH, self.NAMEBDD))
         cur = self.connexionSQL.cursor()
-        cur.execute(f"SELECT pseudo FROM 'player' WHERE pseudo='{pseudo}'")
+        cur.execute(f"SELECT name FROM 'player' WHERE name='{name}'")
         reponse = cur.fetchone()
         self.connexionSQL.close()
         return reponse
