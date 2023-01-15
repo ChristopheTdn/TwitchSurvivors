@@ -51,7 +51,7 @@ class TBOT_BDD():
         self.connexionSQL.commit()
         self.connexionSQL.close()
     
-    def get_stats_player(self,pseudo: str)->dict:
+    def get_stats_player(self,name: str)->dict:
         self.connexionSQL = sqlite3.connect(os.path.join(self.TBOTPATH, self.NAMEBDD))
         cur = self.connexionSQL.cursor()
         cur.execute(f'''SELECT name,

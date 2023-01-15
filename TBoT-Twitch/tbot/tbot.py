@@ -125,33 +125,6 @@ class TBoT(commands.Bot):
             ''')
                 
     @commands.command()
-    async def new_survivant(self, ctx: commands.Context):
-        """
-        Commande !new_survivant
-        -----------
-        Traite la commande twitch !new_survivant. Genere un nouveau survivant et l ajoute a la base de données
-        """
-        pseudo = ctx.author.display_name
-        
-        if TBOTBDD.player_exist(pseudo)!=None : #le pseudo existe deja dans la base de donnée
-            message = f"Echec de tentative de création du joueur {pseudo} sur le serveur ! Le survivant existe déjà. Tapes !info_survivant"
-            messagehtml = f"❌ Echec de tentative de création du joueur {pseudo} sur le serveur !"
-            self.affichage_Overlay(messagehtml)
-            await ctx.send(message) 
-        else :
-            TBOTBDD.create_player(pseudo)
-            message = f"⛹ Le joueur {pseudo} vient d'apparaitre sur le serveur!"
-            messagehtml = f"⛹Le joueur <strong>{pseudo}</strong> vient d'apparaitre sur le serveur."
-            await ctx.send(message)
-            self.affichage_Overlay(messagehtml)
-            sound = sounds.Sound(source=os.path.join(TBOTPATH, "sound/radio1.mp3"))
-            self.event_player.play(sound)
-            message=f"<radio> : ...allo ! je m'appelle {pseudo}... Je suis un surviva....pret a aider....d'autres messages suivront..."
-            with open(URLMOD+"texte.txt","w") as fichier:
-                fichier.write(f"RADIO ({pseudo}) : {message}")
-        
-
-    @commands.command()
     async def parle(self, ctx: commands.Context):
         """
         Commande !parle <message>
@@ -174,17 +147,17 @@ class TBoT(commands.Bot):
         -----------
         Traite la commande twitch !mon_survivant. retourne les stats du joueurs dans le chat Twitch
         """
-        pseudo = ctx.author.display_name
+        name = ctx.author.display_name
 
-        if TBOTBDD.player_exist(pseudo)!=None :
-            dictStat=TBOTBDD.get_stats_player(pseudo)
-            message = f"stat {dictStat['pseudo']} : vie = {dictStat['health']} ; reputation = {dictStat['reputation']},\
+        if TBOTBDD.player_exist(name)!=None :
+            dictStat=TBOTBDD.get_stats_player(name)
+            message = f"stat {dictStat['name']} : vie = {dictStat['health']} ; reputation = {dictStat['reputation']},\
                 levelgun = {dictStat['levelGun']} ; vetement = {dictStat['levelWear']}, vehicule = {dictStat['levelCar']},\
                 Stock = {dictStat['stock']}"
             await ctx.send(message)      
         else :
-            message = f"❌-le survivant {pseudo} n'existe pas sur le serveur ! Tapes !new_survivant pour en creer un."
-            messagehtml = f"❌-le survivant <strong>{pseudo}</strong> n'existe pas sur le serveur ! Tapes !new_survivant pour en creer un."
+            message = f"❌-le survivant {name} n'existe pas sur le serveur ! Tapes !new_survivant pour en creer un."
+            messagehtml = f"❌-le survivant <strong>{name}</strong> n'existe pas sur le serveur ! Tapes !new_survivant pour en creer un."
             self.affichage_Overlay(messagehtml)
             await ctx.send(message)
             
