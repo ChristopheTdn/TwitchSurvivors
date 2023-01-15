@@ -4,6 +4,7 @@ from twitchio.ext import commands, sounds,pubsub
 import sqlite3
 import os
 from  tbot.tbot_bdd import TBOT_BDD
+from datetime import datetime
 
 with open('./config.json', 'r') as fichier:
     data = json.load(fichier)
@@ -76,6 +77,8 @@ class TBoT(commands.Bot):
     async def sound_done(self):
         pass
     
+    
+    
     async def creation_survivant(self,pseudo,channel):
 
         if TBOTBDD.player_exist(pseudo)!=None : #le pseudo existe deja dans la base de donnée
@@ -90,9 +93,9 @@ class TBoT(commands.Bot):
             self.affichage_Overlay(messagehtml)
             sound = sounds.Sound(source=os.path.join(TBOTPATH, "sound/radio1.mp3"))
             self.event_player.play(sound)
-            message=f"<radio> : ...allo ! je m'appelle {pseudo}... Je suis un surviva....pret a aider....d'autres messages suivront..."
+            message=f" : ...allo ! je m'appelle {pseudo}... Je suis un surviva....pret a aider....d'autres messages suivront..."
             with open(URLMOD+"texte.txt","w") as fichier:
-                fichier.write(f"RADIO ({pseudo}) : {message}")
+                fichier.write(f"<radio {pseudo}> : {message}")
                 
                 
     def affichage_Overlay(self,message: str):
@@ -140,6 +143,7 @@ class TBoT(commands.Bot):
             fichier.write(f"⚡<radio {pseudo}> : {message}")
         messagehtml = f"⚡&ltradio {pseudo}> : {message}"
         self.affichage_Overlay(messagehtml)
+        
     @commands.command()
     async def mon_survivant(self, ctx: commands.Context):
         """
@@ -160,8 +164,38 @@ class TBoT(commands.Bot):
             messagehtml = f"❌-le survivant <strong>{name}</strong> n'existe pas sur le serveur ! Tapes !new_survivant pour en creer un."
             self.affichage_Overlay(messagehtml)
             await ctx.send(message)
-            
-
+    
+    @commands.command()
+    async def raid_arme(self, ctx: commands.Context):
+        """
+        Commande !raid_arme
+        -----------
+        Traite la commande twitch !raid_arme. retourne les stats du joueurs dans le chat Twitch
+        """
+        name = ctx.author.display_name
+        if TBOTBDD.player_exist(name)==None :
+            message = f"❌-le survivant {name} n'existe pas sur le serveur ! Creer un nouveau survivant avec tes points de chaine."
+            await ctx.send(message)
+        elif TBOTBDD.raid_exist(name)!=None :
+            message = f"❌-un Raid est dejà en cours pour {name} ! tapez !mon_survivant pour plus d'info."
+            await ctx.send(message) 
+        else :
+            """Création du Raid_Arme
+            """
+            heure =  datetime.now().hour
+            minute = datetime.now().minute
+            jour = datetime.now().day
+            TBOTBDD.create_raid(name,"arme",heure,minute,jour)
+            messagehtml = f"🔨- il est {heure}:{minute}, {name} par en Raid pour récuperer de l'armement !"
+            self.affichage_Overlay(messagehtml)
+            sound = sounds.Sound(source=(os.path.join(TBOTPATH, "sound\\radio3.mp3")))
+            message=f" : ...allo ! ici {name}... Je pars cherch... des arm. et des ..unitions."
+            self.event_player.play(sound)
+            with open(URLMOD+"texte.txt","w") as fichier:
+                fichier.write(f"<radio {name}> : {message}")
+                
+            message = f"🔨-{name} part en Raid pour chercher des armes !"
+            await ctx.send(message)
 
 if __name__ == '__main__': 
     print('Ne peut etre lancé directement')

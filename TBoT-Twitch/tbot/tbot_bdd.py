@@ -24,6 +24,7 @@ class TBOT_BDD():
             levelWear INTEGER,
             levelCar INTEGER,
             stock INTEGER)''')
+
         curseur.execute('''INSERT OR IGNORE INTO player
                         (name,
                         health,
@@ -33,6 +34,23 @@ class TBOT_BDD():
                         levelCar,
                         stock)
                         VALUES (?,?,?,?,?,?,?)''', ("vide", 100,0,0,0,0,0))
+        curseur.execute('''CREATE TABLE IF NOT EXISTS raid(
+            id INTEGER PRIMARY KEY AUTOINCREMENT UNIQUE,
+            name TEXT UNIQUE,
+            type TEXT,
+            heure INTEGER,
+            minute INTEGER,
+            jour INTEGER,
+            renfort TEXT 
+            )''')
+        curseur.execute('''INSERT OR IGNORE INTO raid
+                (name,
+                type,
+                heure,
+                minute,
+                jour,
+                renfort)
+                VALUES (?,?,?,?,?,?)''', ("vide", "",0,0,0,""))
         self.connexionSQL.commit()
         self.connexionSQL.close()
         
@@ -80,6 +98,29 @@ class TBOT_BDD():
         reponse = cur.fetchone()
         self.connexionSQL.close()
         return reponse
+    
+    def raid_exist(self,name: str):
+        self.connexionSQL = sqlite3.connect(os.path.join(self.TBOTPATH, self.NAMEBDD))
+        cur = self.connexionSQL.cursor()
+        cur.execute(f"SELECT name FROM 'raid' WHERE name='{name}'")
+        reponse = cur.fetchone()
+        self.connexionSQL.close()
+        return reponse
+    
+    def create_raid(self,name: str,type: str,heure: int, minute: int, jour: int):
+        self.connexionSQL = sqlite3.connect(os.path.join(self.TBOTPATH, self.NAMEBDD))
+        cur = self.connexionSQL.cursor()
+        cur.execute('''INSERT OR IGNORE INTO raid
+                        (name,
+                        type,
+                        heure,
+                        minute,
+                        jour,
+                        renfort)
+                        VALUES (?,?,?,?,?,?)''', (name,type,heure,minute, jour,""))
+        self.connexionSQL.commit()
+        self.connexionSQL.close()
+        
 
 if __name__ == '__main__': 
     print('Ne peut etre lancé directement')
