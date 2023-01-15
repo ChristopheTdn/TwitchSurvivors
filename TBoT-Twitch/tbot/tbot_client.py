@@ -35,7 +35,6 @@ ligne_overlay=[]
 users_oauth_token = CLIENT_TOKEN
 users_channel_id = CLIENT_USER_ID
 
-
 class TBoT_Client(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
@@ -50,15 +49,15 @@ class TBoT_Client(commands.Cog):
 
     async def event_pubsub_channel_points2(self, event: pubsub.PubSubChannelPointsMessage):
         # You could do this direct in the event if you wanted to
-        message = f"{event.user.name} a utilisé '{event.reward.title}' pour un cout de {str(event.reward.cost)} point de chaine."     
-        channel = bot.get_channel()
-        #await channel.send(message)
-
+        message = f"{event.user.name} a utilisé '{event.reward.title}' pour un cout de {str(event.reward.cost)} point de chaine."
+        print(message)     
+        channel = self.bot.get_channel(CLIENT_CHANNEL)
+        await self.bot.creation_survivant(event.user.name,channel)
+        await channel.send(message)
 
     @commands.Cog.event()
     async def event_pubsub_channel_points(self, event: pubsub.PubSubChannelPointsMessage):
         await self.event_pubsub_channel_points2(event)
-
 
 def prepare(bot):
     bot.add_cog(TBoT_Client(bot))

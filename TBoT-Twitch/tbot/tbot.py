@@ -76,6 +76,26 @@ class TBoT(commands.Bot):
     async def sound_done(self):
         pass
     
+    async def creation_survivant(self,pseudo,channel):
+        
+        if TBOTBDD.player_exist(pseudo)!=None : #le pseudo existe deja dans la base de donnée
+            message = f"Echec de tentative de création du joueur {pseudo} sur le serveur ! Le survivant existe déjà. Tapes !info_survivant"
+            messagehtml = f"❌ Echec de tentative de création du joueur {pseudo} sur le serveur !"
+            self.affichage_Overlay(messagehtml)
+            await channel.send(message) 
+        else :
+            TBOTBDD.create_player(pseudo)
+            message = f"⛹ Le joueur {pseudo} vient d'apparaitre sur le serveur!"
+            messagehtml = f"⛹Le joueur <strong>{pseudo}</strong> vient d'apparaitre sur le serveur."
+            await channel.send(message)
+            self.affichage_Overlay(messagehtml)
+            sound = sounds.Sound(source=os.path.join(TBOTPATH, "sound/radio1.mp3"))
+            self.event_player.play(sound)
+            message=f"<radio> : ...allo ! je m'appelle {pseudo}... Je suis un surviva....pret a aider....d'autres messages suivront..."
+            with open(URLMOD+"texte.txt","w") as fichier:
+                fichier.write(f"RADIO ({pseudo}) : {message}")
+                
+                
     def affichage_Overlay(self,message: str):
         """Genere un fichier HTML utilisable comme OVERLAY dans OBS
 
