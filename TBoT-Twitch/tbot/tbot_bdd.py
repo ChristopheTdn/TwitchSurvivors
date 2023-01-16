@@ -38,19 +38,17 @@ class TBOT_BDD():
             id INTEGER PRIMARY KEY AUTOINCREMENT UNIQUE,
             name TEXT UNIQUE,
             type TEXT,
-            heure INTEGER,
-            minute INTEGER,
-            jour INTEGER,
+            timing INTEGER,
+            retour INTEGER,
             renfort TEXT 
             )''')
         curseur.execute('''INSERT OR IGNORE INTO raid
                 (name,
                 type,
-                heure,
-                minute,
-                jour,
+                timing,
+                retour,
                 renfort)
-                VALUES (?,?,?,?,?,?)''', ("vide", "",0,0,0,""))
+                VALUES (?,?,?,?,?)''', ("vide", "",0,0,""))
         self.connexionSQL.commit()
         self.connexionSQL.close()
         
@@ -107,17 +105,17 @@ class TBOT_BDD():
         self.connexionSQL.close()
         return reponse
     
-    def create_raid(self,name: str,type: str,heure: int, minute: int, jour: int):
+    def create_raid(self,name: str,type: str,timing: int):
+        
         self.connexionSQL = sqlite3.connect(os.path.join(self.TBOTPATH, self.NAMEBDD))
         cur = self.connexionSQL.cursor()
         cur.execute('''INSERT OR IGNORE INTO raid
                         (name,
                         type,
-                        heure,
-                        minute,
-                        jour,
+                        timing,
+                        retour,
                         renfort)
-                        VALUES (?,?,?,?,?,?)''', (name,type,heure,minute, jour,""))
+                        VALUES (?,?,?,?,?)''', (name,type,timing,timing/2,""))
         self.connexionSQL.commit()
         self.connexionSQL.close()
         

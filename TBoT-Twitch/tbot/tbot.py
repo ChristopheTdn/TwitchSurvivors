@@ -185,7 +185,7 @@ class TBoT(commands.Bot):
             heure =  datetime.now().hour
             minute = datetime.now().minute
             jour = datetime.now().day
-            TBOTBDD.create_raid(name,"arme",heure,minute,jour)
+            TBOTBDD.create_raid(name,"arme",90)
             messagehtml = f"🔨- il est {heure}:{minute}, {name} par en Raid pour récuperer de l'armement !"
             self.affichage_Overlay(messagehtml)
             sound = sounds.Sound(source=(os.path.join(TBOTPATH, "sound\\radio3.mp3")))
