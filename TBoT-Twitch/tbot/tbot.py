@@ -6,7 +6,6 @@ import asyncio
 import os
 from  tbot.tbot_bdd import TBOT_BDD
 from datetime import datetime
-import aiosqlite
 import aiofiles
 
 with open('./config.json', 'r') as fichier:
@@ -86,17 +85,18 @@ class TBoT(commands.Bot):
     
     
     async def creation_survivant(self,pseudo,channel):
-
-        if TBOTBDD.player_exist(pseudo)!=None : #le pseudo existe deja dans la base de donnée
+        name_survivant = await TBOTBDD.survivant_exist(pseudo)
+        if name_survivant != None : #le pseudo existe deja dans la base de donnée
             message = f"Echec de tentative de création du joueur {pseudo} sur le serveur ! Le survivant existe déjà. Tapes !info_survivant"
             messagehtml = f"❌ Echec de tentative de création du joueur {pseudo} sur le serveur !"
-            self.affichage_Overlay(messagehtml)
+            await self.affichage_Overlay(messagehtml)
             await channel.send(message) 
         else :
-            TBOTBDD.create_player(pseudo)
+            await TBOTBDD.create_survivant(pseudo)
             message = f"⛹ Le joueur {pseudo} vient d'apparaitre sur le serveur!"
+            await channel.send(message) 
             messagehtml = f"⛹Le joueur <strong>{pseudo}</strong> vient d'apparaitre sur le serveur."
-            self.affichage_Overlay(messagehtml)
+            await self.affichage_Overlay(messagehtml)
             sound = sounds.Sound(source=os.path.join(TBOTPATH, "sound/radio1.mp3"))
             self.event_player.play(sound)
             message=f" : ...allo ! je m'appelle {pseudo}... Je suis un surviva....pret a aider....d'autres messages suivront..."
@@ -148,7 +148,7 @@ class TBoT(commands.Bot):
         async with aiofiles.open(URLMOD+"texte.txt","w",encoding="utf-8") as fichier:
             await fichier.write(f"⚡<radio {pseudo}> : {message}")
         messagehtml = f"⚡&ltradio {pseudo}> : {message}"
-        self.affichage_Overlay(messagehtml)
+        await self.affichage_Overlay(messagehtml)
         
     @commands.command()
     async def mon_survivant(self, ctx: commands.Context):
@@ -158,9 +158,9 @@ class TBoT(commands.Bot):
         Traite la commande twitch !mon_survivant. retourne les stats du joueurs dans le chat Twitch
         """
         name = ctx.author.display_name
-
-        if TBOTBDD.player_exist(name)!=None :
-            dictStat=TBOTBDD.get_stats_player(name)
+        test_survivant_exist = await TBOTBDD.survivant_exist(name)
+        if test_survivant_exist !=None :
+            dictStat= await TBOTBDD.get_stats_survivant(name)
             message = f"stat {dictStat['name']} : vie = {dictStat['health']} ; reputation = {dictStat['reputation']},\
                 levelgun = {dictStat['levelGun']} ; vetement = {dictStat['levelWear']}, vehicule = {dictStat['levelCar']},\
                 Stock = {dictStat['stock']}"
@@ -168,7 +168,7 @@ class TBoT(commands.Bot):
         else :
             message = f"❌-le survivant {name} n'existe pas sur le serveur ! Tapes !new_survivant pour en creer un."
             messagehtml = f"❌-le survivant <strong>{name}</strong> n'existe pas sur le serveur ! Tapes !new_survivant pour en creer un."
-            self.affichage_Overlay(messagehtml)
+            await self.affichage_Overlay(messagehtml)
             await ctx.send(message)
     
     @commands.command()
@@ -178,11 +178,15 @@ class TBoT(commands.Bot):
         -----------
         Traite la commande twitch !raid_arme. retourne les stats du joueurs dans le chat Twitch
         """
+        
         name = ctx.author.display_name
-        if TBOTBDD.player_exist(name)==None :
+        test_survivant_exist = await TBOTBDD.survivant_exist(name)
+        test_raid_exist = await TBOTBDD.raid_exist(name)
+        
+        if test_survivant_exist == None :
             message = f"❌-le survivant {name} n'existe pas sur le serveur ! Creer un nouveau survivant avec tes points de chaine."
             await ctx.send(message)
-        elif TBOTBDD.raid_exist(name)!=None :
+        elif test_raid_exist != None :
             message = f"❌-un Raid est dejà en cours pour {name} ! tapez !mon_survivant pour plus d'info."
             await ctx.send(message) 
         else :
@@ -191,9 +195,9 @@ class TBoT(commands.Bot):
             heure =  datetime.now().hour
             minute = datetime.now().minute
             jour = datetime.now().day
-            TBOTBDD.create_raid(name,"arme",90)
+            await TBOTBDD.create_raid(name,"arme",90)
             messagehtml = f"🔨- il est {heure}:{minute}, {name} par en Raid pour récuperer de l'armement !"
-            self.affichage_Overlay(messagehtml)
+            await self.affichage_Overlay(messagehtml)
             sound = sounds.Sound(source=(os.path.join(TBOTPATH, "sound\\radio3.mp3")))
             message=f" : ...allo ! ici {name}... Je pars cherch... des arm. et des ..unitions."
             self.event_player.play(sound)

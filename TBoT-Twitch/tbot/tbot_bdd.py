@@ -1,5 +1,6 @@
 import sqlite3
 import os
+import aiosqlite
 
 class TBOT_BDD():
         
@@ -36,33 +37,31 @@ class TBOT_BDD():
         self.connexionSQL.commit()
         self.connexionSQL.close()
         
-    def create_player(self,pseudo):
-        self.connexionSQL = sqlite3.connect(os.path.join(self.TBOTPATH, self.NAMEBDD))
-        cur = self.connexionSQL.cursor()
-        cur.execute('''INSERT OR IGNORE INTO player
-                        (name,
-                        health,
-                        reputation,
-                        levelGun,
-                        levelWear,
-                        levelCar,
-                        stock)
-                        VALUES (?,?,?,?,?,?,?)''', (pseudo , 100,0,0,0,0,0))
-        self.connexionSQL.commit()
-        self.connexionSQL.close()
+    async def create_survivant(self,pseudo):
+        db = await aiosqlite.connect(os.path.join(self.TBOTPATH, self.NAMEBDD))
+        await db.execute('''INSERT OR IGNORE INTO player
+                            (name,
+                            health,
+                            reputation,
+                            levelGun,
+                            levelWear,
+                            levelCar,
+                            stock)
+                            VALUES (?,?,?,?,?,?,?)''', (pseudo , 100,0,0,0,0,0)) 
+        await db.commit()
+        await db.close()
     
-    def get_stats_player(self,name: str)->dict:
-        self.connexionSQL = sqlite3.connect(os.path.join(self.TBOTPATH, self.NAMEBDD))
-        cur = self.connexionSQL.cursor()
-        cur.execute(f'''SELECT name,
+    async def get_stats_survivant(self,name: str)->dict:
+        db = await aiosqlite.connect(os.path.join(self.TBOTPATH, self.NAMEBDD))
+        async with db.execute (f'''SELECT name,
                         health,
                         reputation,
                         levelGun,
                         levelWear,
                         levelCar,
-                        stock FROM 'player' WHERE name='{name}' ''')
-        listeStat = cur.fetchone()
-        self.connexionSQL.close()
+                        stock FROM 'player' WHERE name='{name}' ''') as cur:
+            listeStat = await cur.fetchone()
+        await db.close()
         reponse ={"name": listeStat[0],
                 "health": listeStat[1],
                 "reputation": listeStat[2],
@@ -73,35 +72,32 @@ class TBOT_BDD():
                 }
         return reponse
     
-    def player_exist(self,name):
-        self.connexionSQL = sqlite3.connect(os.path.join(self.TBOTPATH, self.NAMEBDD))
-        cur = self.connexionSQL.cursor()
-        cur.execute(f"SELECT name FROM 'player' WHERE name='{name}'")
-        reponse = cur.fetchone()
-        self.connexionSQL.close()
+    async def survivant_exist(self,name):
+        db = await aiosqlite.connect(os.path.join(self.TBOTPATH, self.NAMEBDD))
+        async with db.execute (f"SELECT name FROM 'player' WHERE name='{name}'") as cur:
+            reponse = await cur.fetchone()
+        await db.close()
         return reponse
     
-    def raid_exist(self,name: str):
-        self.connexionSQL = sqlite3.connect(os.path.join(self.TBOTPATH, self.NAMEBDD))
-        cur = self.connexionSQL.cursor()
-        cur.execute(f"SELECT name FROM 'raid' WHERE name='{name}'")
-        reponse = cur.fetchone()
-        self.connexionSQL.close()
+    async def raid_exist(self,name: str):
+        db = await aiosqlite.connect(os.path.join(self.TBOTPATH, self.NAMEBDD))
+        async with db.execute (f"SELECT name FROM 'raid' WHERE name='{name}'") as cur :
+            reponse = await cur.fetchone()
+        await db.close()
         return reponse
     
-    def create_raid(self,name: str,type: str,timing: int):
+    async def create_raid(self,name: str,type: str,timing: int):
         
-        self.connexionSQL = sqlite3.connect(os.path.join(self.TBOTPATH, self.NAMEBDD))
-        cur = self.connexionSQL.cursor()
-        cur.execute('''INSERT OR IGNORE INTO raid
+        db = await aiosqlite.connect(os.path.join(self.TBOTPATH, self.NAMEBDD))
+        await db.execute ('''INSERT OR IGNORE INTO raid
                         (name,
                         type,
                         timing,
                         retour,
                         renfort)
                         VALUES (?,?,?,?,?)''', (name,type,timing,timing/2,""))
-        self.connexionSQL.commit()
-        self.connexionSQL.close()
+        await db.commit()
+        await db.close()
     
     async def genere_StatRaid(self):
         self.connexionSQL = sqlite3.connect(os.path.join(self.TBOTPATH, self.NAMEBDD))
