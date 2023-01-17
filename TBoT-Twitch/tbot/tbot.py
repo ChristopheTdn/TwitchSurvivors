@@ -2,9 +2,12 @@ import json
 import twitchio
 from twitchio.ext import commands, sounds,pubsub
 import sqlite3
+import asyncio
 import os
 from  tbot.tbot_bdd import TBOT_BDD
 from datetime import datetime
+import aiosqlite
+import aiofiles
 
 with open('./config.json', 'r') as fichier:
     data = json.load(fichier)
@@ -48,16 +51,19 @@ class TBoT(commands.Bot):
         self.event_player = sounds.AudioPlayer(callback=self.sound_done)
         TBOTBDD.initTableSql()
         
-        
     async def event_ready(self):
         # Notify us when everything is ready!
         # We are logged in and ready to chat and use commands...
         print(f'Logged in as | {self.nick}')
         print(f'User id is | {self.user_id}')
+        await self.timer_Raid()
+        
 
-
-
-            
+    async def timer_Raid(self):
+        while True:
+            await TBOTBDD.genere_StatRaid()
+            print ('raid mis a jour')
+            await asyncio.sleep(60)
 
     async def event_message(self,message: twitchio.Message):
         
@@ -94,11 +100,11 @@ class TBoT(commands.Bot):
             sound = sounds.Sound(source=os.path.join(TBOTPATH, "sound/radio1.mp3"))
             self.event_player.play(sound)
             message=f" : ...allo ! je m'appelle {pseudo}... Je suis un surviva....pret a aider....d'autres messages suivront..."
-            with open(URLMOD+"texte.txt","w") as fichier:
-                fichier.write(f"<radio {pseudo}> : {message}")
+            async with aiofiles.open(URLMOD+"texte.txt","w") as fichier:
+                await fichier.write(f"<radio {pseudo}> : {message}")
                 
                 
-    def affichage_Overlay(self,message: str):
+    async def affichage_Overlay(self,message: str):
         """Genere un fichier HTML utilisable comme OVERLAY dans OBS
 
         Args:
@@ -118,11 +124,11 @@ class TBoT(commands.Bot):
         <body>
         '''
         ligne_overlay.insert(0,message)
-        with open('tbot.html',"w",encoding="utf-8") as fichier:
-            fichier.write(template)
+        async with aiofiles.open('tbot.html',"w",encoding="utf-8") as fichier:
+            await fichier.write(template)
             for ligne in ligne_overlay:
-                fichier.write ("<p>"+ligne+"</p>\n")
-            fichier.write('''
+                await fichier.write ("<p>"+ligne+"</p>\n")
+            await fichier.write('''
             </body>
             </html>
             ''')
@@ -139,8 +145,8 @@ class TBoT(commands.Bot):
         message=message.replace('!parle',"")
         sound = sounds.Sound(source=(os.path.join(TBOTPATH, "sound\\radio2.mp3")))
         self.event_player.play(sound)
-        with open(URLMOD+"texte.txt","w",encoding="utf-8") as fichier:
-            fichier.write(f"⚡<radio {pseudo}> : {message}")
+        async with aiofiles.open(URLMOD+"texte.txt","w",encoding="utf-8") as fichier:
+            await fichier.write(f"⚡<radio {pseudo}> : {message}")
         messagehtml = f"⚡&ltradio {pseudo}> : {message}"
         self.affichage_Overlay(messagehtml)
         
@@ -191,8 +197,8 @@ class TBoT(commands.Bot):
             sound = sounds.Sound(source=(os.path.join(TBOTPATH, "sound\\radio3.mp3")))
             message=f" : ...allo ! ici {name}... Je pars cherch... des arm. et des ..unitions."
             self.event_player.play(sound)
-            with open(URLMOD+"texte.txt","w") as fichier:
-                fichier.write(f"<radio {name}> : {message}")
+            async with aiofiles.open(URLMOD+"texte.txt","w") as fichier:
+                await fichier.write(f"<radio {name}> : {message}")
                 
             message = f"🔨-{name} part en Raid pour chercher des armes !"
             await ctx.send(message)

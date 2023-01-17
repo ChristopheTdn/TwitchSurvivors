@@ -24,16 +24,7 @@ class TBOT_BDD():
             levelWear INTEGER,
             levelCar INTEGER,
             stock INTEGER)''')
-
-        curseur.execute('''INSERT OR IGNORE INTO player
-                        (name,
-                        health,
-                        reputation,
-                        levelGun,
-                        levelWear,
-                        levelCar,
-                        stock)
-                        VALUES (?,?,?,?,?,?,?)''', ("vide", 100,0,0,0,0,0))
+        
         curseur.execute('''CREATE TABLE IF NOT EXISTS raid(
             id INTEGER PRIMARY KEY AUTOINCREMENT UNIQUE,
             name TEXT UNIQUE,
@@ -42,13 +33,6 @@ class TBOT_BDD():
             retour INTEGER,
             renfort TEXT 
             )''')
-        curseur.execute('''INSERT OR IGNORE INTO raid
-                (name,
-                type,
-                timing,
-                retour,
-                renfort)
-                VALUES (?,?,?,?,?)''', ("vide", "",0,0,""))
         self.connexionSQL.commit()
         self.connexionSQL.close()
         
@@ -118,7 +102,38 @@ class TBOT_BDD():
                         VALUES (?,?,?,?,?)''', (name,type,timing,timing/2,""))
         self.connexionSQL.commit()
         self.connexionSQL.close()
+    
+    async def genere_StatRaid(self):
+        self.connexionSQL = sqlite3.connect(os.path.join(self.TBOTPATH, self.NAMEBDD))
+        cur = self.connexionSQL.cursor()
+        cur.execute(f'''SELECT name,
+                        type,
+                        timing,
+                        retour,
+                        renfort FROM 'raid' ''')
+        listeRaid = cur.fetchall()
+        self.connexionSQL.close()
         
-
+        NumSurvivant = 1
+        self.connexionSQL = sqlite3.connect(os.path.join(self.TBOTPATH, self.NAMEBDD))
+        cur = self.connexionSQL.cursor()
+        with open('raid.json',"w",encoding="utf-8") as fichier:
+            fichier.write('{\n')
+            fichier.write('    "RAID":\n')
+            fichier.write('    {\n')
+            for raid in listeRaid :
+                fichier.write(f'        "SURVIVANT_{NumSurvivant}":\n')
+                fichier.write('        {\n')
+                fichier.write(f'            "NAME":"{raid[0]}",\n') 
+                fichier.write(f'            "TIMING":"{str((raid[2]*100)/(raid[3]*2))} % ",\n')
+                fichier.write(f'            "RENFORT":"{str(raid[4])}"\n') 
+                fichier.write('        },\n')
+                cur.execute(f'''UPDATE raid SET timing = {str(raid[2]-1)} WHERE name = "{raid[0]}"''')
+                
+            fichier.write('    }\n')
+            fichier.write('}\n')
+        self.connexionSQL.commit()
+        self.connexionSQL.close()
+        
 if __name__ == '__main__': 
     print('Ne peut etre lancé directement')
