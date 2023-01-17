@@ -49,7 +49,7 @@ class TBoT_Client(commands.Cog):
 
     async def event_pubsub_channel_points2(self, event: pubsub.PubSubChannelPointsMessage):
         # You could do this direct in the event if you wanted to
-        if event.reward.title == "Creer un survivant":
+        if event.reward.title == "Créer un survivant":
             message = f"{event.user.name} a utilisé '{event.reward.title}' pour un cout de {str(event.reward.cost)} point de chaine."
             channel = self.bot.get_channel(CLIENT_CHANNEL)
             await self.bot.creation_survivant(event.user.name,channel)
