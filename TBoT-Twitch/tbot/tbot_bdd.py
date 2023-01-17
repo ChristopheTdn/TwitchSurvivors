@@ -1,6 +1,8 @@
 import sqlite3
 import os
 import aiosqlite
+import json
+import aiofiles
 
 class TBOT_BDD():
         
@@ -100,36 +102,29 @@ class TBOT_BDD():
         await db.close()
     
     async def genere_StatRaid(self):
-        self.connexionSQL = sqlite3.connect(os.path.join(self.TBOTPATH, self.NAMEBDD))
-        cur = self.connexionSQL.cursor()
-        cur.execute(f'''SELECT name,
+        
+        db = await aiosqlite.connect(os.path.join(self.TBOTPATH, self.NAMEBDD))
+        async with db.execute (f'''SELECT name,
                         type,
                         timing,
                         retour,
-                        renfort FROM 'raid' ''')
-        listeRaid = cur.fetchall()
-        self.connexionSQL.close()
+                        renfort FROM 'raid' ''') as cur:
+            listeRaid = await cur.fetchall()
+        await db.close()
         
         NumSurvivant = 1
-        self.connexionSQL = sqlite3.connect(os.path.join(self.TBOTPATH, self.NAMEBDD))
-        cur = self.connexionSQL.cursor()
-        with open('raid.json',"w",encoding="utf-8") as fichier:
-            fichier.write('{\n')
-            fichier.write('    "RAID":\n')
-            fichier.write('    {\n')
-            for raid in listeRaid :
-                fichier.write(f'        "SURVIVANT_{NumSurvivant}":\n')
-                fichier.write('        {\n')
-                fichier.write(f'            "NAME":"{raid[0]}",\n') 
-                fichier.write(f'            "TIMING":"{str((raid[2]*100)/(raid[3]*2))} % ",\n')
-                fichier.write(f'            "RENFORT":"{str(raid[4])}"\n') 
-                fichier.write('        },\n')
-                cur.execute(f'''UPDATE raid SET timing = {str(raid[2]-1)} WHERE name = "{raid[0]}"''')
-                
-            fichier.write('    }\n')
-            fichier.write('}\n')
-        self.connexionSQL.commit()
-        self.connexionSQL.close()
+        
+        db = await aiosqlite.connect(os.path.join(self.TBOTPATH, self.NAMEBDD))
+        data={}
+        for raid in listeRaid:
+            data[f"SURVIVANT_{NumSurvivant}"]={"NAME":f"{raid[0]}","TYPE":raid[1],"DISTANCE":((raid[2]*100)//(raid[3]*2)),"RENFORT":f"{str(raid[4])}"}
+            await db.execute(f'''UPDATE raid SET timing = {str(raid[2]-1)} WHERE name = "{raid[0]}"''')
+            NumSurvivant+=1
+        await db.commit()
+        await db.close()
+        
+        async with aiofiles.open("raid.json", "w") as fichier:
+            await fichier.write(json.dumps(data))
         
 if __name__ == '__main__': 
     print('Ne peut etre lancé directement')
