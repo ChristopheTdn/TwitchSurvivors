@@ -4,6 +4,7 @@ import aiosqlite
 import json
 import aiofiles
 import random
+from . import tbot_alert  
 
 class TBOT_BDD():
         
@@ -96,16 +97,16 @@ class TBOT_BDD():
         resultRAID = random.randrange(100) # un nombre entre 0 et 99
         if resultRAID < 5 : # Mort sans appel
             resultat = "ECHOUE AVEC PERTE"
-            alerteResultat = random.randrange(distance-10)
+            alerteResultat = random.randrange(distance-60,distance-5) 
         elif resultRAID < 15 :
             resultat = 'ECHOUE SANS PERTE' 
-            alerteResultat = 0
+            alerteResultat = 1
         elif resultRAID < 80 :
             resultat = 'SUCCES SANS BUTIN' 
-            alerteResultat = 0
+            alerteResultat = 1
         else :
             resultat = 'SUCCES AVEC BUTIN' 
-            alerteResultat = 0    
+            alerteResultat = 1    
             
         db = await aiosqlite.connect(os.path.join(self.TBOTPATH, self.NAMEBDD))
         await db.execute ('''INSERT OR IGNORE INTO raid
@@ -152,6 +153,7 @@ class TBOT_BDD():
             else:
                 if raid[2] == raid[3] :
                     print("Je commence a faire demi tour")
+                    tbot_alert.joue_son("radio2.mp3")
                 data[f"SURVIVANT_{NumSurvivant}"]={"NAME":f"{raid[0]}","TYPE":raid[1],"DISTANCE":((raid[2]*100)//(raid[3]*2)),"RENFORT":f"{str(raid[4])}"}
                 await db.execute(f'''UPDATE raid SET distance = {str(raid[2]-1)} WHERE name = "{raid[0]}"''') #Enleve 1 point de distance de RAID
             NumSurvivant+=1

@@ -7,6 +7,7 @@ import os
 from  tbot.tbot_bdd import TBOT_BDD
 from datetime import datetime
 import aiofiles
+from . import tbot_alert
 
 with open('./config.json', 'r') as fichier:
     data = json.load(fichier)
@@ -47,7 +48,6 @@ class TBoT(commands.Bot):
         # prefix can be a callable, which returns a list of strings or a string...
         # initial_channels can also be a callable which returns a list of strings...
         super().__init__(token=BOT_TOKEN, prefix=BOT_PREFIX, initial_channels=[CLIENT_CHANNEL])
-        self.event_player = sounds.AudioPlayer(callback=self.sound_done)
         TBOTBDD.initTableSql()
         
     async def event_ready(self):
@@ -78,11 +78,6 @@ class TBoT(commands.Bot):
         # We must let the bot know we want to handle and invoke our commands...
         await self.handle_commands(message)
         
-    async def sound_done(self):
-        pass
-    
-    
-    
     async def creation_survivant(self,pseudo,channel):
         name_survivant = await TBOTBDD.survivant_exist(pseudo)
         if name_survivant != None : #le pseudo existe deja dans la base de donnée
@@ -96,8 +91,7 @@ class TBoT(commands.Bot):
             await channel.send(message) 
             messagehtml = f"⛹Le joueur <strong>{pseudo}</strong> vient d'apparaitre sur le serveur."
             await self.affichage_Overlay(messagehtml)
-            sound = sounds.Sound(source=os.path.join(TBOTPATH, "sound/radio1.mp3"))
-            self.event_player.play(sound)
+            tbot_alert.joue_son("radio1.mp3")
             message=f" : ...allo ! je m'appelle {pseudo}... Je suis un surviva....pret a aider....d'autres messages suivront..."
             async with aiofiles.open(URLMOD+"texte.txt","w") as fichier:
                 await fichier.write(f"<radio {pseudo}> : {message}")
@@ -142,8 +136,7 @@ class TBoT(commands.Bot):
         pseudo = ctx.author.display_name
         message = ctx.message.content
         message=message.replace('!parle',"")
-        sound = sounds.Sound(source=(os.path.join(TBOTPATH, "sound\\radio2.mp3")))
-        self.event_player.play(sound)
+        tbot_alert.joue_son("radio2.mp3")
         async with aiofiles.open(URLMOD+"texte.txt","w",encoding="utf-8") as fichier:
             await fichier.write(f"⚡<radio {pseudo}> : {message}")
         messagehtml = f"⚡&ltradio {pseudo}> : {message}"
@@ -197,9 +190,8 @@ class TBoT(commands.Bot):
             await TBOTBDD.create_raid(name,"arme",90)
             messagehtml = f"🔨- il est {heure}:{minute}, {name} par en Raid pour récuperer de l'armement !"
             await self.affichage_Overlay(messagehtml)
-            sound = sounds.Sound(source=(os.path.join(TBOTPATH, "sound\\radio3.mp3")))
             message=f" : ...allo ! ici {name}... Je pars cherch... des arm. et des ..unitions."
-            self.event_player.play(sound)
+            tbot_alert.joue_son("radio3.mp3")
             async with aiofiles.open(URLMOD+"texte.txt","w") as fichier:
                 await fichier.write(f"<radio {name}> : {message}")
                 
