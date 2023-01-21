@@ -1,1 +1,1 @@
-from . import tbot_alert
+from . import tbot_com

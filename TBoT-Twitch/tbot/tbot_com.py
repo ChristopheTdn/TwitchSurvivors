@@ -1,5 +1,5 @@
 '''
-Module de gestion des alertes sonores pour le Projet TBoT_Terror
+Module de gestion des communication twitch chat, Mod, overlay Obs pour le Projet TBoT_Terror
 '''
 
 import twitchio
@@ -11,25 +11,33 @@ from pygame import mixer
 import aiofiles
 
 
+
+with open('./config.json', 'r') as fichier:
+    data = json.load(fichier)
+    URLMOD = data["URLMOD"]
+    
 TBOTPATH, filename = os.path.split(__file__) 
 ligne_overlay=[]
-
+    
+    
 def joue_son(radio = "radio1.mp3"):
     mixer.init()   
     mixer.music.load(os.path.join(TBOTPATH, "sound/"+radio))
     mixer.music.play()
 
-async def message(ctx: commands.Context,overlay ="",chat="",mod="",son="",):
+async def message(channel=None,overlay ="",chat="",mod="",son="",):
     '''
-    envois un message vers l'overlay
+    envois un message 
     '''
     if chat != "":
-        await ctx.send(chat)
+        await channel.send(chat)
     if overlay != "" :
-        await affichage_Overlay(messagehtml)
+        await affichage_Overlay(overlay)
     if mod != "" :
         async with aiofiles.open(URLMOD+"texte.txt","w") as fichier:
-            await fichier.write(f"<radio {name}> : {message}")
+            await fichier.write(mod)
+    if son != "" :
+        joue_son(son)
 
 async def affichage_Overlay(message: str):
     """Genere un fichier HTML utilisable comme OVERLAY dans OBS

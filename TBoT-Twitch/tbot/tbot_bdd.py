@@ -4,7 +4,7 @@ import aiosqlite
 import json
 import aiofiles
 import random
-from . import tbot_alert  
+from . import tbot_com  
 
 class TBOT_BDD():
         
@@ -23,7 +23,6 @@ class TBOT_BDD():
         curseur.execute('''CREATE TABLE IF NOT EXISTS survivant(
             id INTEGER PRIMARY KEY AUTOINCREMENT UNIQUE,
             name TEXT UNIQUE,
-            health INTEGER,
             reputation INTEGER,
             levelGun INTEGER,
             levelWear INTEGER,
@@ -60,8 +59,7 @@ class TBOT_BDD():
                         reputation,
                         levelGun,
                         levelWear,
-                        levelCar,
-                        stock FROM 'survivant' WHERE name='{name}' ''') as cur:
+                        levelCar FROM 'survivant' WHERE name='{name}' ''') as cur:
             listeStat = await cur.fetchone()
         await db.close()
         reponse ={"name": listeStat[0],
@@ -101,7 +99,7 @@ class TBOT_BDD():
         else :
             resultat = 'SUCCES AVEC BUTIN' 
             alerteResultat = 1    
-            
+        
         db = await aiosqlite.connect(os.path.join(self.TBOTPATH, self.NAMEBDD))
         await db.execute ('''INSERT OR IGNORE INTO raid
                         (name,
@@ -111,7 +109,7 @@ class TBOT_BDD():
                         renfort,
                         resultat,
                         alerteResultat)
-                        VALUES (?,?,?,?,?,?,?)''', (name,type,distance,distance//2,"",resultat,alerteResultat))
+                        VALUES (?,?,?,?,?,?,?)''', (name,type,distance,distance//2,'{}',resultat,alerteResultat))
         await db.commit()
         await db.close()
     
@@ -146,14 +144,16 @@ class TBOT_BDD():
             else:
                 if raid[2] == raid[3] :
                     print("Je commence a faire demi tour")
-                    tbot_alert.joue_son("radio2.mp3")
-                data[f"SURVIVANT_{raid[0]}"]={"NAME":f"{raid[0]}","TYPE":raid[1],"DISTANCE":((raid[2]*100)//(raid[3]*2)),"RENFORT":f"{str(raid[4])}"}
+                    tbot_com.joue_son("radio2.mp3")
+                stat_survivant= await self.get_stats_survivant(raid[0])
+                data[f"SURVIVANT_{raid[0]}"]={"NAME":f"{raid[0]}","STATS":stat_survivant,"TYPE":f"{raid[1]}","DISTANCE":((raid[2]*100)//(raid[3]*2)),"RENFORT":f"{raid[4]}"}
                 await db.execute(f'''UPDATE raid SET distance = {str(raid[2]-1)} WHERE name = "{raid[0]}"''') #Enleve 1 point de distance de RAID
             NumSurvivant+=1
         await db.commit()
         await db.close()
         
         async with aiofiles.open("raid.json", "w") as fichier:
+            print (data)
             await fichier.write(json.dumps(data))
         
 if __name__ == '__main__': 

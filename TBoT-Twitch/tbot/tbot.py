@@ -7,7 +7,7 @@ import os
 from  tbot.tbot_bdd import TBOT_BDD
 from datetime import datetime
 import aiofiles
-from . import tbot_alert
+from . import tbot_com
 
 with open('./config.json', 'r') as fichier:
     data = json.load(fichier)
@@ -85,46 +85,16 @@ class TBoT(commands.Bot):
             messagehtml = f"❌ Echec de tentative de création du joueur {pseudo} sur le serveur !"
             await self.affichage_Overlay(messagehtml)
             await channel.send(message) 
+        
         else :
             await TBOTBDD.create_survivant(pseudo)
-            message = f"⛹ Le joueur {pseudo} vient d'apparaitre sur le serveur!"
-            await channel.send(message) 
-            messagehtml = f"⛹Le joueur <strong>{pseudo}</strong> vient d'apparaitre sur le serveur."
-            await self.affichage_Overlay(messagehtml)
-            tbot_alert.joue_son("radio1.mp3")
-            message=f" : ...allo ! je m'appelle {pseudo}... Je suis un surviva....pret a aider....d'autres messages suivront..."
-            async with aiofiles.open(URLMOD+"texte.txt","w") as fichier:
-                await fichier.write(f"<radio {pseudo}> : {message}")
+            await tbot_com.message(channel,mod=f" : ...allo ! je m'appelle {pseudo}... Je suis un surviva....pret a aider....d'autres messages suivront...",
+                            overlay=f"⛹Le joueur <strong>{pseudo}</strong> vient d'apparaitre sur le serveur.",
+                            chat=f"⛹ Le joueur {pseudo} vient d'apparaitre sur le serveur!",
+                            son="radio1.mp3")
+            
                 
-                
-    async def affichage_Overlay(self,message: str):
-        """Genere un fichier HTML utilisable comme OVERLAY dans OBS
 
-        Args:
-            message (str): message a ajouté à la page html
-        """        
-        template = '''
-        <!doctype html>
-        <html lang="fr">
-        <head>
-            <meta charset="utf-8">
-            <title>Overlay TBOT</title>
-            <link rel="stylesheet" href="style.css">
-            <script>
-                setTimeout(function(){location.reload()},4000);
-            </script>
-        </head>
-        <body>
-        '''
-        ligne_overlay.insert(0,message)
-        async with aiofiles.open('tbot.html',"w",encoding="utf-8") as fichier:
-            await fichier.write(template)
-            for ligne in ligne_overlay:
-                await fichier.write ("<p>"+ligne+"</p>\n")
-            await fichier.write('''
-            </body>
-            </html>
-            ''')
                 
     @commands.command()
     async def parle(self, ctx: commands.Context):
@@ -136,7 +106,7 @@ class TBoT(commands.Bot):
         pseudo = ctx.author.display_name
         message = ctx.message.content
         message=message.replace('!parle',"")
-        tbot_alert.joue_son("radio2.mp3")
+        tbot_com.joue_son("radio2.mp3")
         async with aiofiles.open(URLMOD+"texte.txt","w",encoding="utf-8") as fichier:
             await fichier.write(f"⚡<radio {pseudo}> : {message}")
         messagehtml = f"⚡&ltradio {pseudo}> : {message}"
@@ -150,37 +120,38 @@ class TBoT(commands.Bot):
         Traite la commande twitch !mon_survivant. retourne les stats du joueurs dans le chat Twitch
         """
         name = ctx.author.display_name
+        channel = ctx.channel
         test_survivant_exist = await TBOTBDD.survivant_exist(name)
         if test_survivant_exist !=None :
             dictStat= await TBOTBDD.get_stats_survivant(name)
-            message = f"stat {dictStat['name']} : vie = {dictStat['health']} ; reputation = {dictStat['reputation']},\
-                levelgun = {dictStat['levelGun']} ; vetement = {dictStat['levelWear']}, vehicule = {dictStat['levelCar']},\
-                Stock = {dictStat['stock']}"
-            await ctx.send(message)      
+            message = f"stat {dictStat['name']} : reputation = {dictStat['reputation']},\
+                levelgun = {dictStat['levelGun']} ; vetement = {dictStat['levelWear']}, vehicule = {dictStat['levelCar']}"
+            await tbot_com.message(channel,chat=message)
+     
         else :
-            message = f"❌-le survivant {name} n'existe pas sur le serveur ! Tapes !new_survivant pour en creer un."
-            messagehtml = f"❌-le survivant <strong>{name}</strong> n'existe pas sur le serveur ! Tapes !new_survivant pour en creer un."
-            await self.affichage_Overlay(messagehtml)
-            await ctx.send(message)
+            await tbot_com.message(channel,overlay=f"❌- le survivant <strong>{name}</strong> n'existe pas sur le serveur ! utilise les points de Chaine pour en creer un.",
+                                     chat=f"❌- le survivant <strong>{name}</strong> n'existe pas sur le serveur ! utilise les points de Chaine pour en creer un.")
     
     @commands.command()
     async def raid_arme(self, ctx: commands.Context):
         """
         Commande !raid_arme
         -----------
-        Traite la commande twitch !raid_arme. retourne les stats du joueurs dans le chat Twitch
+        Traite la commande twitch !raid_arme. 
         """
         
         name = ctx.author.display_name
+        channel = ctx.channel
         test_survivant_exist = await TBOTBDD.survivant_exist(name)
         test_raid_exist = await TBOTBDD.raid_exist(name)
         
         if test_survivant_exist == None :
-            message = f"❌-le survivant {name} n'existe pas sur le serveur ! Creer un nouveau survivant avec tes points de chaine."
-            await ctx.send(message)
+            await tbot_com.message(channel,chat=f"❌-le survivant {name} n'existe pas sur le serveur ! Creer un nouveau survivant avec tes points de chaine.")
+
         elif test_raid_exist != None :
-            message = f"❌-un Raid est dejà en cours pour {name} ! tapez !mon_survivant pour plus d'info."
-            await ctx.send(message) 
+
+            await tbot_com.message(channel,chat=f"❌-un Raid est dejà en cours pour {name} ! tapez !mon_survivant pour plus d'info.")
+
         else :
             """Création du Raid_Arme
             """
@@ -188,15 +159,12 @@ class TBoT(commands.Bot):
             minute = datetime.now().minute
             jour = datetime.now().day
             await TBOTBDD.create_raid(name,"arme",90)
-            messagehtml = f"🔨- il est {heure}:{minute}, {name} par en Raid pour récuperer de l'armement !"
-            await self.affichage_Overlay(messagehtml)
-            message=f" : ...allo ! ici {name}... Je pars cherch... des arm. et des ..unitions."
-            tbot_alert.joue_son("radio3.mp3")
-            async with aiofiles.open(URLMOD+"texte.txt","w") as fichier:
-                await fichier.write(f"<radio {name}> : {message}")
-                
-            message = f"🔨-{name} part en Raid pour chercher des armes !"
-            await ctx.send(message)
+
+            await tbot_com.message(channel,mod=f"<radio {name}> : ...allo ! ici {name}... Je pars cherch... des arm. et des ..unitions.",
+                                     overlay=f"🔨- radio {name} : ...allo ! ici {name}... Je pars cherch... des arm. et des ..unitions.",
+                                     chat=f"🔨- il est {heure}:{minute}, {name} part en Raid pour récuperer de l'armement !",
+                                     son="radio2.mp3")
+
 
 if __name__ == '__main__': 
     print('Ne peut etre lancé directement')
