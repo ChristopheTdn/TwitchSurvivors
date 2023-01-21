@@ -20,15 +20,14 @@ class TBOT_BDD():
         """
         self.connexionSQL = sqlite3.connect(os.path.join(self.TBOTPATH, self.NAMEBDD))
         curseur = self.connexionSQL.cursor()
-        curseur.execute('''CREATE TABLE IF NOT EXISTS player(
+        curseur.execute('''CREATE TABLE IF NOT EXISTS survivant(
             id INTEGER PRIMARY KEY AUTOINCREMENT UNIQUE,
             name TEXT UNIQUE,
             health INTEGER,
             reputation INTEGER,
             levelGun INTEGER,
             levelWear INTEGER,
-            levelCar INTEGER,
-            stock INTEGER)''')
+            levelCar INTEGER)''')
         
         curseur.execute('''CREATE TABLE IF NOT EXISTS raid(
             id INTEGER PRIMARY KEY AUTOINCREMENT UNIQUE,
@@ -45,42 +44,37 @@ class TBOT_BDD():
         
     async def create_survivant(self,pseudo):
         db = await aiosqlite.connect(os.path.join(self.TBOTPATH, self.NAMEBDD))
-        await db.execute('''INSERT OR IGNORE INTO player
+        await db.execute('''INSERT OR IGNORE INTO survivant
                             (name,
-                            health,
                             reputation,
                             levelGun,
                             levelWear,
-                            levelCar,
-                            stock)
-                            VALUES (?,?,?,?,?,?,?)''', (pseudo , 100,0,0,0,0,0)) 
+                            levelCar)
+                            VALUES (?,?,?,?,?)''', (pseudo , 0,0,0,0)) 
         await db.commit()
         await db.close()
     
     async def get_stats_survivant(self,name: str)->dict:
         db = await aiosqlite.connect(os.path.join(self.TBOTPATH, self.NAMEBDD))
         async with db.execute (f'''SELECT name,
-                        health,
                         reputation,
                         levelGun,
                         levelWear,
                         levelCar,
-                        stock FROM 'player' WHERE name='{name}' ''') as cur:
+                        stock FROM 'survivant' WHERE name='{name}' ''') as cur:
             listeStat = await cur.fetchone()
         await db.close()
         reponse ={"name": listeStat[0],
-                "health": listeStat[1],
-                "reputation": listeStat[2],
-                "levelGun": listeStat[3],
-                "levelWear": listeStat[4],
-                "levelCar": listeStat[5],
-                "stock": listeStat[6]
+                "reputation": listeStat[1],
+                "levelGun": listeStat[2],
+                "levelWear": listeStat[3],
+                "levelCar": listeStat[4]
                 }
         return reponse
     
     async def survivant_exist(self,name):
         db = await aiosqlite.connect(os.path.join(self.TBOTPATH, self.NAMEBDD))
-        async with db.execute (f"SELECT name FROM 'player' WHERE name='{name}'") as cur:
+        async with db.execute (f"SELECT name FROM 'survivant' WHERE name='{name}'") as cur:
             reponse = await cur.fetchone()
         await db.close()
         return reponse
@@ -132,8 +126,7 @@ class TBOT_BDD():
                         resultat,
                         alerteResultat FROM 'raid' ''') as cur:
             listeRaid = await cur.fetchall()
-        await db.close()
-        
+        await db.close()        
         NumSurvivant = 1
         
         db = await aiosqlite.connect(os.path.join(self.TBOTPATH, self.NAMEBDD))
@@ -146,15 +139,15 @@ class TBOT_BDD():
                 if raid[6]>1 : #le joueur est mort
                     print (f"Le survivant est mort ! Vous avez tout perdu !")
                     await db.execute(f'''DELETE from raid WHERE name = "{raid[0]}"''')
-                    await db.execute(f'''DELETE from player WHERE name = "{raid[0]}"''')
-            elif raid[2] == 0 :
+                    await db.execute(f'''DELETE from survivant WHERE name = "{raid[0]}"''')
+            elif raid[2] <= 0 :
                 print (f"{raid[0]} est revenu à la base, le RAID est terminé !!!!")
                 await db.execute(f'''DELETE from raid WHERE name = "{raid[0]}"''')
             else:
                 if raid[2] == raid[3] :
                     print("Je commence a faire demi tour")
                     tbot_alert.joue_son("radio2.mp3")
-                data[f"SURVIVANT_{NumSurvivant}"]={"NAME":f"{raid[0]}","TYPE":raid[1],"DISTANCE":((raid[2]*100)//(raid[3]*2)),"RENFORT":f"{str(raid[4])}"}
+                data[f"SURVIVANT_{raid[0]}"]={"NAME":f"{raid[0]}","TYPE":raid[1],"DISTANCE":((raid[2]*100)//(raid[3]*2)),"RENFORT":f"{str(raid[4])}"}
                 await db.execute(f'''UPDATE raid SET distance = {str(raid[2]-1)} WHERE name = "{raid[0]}"''') #Enleve 1 point de distance de RAID
             NumSurvivant+=1
         await db.commit()
