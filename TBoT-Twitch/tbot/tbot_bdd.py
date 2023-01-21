@@ -3,6 +3,7 @@ import os
 import aiosqlite
 import json
 import aiofiles
+import random
 
 class TBOT_BDD():
         
@@ -32,9 +33,11 @@ class TBOT_BDD():
             id INTEGER PRIMARY KEY AUTOINCREMENT UNIQUE,
             name TEXT UNIQUE,
             type TEXT,
-            timing INTEGER,
-            retour INTEGER,
-            renfort TEXT 
+            distance INTEGER,
+            michemin INTEGER,
+            renfort TEXT,
+            resultat TEXT,
+            alerteResultat INTEGER 
             )''')
         self.connexionSQL.commit()
         self.connexionSQL.close()
@@ -88,27 +91,45 @@ class TBOT_BDD():
         await db.close()
         return reponse
     
-    async def create_raid(self,name: str,type: str,timing: int):
-        
+    async def create_raid(self,name: str,type: str,distance: int):
+        # determine si le RAID sera un succes
+        resultRAID = random.randrange(100) # un nombre entre 0 et 99
+        if resultRAID < 5 : # Mort sans appel
+            resultat = "ECHOUE AVEC PERTE"
+            alerteResultat = random.randrange(distance-10)
+        elif resultRAID < 15 :
+            resultat = 'ECHOUE SANS PERTE' 
+            alerteResultat = 0
+        elif resultRAID < 80 :
+            resultat = 'SUCCES SANS BUTIN' 
+            alerteResultat = 0
+        else :
+            resultat = 'SUCCES AVEC BUTIN' 
+            alerteResultat = 0    
+            
         db = await aiosqlite.connect(os.path.join(self.TBOTPATH, self.NAMEBDD))
         await db.execute ('''INSERT OR IGNORE INTO raid
                         (name,
                         type,
-                        timing,
-                        retour,
-                        renfort)
-                        VALUES (?,?,?,?,?)''', (name,type,timing,timing/2,""))
+                        distance,
+                        michemin,
+                        renfort,
+                        resultat,
+                        alerteResultat)
+                        VALUES (?,?,?,?,?,?,?)''', (name,type,distance,distance//2,"",resultat,alerteResultat))
         await db.commit()
         await db.close()
     
-    async def genere_StatRaid(self):
+    async def actualise_statRaid(self):
         
         db = await aiosqlite.connect(os.path.join(self.TBOTPATH, self.NAMEBDD))
         async with db.execute (f'''SELECT name,
                         type,
-                        timing,
-                        retour,
-                        renfort FROM 'raid' ''') as cur:
+                        distance,
+                        michemin,
+                        renfort,
+                        resultat,
+                        alerteResultat FROM 'raid' ''') as cur:
             listeRaid = await cur.fetchall()
         await db.close()
         
@@ -117,8 +138,22 @@ class TBOT_BDD():
         db = await aiosqlite.connect(os.path.join(self.TBOTPATH, self.NAMEBDD))
         data={}
         for raid in listeRaid:
-            data[f"SURVIVANT_{NumSurvivant}"]={"NAME":f"{raid[0]}","TYPE":raid[1],"DISTANCE":((raid[2]*100)//(raid[3]*2)),"RENFORT":f"{str(raid[4])}"}
-            await db.execute(f'''UPDATE raid SET timing = {str(raid[2]-1)} WHERE name = "{raid[0]}"''')
+            distance = (raid[2]*100)//(raid[3]*2)
+            if raid[2] == raid[6] :
+                print (f"Le raid se termine avec pour resultat : {raid[5]}")
+                await db.execute(f'''UPDATE raid SET distance = {str(raid[2]-1)} WHERE name = "{raid[0]}"''') #Enleve 1 point de distance de RAID
+                if raid[6]>1 : #le joueur est mort
+                    print (f"Le survivant est mort ! Vous avez tout perdu !")
+                    await db.execute(f'''DELETE from raid WHERE name = "{raid[0]}"''')
+                    await db.execute(f'''DELETE from player WHERE name = "{raid[0]}"''')
+            elif raid[2] == 0 :
+                print (f"{raid[0]} est revenu à la base, le RAID est terminé !!!!")
+                await db.execute(f'''DELETE from raid WHERE name = "{raid[0]}"''')
+            else:
+                if raid[2] == raid[3] :
+                    print("Je commence a faire demi tour")
+                data[f"SURVIVANT_{NumSurvivant}"]={"NAME":f"{raid[0]}","TYPE":raid[1],"DISTANCE":((raid[2]*100)//(raid[3]*2)),"RENFORT":f"{str(raid[4])}"}
+                await db.execute(f'''UPDATE raid SET distance = {str(raid[2]-1)} WHERE name = "{raid[0]}"''') #Enleve 1 point de distance de RAID
             NumSurvivant+=1
         await db.commit()
         await db.close()
