@@ -81,10 +81,8 @@ class TBoT(commands.Bot):
     async def creation_survivant(self,pseudo,channel):
         name_survivant = await TBOTBDD.survivant_exist(pseudo)
         if name_survivant != None : #le pseudo existe deja dans la base de donnée
-            message = f"Echec de tentative de création du joueur {pseudo} sur le serveur ! Le survivant existe déjà. Tapes !info_survivant"
-            messagehtml = f"❌ Echec de tentative de création du joueur {pseudo} sur le serveur !"
-            await self.affichage_Overlay(messagehtml)
-            await channel.send(message) 
+            await tbot_com.message(channel,overlay=f"❌ Echec de tentative de création du joueur {pseudo} sur le serveur !",
+                chat=f"❌- Echec de tentative de création du joueur {pseudo} sur le serveur ! Le survivant existe déjà. Tapes !info_survivant")
         
         else :
             await TBOTBDD.create_survivant(pseudo)
@@ -105,12 +103,11 @@ class TBoT(commands.Bot):
         """
         pseudo = ctx.author.display_name
         message = ctx.message.content
+        channel = ctx.channel
         message=message.replace('!parle',"")
-        tbot_com.joue_son("radio2.mp3")
-        async with aiofiles.open(URLMOD+"texte.txt","w",encoding="utf-8") as fichier:
-            await fichier.write(f"⚡<radio {pseudo}> : {message}")
-        messagehtml = f"⚡&ltradio {pseudo}> : {message}"
-        await self.affichage_Overlay(messagehtml)
+        await tbot_com.message(channel,mod=f"<radio {pseudo}> : {message}",
+                        overlay=f"⚡&ltradio {pseudo}> : {message}",
+                        son="radio2.mp3")
         
     @commands.command()
     async def mon_survivant(self, ctx: commands.Context):
@@ -127,7 +124,6 @@ class TBoT(commands.Bot):
             message = f"stat {dictStat['name']} : reputation = {dictStat['reputation']},\
                 levelgun = {dictStat['levelGun']} ; vetement = {dictStat['levelWear']}, vehicule = {dictStat['levelCar']}"
             await tbot_com.message(channel,chat=message)
-     
         else :
             await tbot_com.message(channel,overlay=f"❌- le survivant <strong>{name}</strong> n'existe pas sur le serveur ! utilise les points de Chaine pour en creer un.",
                                      chat=f"❌- le survivant <strong>{name}</strong> n'existe pas sur le serveur ! utilise les points de Chaine pour en creer un.")
