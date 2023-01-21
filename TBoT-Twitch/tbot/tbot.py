@@ -60,9 +60,8 @@ class TBoT(commands.Bot):
 
     async def timer_Raid(self):
         while True:
-            await TBOTBDD.genere_StatRaid()
-            print ('raid mis a jour')
-            await asyncio.sleep(60)
+            await TBOTBDD.actualise_statRaid()
+            await asyncio.sleep(2)
 
     async def event_message(self,message: twitchio.Message):
         
