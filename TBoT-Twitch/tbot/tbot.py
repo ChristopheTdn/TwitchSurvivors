@@ -59,8 +59,9 @@ class TBoT(commands.Bot):
         
 
     async def timer_Raid(self):
+        channel = self.get_channel(CLIENT_CHANNEL)
         while True:
-            await TBOTBDD.actualise_statRaid()
+            await TBOTBDD.actualise_statRaid(channel)
             await asyncio.sleep(2)
 
     async def event_message(self,message: twitchio.Message):
@@ -78,11 +79,11 @@ class TBoT(commands.Bot):
         # We must let the bot know we want to handle and invoke our commands...
         await self.handle_commands(message)
         
-    async def creation_survivant(self,pseudo,channel):
+    async def creation_survivant(self,pseudo: str,channel):
         name_survivant = await TBOTBDD.survivant_exist(pseudo)
         if name_survivant != None : #le pseudo existe deja dans la base de donnée
             await tbot_com.message(channel,overlay=f"❌ Echec de tentative de création du joueur {pseudo} sur le serveur !",
-                chat=f"❌- Echec de tentative de création du joueur {pseudo} sur le serveur ! Le survivant existe déjà. Tapes !info_survivant")
+                chat=f"❌- Echec de tentative de creation du joueur {pseudo} sur le serveur ! Le survivant existe déjà. Tapes !info_survivant")
         
         else :
             await TBOTBDD.create_survivant(pseudo)
@@ -91,7 +92,40 @@ class TBoT(commands.Bot):
                             chat=f"⛹ Le joueur {pseudo} vient d'apparaitre sur le serveur!",
                             son="radio1.mp3")
             
-                
+    async def creer_raid(self,ctx: commands.Context,type_raid: str):
+        
+        name = ctx.author.display_name
+        channel = ctx.channel
+        test_survivant_exist = await TBOTBDD.survivant_exist(name)
+        test_raid_exist = await TBOTBDD.raid_exist(name)
+        
+        if test_survivant_exist == None :
+            await tbot_com.message(channel,chat=f"❌-le survivant {name} n'existe pas sur le serveur ! Creer un nouveau survivant avec tes points de chaine.")
+
+        elif test_raid_exist != None :
+
+            await tbot_com.message(channel,chat=f"❌-un Raid est dejà en cours pour {name} ! tapez !mon_survivant pour plus d'info.")
+
+        else :
+            """Création du Raid
+            """
+            with open('./TBOT-Twitch/tbot/config/raid.json', 'r',encoding="utf-8" ) as fichier:
+                 data = json.load(fichier)
+            raid_name = data["raid_"+type_raid]["nom_raid"]
+            msg_start_chat = data["raid_"+type_raid]["msg_start_chat"]
+            msg_start_overlay = data["raid_"+type_raid]["msg_start_overlay"]
+            msg_start_mod = data["raid_"+type_raid]["msg_start_mod"]
+            distance_raid = data["raid_"+type_raid]["distance_raid"]
+            
+            heure =  datetime.now().hour
+            minute = datetime.now().minute
+            jour = datetime.now().day
+            await TBOTBDD.create_raid(name,raid_name,distance_raid)
+
+            await tbot_com.message(channel,mod=f"<radio {name}> : ...allo ! ici {name}... {msg_start_mod}",
+                                     overlay=f"🔨- radio {name} : ...allo ! ici {name}... {msg_start_overlay}",
+                                     chat=f"🔨- il est {heure}:{minute}, {name} part en Raid {msg_start_chat}",
+                                     son="radio5.mp3")           
 
                 
     @commands.command()
@@ -107,7 +141,7 @@ class TBoT(commands.Bot):
         message=message.replace('!parle',"")
         await tbot_com.message(channel,mod=f"<radio {pseudo}> : {message}",
                         overlay=f"⚡&ltradio {pseudo}> : {message}",
-                        son="radio2.mp3")
+                        son="radio4.mp3")
         
     @commands.command()
     async def mon_survivant(self, ctx: commands.Context):
@@ -135,31 +169,8 @@ class TBoT(commands.Bot):
         -----------
         Traite la commande twitch !raid_arme. 
         """
-        
-        name = ctx.author.display_name
-        channel = ctx.channel
-        test_survivant_exist = await TBOTBDD.survivant_exist(name)
-        test_raid_exist = await TBOTBDD.raid_exist(name)
-        
-        if test_survivant_exist == None :
-            await tbot_com.message(channel,chat=f"❌-le survivant {name} n'existe pas sur le serveur ! Creer un nouveau survivant avec tes points de chaine.")
+        await self.creer_raid(ctx,"arme")
 
-        elif test_raid_exist != None :
-
-            await tbot_com.message(channel,chat=f"❌-un Raid est dejà en cours pour {name} ! tapez !mon_survivant pour plus d'info.")
-
-        else :
-            """Création du Raid_Arme
-            """
-            heure =  datetime.now().hour
-            minute = datetime.now().minute
-            jour = datetime.now().day
-            await TBOTBDD.create_raid(name,"arme",90)
-
-            await tbot_com.message(channel,mod=f"<radio {name}> : ...allo ! ici {name}... Je pars cherch... des arm. et des ..unitions.",
-                                     overlay=f"🔨- radio {name} : ...allo ! ici {name}... Je pars cherch... des arm. et des ..unitions.",
-                                     chat=f"🔨- il est {heure}:{minute}, {name} part en Raid pour récuperer de l'armement !",
-                                     son="radio2.mp3")
 
 
 if __name__ == '__main__': 

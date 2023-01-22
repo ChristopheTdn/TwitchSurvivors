@@ -113,7 +113,7 @@ class TBOT_BDD():
         await db.commit()
         await db.close()
     
-    async def actualise_statRaid(self):
+    async def actualise_statRaid(self,channel):
         
         db = await aiosqlite.connect(os.path.join(self.TBOTPATH, self.NAMEBDD))
         async with db.execute (f'''SELECT name,
@@ -135,17 +135,15 @@ class TBOT_BDD():
                 print (f"Le raid se termine avec pour resultat : {raid[5]}")
                 await db.execute(f'''UPDATE raid SET distance = {str(raid[2]-1)} WHERE name = "{raid[0]}"''') #Enleve 1 point de distance de RAID
                 if raid[6]>1 : #le joueur est mort
-                    print (f"Le survivant est mort ! Vous avez tout perdu !")
+                    await tbot_com.message(channel,overlay=f"{raid[0]} a succombé durant son raid ! Il a tout perdu !", mod=f"'<radio {raid[0]}> Arggg...partout. arghh... u secours... zzz..z...",chat=f"{raid[0]} a succombé durant son raid ! Il est mort !",son="radio4.mp3")
                     await db.execute(f'''DELETE from raid WHERE name = "{raid[0]}"''')
                     await db.execute(f'''DELETE from survivant WHERE name = "{raid[0]}"''')
             elif raid[2] <= 0 :
-                tbot_com.message()
-                print (f"{raid[0]} est revenu à la base, le RAID est terminé !!!!")
+                await tbot_com.message(channel,overlay=f"{raid[0]} est revenu à la base, le RAID est terminé !!!!",mod=f"'<radio {raid[0]}> je suis ...nfin reven... à la base...",chat=f"{raid[0]} est revenu à la base, le RAID est terminé !!!!",son="radio4.mp3")
                 await db.execute(f'''DELETE from raid WHERE name = "{raid[0]}"''')
             else:
                 if raid[2] == raid[3] :
-                    print("Je commence a faire demi tour")
-                    tbot_com.joue_son("radio2.mp3")
+                    await tbot_com.message(channel,overlay=f"{raid[0]} commence à faire demi-tour.", mod=f"'<radio {raid[0]}> allo... ..ai atteint mon object... je ...revie... a la base..",chat=f"{raid[0]} retourne à la base",son="radio5.mp3")
                 stat_survivant= await self.get_stats_survivant(raid[0])
                 data[f"SURVIVANT_{raid[0]}"]={"NAME":f"{raid[0]}","STATS":stat_survivant,"TYPE":f"{raid[1]}","DISTANCE":((raid[2]*100)//(raid[3]*2)),"RENFORT":f"{raid[4]}"}
                 await db.execute(f'''UPDATE raid SET distance = {str(raid[2]-1)} WHERE name = "{raid[0]}"''') #Enleve 1 point de distance de RAID
@@ -153,7 +151,7 @@ class TBOT_BDD():
         await db.commit()
         await db.close()
         
-        async with aiofiles.open("raid.json", "w") as fichier:
+        async with aiofiles.open("raid.json", "w",encoding="utf-8") as fichier:
             await fichier.write(json.dumps(data))
         
 if __name__ == '__main__': 
