@@ -1,0 +1,48 @@
+{
+    "raid_arme":
+    {
+        "nom_raid":"arme",
+        "msg_start_chat":"pour récupérer de l'armement.",
+        "msg_start_overlay":"Je pars cherch... des arm. et des ..unitions.",
+        "msg_start_mod":"Je pars cherch... des arm. et des ..unitions.",
+        "gain_reputation":1000,
+        "stats_raid":{
+            "distance_raid":120,
+            "MORT":40,
+            "BLESSE":30,
+            "BREDOUILLE":20,
+            "BUTIN":10
+        }
+    },
+    "raid_outil":
+    {
+        "nom_raid":"outil",
+        "msg_start_chat":"pour récupérer des outils.",
+        "msg_start_overlay":"Je pars cherch... du materiel...t des outils.",
+        "msg_start_mod":"Je pars cherch... du materiel...t des outils.",
+        "gain_reputation":1000,
+        "stats_raid":{
+            "distance_raid":80,
+            "MORT":35,
+            "BLESSE":35,
+            "BREDOUILLE":20,
+            "BUTIN":10
+        }
+    },
+    "raid_medical":
+    {
+        "nom_raid":"medical",
+        "msg_start_chat":"pour récupérer des fournitures medicales.",
+        "msg_start_overlay":"Je pars cherch... de..medicaments..t des pansement.",
+        "msg_start_mod":"Je pars cherch... de..medicaments..t des pansement.",
+        "gain_reputation":1000,
+        "stats_raid":{
+            "distance_raid":80,
+            "MORT":30,
+            "BLESSE":30,
+            "BREDOUILLE":25,
+            "BUTIN":15
+        }
+    }
+
+}
