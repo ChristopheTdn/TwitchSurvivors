@@ -89,11 +89,11 @@ class TBOT_BDD():
         # determine si le RAID sera un succes
         with open('./TBOT-Twitch/tbot/config/raid.json', 'r',encoding="utf-8" ) as fichier:
                 data = json.load(fichier)
-        distance_raid = data["raid_"+type_raid]["stat"]["distance_raid"]
-        MORT = data["raid_"+type_raid]["stat"]["MORT"]
-        BLESSE = data["raid_"+type_raid]["stat"]["BLESSE"]
-        BREDOUILLE = data["raid_"+type_raid]["stat"]["BREDOUILLE"]
-        BUTIN = data["raid_"+type_raid]["stat"]["BUTIN"]
+        distance_raid = data["raid_"+type_raid]["stats_raid"]["distance_raid"]
+        MORT = data["raid_"+type_raid]["stats_raid"]["MORT"]
+        BLESSE = data["raid_"+type_raid]["stats_raid"]["BLESSE"]
+        BREDOUILLE = data["raid_"+type_raid]["stats_raid"]["BREDOUILLE"]
+        BUTIN = data["raid_"+type_raid]["stats_raid"]["BUTIN"]
         
 
         michemin = distance_raid//2
@@ -118,7 +118,6 @@ class TBOT_BDD():
             resultat = 'BREDOUILLE'
             blesse=-1
             fin = 0 
-
         else :
             resultat = 'BUTIN' 
             blesse=-1
@@ -134,7 +133,7 @@ class TBOT_BDD():
                         resultat,
                         blesse,
                         fin)
-                        VALUES (?,?,?,?,?,?,?,?)''', (name,type,distance_raid,distance_raid//2,'{}',resultat,blesse,fin))
+                        VALUES (?,?,?,?,?,?,?,?)''', (name,type_raid,distance_raid,distance_raid//2,'{}',resultat,blesse,fin))
         await db.commit()
         await db.close()
     
@@ -167,19 +166,19 @@ class TBOT_BDD():
             
             distance -=1
             distancepourcent = (distance*100)//(distance_total)
-            
+
             stat_survivant= await self.get_stats_survivant(name)
             data[f"SURVIVANT_{name}"]={"NAME":f"{name}","STATS":stat_survivant,"TYPE":f"{type}","DISTANCE":distancepourcent,"RENFORT":f"{renfort}"}
+            await db.execute(f'''UPDATE raid SET distance = {distance} WHERE name = "{name}"''') 
             
             if distance == michemin :
                 await tbot_com.message(channel,overlay=f"{name} commence à faire demi-tour.", mod=f"'<radio {name}> allo... ..ai atteint mon object... je ...revie... a la base..",chat=f"{name} retourne à la base",son="radio5.mp3")
-                await db.execute(f'''UPDATE raid SET distance = {distance} WHERE name = "{name}"''') 
+
             elif distance == blesse : 
                 await tbot_com.message(channel,overlay=f"{name} a été attaqué durant son raid. Il est bléssé ! ", mod=f"'<radio {name}> Aidez moi! victim...zzz.. ne attaque... je suis ...gèrement bléssé... zzz..z...",chat=f"{name} a été bléssé sur une attaque !",son="radio5.mp3")
-                await db.execute(f'''UPDATE raid SET distance = {distance} WHERE name = "{name}"''') 
+
             elif distance == fin :
                 print (f"Le raid se termine avec pour resultat : {resultat}")
-                await db.execute(f'''UPDATE raid SET distance = {distance} WHERE name = "{name}"''') 
                 if fin>1 : #le joueur est mort
                     await tbot_com.message(channel,overlay=f"{name} a succombé durant son raid ! Il a tout perdu !",
                                            mod=f"'<radio {name}> Arggg...partout. arghh... u secours... zzz..z...",

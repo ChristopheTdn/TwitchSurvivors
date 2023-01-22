@@ -115,12 +115,12 @@ class TBoT(commands.Bot):
             msg_start_chat = data["raid_"+type_raid]["msg_start_chat"]
             msg_start_overlay = data["raid_"+type_raid]["msg_start_overlay"]
             msg_start_mod = data["raid_"+type_raid]["msg_start_mod"]
-            distance_raid = data["raid_"+type_raid]["distance_raid"]
+            distance_raid = data["raid_"+type_raid]["stats_raid"]["distance_raid"]
             
             heure =  datetime.now().hour
             minute = datetime.now().minute
             jour = datetime.now().day
-            await TBOTBDD.create_raid(name,raid_name,distance_raid)
+            await TBOTBDD.create_raid(name,raid_name)
 
             await tbot_com.message(channel,mod=f"<radio {name}> : ...allo ! ici {name}... {msg_start_mod}",
                                      overlay=f"🔨- radio {name} : ...allo ! ici {name}... {msg_start_overlay}",
