@@ -139,6 +139,7 @@ class TBOT_BDD():
                     await db.execute(f'''DELETE from raid WHERE name = "{raid[0]}"''')
                     await db.execute(f'''DELETE from survivant WHERE name = "{raid[0]}"''')
             elif raid[2] <= 0 :
+                tbot_com.message()
                 print (f"{raid[0]} est revenu à la base, le RAID est terminé !!!!")
                 await db.execute(f'''DELETE from raid WHERE name = "{raid[0]}"''')
             else:
@@ -153,7 +154,6 @@ class TBOT_BDD():
         await db.close()
         
         async with aiofiles.open("raid.json", "w") as fichier:
-            print (data)
             await fichier.write(json.dumps(data))
         
 if __name__ == '__main__': 
