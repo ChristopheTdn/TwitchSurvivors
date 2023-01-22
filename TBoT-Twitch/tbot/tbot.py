@@ -109,7 +109,7 @@ class TBoT(commands.Bot):
         else :
             """Création du Raid
             """
-            with open('./TBOT-Twitch/tbot/config/raid.json', 'r',encoding="utf-8" ) as fichier:
+            with open('./TBOT-Twitch/tbot/config/config_raid.json', 'r',encoding="utf-8" ) as fichier:
                  data = json.load(fichier)
             raid_name = data["raid_"+type_raid]["nom_raid"]
             msg_start_chat = data["raid_"+type_raid]["msg_start_chat"]
