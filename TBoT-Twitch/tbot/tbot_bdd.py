@@ -36,7 +36,8 @@ class TBOT_BDD():
             michemin INTEGER,
             renfort TEXT,
             resultat TEXT,
-            alerteResultat INTEGER 
+            blesse INTEGER,
+            fin INTEGER 
             )''')
         self.connexionSQL.commit()
         self.connexionSQL.close()
@@ -84,21 +85,44 @@ class TBOT_BDD():
         await db.close()
         return reponse
     
-    async def create_raid(self,name: str,type: str,distance: int):
+    async def create_raid(self,name: str,type_raid: str):
         # determine si le RAID sera un succes
+        with open('./TBOT-Twitch/tbot/config/raid.json', 'r',encoding="utf-8" ) as fichier:
+                data = json.load(fichier)
+        distance_raid = data["raid_"+type_raid]["stat"]["distance_raid"]
+        MORT = data["raid_"+type_raid]["stat"]["MORT"]
+        BLESSE = data["raid_"+type_raid]["stat"]["BLESSE"]
+        BREDOUILLE = data["raid_"+type_raid]["stat"]["BREDOUILLE"]
+        BUTIN = data["raid_"+type_raid]["stat"]["BUTIN"]
+        
+
+        michemin = distance_raid//2
+        
+        #determine le resultat du raid
         resultRAID = random.randrange(100) # un nombre entre 0 et 99
-        if resultRAID < 5 : # Mort sans appel
-            resultat = "ECHOUE AVEC PERTE"
-            alerteResultat = random.randrange(distance-60,distance-5) 
-        elif resultRAID < 15 :
-            resultat = 'ECHOUE SANS PERTE' 
-            alerteResultat = 1
-        elif resultRAID < 80 :
-            resultat = 'SUCCES SANS BUTIN' 
-            alerteResultat = 1
+
+        if resultRAID < MORT : # Mort sans appel
+            resultat = "MORT"
+            blesse = random.randrange(distance_raid-60,distance_raid-10)
+            if blesse == michemin :
+                blesse +=2
+            fin = random.randrange(4,blesse-2)
+            
+        elif resultRAID < MORT+BLESSE :
+            resultat = 'BLESSE' 
+            blesse = random.randrange(distance_raid-60,distance_raid-10)
+            if blesse == michemin :
+                blesse +=2
+            fin = 0
+        elif resultRAID < MORT+BLESSE+BREDOUILLE:
+            resultat = 'BREDOUILLE'
+            blesse=-1
+            fin = 0 
+
         else :
-            resultat = 'SUCCES AVEC BUTIN' 
-            alerteResultat = 1    
+            resultat = 'BUTIN' 
+            blesse=-1
+            fin = 0     
         
         db = await aiosqlite.connect(os.path.join(self.TBOTPATH, self.NAMEBDD))
         await db.execute ('''INSERT OR IGNORE INTO raid
@@ -108,8 +132,9 @@ class TBOT_BDD():
                         michemin,
                         renfort,
                         resultat,
-                        alerteResultat)
-                        VALUES (?,?,?,?,?,?,?)''', (name,type,distance,distance//2,'{}',resultat,alerteResultat))
+                        blesse,
+                        fin)
+                        VALUES (?,?,?,?,?,?,?,?)''', (name,type,distance_raid,distance_raid//2,'{}',resultat,blesse,fin))
         await db.commit()
         await db.close()
     
@@ -122,32 +147,55 @@ class TBOT_BDD():
                         michemin,
                         renfort,
                         resultat,
-                        alerteResultat FROM 'raid' ''') as cur:
+                        blesse,
+                        fin FROM 'raid' ''') as cur:
             listeRaid = await cur.fetchall()
-        await db.close()        
-        NumSurvivant = 1
-        
+        await db.close()  
+
         db = await aiosqlite.connect(os.path.join(self.TBOTPATH, self.NAMEBDD))
         data={}
         for raid in listeRaid:
-            distance = (raid[2]*100)//(raid[3]*2)
-            if raid[2] == raid[6] :
-                print (f"Le raid se termine avec pour resultat : {raid[5]}")
-                await db.execute(f'''UPDATE raid SET distance = {str(raid[2]-1)} WHERE name = "{raid[0]}"''') #Enleve 1 point de distance de RAID
-                if raid[6]>1 : #le joueur est mort
-                    await tbot_com.message(channel,overlay=f"{raid[0]} a succombé durant son raid ! Il a tout perdu !", mod=f"'<radio {raid[0]}> Arggg...partout. arghh... u secours... zzz..z...",chat=f"{raid[0]} a succombé durant son raid ! Il est mort !",son="radio4.mp3")
-                    await db.execute(f'''DELETE from raid WHERE name = "{raid[0]}"''')
-                    await db.execute(f'''DELETE from survivant WHERE name = "{raid[0]}"''')
-            elif raid[2] <= 0 :
-                await tbot_com.message(channel,overlay=f"{raid[0]} est revenu à la base, le RAID est terminé !!!!",mod=f"'<radio {raid[0]}> je suis ...nfin reven... à la base...",chat=f"{raid[0]} est revenu à la base, le RAID est terminé !!!!",son="radio4.mp3")
-                await db.execute(f'''DELETE from raid WHERE name = "{raid[0]}"''')
-            else:
-                if raid[2] == raid[3] :
-                    await tbot_com.message(channel,overlay=f"{raid[0]} commence à faire demi-tour.", mod=f"'<radio {raid[0]}> allo... ..ai atteint mon object... je ...revie... a la base..",chat=f"{raid[0]} retourne à la base",son="radio5.mp3")
-                stat_survivant= await self.get_stats_survivant(raid[0])
-                data[f"SURVIVANT_{raid[0]}"]={"NAME":f"{raid[0]}","STATS":stat_survivant,"TYPE":f"{raid[1]}","DISTANCE":((raid[2]*100)//(raid[3]*2)),"RENFORT":f"{raid[4]}"}
-                await db.execute(f'''UPDATE raid SET distance = {str(raid[2]-1)} WHERE name = "{raid[0]}"''') #Enleve 1 point de distance de RAID
-            NumSurvivant+=1
+            name = raid[0]
+            type = raid[1]
+            distance = raid[2]
+            michemin = raid[3]
+            distance_total = michemin*2
+            renfort = raid[4]
+            resultat = raid[5]
+            blesse = raid[6]
+            fin = raid[7]
+            
+            distance -=1
+            distancepourcent = (distance*100)//(distance_total)
+            
+            stat_survivant= await self.get_stats_survivant(name)
+            data[f"SURVIVANT_{name}"]={"NAME":f"{name}","STATS":stat_survivant,"TYPE":f"{type}","DISTANCE":distancepourcent,"RENFORT":f"{renfort}"}
+            
+            if distance == michemin :
+                await tbot_com.message(channel,overlay=f"{name} commence à faire demi-tour.", mod=f"'<radio {name}> allo... ..ai atteint mon object... je ...revie... a la base..",chat=f"{name} retourne à la base",son="radio5.mp3")
+                await db.execute(f'''UPDATE raid SET distance = {distance} WHERE name = "{name}"''') 
+            elif distance == blesse : 
+                await tbot_com.message(channel,overlay=f"{name} a été attaqué durant son raid. Il est bléssé ! ", mod=f"'<radio {name}> Aidez moi! victim...zzz.. ne attaque... je suis ...gèrement bléssé... zzz..z...",chat=f"{name} a été bléssé sur une attaque !",son="radio5.mp3")
+                await db.execute(f'''UPDATE raid SET distance = {distance} WHERE name = "{name}"''') 
+            elif distance == fin :
+                print (f"Le raid se termine avec pour resultat : {resultat}")
+                await db.execute(f'''UPDATE raid SET distance = {distance} WHERE name = "{name}"''') 
+                if fin>1 : #le joueur est mort
+                    await tbot_com.message(channel,overlay=f"{name} a succombé durant son raid ! Il a tout perdu !",
+                                           mod=f"'<radio {name}> Arggg...partout. arghh... u secours... zzz..z...",
+                                           chat=f"{name} a succombé durant son raid ! Il est mort !",
+                                           son="radio4.mp3")
+                    await db.execute(f'''DELETE from raid WHERE name = "{name}"''')
+                    await db.execute(f'''DELETE from survivant WHERE name = "{name}"''')
+
+                if distance <= 0 : #le joueur est revenu a la base
+                    await tbot_com.message(channel,overlay=f"{name} est revenu à la base, le RAID est terminé !!!!",
+                                           mod=f"'<radio {name}> je suis ...nfin reven... à la base...",
+                                           chat=f"{name} est revenu à la base, le RAID est terminé !!!!",
+                                           son="radio4.mp3")
+                    await db.execute(f'''DELETE from raid WHERE name = "{name}"''')
+
+
         await db.commit()
         await db.close()
         
