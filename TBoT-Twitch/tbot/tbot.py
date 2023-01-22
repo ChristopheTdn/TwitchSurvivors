@@ -171,7 +171,23 @@ class TBoT(commands.Bot):
         """
         await self.creer_raid(ctx,"arme")
 
+    @commands.command()
+    async def raid_outil(self, ctx: commands.Context):
+        """
+        Commande !raid_outil
+        -----------
+        Traite la commande twitch !raid_outil. 
+        """
+        await self.creer_raid(ctx,"outil")
 
+    @commands.command()
+    async def raid_medical(self, ctx: commands.Context):
+        """
+        Commande !raid_medical
+        -----------
+        Traite la commande twitch !raid_medical. 
+        """
+        await self.creer_raid(ctx,"medical")
 
 if __name__ == '__main__': 
     print('Ne peut etre lancé directement')

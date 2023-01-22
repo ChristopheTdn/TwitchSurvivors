@@ -87,7 +87,7 @@ class TBOT_BDD():
     
     async def create_raid(self,name: str,type_raid: str):
         # determine si le RAID sera un succes
-        with open('./TBOT-Twitch/tbot/config/raid.json', 'r',encoding="utf-8" ) as fichier:
+        with open('./TBOT-Twitch/tbot/config/config_raid.json', 'r',encoding="utf-8" ) as fichier:
                 data = json.load(fichier)
         distance_raid = data["raid_"+type_raid]["stats_raid"]["distance_raid"]
         MORT = data["raid_"+type_raid]["stats_raid"]["MORT"]
