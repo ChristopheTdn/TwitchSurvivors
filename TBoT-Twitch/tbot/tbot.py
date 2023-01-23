@@ -135,12 +135,12 @@ class TBoT(commands.Bot):
         -----------
         Traite la commande twitch !parle. Envois in game le message passé en parametre avec un son radio
         """
-        pseudo = ctx.author.display_name
+        name = ctx.author.display_name
         message = ctx.message.content
         channel = ctx.channel
         message=message.replace('!parle',"")
-        await tbot_com.message(channel,mod=f"<radio {pseudo}> : {message}",
-                        overlay=f"⚡&ltradio {pseudo}> : {message}",
+        await tbot_com.message(channel,mod=f"<radio {name}> : {message}",
+                        overlay=f"⚡&ltradio <span class='pseudo'>{name}</span> > : {message}",
                         son="radio4.mp3")
         
     @commands.command()
@@ -159,8 +159,8 @@ class TBoT(commands.Bot):
                 levelgun = {dictStat['levelGun']} ; vetement = {dictStat['levelWear']}, vehicule = {dictStat['levelCar']}"
             await tbot_com.message(channel,chat=message)
         else :
-            await tbot_com.message(channel,overlay=f"❌- le survivant <strong>{name}</strong> n'existe pas sur le serveur ! utilise les points de Chaine pour en creer un.",
-                                     chat=f"❌- le survivant <strong>{name}</strong> n'existe pas sur le serveur ! utilise les points de Chaine pour en creer un.")
+            await tbot_com.message(channel,overlay=f"❌- le survivant <span class='pseudo'>{name}</span> n'existe pas sur le serveur ! utilise les points de Chaine pour en creer un.",
+                                     chat=f"❌- le survivant {name} n'existe pas sur le serveur ! utilise les points de Chaine pour en creer un.")
     
     @commands.command()
     async def raid_arme(self, ctx: commands.Context):

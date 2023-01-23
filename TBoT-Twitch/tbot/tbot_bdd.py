@@ -172,15 +172,17 @@ class TBOT_BDD():
             await db.execute(f'''UPDATE raid SET distance = {distance} WHERE name = "{name}"''') 
             
             if distance == michemin :
-                await tbot_com.message(channel,overlay=f"{name} commence à faire demi-tour.", mod=f"'<radio {name}> allo... ..ai atteint mon object... je ...revie... a la base..",chat=f"{name} retourne à la base",son="radio5.mp3")
+                await tbot_com.message(channel,overlay=f"<span class='pseudo'>{name}</span> commence à faire demi-tour.",
+                                       mod=f"'<radio {name}> allo... ..ai atteint mon object... je ...revie... a la base..",
+                                       chat=f"{name} retourne à la base",son="radio5.mp3")
 
             elif distance == blesse : 
-                await tbot_com.message(channel,overlay=f"{name} a été attaqué durant son raid. Il est bléssé ! ", mod=f"'<radio {name}> Aidez moi! victim...zzz.. ne attaque... je suis ...gèrement bléssé... zzz..z...",chat=f"{name} a été bléssé sur une attaque !",son="radio5.mp3")
+                await tbot_com.message(channel,overlay=f"<span class='pseudo'>{name}</span> a été attaqué durant son raid. Il est bléssé ! ", mod=f"'<radio {name}> Aidez moi! victim...zzz.. ne attaque... je suis ...gèrement bléssé... zzz..z...",chat=f"{name} a été bléssé sur une attaque !",son="radio5.mp3")
 
             elif distance == fin :
                 print (f"Le raid se termine avec pour resultat : {resultat}")
                 if fin>1 : #le joueur est mort
-                    await tbot_com.message(channel,overlay=f"{name} a succombé durant son raid ! Il a tout perdu !",
+                    await tbot_com.message(channel,overlay=f"<span class='pseudo'>{name}</span> a succombé durant son raid ! Il a tout perdu !",
                                            mod=f"'<radio {name}> Arggg...partout. arghh... u secours... zzz..z...",
                                            chat=f"{name} a succombé durant son raid ! Il est mort !",
                                            son="radio4.mp3")
@@ -188,7 +190,7 @@ class TBOT_BDD():
                     await db.execute(f'''DELETE from survivant WHERE name = "{name}"''')
 
                 if distance <= 0 : #le joueur est revenu a la base
-                    await tbot_com.message(channel,overlay=f"{name} est revenu à la base, le RAID est terminé !!!!",
+                    await tbot_com.message(channel,overlay=f"<span class='pseudo'>{name}</span> est revenu à la base, le RAID est terminé !!!!",
                                            mod=f"'<radio {name}> je suis ...nfin reven... à la base...",
                                            chat=f"{name} est revenu à la base, le RAID est terminé !!!!",
                                            son="radio4.mp3")
