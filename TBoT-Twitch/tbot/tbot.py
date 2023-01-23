@@ -79,17 +79,17 @@ class TBoT(commands.Bot):
         # We must let the bot know we want to handle and invoke our commands...
         await self.handle_commands(message)
         
-    async def creation_survivant(self,pseudo: str,channel):
-        name_survivant = await TBOTBDD.survivant_exist(pseudo)
+    async def creation_survivant(self,name: str,channel):
+        name_survivant = await TBOTBDD.survivant_exist(name)
         if name_survivant != None : #le pseudo existe deja dans la base de donnée
-            await tbot_com.message(channel,overlay=f"❌ Echec de tentative de création du joueur {pseudo} sur le serveur !",
-                chat=f"❌- Echec de tentative de creation du joueur {pseudo} sur le serveur ! Le survivant existe déjà. Tapes !info_survivant")
+            await tbot_com.message(channel,overlay=f"❌ Echec de tentative de création du joueur <span class='pseudo'>{name}</span> sur le serveur !",
+                chat=f"❌- Echec de tentative de creation du joueur {name} sur le serveur ! Le survivant existe déjà. Tapes !info_survivant")
         
         else :
-            await TBOTBDD.create_survivant(pseudo)
-            await tbot_com.message(channel,mod=f" : ...allo ! je m'appelle {pseudo}... Je suis un surviva....pret a aider....d'autres messages suivront...",
-                            overlay=f"⛹Le joueur <strong>{pseudo}</strong> vient d'apparaitre sur le serveur.",
-                            chat=f"⛹ Le joueur {pseudo} vient d'apparaitre sur le serveur!",
+            await TBOTBDD.create_survivant(name)
+            await tbot_com.message(channel,mod=f" : ...allo ! je m'appelle {name}... Je suis un surviva....pret a aider....d'autres messages suivront...",
+                            overlay=f"⛹Le joueur <span class='pseudo'>{name}</span> vient d'apparaitre sur le serveur.",
+                            chat=f"⛹ Le joueur {name} vient d'apparaitre sur le serveur!",
                             son="radio1.mp3")
             
     async def creer_raid(self,ctx: commands.Context,type_raid: str):
@@ -123,9 +123,9 @@ class TBoT(commands.Bot):
             await TBOTBDD.create_raid(name,raid_name)
 
             await tbot_com.message(channel,mod=f"<radio {name}> : ...allo ! ici {name}... {msg_start_mod}",
-                                     overlay=f"🔨- radio {name} : ...allo ! ici {name}... {msg_start_overlay}",
+                                     overlay=f"🔨- radio : ...allo ! ici <span class='pseudo'>{name}</span>... {msg_start_overlay}",
                                      chat=f"🔨- il est {heure}:{minute}, {name} part en Raid {msg_start_chat}",
-                                     son="radio5.mp3")           
+                                     son="radio3.mp3")           
 
                 
     @commands.command()
