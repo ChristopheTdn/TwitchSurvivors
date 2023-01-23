@@ -1,11 +1,12 @@
 {
     "raid_arme":
     {
+        "icon":"🔫",
         "nom_raid":"arme",
         "msg_start_chat":"pour récupérer de l'armement.",
         "msg_start_overlay":"Je pars cherch... des arm. et des ..unitions.",
         "msg_start_mod":"Je pars cherch... des arm. et des ..unitions.",
-        "gain_reputation":1000,
+        "gain_reputation":1200,
         "stats_raid":{
             "distance_raid":120,
             "MORT":40,
@@ -16,6 +17,7 @@
     },
     "raid_outil":
     {
+        "icon":"🪓",
         "nom_raid":"outil",
         "msg_start_chat":"pour récupérer des outils.",
         "msg_start_overlay":"Je pars cherch... du materiel...t des outils.",
@@ -31,11 +33,12 @@
     },
     "raid_medical":
     {
+        "icon":"☣️",
         "nom_raid":"medical",
         "msg_start_chat":"pour récupérer des fournitures medicales.",
         "msg_start_overlay":"Je pars cherch... de..medicaments..t des pansement.",
         "msg_start_mod":"Je pars cherch... de..medicaments..t des pansement.",
-        "gain_reputation":1000,
+        "gain_reputation":800,
         "stats_raid":{
             "distance_raid":80,
             "MORT":30,
@@ -43,6 +46,21 @@
             "BREDOUILLE":25,
             "BUTIN":15
         }
+    },
+    "raid_nourriture":
+    {
+        "icon":"🍖",
+        "nom_raid":"medical",
+        "msg_start_chat":"pour récupérer des provisions.",
+        "msg_start_overlay":"Je pars cherch...de...manger..t nourriture.",
+        "msg_start_mod":"Je pars cherch...de...manger..t nourriture.",
+        "gain_reputation":600,
+        "stats_raid":{
+            "distance_raid":80,
+            "MORT":20,
+            "BLESSE":35,
+            "BREDOUILLE":25,
+            "BUTIN":20
+        }
     }
-
 }
