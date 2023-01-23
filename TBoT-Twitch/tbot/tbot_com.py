@@ -45,7 +45,7 @@ async def message(channel=None,overlay ="",chat="",mod="",son="",):
     if overlay != "" :
         await affichage_Overlay(overlay)
     if mod != "" :
-        async with aiofiles.open(URLMOD+"texte.txt","w") as fichier:
+        async with aiofiles.open(URLMOD+"texte.txt","w",encoding="utf-8") as fichier:
             await fichier.write(mod)
     if son != "" :
         joue_son(son)
@@ -90,5 +90,5 @@ async def affichage_Overlay(message: str):
         num_message +=1
         
     async with aiofiles.open("message_overlay.json", "w",encoding="utf-8") as fichier:
-        await fichier.write(json.dumps(messageJson))
+        await fichier.write(json.dumps(messageJson,indent=4,ensure_ascii=False))
     
