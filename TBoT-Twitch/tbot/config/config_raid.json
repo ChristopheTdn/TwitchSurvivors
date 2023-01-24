@@ -17,7 +17,7 @@
     },
     "raid_outil":
     {
-        "icon":"🪓",
+        "icon":"🔨",
         "nom_raid":"outil",
         "msg_start_chat":"pour récupérer des outils.",
         "msg_start_overlay":"Je pars cherch... du materiel...t des outils.",
@@ -62,7 +62,7 @@
             "BREDOUILLE":30,
             "BUTIN":20
         }
-    }",
+    },
     "raid_alcool":
     {
         "icon":"🍹",
