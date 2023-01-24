@@ -23,6 +23,7 @@ class TBOT_BDD():
         curseur.execute('''CREATE TABLE IF NOT EXISTS survivant(
             id INTEGER PRIMARY KEY AUTOINCREMENT UNIQUE,
             name TEXT UNIQUE,
+            profession TEXT,
             reputation INTEGER,
             levelGun INTEGER,
             levelWear INTEGER,
@@ -46,17 +47,19 @@ class TBOT_BDD():
         db = await aiosqlite.connect(os.path.join(self.TBOTPATH, self.NAMEBDD))
         await db.execute('''INSERT OR IGNORE INTO survivant
                             (name,
+                            profession,
                             reputation,
                             levelGun,
                             levelWear,
                             levelCar)
-                            VALUES (?,?,?,?,?)''', (pseudo , 0,0,0,0)) 
+                            VALUES (?,?,?,?,?,?)''', (pseudo ,"",0,0,0,0)) 
         await db.commit()
         await db.close()
     
     async def get_stats_survivant(self,name: str)->dict:
         db = await aiosqlite.connect(os.path.join(self.TBOTPATH, self.NAMEBDD))
         async with db.execute (f'''SELECT name,
+                        profession,
                         reputation,
                         levelGun,
                         levelWear,
@@ -64,10 +67,11 @@ class TBOT_BDD():
             listeStat = await cur.fetchone()
         await db.close()
         reponse ={"name": listeStat[0],
-                "reputation": listeStat[1],
-                "levelGun": listeStat[2],
-                "levelWear": listeStat[3],
-                "levelCar": listeStat[4]
+                  "profession" : listeStat[1]
+                "reputation": listeStat[2],
+                "levelGun": listeStat[3],
+                "levelWear": listeStat[4],
+                "levelCar": listeStat[5]
                 }
         return reponse
     
