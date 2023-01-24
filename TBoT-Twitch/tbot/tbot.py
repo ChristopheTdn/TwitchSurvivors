@@ -188,7 +188,52 @@ class TBoT(commands.Bot):
         Traite la commande twitch !raid_medical. 
         """
         await self.creer_raid(ctx,"medical")
+        
+    @commands.command()
+    async def raid_nourriture(self, ctx: commands.Context):
+        """
+        Commande !raid_nourriture
+        -----------
+        Traite la commande twitch !raid_nourriture. 
+        """
+        await self.creer_raid(ctx,"nourriture")
+        
+    @commands.command()
+    async def raid_automobile(self, ctx: commands.Context):
+        """
+        Commande !raid_automobile
+        -----------
+        Traite la commande twitch !raid_automobile. 
+        """
+        await self.creer_raid(ctx,"automobile")
+        
+    @commands.command()
+    async def raid_alcool(self, ctx: commands.Context):
+        """
+        Commande !raid_alcool
+        -----------
+        Traite la commande twitch !raid_alcool. 
+        """
+        await self.creer_raid(ctx,"alcool")
 
+    @commands.command()
+    async def raid_agriculture(self, ctx: commands.Context):
+        """
+        Commande !raid_agriculture
+        -----------
+        Traite la commande twitch !raid_agriculture. 
+        """
+        await self.creer_raid(ctx,"agriculture")
+        
+    @commands.command()
+    async def raid_meuble(self, ctx: commands.Context):
+        """
+        Commande !raid_meuble
+        -----------
+        Traite la commande twitch !raid_meuble. 
+        """
+        await self.creer_raid(ctx,"meuble") 
+        
 if __name__ == '__main__': 
     print('Ne peut etre lancé directement')
     
