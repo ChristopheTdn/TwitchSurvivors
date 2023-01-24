@@ -67,7 +67,7 @@ class TBOT_BDD():
             listeStat = await cur.fetchone()
         await db.close()
         reponse ={"name": listeStat[0],
-                  "profession" : listeStat[1]
+                "profession" : listeStat[1],
                 "reputation": listeStat[2],
                 "levelGun": listeStat[3],
                 "levelWear": listeStat[4],
@@ -172,7 +172,7 @@ class TBOT_BDD():
             distancepourcent = (distance*100)//(distance_total)
 
             stat_survivant= await self.get_stats_survivant(name)
-            data[f"SURVIVANT_{name}"]={"NAME":f"{name}",STATS":stat_survivant,"TYPE":f"{type}","DISTANCE":distancepourcent,"RENFORT":f"{renfort}"}
+            data[f"SURVIVANT_{name}"]={"NAME":f"{name}","STATS":f"{stat_survivant}","TYPE":f"{type}","DISTANCE":distancepourcent,"RENFORT":f"{renfort}"}
             await db.execute(f'''UPDATE raid SET distance = {distance} WHERE name = "{name}"''') 
             
             if distance == michemin :
