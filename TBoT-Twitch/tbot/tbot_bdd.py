@@ -172,7 +172,7 @@ class TBOT_BDD():
             distancepourcent = (distance*100)//(distance_total)
 
             stat_survivant= await self.get_stats_survivant(name)
-            data[f"SURVIVANT_{name}"]={"NAME":f"{name}","STATS":stat_survivant,"TYPE":f"{type}","DISTANCE":distancepourcent,"RENFORT":f"{renfort}"}
+            data[f"SURVIVANT_{name}"]={"NAME":f"{name}",STATS":stat_survivant,"TYPE":f"{type}","DISTANCE":distancepourcent,"RENFORT":f"{renfort}"}
             await db.execute(f'''UPDATE raid SET distance = {distance} WHERE name = "{name}"''') 
             
             if distance == michemin :
@@ -189,7 +189,7 @@ class TBOT_BDD():
                     await tbot_com.message(channel,overlay=f"<span class='pseudo'>{name}</span> a succombé durant son raid ! Il a tout perdu !",
                                            mod=f"'<radio {name}> Arggg...partout. arghh... u secours... zzz..z...",
                                            chat=f"{name} a succombé durant son raid ! Il est mort !",
-                                           son="radio4.mp3")
+                                           son="radio2.mp3")
                     await db.execute(f'''DELETE from raid WHERE name = "{name}"''')
                     await db.execute(f'''DELETE from survivant WHERE name = "{name}"''')
 
@@ -197,7 +197,7 @@ class TBOT_BDD():
                     await tbot_com.message(channel,overlay=f"<span class='pseudo'>{name}</span> est revenu à la base, le RAID est terminé !!!!",
                                            mod=f"'<radio {name}> je suis ...nfin reven... à la base...",
                                            chat=f"{name} est revenu à la base, le RAID est terminé !!!!",
-                                           son="radio4.mp3")
+                                           son="radio3.mp3")
                     await db.execute(f'''DELETE from raid WHERE name = "{name}"''')
 
 
