@@ -95,5 +95,5 @@ async def affichage_Overlay(message: str):
 async def ecrit_log(msg: str):
     heure =  datetime.now().hour
     minute = datetime.now().minute
-    async with aiofiles.open("journal.log", "w",encoding="utf-8") as journal:
+    async with aiofiles.open("journal.log", "a",encoding="utf-8") as journal:
         await journal.write(f"{heure}:{minute} | {msg}")

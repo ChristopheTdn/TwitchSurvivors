@@ -133,34 +133,18 @@ class TBoT(commands.Bot):
         
         name = ctx.author.display_name
         channel = ctx.channel
-        test_survivant_exist = await TBOTBDD.get_stats_survivant(name)
-        test_raid_exist = await TBOTBDD.raid_exist(name)
+        survivant = await TBOTBDD.get_stats_survivant(name)
+        raid = await TBOTBDD.raid_exist(name)
         level=1
         
         
-        if test_survivant_exist == None :
+        if survivant == None :
             await tbot_com.message(channel,chat=f"❌-le survivant {name} n'existe pas sur le serveur ! Creer un nouveau survivant avec tes points de chaine.")
-        elif test_raid_exist != None :
+        elif raid != None :
             await tbot_com.message(channel,chat=f"❌-un Raid est en cours pour {name} ! tu ne peux pas modifier ses aptitudes.")
         else :
-            if aptitude == "arme":
-                level=test_survivant_exist[3]
-            elif aptitude == "outil":
-                level=test_survivant_exist[4]
-            elif aptitude == "medical":
-                level=test_survivant_exist[5] 
-            elif aptitude == "nourriture":
-                level=test_survivant_exist[6]
-            elif aptitude == "automobile":
-                level=test_survivant_exist[7]
-            elif aptitude == "alcool" :
-                level=test_survivant_exist[8] 
-            elif aptitude == "agriculture" :
-                level=test_survivant_exist[9]
-            else : #meuble
-                level=test_survivant_exist[10]
-                
-            reputation = test_survivant_exist[2]
+            level = survivant[f"level_{aptitude}"]                
+            reputation = survivant["reputation"]
             tarif=[0,1000,2500,6000,13000]
             
             if  tarif[level]<=reputation:
