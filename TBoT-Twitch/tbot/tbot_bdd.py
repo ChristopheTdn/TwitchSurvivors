@@ -122,8 +122,7 @@ class TBOT_BDD():
                 delta = abs(BLESSE-5) 
                 BLESSE = 5
                 BUTIN -= delta
-                
-                
+
         if level_armure>1:
             BREDOUILLE=BREDOUILLE+(5*level_armure)
             MORT=MORT-(5*level_armure)
@@ -131,12 +130,11 @@ class TBOT_BDD():
                 delta = abs(MORT-5) 
                 MORT = 5
                 BREDOUILLE-= delta 
-                
-                
+
         if level_transport>1:
             DISTANCE = DISTANCE - (10*level_transport)
         
-        await tbot_com.ecrit_log(f"Name>{name}, Butin>{BUTIN}, Bredouille>{BREDOUILLE}, Blesse>{BLESSE},Mort>{MORT}, Distance>{DISTANCE}.")
+        await tbot_com.ecrit_log(f"Name>{name} : Butin={BUTIN}%, Bredouille={BREDOUILLE}%, Blesse={BLESSE}%,Mort={MORT}%, Distance={DISTANCE}.")
 
         return (BUTIN,BREDOUILLE,BLESSE,MORT,DISTANCE) 
     
