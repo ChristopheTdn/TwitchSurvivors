@@ -64,7 +64,7 @@ class TBoT(commands.Bot):
         channel = self.get_channel(CLIENT_CHANNEL)
         while True:
             await TBOTBDD.actualise_statRaid(channel)
-            await asyncio.sleep(2)
+            await asyncio.sleep(1)
 
     async def event_message(self,message: twitchio.Message):
         
@@ -82,7 +82,7 @@ class TBoT(commands.Bot):
         await self.handle_commands(message)
         
     async def creation_survivant(self,name: str,channel):
-        name_survivant = await TBOTBDD.survivant_exist(name)
+        name_survivant = await TBOTBDD.survivant_stat(name)
         if name_survivant != None : #le pseudo existe deja dans la base de donnée
             await tbot_com.message(channel,overlay=f"❌ Echec de tentative de création du joueur <span class='pseudo'>{name}</span> sur le serveur !",
                 chat=f"❌- Echec de tentative de creation du joueur {name} sur le serveur ! Le survivant existe déjà. Tapes !info_survivant")
@@ -98,7 +98,7 @@ class TBoT(commands.Bot):
         
         name = ctx.author.display_name
         channel = ctx.channel
-        test_survivant_exist = await TBOTBDD.survivant_exist(name)
+        test_survivant_exist = await TBOTBDD.survivant_stat(name)
         test_raid_exist = await TBOTBDD.raid_exist(name)
         
         if test_survivant_exist == None :
@@ -145,8 +145,47 @@ class TBoT(commands.Bot):
                                      overlay=f"{raid_icon}- radio : ...allo ! ici <span class='pseudo'>{name}</span>... {msg_start_overlay}",
                                      chat=f"{raid_icon}- il est {heure}:{minute}, {name} part en Raid {msg_start_chat}",
                                      son="radio3.mp3")           
-
+    async def upgrade_aptitude(self,ctx: commands.Context ,aptitude: str):
+        
+        name = ctx.author.display_name
+        channel = ctx.channel
+        test_survivant_exist = await TBOTBDD.survivant_stat(name)
+        test_raid_exist = await TBOTBDD.raid_exist(name)
+        level=1
+        
+        
+        if test_survivant_exist == None :
+            await tbot_com.message(channel,chat=f"❌-le survivant {name} n'existe pas sur le serveur ! Creer un nouveau survivant avec tes points de chaine.")
+        elif test_raid_exist != None :
+            await tbot_com.message(channel,chat=f"❌-un Raid est en cours pour {name} ! tu ne peux pas modifier ses aptitudes.")
+        else :
+            if aptitude == "arme":
+                level=test_survivant_exist[3]
+            elif aptitude == "outil":
+                level=test_survivant_exist[4]
+            elif aptitude == "medical":
+                level=test_survivant_exist[5] 
+            elif aptitude == "nourriture":
+                level=test_survivant_exist[6]
+            elif aptitude == "automobile":
+                level=test_survivant_exist[7]
+            elif aptitude == "alcool" :
+                level=test_survivant_exist[8] 
+            elif aptitude == "agriculture" :
+                level=test_survivant_exist[9]
+            else : #meuble
+                level=test_survivant_exist[10]
                 
+            reputation = test_survivant_exist[2]
+            tarif=[0,1000,2500,6000,13000]
+            
+            if  tarif[level]<=reputation:
+                await TBOTBDD.upgrade_aptitude(name,aptitude,tarif[level])
+                await tbot_com.message(channel,overlay=f"<span class='pseudo'>{name}</span> > upgrade son aptitude {aptitude} pour {tarif[level]}.",
+                                       chat=f"{name} upgrade son aptitude {aptitude} pour {tarif[level]}.")
+            else :
+                await tbot_com.message(channel,chat=f"❌- {name} ne possède pas assez de points de réputation pour upgrade son aptitude {aptitude} (cout : {tarif[level]} pts).")  
+                        
     @commands.command()
     async def parle(self, ctx: commands.Context):
         """
@@ -171,7 +210,7 @@ class TBoT(commands.Bot):
         """
         name = ctx.author.display_name
         channel = ctx.channel
-        test_survivant_exist = await TBOTBDD.survivant_exist(name)
+        test_survivant_exist = await TBOTBDD.survivant_stat(name)
         if test_survivant_exist !=None :
             dictStat= await TBOTBDD.get_stats_survivant(name)
             message = f"stat {dictStat['name']} : reputation = {dictStat['reputation']},\
@@ -260,6 +299,15 @@ class TBoT(commands.Bot):
         """
         await self.creer_raid(ctx,"meuble") 
         
+    @commands.command()
+    async def upgrade_armement(self, ctx: commands.Context):
+        """
+        Commande !upgrade_armement
+        -----------
+        Traite la commande twitch !upgrade_arme. 
+        """
+        await self.upgrade_aptitude(ctx,"armement")         
+
 if __name__ == '__main__': 
     print('Ne peut etre lancé directement')
     

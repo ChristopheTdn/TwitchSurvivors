@@ -28,14 +28,10 @@ class TBOT_BDD():
             name TEXT UNIQUE,
             profession TEXT,
             reputation INTEGER,
-            level_arme INTEGER,
-            level_outil INTEGER,
-            level_medical INTEGER,
-            level_nourriture INTEGER,
-            level_automobile INTEGER,
-            level_alcool INTEGER,
-            level_agriculture INTEGER,            
-            level_meuble INTEGER)''')
+            level_armement INTEGER,
+            level_armure INTEGER,
+            level_transport INTEGER,
+            level_equipement INTEGER)''')
         
         curseur.execute('''CREATE TABLE IF NOT EXISTS raid(
             id INTEGER PRIMARY KEY AUTOINCREMENT UNIQUE,
@@ -57,15 +53,11 @@ class TBOT_BDD():
                             (name,
                             profession,
                             reputation,
-                            level_arme,
-                            level_outil,
-                            level_medical,
-                            level_nourriture,
-                            level_automobile,
-                            level_alcool,
-                            level_agriculture,            
-                            level_meuble)
-                            VALUES (?,?,?,?,?,?,?,?,?,?,?)''', (pseudo ,"",0,1,1,1,1,1,1,1,1)) 
+                            level_armement,
+                            level_armure,
+                            level_transport,
+                            level_equipement)
+                            VALUES (?,?,?,?,?,?,?)''', (pseudo ,"",0,1,1,1,1)) 
         await db.commit()
         await db.close()
     
@@ -74,43 +66,31 @@ class TBOT_BDD():
         async with db.execute (f'''SELECT name,
                             profession,
                             reputation,
-                            level_arme,
-                            level_outil,
-                            level_medical,
-                            level_nourriture,
-                            level_automobile,
-                            level_alcool,
-                            level_agriculture,            
-                            level_meuble FROM 'survivant' WHERE name='{name}' ''') as cur:
+                            level_armement,
+                            level_armure,
+                            level_transport,
+                            level_equipement FROM 'survivant' WHERE name='{name}' ''') as cur:
             listeStat = await cur.fetchone()
         await db.close()
         reponse ={"name": listeStat[0],
                 "profession" : listeStat[1],
                 "reputation": listeStat[2],
-                "level_arme":listeStat[3],
-                "level_outil":listeStat[4],
-                "level_medical":listeStat[5],
-                "level_nourriture":listeStat[6],
-                "level_automobile":listeStat[7],
-                "level_alcool":listeStat[8],
-                "level_agriculture":listeStat[9],            
-                "level_meuble":listeStat[10]
+                "level_armement":listeStat[3],
+                "level_armure":listeStat[4],
+                "level_transport":listeStat[5],
+                "level_equipement":listeStat[6]
                 }
         return reponse
     
-    async def survivant_exist(self,name):
+    async def survivant_stat(self,name):
         db = await aiosqlite.connect(os.path.join(self.TBOTPATH, self.NAMEBDD))
         async with db.execute (f'''SELECT name,
                             profession,
                             reputation,
-                            level_arme,
-                            level_outil,
-                            level_medical,
-                            level_nourriture,
-                            level_automobile,
-                            level_alcool,
-                            level_agriculture,            
-                            level_meuble FROM 'survivant' WHERE name='{name}' ''') as cur:
+                            level_armement,
+                            level_armure,
+                            level_transport,
+                            level_equipement FROM 'survivant' WHERE name='{name}' ''') as cur:
             reponse = await cur.fetchone()
         await db.close()
         return reponse
@@ -121,31 +101,83 @@ class TBOT_BDD():
             reponse = await cur.fetchone()
         await db.close()
         return reponse
+
+        
+
+    async def calcul_ratio_raid(self,type_raid: str,name: str,BUTIN: int,BREDOUILLE: int,BLESSE: int,MORT: int,DISTANCE: int) -> tuple:
+        """Calcul du ratio reussite du RAID en fonction du type de raid et des attributs du survivant
+
+        Args:
+            type_raid (str): _description_
+            name (str): _description_
+            BUTIN (int): _description_
+            BREDOUILLE (int): _description_
+            BLESSE (int): _description_
+            MORT (int): _description_
+            DISTANCE (int): _description_
+
+        Returns:
+            tuple: ensemble des valeurs definissant le RAID influencé par les stats du survivants
+            -> BUTIN,BREDOUILLE,BLESSE,MORT,DISTANCE
+        """        
+        survivant_stat= self.get_stats_survivant(name)
+        profession = survivant_stat["profession"]
+        level_armement = survivant_stat["level_armement"]
+        level_armure=survivant_stat["level_armure"]
+        level_transport=survivant_stat["level_transport"]
+        level_equipement=survivant_stat["level_equipement"]
+        
+        if level_armement>1:
+            BUTIN=BUTIN+(5*level_armement) 
+            BLESSE=BLESSE-(5*level_armement) 
+            if BLESSE<5:
+                delta = abs(BLESSE-5) 
+                BLESSE = 5
+                BUTIN -= delta
+                
+                
+        if level_armure>1:
+            BREDOUILLE=BREDOUILLE+(5*level_armure)
+            MORT=MORT-(5*level_armure)
+            if MORT<5:
+                delta = abs(MORT-5) 
+                MORT = 5
+                BREDOUILLE-= delta 
+                
+                
+        if level_transport>1:
+            DISTANCE = DISTANCE - (10*level_transport)
+        
+        await tbot_com.ecrit_log(f"Name>{name}, Butin>{BUTIN}, Bredouille>{BREDOUILLE}, Blesse>{BLESSE},Mort>{MORT}, Distance>{DISTANCE}.")
+
+        return (BUTIN,BREDOUILLE,BLESSE,MORT,DISTANCE) 
     
-    async def create_raid(self,name: str,type_raid: str,level: int):
+        
+    async def create_raid(self,name: str,type_raid: str):
         # determine si le RAID sera un succes
         
-        distance_raid = self.config_raid_json["raid_"+type_raid]["distance_raid"]
-        BUTIN = self.config_raid_json["raid_"+type_raid]["stats_raid"][f"niveau-{level}"]["BUTIN"]
-        BREDOUILLE = self.config_raid_json["raid_"+type_raid]["stats_raid"][f"niveau-{level}"]["BREDOUILLE"]
-        BLESSE = self.config_raid_json["raid_"+type_raid]["stats_raid"][f"niveau-{level}"]["BLESSE"]
-        MORT = self.config_raid_json["raid_"+type_raid]["stats_raid"][f"niveau-{level}"]["MORT"]
+        DISTANCE = self.config_raid_json["raid_"+type_raid]["distance_raid"]
+        BUTIN = self.config_raid_json["raid_"+type_raid]["stats_raid"][f"niveau-1"]["BUTIN"]
+        BREDOUILLE = self.config_raid_json["raid_"+type_raid]["stats_raid"][f"niveau-1"]["BREDOUILLE"]
+        BLESSE = self.config_raid_json["raid_"+type_raid]["stats_raid"][f"niveau-1"]["BLESSE"]
+        MORT = self.config_raid_json["raid_"+type_raid]["stats_raid"][f"niveau-1"]["MORT"]
 
-        michemin = distance_raid//2
-        
+        BUTIN,BREDOUILLE,BLESSE,MORT,DISTANCE = await self.calcul_ratio_raid(type_raid,name,BUTIN,BREDOUILLE,BLESSE,MORT,DISTANCE)
+        michemin = DISTANCE//2
+
         #determine le resultat du raid
         resultRAID = random.randrange(100) # un nombre entre 0 et 99
 
         if resultRAID < MORT : # Mort sans appel
             resultat = "MORT"
-            blesse = random.randrange(distance_raid-50,distance_raid-10)
+            blesse = random.randrange(DISTANCE-50,DISTANCE-10)
             if blesse == michemin :
                 blesse +=2
             fin = random.randrange(4,blesse-2)
             
         elif resultRAID < MORT+BLESSE :
             resultat = 'BLESSE' 
-            blesse = random.randrange(distance_raid-50,distance_raid-10)
+            blesse = random.randrange(DISTANCE-50,DISTANCE-10)
             if blesse == michemin :
                 blesse +=2
             fin = 0
@@ -246,7 +278,12 @@ class TBOT_BDD():
                         son="radio3.mp3")
         await db.execute(f'''UPDATE survivant SET reputation = reputation +{gain_reputation} WHERE name = "{name}"''')
 
-
+    async def upgrade_aptitude(self,name,aptitude: str,cout_upgrade: int):
+        db = await aiosqlite.connect(os.path.join(self.TBOTPATH, self.NAMEBDD))
+        await db.execute(f'''UPDATE survivant SET reputation = reputation - {cout_upgrade} WHERE name = "{name}"''')
+        await db.execute(f'''UPDATE survivant SET level_{aptitude} = level_{aptitude} + 1 WHERE name = "{name}"''') 
+        await db.commit()
+        await db.close()
         
 if __name__ == '__main__': 
     print('Ne peut etre lancé directement')
