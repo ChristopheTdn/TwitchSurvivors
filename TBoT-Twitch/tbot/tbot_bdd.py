@@ -157,14 +157,14 @@ class TBOT_BDD():
         if resultRAID < MORT : # Mort sans appel
             resultat = "MORT"
             blesse = random.randrange(DISTANCE-50,DISTANCE-10)
-            if blesse == michemin :
+            if blesse == DISTANCE//2 :
                 blesse +=2
             fin = random.randrange(4,blesse-2)
             
         elif resultRAID < MORT+BLESSE :
             resultat = 'BLESSE' 
             blesse = random.randrange(DISTANCE-50,DISTANCE-10)
-            if blesse == michemin :
+            if blesse == DISTANCE//2 :
                 blesse +=2
             fin = 0
         elif resultRAID < MORT+BLESSE+BREDOUILLE:
