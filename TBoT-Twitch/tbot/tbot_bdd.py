@@ -152,7 +152,7 @@ class TBOT_BDD():
         MORT = self.config_raid_json["raid_"+type_raid]["stats_raid"][f"niveau-1"]["MORT"]
 
         BUTIN,BREDOUILLE,BLESSE,MORT,DISTANCE = await self.calcul_ratio_raid(name,BUTIN,BREDOUILLE,BLESSE,MORT,DISTANCE)
-        michemin = DISTANCE//2
+
 
         #determine le resultat du raid
         resultRAID = random.randrange(100) # un nombre entre 0 et 99
@@ -189,7 +189,7 @@ class TBOT_BDD():
                         resultat,
                         blesse,
                         fin)
-                        VALUES (?,?,?,?,?,?,?,?)''', (name,type_raid,distance_raid,distance_raid//2,'{}',resultat,blesse,fin))
+                        VALUES (?,?,?,?,?,?,?,?)''', (name,type_raid,DISTANCE,DISTANCE//2,'{}',resultat,blesse,fin))
         await db.commit()
         await db.close()
     
