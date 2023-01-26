@@ -73,15 +73,18 @@ class TBOT_BDD():
                             level_equipement FROM 'survivant' WHERE name='{name}' ''') as cur:
             listeStat = await cur.fetchone()
         await db.close()
-        reponse ={"name": listeStat[0],
-                "profession" : listeStat[1],
-                "reputation": listeStat[2],
-                "level_armement":listeStat[3],
-                "level_armure":listeStat[4],
-                "level_transport":listeStat[5],
-                "level_equipement":listeStat[6]
-                }
-        return reponse
+        if listeStat==None:
+            return None
+        else:                
+            reponse ={"name": listeStat[0],
+                    "profession" : listeStat[1],
+                    "reputation": listeStat[2],
+                    "level_armement":listeStat[3],
+                    "level_armure":listeStat[4],
+                    "level_transport":listeStat[5],
+                    "level_equipement":listeStat[6]
+                    }
+            return reponse
     
     
     async def raid_exist(self,name: str):
