@@ -62,6 +62,7 @@ class TBOT_BDD():
         await db.close()
     
     async def get_stats_survivant(self,name: str)->dict:
+        reponse = {}
         db = await aiosqlite.connect(os.path.join(self.TBOTPATH, self.NAMEBDD))
         async with db.execute (f'''SELECT name,
                             profession,
@@ -82,18 +83,6 @@ class TBOT_BDD():
                 }
         return reponse
     
-    async def survivant_stat(self,name):
-        db = await aiosqlite.connect(os.path.join(self.TBOTPATH, self.NAMEBDD))
-        async with db.execute (f'''SELECT name,
-                            profession,
-                            reputation,
-                            level_armement,
-                            level_armure,
-                            level_transport,
-                            level_equipement FROM 'survivant' WHERE name='{name}' ''') as cur:
-            reponse = await cur.fetchone()
-        await db.close()
-        return reponse
     
     async def raid_exist(self,name: str):
         db = await aiosqlite.connect(os.path.join(self.TBOTPATH, self.NAMEBDD))
@@ -104,7 +93,7 @@ class TBOT_BDD():
 
         
 
-    async def calcul_ratio_raid(self,type_raid: str,name: str,BUTIN: int,BREDOUILLE: int,BLESSE: int,MORT: int,DISTANCE: int) -> tuple:
+    async def calcul_ratio_raid(self,name: str,BUTIN: int,BREDOUILLE: int,BLESSE: int,MORT: int,DISTANCE: int) -> tuple:
         """Calcul du ratio reussite du RAID en fonction du type de raid et des attributs du survivant
 
         Args:
@@ -120,7 +109,7 @@ class TBOT_BDD():
             tuple: ensemble des valeurs definissant le RAID influencé par les stats du survivants
             -> BUTIN,BREDOUILLE,BLESSE,MORT,DISTANCE
         """        
-        survivant_stat= self.get_stats_survivant(name)
+        survivant_stat= await self.get_stats_survivant(name)
         profession = survivant_stat["profession"]
         level_armement = survivant_stat["level_armement"]
         level_armure=survivant_stat["level_armure"]
@@ -162,7 +151,7 @@ class TBOT_BDD():
         BLESSE = self.config_raid_json["raid_"+type_raid]["stats_raid"][f"niveau-1"]["BLESSE"]
         MORT = self.config_raid_json["raid_"+type_raid]["stats_raid"][f"niveau-1"]["MORT"]
 
-        BUTIN,BREDOUILLE,BLESSE,MORT,DISTANCE = await self.calcul_ratio_raid(type_raid,name,BUTIN,BREDOUILLE,BLESSE,MORT,DISTANCE)
+        BUTIN,BREDOUILLE,BLESSE,MORT,DISTANCE = await self.calcul_ratio_raid(name,BUTIN,BREDOUILLE,BLESSE,MORT,DISTANCE)
         michemin = DISTANCE//2
 
         #determine le resultat du raid
