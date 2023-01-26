@@ -1,0 +1,114 @@
+{
+    "raid_arme":
+    {
+        "icon":"🔫",
+        "nom_raid":"arme",
+        "msg_start_chat":"pour récupérer de l'armement.",
+        "msg_start_overlay":"Je pars cherch... des arm. et des ..unitions.",
+        "msg_start_mod":"Je pars cherch... des arm. et des ..unitions.",
+        "gain_reputation":1200,
+        "stats_raid":{
+            "distance_raid":100,
+            "MORT":40,
+            "BLESSE":30,
+            "BREDOUILLE":20,
+            "BUTIN":10
+        }
+    },
+    "raid_outil":
+    {
+        "icon":"🔨",
+        "nom_raid":"outil",
+        "msg_start_chat":"pour récupérer des outils.",
+        "msg_start_overlay":"Je pars cherch... du materiel...t des outils.",
+        "msg_start_mod":"Je pars cherch... du materiel...t des outils.",
+        "gain_reputation":1000,
+        "stats_raid":{
+            "distance_raid":80,
+            "MORT":35,
+            "BLESSE":35,
+            "BREDOUILLE":20,
+            "BUTIN":10
+        }
+    },
+    "raid_medical":
+    {
+        "icon":"☣️",
+        "nom_raid":"medical",
+        "msg_start_chat":"pour récupérer des fournitures medicales.",
+        "msg_start_overlay":"Je pars cherch... de..medicaments..t des pansement.",
+        "msg_start_mod":"Je pars cherch... de..medicaments..t des pansement.",
+        "gain_reputation":800,
+        "stats_raid":{
+            "distance_raid":80,
+            "MORT":30,
+            "BLESSE":30,
+            "BREDOUILLE":25,
+            "BUTIN":15
+        }
+    },
+    "raid_automobile":
+    {
+        "icon":"🚙 ",
+        "nom_raid":"automobile",
+        "msg_start_chat":"pour customiser sa voiture.",
+        "msg_start_overlay":"Je pars cherch...de...reparer ..ma bagnole.",
+        "msg_start_mod":"Je pars cherch...de...reparer ..ma bagnole.",
+        "gain_reputation":500,
+        "stats_raid":{
+            "distance_raid":70,
+            "MORT":20,
+            "BLESSE":30,
+            "BREDOUILLE":30,
+            "BUTIN":20
+        }
+    },
+    "raid_alcool":
+    {
+        "icon":"🍹",
+        "nom_raid":"alcool",
+        "msg_start_chat":"pour chercher de l alcool.",
+        "msg_start_overlay":"Je pars cherch...de quoi ..re la fete...",
+        "msg_start_mod":"Je pars cherch...de quoi ..re la fete...",
+        "gain_reputation":400,
+        "stats_raid":{
+            "distance_raid":70,
+            "MORT":20,
+            "BLESSE":30,
+            "BREDOUILLE":30,
+            "BUTIN":20
+        }
+    },
+    "raid_agriculture":
+    {
+        "icon":"🌿",
+        "nom_raid":"alcool",
+        "msg_start_chat":"pour chercher de l alcool.",
+        "msg_start_overlay":"Je pars cherch...de quoi ..re la fete...",
+        "msg_start_mod":"Je pars cherch...de quoi ..re la fete...",
+        "gain_reputation":300,
+        "stats_raid":{
+            "distance_raid":70,
+            "MORT":20,
+            "BLESSE":35,
+            "BREDOUILLE":25,
+            "BUTIN":20
+        }
+    },
+    "raid_meuble":
+    {
+        "icon":"🗄️",
+        "nom_raid":"meuble",
+        "msg_start_chat":"pour chercher du mobilier.",
+        "msg_start_overlay":"Je pars cherch...de quoi .equiper la bas...",
+        "msg_start_mod":"Je pars cherch...de quoi .equiper la bas...",
+        "gain_reputation":200,
+        "stats_raid":{
+            "distance_raid":70,
+            "MORT":20,
+            "BLESSE":35,
+            "BREDOUILLE":25,
+            "BUTIN":20
+        }
+    }
+}
