@@ -7,12 +7,14 @@
         "msg_start_overlay":"Je pars cherch... des arm. et des ..unitions.",
         "msg_start_mod":"Je pars cherch... des arm. et des ..unitions.",
         "gain_reputation":1200,
+        "distance_raid":100,
         "stats_raid":{
-            "distance_raid":100,
-            "MORT":40,
-            "BLESSE":30,
-            "BREDOUILLE":20,
-            "BUTIN":10
+            "niveau-1":{
+                "BUTIN":10,
+                "BREDOUILLE":20,
+                "BLESSE":30,
+                "MORT":40
+            }
         }
     },
     "raid_outil":
@@ -23,12 +25,14 @@
         "msg_start_overlay":"Je pars cherch... du materiel...t des outils.",
         "msg_start_mod":"Je pars cherch... du materiel...t des outils.",
         "gain_reputation":1000,
+        "distance_raid":80,
         "stats_raid":{
-            "distance_raid":80,
-            "MORT":35,
-            "BLESSE":35,
-            "BREDOUILLE":20,
-            "BUTIN":10
+            "niveau-1":{
+                "BUTIN":10,
+                "BREDOUILLE":20,
+                "BLESSE":35,
+                "MORT":35
+            }
         }
     },
     "raid_medical":
@@ -39,12 +43,32 @@
         "msg_start_overlay":"Je pars cherch... de..medicaments..t des pansement.",
         "msg_start_mod":"Je pars cherch... de..medicaments..t des pansement.",
         "gain_reputation":800,
+        "distance_raid":80,
         "stats_raid":{
-            "distance_raid":80,
-            "MORT":30,
-            "BLESSE":30,
-            "BREDOUILLE":25,
-            "BUTIN":15
+            "niveau-1":{
+                "BUTIN":15,
+                "BREDOUILLE":25,
+                "BLESSE":30,
+                "MORT":30
+            }
+        }
+    },
+    "raid_nourriture":
+    {
+        "icon":"🍖",
+        "nom_raid":"nourriture",
+        "msg_start_chat":"pour recuperer de la nourriture.",
+        "msg_start_overlay":"Je pars cherch...de..la nourriture.",
+        "msg_start_mod":"Je pars cherch...de..la nourriture.",
+        "gain_reputation":600,
+        "distance_raid":80,
+        "stats_raid":{
+            "niveau-1":{
+                "BUTIN":15,
+                "BREDOUILLE":30,
+                "BLESSE":30,
+                "MORT":25
+            }
         }
     },
     "raid_automobile":
@@ -55,12 +79,14 @@
         "msg_start_overlay":"Je pars cherch...de...reparer ..ma bagnole.",
         "msg_start_mod":"Je pars cherch...de...reparer ..ma bagnole.",
         "gain_reputation":500,
+        "distance_raid":70,
         "stats_raid":{
-            "distance_raid":70,
-            "MORT":20,
-            "BLESSE":30,
-            "BREDOUILLE":30,
-            "BUTIN":20
+            "niveau-1":{
+                "BUTIN":20,
+                "BREDOUILLE":30,
+                "BLESSE":30,
+                "MORT":20
+            }
         }
     },
     "raid_alcool":
@@ -71,12 +97,14 @@
         "msg_start_overlay":"Je pars cherch...de quoi ..re la fete...",
         "msg_start_mod":"Je pars cherch...de quoi ..re la fete...",
         "gain_reputation":400,
+        "distance_raid":70,
         "stats_raid":{
-            "distance_raid":70,
-            "MORT":20,
-            "BLESSE":30,
-            "BREDOUILLE":30,
-            "BUTIN":20
+            "niveau-1":{
+                "BUTIN":20,
+                "BREDOUILLE":30,
+                "BLESSE":30,
+                "MORT":20
+            }
         }
     },
     "raid_agriculture":
@@ -87,12 +115,14 @@
         "msg_start_overlay":"Je pars cherch...de quoi ..re la fete...",
         "msg_start_mod":"Je pars cherch...de quoi ..re la fete...",
         "gain_reputation":300,
+        "distance_raid":60,
         "stats_raid":{
-            "distance_raid":70,
-            "MORT":20,
-            "BLESSE":35,
-            "BREDOUILLE":25,
-            "BUTIN":20
+            "niveau-1":{
+                "BUTIN":20,
+                "BREDOUILLE":35,
+                "BLESSE":25,
+                "MORT":20
+            }
         }
     },
     "raid_meuble":
@@ -103,12 +133,14 @@
         "msg_start_overlay":"Je pars cherch...de quoi .equiper la bas...",
         "msg_start_mod":"Je pars cherch...de quoi .equiper la bas...",
         "gain_reputation":200,
+        "distance_raid":60,
         "stats_raid":{
-            "distance_raid":70,
-            "MORT":20,
-            "BLESSE":35,
-            "BREDOUILLE":25,
-            "BUTIN":20
+            "niveau-1":{
+                "BUTIN":20,
+                "BREDOUILLE":35,
+                "BLESSE":25,
+                "MORT":20
+            }
         }
     }
 }

@@ -32,3 +32,11 @@ TEST/
 TBoT-Twitch/__pycache__/
 raid.json
 tbot.html
+DOCUMENTATION/~$stats.xlsx
+
+.gitignore
+journal.log
+message_overlay.json
+tbot.html
+tbot.html
+tbot.html
