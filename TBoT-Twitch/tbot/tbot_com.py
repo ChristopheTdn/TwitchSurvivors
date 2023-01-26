@@ -91,4 +91,9 @@ async def affichage_Overlay(message: str):
         
     async with aiofiles.open("message_overlay.json", "w",encoding="utf-8") as fichier:
         await fichier.write(json.dumps(messageJson,indent=4,ensure_ascii=False))
-    
+
+async def ecrit_log(self,msg: str):
+    heure =  datetime.now().hour
+    minute = datetime.now().minute
+    async with aiofiles.open("journal.log", "w",encoding="utf-8") as journal:
+        await journal.write(f"{heure}:{minute} | {msg})
