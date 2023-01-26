@@ -7,7 +7,7 @@
         "msg_start_overlay":"Je pars cherch... des arm. et des ..unitions.",
         "msg_start_mod":"Je pars cherch... des arm. et des ..unitions.",
         "gain_reputation":1200,
-        "distance_raid":100,
+        "distance_raid":105,
         "stats_raid":{
             "niveau-1":{
                 "BUTIN":10,
@@ -25,7 +25,7 @@
         "msg_start_overlay":"Je pars cherch... du materiel...t des outils.",
         "msg_start_mod":"Je pars cherch... du materiel...t des outils.",
         "gain_reputation":1000,
-        "distance_raid":80,
+        "distance_raid":105,
         "stats_raid":{
             "niveau-1":{
                 "BUTIN":10,
@@ -43,7 +43,7 @@
         "msg_start_overlay":"Je pars cherch... de..medicaments..t des pansement.",
         "msg_start_mod":"Je pars cherch... de..medicaments..t des pansement.",
         "gain_reputation":800,
-        "distance_raid":80,
+        "distance_raid":105,
         "stats_raid":{
             "niveau-1":{
                 "BUTIN":15,
@@ -61,7 +61,7 @@
         "msg_start_overlay":"Je pars cherch...de..la nourriture.",
         "msg_start_mod":"Je pars cherch...de..la nourriture.",
         "gain_reputation":600,
-        "distance_raid":80,
+        "distance_raid":105,
         "stats_raid":{
             "niveau-1":{
                 "BUTIN":15,
@@ -79,7 +79,7 @@
         "msg_start_overlay":"Je pars cherch...de...reparer ..ma bagnole.",
         "msg_start_mod":"Je pars cherch...de...reparer ..ma bagnole.",
         "gain_reputation":500,
-        "distance_raid":70,
+        "distance_raid":105,
         "stats_raid":{
             "niveau-1":{
                 "BUTIN":20,
@@ -97,7 +97,7 @@
         "msg_start_overlay":"Je pars cherch...de quoi ..re la fete...",
         "msg_start_mod":"Je pars cherch...de quoi ..re la fete...",
         "gain_reputation":400,
-        "distance_raid":70,
+        "distance_raid":105,
         "stats_raid":{
             "niveau-1":{
                 "BUTIN":20,
@@ -115,7 +115,7 @@
         "msg_start_overlay":"Je pars cherch...de quoi ..re la fete...",
         "msg_start_mod":"Je pars cherch...de quoi ..re la fete...",
         "gain_reputation":300,
-        "distance_raid":60,
+        "distance_raid":105,
         "stats_raid":{
             "niveau-1":{
                 "BUTIN":20,
@@ -133,7 +133,7 @@
         "msg_start_overlay":"Je pars cherch...de quoi .equiper la bas...",
         "msg_start_mod":"Je pars cherch...de quoi .equiper la bas...",
         "gain_reputation":200,
-        "distance_raid":60,
+        "distance_raid":105,
         "stats_raid":{
             "niveau-1":{
                 "BUTIN":20,
