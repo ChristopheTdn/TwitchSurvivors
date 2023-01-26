@@ -119,23 +119,23 @@ class TBOT_BDD():
         level_equipement=survivant_stat["level_equipement"]
         
         if level_armement>1:
-            BUTIN=BUTIN+(5*level_armement) 
-            BLESSE=BLESSE-(5*level_armement) 
+            BUTIN=BUTIN+(5*level_armement)-5 
+            BLESSE=BLESSE-(5*level_armement)+5 
             if BLESSE<5:
                 delta = abs(BLESSE-5) 
                 BLESSE = 5
                 BUTIN -= delta
 
         if level_armure>1:
-            BREDOUILLE=BREDOUILLE+(5*level_armure)
-            MORT=MORT-(5*level_armure)
+            BREDOUILLE=BREDOUILLE+(5*level_armure)-5
+            MORT=MORT-(5*level_armure)+5
             if MORT<5:
                 delta = abs(MORT-5) 
                 MORT = 5
                 BREDOUILLE-= delta 
 
         if level_transport>1:
-            DISTANCE = DISTANCE - (10*level_transport)
+            DISTANCE = DISTANCE - (15*level_transport)+15
         
         await tbot_com.ecrit_log(f"Name>{name} : Butin={BUTIN}%, Bredouille={BREDOUILLE}%, Blesse={BLESSE}%,Mort={MORT}%, Distance={DISTANCE}.")
 
@@ -259,6 +259,7 @@ class TBOT_BDD():
         
     async def gere_fin_raid(self,db,name,type_raid,channel):
         
+                
         gain_reputation = self.config_raid_json["raid_"+type_raid]["gain_reputation"]
         
         await tbot_com.message(channel,overlay=f"<span class='pseudo'>{name}</span> est revenu à la base. gain de reputation : +{gain_reputation} !!!",
