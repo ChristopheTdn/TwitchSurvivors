@@ -6,6 +6,7 @@ import aiofiles
 import random
 from . import tbot_com  
 
+
 class TBOT_BDD():
         
     """Gestion de la base de donnée du TBOT
@@ -13,6 +14,8 @@ class TBOT_BDD():
     def __init__(self,TBOTPATH) -> None:
         self.TBOTPATH=TBOTPATH
         self.NAMEBDD = "tbot_bdd.sqlite"
+        with open ('./TBOT-Twitch/tbot/config/config_raid.json', 'r',encoding="utf-8" ) as fichier:
+            self.config_raid_json = json.load(fichier)
     
     def initTableSql(self):
         """
@@ -25,9 +28,14 @@ class TBOT_BDD():
             name TEXT UNIQUE,
             profession TEXT,
             reputation INTEGER,
-            levelGun INTEGER,
-            levelWear INTEGER,
-            levelCar INTEGER)''')
+            level_arme INTEGER,
+            level_outil INTEGER,
+            level_medical INTEGER,
+            level_nourriture INTEGER,
+            level_automobile INTEGER,
+            level_alcool INTEGER,
+            level_agriculture INTEGER,            
+            level_meuble INTEGER)''')
         
         curseur.execute('''CREATE TABLE IF NOT EXISTS raid(
             id INTEGER PRIMARY KEY AUTOINCREMENT UNIQUE,
@@ -49,35 +57,60 @@ class TBOT_BDD():
                             (name,
                             profession,
                             reputation,
-                            levelGun,
-                            levelWear,
-                            levelCar)
-                            VALUES (?,?,?,?,?,?)''', (pseudo ,"",0,0,0,0)) 
+                            level_arme,
+                            level_outil,
+                            level_medical,
+                            level_nourriture,
+                            level_automobile,
+                            level_alcool,
+                            level_agriculture,            
+                            level_meuble)
+                            VALUES (?,?,?,?,?,?,?,?,?,?,?)''', (pseudo ,"",0,1,1,1,1,1,1,1,1)) 
         await db.commit()
         await db.close()
     
     async def get_stats_survivant(self,name: str)->dict:
         db = await aiosqlite.connect(os.path.join(self.TBOTPATH, self.NAMEBDD))
         async with db.execute (f'''SELECT name,
-                        profession,
-                        reputation,
-                        levelGun,
-                        levelWear,
-                        levelCar FROM 'survivant' WHERE name='{name}' ''') as cur:
+                            profession,
+                            reputation,
+                            level_arme,
+                            level_outil,
+                            level_medical,
+                            level_nourriture,
+                            level_automobile,
+                            level_alcool,
+                            level_agriculture,            
+                            level_meuble FROM 'survivant' WHERE name='{name}' ''') as cur:
             listeStat = await cur.fetchone()
         await db.close()
         reponse ={"name": listeStat[0],
                 "profession" : listeStat[1],
                 "reputation": listeStat[2],
-                "levelGun": listeStat[3],
-                "levelWear": listeStat[4],
-                "levelCar": listeStat[5]
+                "level_arme":listeStat[3],
+                "level_outil":listeStat[4],
+                "level_medical":listeStat[5],
+                "level_nourriture":listeStat[6],
+                "level_automobile":listeStat[7],
+                "level_alcool":listeStat[8],
+                "level_agriculture":listeStat[9],            
+                "level_meuble":listeStat[10]
                 }
         return reponse
     
     async def survivant_exist(self,name):
         db = await aiosqlite.connect(os.path.join(self.TBOTPATH, self.NAMEBDD))
-        async with db.execute (f"SELECT name FROM 'survivant' WHERE name='{name}'") as cur:
+        async with db.execute (f'''SELECT name,
+                            profession,
+                            reputation,
+                            level_arme,
+                            level_outil,
+                            level_medical,
+                            level_nourriture,
+                            level_automobile,
+                            level_alcool,
+                            level_agriculture,            
+                            level_meuble FROM 'survivant' WHERE name='{name}' ''') as cur:
             reponse = await cur.fetchone()
         await db.close()
         return reponse
@@ -89,16 +122,14 @@ class TBOT_BDD():
         await db.close()
         return reponse
     
-    async def create_raid(self,name: str,type_raid: str):
+    async def create_raid(self,name: str,type_raid: str,level: int):
         # determine si le RAID sera un succes
-        with open ('./TBOT-Twitch/tbot/config/config_raid.json', 'r',encoding="utf-8" ) as fichier:
-                data = json.load(fichier)
-        distance_raid = data["raid_"+type_raid]["stats_raid"]["distance_raid"]
-        MORT = data["raid_"+type_raid]["stats_raid"]["MORT"]
-        BLESSE = data["raid_"+type_raid]["stats_raid"]["BLESSE"]
-        BREDOUILLE = data["raid_"+type_raid]["stats_raid"]["BREDOUILLE"]
-        BUTIN = data["raid_"+type_raid]["stats_raid"]["BUTIN"]
         
+        distance_raid = self.config_raid_json["raid_"+type_raid]["distance_raid"]
+        BUTIN = self.config_raid_json["raid_"+type_raid]["stats_raid"][f"niveau-{level}"]["BUTIN"]
+        BREDOUILLE = self.config_raid_json["raid_"+type_raid]["stats_raid"][f"niveau-{level}"]["BREDOUILLE"]
+        BLESSE = self.config_raid_json["raid_"+type_raid]["stats_raid"][f"niveau-{level}"]["BLESSE"]
+        MORT = self.config_raid_json["raid_"+type_raid]["stats_raid"][f"niveau-{level}"]["MORT"]
 
         michemin = distance_raid//2
         
@@ -107,14 +138,14 @@ class TBOT_BDD():
 
         if resultRAID < MORT : # Mort sans appel
             resultat = "MORT"
-            blesse = random.randrange(distance_raid-60,distance_raid-10)
+            blesse = random.randrange(distance_raid-50,distance_raid-10)
             if blesse == michemin :
                 blesse +=2
             fin = random.randrange(4,blesse-2)
             
         elif resultRAID < MORT+BLESSE :
             resultat = 'BLESSE' 
-            blesse = random.randrange(distance_raid-60,distance_raid-10)
+            blesse = random.randrange(distance_raid-50,distance_raid-10)
             if blesse == michemin :
                 blesse +=2
             fin = 0
@@ -159,7 +190,7 @@ class TBOT_BDD():
         data={}
         for raid in listeRaid:
             name = raid[0]
-            type = raid[1]
+            type_raid = raid[1]
             distance = raid[2]
             michemin = raid[3]
             distance_total = michemin*2
@@ -172,7 +203,7 @@ class TBOT_BDD():
             distancepourcent = (distance*100)//(distance_total)
 
             stat_survivant= await self.get_stats_survivant(name)
-            data[f"SURVIVANT_{name}"]={"NAME":f"{name}","STATS":f"{stat_survivant}","TYPE":f"{type}","DISTANCE":distancepourcent,"RENFORT":f"{renfort}"}
+            data[f"SURVIVANT_{name}"]={"NAME":f"{name}","STATS":f"{stat_survivant}","TYPE":f"{type_raid}","DISTANCE":distancepourcent,"RENFORT":f"{renfort}"}
             await db.execute(f'''UPDATE raid SET distance = {distance} WHERE name = "{name}"''') 
             
             if distance == michemin :
@@ -194,18 +225,28 @@ class TBOT_BDD():
                     await db.execute(f'''DELETE from survivant WHERE name = "{name}"''')
 
                 if distance <= 0 : #le joueur est revenu a la base
-                    await tbot_com.message(channel,overlay=f"<span class='pseudo'>{name}</span> est revenu à la base, le RAID est terminé !!!!",
-                                           mod=f"'<radio {name}> je suis ...nfin reven... à la base...",
-                                           chat=f"{name} est revenu à la base, le RAID est terminé !!!!",
-                                           son="radio3.mp3")
-                    await db.execute(f'''DELETE from raid WHERE name = "{name}"''')
 
+                    await self.gere_fin_raid(db,name,type_raid,channel)
+                    await db.execute(f'''DELETE from raid WHERE name = "{name}"''')
+                    
 
         await db.commit()
         await db.close()
-        
+            
         async with aiofiles.open("raid.json", "w",encoding="utf-8") as fichier:
             await fichier.write(json.dumps(data,indent=4,ensure_ascii=False))
+        
+    async def gere_fin_raid(self,db,name,type_raid,channel):
+        
+        gain_reputation = self.config_raid_json["raid_"+type_raid]["gain_reputation"]
+        
+        await tbot_com.message(channel,overlay=f"<span class='pseudo'>{name}</span> est revenu à la base. gain de reputation : +{gain_reputation} !!!",
+                        mod=f"'<radio {name}> je suis ...nfin reven... à la base...",
+                        chat=f"{name} est revenu à la base. gain de reputation : +{gain_reputation} !!!!!!!",
+                        son="radio3.mp3")
+        await db.execute(f'''UPDATE survivant SET reputation = reputation +{gain_reputation} WHERE name = "{name}"''')
+
+
         
 if __name__ == '__main__': 
     print('Ne peut etre lancé directement')

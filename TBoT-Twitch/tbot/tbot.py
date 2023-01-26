@@ -1,6 +1,6 @@
 import json
 import twitchio
-from twitchio.ext import commands, sounds,pubsub
+from twitchio.ext import commands
 import sqlite3
 import asyncio
 import os
@@ -49,6 +49,8 @@ class TBoT(commands.Bot):
         # initial_channels can also be a callable which returns a list of strings...
         super().__init__(token=BOT_TOKEN, prefix=BOT_PREFIX, initial_channels=[CLIENT_CHANNEL])
         TBOTBDD.initTableSql()
+        with open ('./TBOT-Twitch/tbot/config/config_raid.json', 'r',encoding="utf-8" ) as fichier:
+            self.config_raid_json = json.load(fichier)
         
     async def event_ready(self):
         # Notify us when everything is ready!
@@ -109,22 +111,39 @@ class TBoT(commands.Bot):
         else :
             """Création du Raid
             """
-            with open('./TBOT-Twitch/tbot/config/config_raid.json', 'r',encoding="utf-8" ) as fichier:
-                 data = json.load(fichier)
-            raid_name = data["raid_"+type_raid]["nom_raid"]
-            msg_start_chat = data["raid_"+type_raid]["msg_start_chat"]
-            msg_start_overlay = data["raid_"+type_raid]["msg_start_overlay"]
-            msg_start_mod = data["raid_"+type_raid]["msg_start_mod"]
-            distance_raid = data["raid_"+type_raid]["stats_raid"]["distance_raid"]
+            # recupere le level du joueur en fonction du type de raid
+            if type_raid == "arme":
+                level=test_survivant_exist[3]
+            elif type_raid == "outil":
+                level=test_survivant_exist[4]
+            elif type_raid == "medical":
+                level=test_survivant_exist[5] 
+            elif type_raid == "nourriture":
+                level=test_survivant_exist[6]
+            elif type_raid == "automobile":
+                level=test_survivant_exist[7]
+            elif type_raid == "alcool" :
+                level=test_survivant_exist[8] 
+            elif type_raid == "agriculture" :
+                level=test_survivant_exist[9]
+            else : #meuble
+                level=test_survivant_exist[10]
+                
+                           
+            raid_name = self.config_raid_json["raid_"+type_raid]["nom_raid"]
+            msg_start_chat = self.config_raid_json["raid_"+type_raid]["msg_start_chat"]
+            msg_start_overlay = self.config_raid_json["raid_"+type_raid]["msg_start_overlay"]
+            msg_start_mod = self.config_raid_json["raid_"+type_raid]["msg_start_mod"]
+            raid_icon = self.config_raid_json["raid_"+type_raid]["icon"]
             
             heure =  datetime.now().hour
             minute = datetime.now().minute
-            jour = datetime.now().day
-            await TBOTBDD.create_raid(name,raid_name)
+            
+            await TBOTBDD.create_raid(name,raid_name,level)
 
             await tbot_com.message(channel,mod=f"<radio {name}> : ...allo ! ici {name}... {msg_start_mod}",
-                                     overlay=f"🔨- radio : ...allo ! ici <span class='pseudo'>{name}</span>... {msg_start_overlay}",
-                                     chat=f"🔨- il est {heure}:{minute}, {name} part en Raid {msg_start_chat}",
+                                     overlay=f"{raid_icon}- radio : ...allo ! ici <span class='pseudo'>{name}</span>... {msg_start_overlay}",
+                                     chat=f"{raid_icon}- il est {heure}:{minute}, {name} part en Raid {msg_start_chat}",
                                      son="radio3.mp3")           
 
                 
@@ -156,7 +175,14 @@ class TBoT(commands.Bot):
         if test_survivant_exist !=None :
             dictStat= await TBOTBDD.get_stats_survivant(name)
             message = f"stat {dictStat['name']} : reputation = {dictStat['reputation']},\
-                levelgun = {dictStat['levelGun']} ; vetement = {dictStat['levelWear']}, vehicule = {dictStat['levelCar']}"
+                level_arme = {dictStat['level_arme']} ;\
+                level_outil= {dictStat['level_outil']} ;\
+                level_medical= {dictStat['level_medical']} ;\
+                level_nourriture= {dictStat['level_nourriture']} ;\
+                level_automobile= {dictStat['level_automobile']} ;\
+                level_alcool= {dictStat['level_alcool']} ;\
+                level_agriculture= {dictStat['level_agriculture']} ;\
+                level_meuble = {dictStat['level_meuble']}"
             await tbot_com.message(channel,chat=message)
         else :
             await tbot_com.message(channel,overlay=f"❌- le survivant <span class='pseudo'>{name}</span> n'existe pas sur le serveur ! utilise les points de Chaine pour en creer un.",
