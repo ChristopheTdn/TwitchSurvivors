@@ -96,4 +96,4 @@ async def ecrit_log(msg: str):
     heure =  datetime.now().hour
     minute = datetime.now().minute
     async with aiofiles.open("journal.log", "a",encoding="utf-8") as journal:
-        await journal.write(f"{heure}:{minute} | {msg}")
+        await journal.write(f"{heure}:{minute} | {msg}\n")
