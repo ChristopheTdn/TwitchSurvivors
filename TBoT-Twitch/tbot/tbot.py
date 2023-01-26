@@ -274,8 +274,35 @@ class TBoT(commands.Bot):
         -----------
         Traite la commande twitch !upgrade_arme. 
         """
-        await self.upgrade_aptitude(ctx,"armement")         
+        await self.upgrade_aptitude(ctx,"armement")
+                 
+    @commands.command()
+    async def upgrade_armure(self, ctx: commands.Context):
+        """
+        Commande !upgrade_armure
+        -----------
+        Traite la commande twitch !upgrade_armure. 
+        """
+        await self.upgrade_aptitude(ctx,"armure") 
+        
+    @commands.command()
+    async def upgrade_transport(self, ctx: commands.Context):
+        """
+        Commande !upgrade_transport
+        -----------
+        Traite la commande twitch !upgrade_transport. 
+        """
+        await self.upgrade_aptitude(ctx,"transport") 
 
+    @commands.command()
+    async def upgrade_equipement(self, ctx: commands.Context):
+        """
+        Commande !upgrade_equipement
+        -----------
+        Traite la commande twitch !upgrade_equipement. 
+        """
+        await self.upgrade_aptitude(ctx,"equipement")                
+        
 if __name__ == '__main__': 
     print('Ne peut etre lancé directement')
     
