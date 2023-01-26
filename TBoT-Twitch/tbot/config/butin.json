@@ -1,0 +1,67 @@
+{
+    "arme":{
+        "tier_1":{
+            "Pagaie Canoé"      : "Base.CanoePadel",
+            "Club Golf"         : "Base.Golfclub",
+            "Cross Hockey"      : "Base.HockeyStick",
+            "Cross Hockey glace": "Base.IceHockeyStick",
+            "Baton Lacross"     : "Base.LaCrosseStick",
+            "Queue billard"     : "Base.Poolcue",
+            "Planche"           : "Base.Plank",
+            "Planche cloutée"   : "Base.PlankNail",
+            "Raquette Tennis"   : "Base.TennisRacket",
+            "Tuyau plomb"       : "Base.LeadPipe",
+            "Tuyau métal"       : "Base.MetalPipe",
+            "Couteau beurre"    : "Base.ButterKnife",
+            "Hachoire viande"   : "Base.MeatCleaver",
+            "Couteau pierre"    : "Base.FlintKnife",
+            "Lance"             : "Base.SpearCrafted",
+            "Faucille"          : "Base.HandScythe",
+            "Pistolet M36"      : "Base.Revolver_Short",
+            "Couteau cuisine"   : "Base.KitchenKnife",
+            "Pique glace"       : "Base.IcePick",
+            "Hachette pierre"   : "Base.HammerStone"
+        },
+        "tier_2":{
+            "Hachette"          : "Base.HandAxe",
+            "Hache bûcheron"	: "Base.WoodAxe",
+            "Matraque"	        : "Base.Nightstick",
+            "Couteau chasse"	: "Base.HuntingKnife",
+            "Pistolet M9"	    : "Base.Pistol",
+            "MSR700"	        : "Base.VarmintRifle",
+            "Pistolet D-E"	    : "Base.Pistol3",
+            "Double canon"	    : "Base.DoubleBarrelShotgun",
+            "Pied de biche"	    : "Base.Crowbar"
+        },
+        "tier_3":{
+            "Hache"             : "Base.Axe",
+            "Pioche"	        : "Base.PickAxe",
+            "Batte Baseball"	: "Base.BaseballBat",
+            "MSR788"	        : "Base.HuntingRifle",
+            "Machete"	        : "Base.Machete",
+            "JS2000"	        : "Base.Shotgun",
+            "M14"	            : "Base.AssaultRifle2",
+            "M16"	            : "Base.AssaultRifle"            
+        }
+    },
+    "outil":{
+        "tier_1":{
+            "Fouchette barbecue" : "Base.HandFork",
+            "Hachoire viande"	 : "Base.MeatCleaver",
+            "Tourne-Vis"	     : "Base.Screwdriver",
+            "Couteau pierre"	 : "Base.FlintKnife",
+            "Faucille"	         : "Base.HandScythe",
+            "Couteau cuisine"	 : "Base.KitchenKnife",
+            "Massette"	         : "Base.ClubHammer",
+            "Fourche"	         : "Base.GardenFork",
+            "Balai"	             : "Base.Broom",
+            "Pelle neige"	     : "Base.SnowShovel",
+            "Poele"	             : "Base.Pan",
+            "Poele frire"	     : "Base.GridlePan",
+            "Rouleau"	         : "Base.RollingPin",
+            "Casserole"	         : "Base.Saucepan",
+            "Pique glace"	     : "Base.IcePick",
+            "Scalpel"	         : "Base.Scalpel"
+        }
+    }
+}
