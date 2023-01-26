@@ -82,7 +82,7 @@ class TBoT(commands.Bot):
         await self.handle_commands(message)
         
     async def creation_survivant(self,name: str,channel):
-        name_survivant = await TBOTBDD.survivant_stat(name)
+        name_survivant = await TBOTBDD.get_stats_survivant(name)
         if name_survivant != None : #le pseudo existe deja dans la base de donnée
             await tbot_com.message(channel,overlay=f"❌ Echec de tentative de création du joueur <span class='pseudo'>{name}</span> sur le serveur !",
                 chat=f"❌- Echec de tentative de creation du joueur {name} sur le serveur ! Le survivant existe déjà. Tapes !info_survivant")
@@ -98,7 +98,7 @@ class TBoT(commands.Bot):
         
         name = ctx.author.display_name
         channel = ctx.channel
-        test_survivant_exist = await TBOTBDD.survivant_stat(name)
+        test_survivant_exist = await TBOTBDD.get_stats_survivant(name)
         test_raid_exist = await TBOTBDD.raid_exist(name)
         
         if test_survivant_exist == None :
@@ -133,7 +133,7 @@ class TBoT(commands.Bot):
         
         name = ctx.author.display_name
         channel = ctx.channel
-        test_survivant_exist = await TBOTBDD.survivant_stat(name)
+        test_survivant_exist = await TBOTBDD.get_stats_survivant(name)
         test_raid_exist = await TBOTBDD.raid_exist(name)
         level=1
         
@@ -194,7 +194,7 @@ class TBoT(commands.Bot):
         """
         name = ctx.author.display_name
         channel = ctx.channel
-        test_survivant_exist = await TBOTBDD.survivant_stat(name)
+        test_survivant_exist = await TBOTBDD.get_stats_survivant(name)
         if test_survivant_exist !=None :
             dictStat= await TBOTBDD.get_stats_survivant(name)
             message = f"stat {dictStat['name']} : reputation = {dictStat['reputation']},\
