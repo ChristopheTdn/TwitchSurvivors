@@ -112,23 +112,7 @@ class TBoT(commands.Bot):
             """Création du Raid
             """
             # recupere le level du joueur en fonction du type de raid
-            if type_raid == "arme":
-                level=test_survivant_exist[3]
-            elif type_raid == "outil":
-                level=test_survivant_exist[4]
-            elif type_raid == "medical":
-                level=test_survivant_exist[5] 
-            elif type_raid == "nourriture":
-                level=test_survivant_exist[6]
-            elif type_raid == "automobile":
-                level=test_survivant_exist[7]
-            elif type_raid == "alcool" :
-                level=test_survivant_exist[8] 
-            elif type_raid == "agriculture" :
-                level=test_survivant_exist[9]
-            else : #meuble
-                level=test_survivant_exist[10]
-                
+               
                            
             raid_name = self.config_raid_json["raid_"+type_raid]["nom_raid"]
             msg_start_chat = self.config_raid_json["raid_"+type_raid]["msg_start_chat"]
@@ -139,7 +123,7 @@ class TBoT(commands.Bot):
             heure =  datetime.now().hour
             minute = datetime.now().minute
             
-            await TBOTBDD.create_raid(name,raid_name,level)
+            await TBOTBDD.create_raid(name,raid_name)
 
             await tbot_com.message(channel,mod=f"<radio {name}> : ...allo ! ici {name}... {msg_start_mod}",
                                      overlay=f"{raid_icon}- radio : ...allo ! ici <span class='pseudo'>{name}</span>... {msg_start_overlay}",
