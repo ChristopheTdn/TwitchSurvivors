@@ -97,16 +97,15 @@ class TBOT_BDD():
         """Calcul du ratio reussite du RAID en fonction du type de raid et des attributs du survivant
 
         Args:
-            type_raid (str): _description_
-            name (str): _description_
-            BUTIN (int): _description_
-            BREDOUILLE (int): _description_
-            BLESSE (int): _description_
-            MORT (int): _description_
-            DISTANCE (int): _description_
+            name (str): pseudo du survivant
+            BUTIN (int): pourcentage de reussite du raid en BUTIN
+            BREDOUILLE (int): pourcentage de reussite du raid en BREDOUILLE
+            BLESSE (int): pourcentage de reussite du raid en BLESSE
+            MORT (int): pourcentage de reussite du raid en MORT
+            DISTANCE (int): Distancedu Raid
 
         Returns:
-            tuple: ensemble des valeurs definissant le RAID influencé par les stats du survivants
+            tuple: ensemble des valeurs definissant le RAID influencées par les stats du survivants
             -> BUTIN,BREDOUILLE,BLESSE,MORT,DISTANCE
         """        
         survivant_stat= await self.get_stats_survivant(name)
