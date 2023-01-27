@@ -16,7 +16,9 @@ class TBOT_BDD():
         self.NAMEBDD = "tbot_bdd.sqlite"
         with open ('./TBOT-Twitch/tbot/config/config_raid.json', 'r',encoding="utf-8" ) as fichier:
             self.config_raid_json = json.load(fichier)
-    
+        with open ('./TBOT-Twitch/tbot/config/config_butin.json', 'r',encoding="utf-8" ) as fichier:
+            self.config_butin_json = json.load(fichier)
+            
     def initTableSql(self):
         """
                 Initialise la base de donnée si elle n'existe pas
@@ -42,8 +44,8 @@ class TBOT_BDD():
             renfort TEXT,
             resultat TEXT,
             blesse INTEGER,
-            fin INTEGER 
-            )''')
+            fin INTEGER,
+            composition_butin text)''')
         self.connexionSQL.commit()
         self.connexionSQL.close()
         
@@ -152,7 +154,7 @@ class TBOT_BDD():
         MORT = self.config_raid_json["raid_"+type_raid]["stats_raid"][f"niveau-1"]["MORT"]
 
         BUTIN,BREDOUILLE,BLESSE,MORT,DISTANCE = await self.calcul_ratio_raid(name,BUTIN,BREDOUILLE,BLESSE,MORT,DISTANCE)
-
+        composition_butin={}
 
         #determine le resultat du raid
         resultRAID = random.randrange(100) # un nombre entre 0 et 99
@@ -177,7 +179,8 @@ class TBOT_BDD():
         else :
             resultat = 'BUTIN' 
             blesse=-1
-            fin = 0     
+            fin = 0
+            composition_butin = await self.recupere_butin(name,type_raid)     
         
         db = await aiosqlite.connect(os.path.join(self.TBOTPATH, self.NAMEBDD))
         await db.execute ('''INSERT OR IGNORE INTO raid
@@ -188,11 +191,22 @@ class TBOT_BDD():
                         renfort,
                         resultat,
                         blesse,
-                        fin)
-                        VALUES (?,?,?,?,?,?,?,?)''', (name,type_raid,DISTANCE,DISTANCE//2,'{}',resultat,blesse,fin))
+                        fin,
+                        composition_butin)
+                        VALUES (?,?,?,?,?,?,?,?)''', (name,type_raid,DISTANCE,DISTANCE//2,'{}',resultat,blesse,fin,json.dumps(composition_butin)))
         await db.commit()
         await db.close()
-    
+    async def recupere_butin(self,name: str,type_raid:str)->dict:
+        """Determine le Butin en fonction du level et du type de Raid
+
+        Args:
+            name (str): pseudo du survivant
+            type_raid (str): type de raid
+
+        Returns:
+            dict: dictionnaire renvoyant le nom et la class du loot.
+        """        
+        pass    
     async def actualise_statRaid(self,channel):
         
         db = await aiosqlite.connect(os.path.join(self.TBOTPATH, self.NAMEBDD))
@@ -203,7 +217,8 @@ class TBOT_BDD():
                         renfort,
                         resultat,
                         blesse,
-                        fin FROM 'raid' ''') as cur:
+                        fin,
+                        composition_butin FROM 'raid' ''') as cur:
             listeRaid = await cur.fetchall()
         await db.close()  
 
