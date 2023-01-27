@@ -1,0 +1,23 @@
+@font-face {
+	font-family: 'FugazOne';
+	src: url('FugazOne-Regular.ttf');
+}
+* {
+	font-family: FugazOne;
+}
+body, html {
+	height: 100%;
+}
+.pseudo {
+	color: blue;
+}
+#box {
+	position: absolute;
+	inset: 0;
+	top: auto;
+	display: flex;
+	flex-direction: column;
+}
+.message {
+	font-size: 5em;
+}
