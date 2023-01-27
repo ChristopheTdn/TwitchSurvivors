@@ -62,6 +62,24 @@
             "Casserole"	         : "Base.Saucepan",
             "Pique glace"	     : "Base.IcePick",
             "Scalpel"	         : "Base.Scalpel"
+        },
+        "tier_2":{
+            "Hachette pierre"    : "Base.AxeStone",
+            "Pelle"	             : "Base.Shovel",
+            "Bêche"	             : "Base.Shovel2",
+            "Canne à pêche"	     : "Base.FishingRod",
+            "Marteau rond"	     : "Base.BallPeenHammer",
+            "Marteau"	         : "Base.Hammer",
+            "Clef à molette"	 : "Base.Wrench",
+            "Clef anglaise"	     : "Base.PipeWrench",
+
+        
+        },
+        "tier_3":{
+            "Masse à deux mains" : "Base.Sledgehammer",
+            "Hache bûcheron"     : "Base.WoodAxe",
+            "Pied de biche"      : "Base.Crowbar"
         }
+        
     }
 }
