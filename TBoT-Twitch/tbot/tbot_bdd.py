@@ -18,7 +18,9 @@ class TBOT_BDD():
             self.config_raid_json = json.load(fichier)
         with open ('./TBOT-Twitch/tbot/config/config_butin.json', 'r',encoding="utf-8" ) as fichier:
             self.config_butin_json = json.load(fichier)
-            
+        with open ('./TBOT-Twitch/tbot/config/config_ratio_butin.json', 'r',encoding="utf-8" ) as fichier:
+            self.config_ratio_json = json.load(fichier)   
+                     
     def initTableSql(self):
         """
                 Initialise la base de donnée si elle n'existe pas
@@ -158,6 +160,7 @@ class TBOT_BDD():
 
         #determine le resultat du raid
         resultRAID = random.randrange(100) # un nombre entre 0 et 99
+        resultRAID = 95  # A SUPPRIMER > Force le resultat du raid a BUTIN
 
         if resultRAID < MORT : # Mort sans appel
             resultat = "MORT"
@@ -180,7 +183,7 @@ class TBOT_BDD():
             resultat = 'BUTIN' 
             blesse=-1
             fin = 0
-            composition_butin = await self.recupere_butin(name,type_raid)     
+            composition_butin = await self.genere_butin(name,type_raid)     
         
         db = await aiosqlite.connect(os.path.join(self.TBOTPATH, self.NAMEBDD))
         await db.execute ('''INSERT OR IGNORE INTO raid
@@ -193,10 +196,11 @@ class TBOT_BDD():
                         blesse,
                         fin,
                         composition_butin)
-                        VALUES (?,?,?,?,?,?,?,?)''', (name,type_raid,DISTANCE,DISTANCE//2,'{}',resultat,blesse,fin,json.dumps(composition_butin)))
+                        VALUES (?,?,?,?,?,?,?,?,?)''', (name,type_raid,DISTANCE,DISTANCE//2,'{}',resultat,blesse,fin,json.dumps(composition_butin)))
         await db.commit()
         await db.close()
-    async def recupere_butin(self,name: str,type_raid:str)->dict:
+        
+    async def genere_butin(self,name: str,type_raid:str)->dict:
         """Determine le Butin en fonction du level et du type de Raid
 
         Args:
@@ -206,7 +210,34 @@ class TBOT_BDD():
         Returns:
             dict: dictionnaire renvoyant le nom et la class du loot.
         """        
-        pass    
+        survivant = await self.get_stats_survivant(name)
+        level_equipement = survivant["level_equipement"]
+        level_armement=survivant["level_armement"]
+        butin_final={}
+        
+        for i in range(level_equipement):
+            hasard=random.randrange(100)
+            object_tier1=self.config_ratio_json[f"objet_{i+1}"][f"armement_{level_armement}"]["tier_1"]
+            object_tier2=self.config_ratio_json[f"objet_{i+1}"][f"armement_{level_armement}"]["tier_2"]
+            object_tier3=self.config_ratio_json[f"objet_{i+1}"][f"armement_{level_armement}"]["tier_3"]
+            if hasard<object_tier3: #Donne un objet de Tier3
+                loot = self.config_butin_json[type_raid][f"tier_3"]
+                if butin_final[loot]=="":
+                    butin_final[loot]=self.config_butin_json[type_raid][f"tier_3"][loot]
+            elif hasard<object_tier2+object_tier3 :
+                #Donne un objet de Tier2
+                loot = self.config_butin_json[type_raid][f"tier_2"]
+                if butin_final[loot]=="":
+                    butin_final[loot]=self.config_butin_json[type_raid][f"tier_2"][loot]
+            else: #Donne un objet de Tier1
+                loot = self.config_butin_json[type_raid][f"tier_3"]
+                if butin_final[loot]=="":
+                    butin_final[loot]=self.config_butin_json[type_raid][f"tier_3"][loot]
+
+        return butin_final
+    
+    
+        
     async def actualise_statRaid(self,channel):
         
         db = await aiosqlite.connect(os.path.join(self.TBOTPATH, self.NAMEBDD))
