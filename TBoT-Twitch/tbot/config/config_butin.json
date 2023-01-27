@@ -71,9 +71,7 @@
             "Marteau rond"	     : "Base.BallPeenHammer",
             "Marteau"	         : "Base.Hammer",
             "Clef à molette"	 : "Base.Wrench",
-            "Clef anglaise"	     : "Base.PipeWrench",
-
-        
+            "Clef anglaise"	     : "Base.PipeWrench"        
         },
         "tier_3":{
             "Masse à deux mains" : "Base.Sledgehammer",
