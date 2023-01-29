@@ -31,10 +31,10 @@ def joue_son(radio = "radio1.mp3"):
     mixer.music.play()
 
 async def message(channel=None,overlay ="",chat="",mod="",son="",):
-    """    envois un message vers les differ
+    """    envois un message vers les différentes interfaces (twitch, overlay obs, chat in game PZ)
 
     Args:
-        channel (_type_, optional): Donne l'objet channel pour envoer un message sur le chat twitch. Defaults > None.
+        channel (_type_, optional): Donne l'objet channel pour envoyer un message sur le chat twitch. Defaults > None.
         overlay (str, optional): message devant etre affiché sur l'overlay. Defaults > "".
         chat (str, optional): message devant afficher le message dans le chat twitch. Defaults to "".
         mod (str, optional): message devant afficher le message dans le jeu via le Mod. Defaults to "".
@@ -49,6 +49,14 @@ async def message(channel=None,overlay ="",chat="",mod="",son="",):
             await fichier.write(mod)
     if son != "" :
         joue_son(son)
+        
+async def donne_butin(butin):
+    for nom, denomination  in butin.items():
+        texte += denomination+"\n"
+    
+    async with aiofiles.open(URLMOD+"butin.txt","w",encoding="utf-8") as fichier:
+        await fichier.write(texte)
+        
 
 async def affichage_Overlay(message: str):
     """Genere un fichier HTML utilisable comme OVERLAY dans OBS
@@ -89,7 +97,7 @@ async def affichage_Overlay(message: str):
         messageJson[f"message_{num_message}"] = ligne
         num_message +=1
         
-    async with aiofiles.open("message_overlay.json", "w",encoding="utf-8") as fichier:
+    async with aiofiles.open("assets/chat.json", "w",encoding="utf-8") as fichier:
         await fichier.write(json.dumps(messageJson,indent=4,ensure_ascii=False))
 
 async def ecrit_log(msg: str):
