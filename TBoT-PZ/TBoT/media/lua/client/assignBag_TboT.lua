@@ -6,7 +6,6 @@ function assignBag()
     if TBoT.tbag == nil then
         TBoT.tbag=player:getInventory():AddItem("TBoT.Bag_TBoT")
     end
-    TBoT.tbag:getInventory():AddItem("Base.Pistol")
 end
 
 local function OnInitGlobalModData(isNewGame)
