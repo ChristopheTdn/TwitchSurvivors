@@ -160,7 +160,6 @@ class TBOT_BDD():
 
         #determine le resultat du raid
         resultRAID = random.randrange(100) # un nombre entre 0 et 99
-        resultRAID = 95  # A SUPPRIMER > Force le resultat du raid a BUTIN
 
         if resultRAID < MORT : # Mort sans appel
             resultat = "MORT"
@@ -215,25 +214,29 @@ class TBOT_BDD():
         level_armement=survivant["level_armement"]
         butin_final={}
         
-        for i in range(level_equipement):
+        for i in range(level_equipement): # Autant de tour que le niveau d'equipement
             hasard=random.randrange(100)
             object_tier1=self.config_ratio_json[f"objet_{i+1}"][f"armement_{level_armement}"]["tier_1"]
             object_tier2=self.config_ratio_json[f"objet_{i+1}"][f"armement_{level_armement}"]["tier_2"]
             object_tier3=self.config_ratio_json[f"objet_{i+1}"][f"armement_{level_armement}"]["tier_3"]
             if hasard<object_tier3: #Donne un objet de Tier3
-                loot = self.config_butin_json[type_raid][f"tier_3"]
-                if butin_final[loot]=="":
-                    butin_final[loot]=self.config_butin_json[type_raid][f"tier_3"][loot]
+                loot = self.config_butin_json[type_raid]["tier_3"]
+                choix_loot = random.choice(tuple(loot.keys()))
+                if choix_loot not in butin_final:
+                    butin_final[choix_loot]=self.config_butin_json[type_raid][f"tier_3"][choix_loot]
             elif hasard<object_tier2+object_tier3 :
                 #Donne un objet de Tier2
-                loot = self.config_butin_json[type_raid][f"tier_2"]
-                if butin_final[loot]=="":
-                    butin_final[loot]=self.config_butin_json[type_raid][f"tier_2"][loot]
+                loot = self.config_butin_json[type_raid]["tier_2"]
+                choix_loot = random.choice(tuple(loot.keys()))
+                if choix_loot not in butin_final:
+                    butin_final[choix_loot]=self.config_butin_json[type_raid][f"tier_2"][choix_loot]
             else: #Donne un objet de Tier1
-                loot = self.config_butin_json[type_raid][f"tier_3"]
-                if butin_final[loot]=="":
-                    butin_final[loot]=self.config_butin_json[type_raid][f"tier_3"][loot]
-
+                loot = self.config_butin_json[type_raid]["tier_3"]
+                choix_loot = random.choice(tuple(loot.keys()))
+                if choix_loot not in butin_final:
+                    butin_final[choix_loot]=self.config_butin_json[type_raid][f"tier_3"][choix_loot]
+            if random.randrange(100)>50 : #test si on arrete le tour (50 % de chance que oui)
+                break
         return butin_final
     
     
@@ -265,6 +268,7 @@ class TBOT_BDD():
             resultat = raid[5]
             blesse = raid[6]
             fin = raid[7]
+            composition_butin = json.encoder(raid[8])
             
             distance -=1
             distancepourcent = (distance*100)//(distance_total)
@@ -293,20 +297,23 @@ class TBOT_BDD():
 
                 if distance <= 0 : #le joueur est revenu a la base
 
-                    await self.gere_fin_raid(db,name,type_raid,channel)
+                    await self.gere_fin_raid(db,name,type_raid,resultat,composition_butin,channel)
+                        
                     await db.execute(f'''DELETE from raid WHERE name = "{name}"''')
                     
 
         await db.commit()
         await db.close()
             
-        async with aiofiles.open("raid.json", "w",encoding="utf-8") as fichier:
+        async with aiofiles.open("assets/raid.json", "w",encoding="utf-8") as fichier:
             await fichier.write(json.dumps(data,indent=4,ensure_ascii=False))
         
-    async def gere_fin_raid(self,db,name,type_raid,channel):
+    async def gere_fin_raid(self,db,name,type_raid,resultat,composition_butin,channel):
         
                 
         gain_reputation = self.config_raid_json["raid_"+type_raid]["gain_reputation"]
+        if resultat =="BUTIN":
+            pass
         
         await tbot_com.message(channel,overlay=f"<span class='pseudo'>{name}</span> est revenu à la base. gain de reputation : +{gain_reputation} !!!",
                         mod=f"'<radio {name}> je suis ...nfin reven... à la base...",
