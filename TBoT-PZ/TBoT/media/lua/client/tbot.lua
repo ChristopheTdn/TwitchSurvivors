@@ -1,6 +1,10 @@
 function afficheTexte()
-
     local player = getSpecificPlayer(0)
+
+    TBoTTime = GameTime:getInstance();
+    TBoT = TBoTTime:getModData();
+    TBoT.tbag =player:getInventory():getItemFromTypeRecurse("TBoT.Bag_TBoT")
+
     local file=getModFileReader("TBoT","butin.txt",false)
     if not file then return end
     local lines = "" -- empty table for now
