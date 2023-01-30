@@ -268,7 +268,7 @@ class TBOT_BDD():
             resultat = raid[5]
             blesse = raid[6]
             fin = raid[7]
-            composition_butin = json.encoder(raid[8])
+            composition_butin = raid[8]
             
             distance -=1
             distancepourcent = (distance*100)//(distance_total)
@@ -313,7 +313,7 @@ class TBOT_BDD():
                 
         gain_reputation = self.config_raid_json["raid_"+type_raid]["gain_reputation"]
         if resultat =="BUTIN":
-            pass
+            await tbot_com.donne_butin(composition_butin)
         
         await tbot_com.message(channel,overlay=f"<span class='pseudo'>{name}</span> est revenu à la base. gain de reputation : +{gain_reputation} !!!",
                         mod=f"'<radio {name}> je suis ...nfin reven... à la base...",

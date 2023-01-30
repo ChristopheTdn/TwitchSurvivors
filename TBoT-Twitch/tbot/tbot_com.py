@@ -50,12 +50,18 @@ async def message(channel=None,overlay ="",chat="",mod="",son="",):
     if son != "" :
         joue_son(son)
         
-async def donne_butin(butin):
-    for nom, denomination  in butin.items():
-        texte += denomination+"\n"
-    
+async def donne_butin(butin:str):
+    butin=butin.replace("{","")
+    butin=butin.replace("}","")
+    liste_Butin=butin.split(",")
+    listefinale = ""
+    for nom in liste_Butin:
+        item=nom.split(':')
+        item[1]= item[1].strip().replace ('"',"")
+        listefinale += item[1]+"\n"
+
     async with aiofiles.open(URLMOD+"butin.txt","w",encoding="utf-8") as fichier:
-        await fichier.write(texte)
+        await fichier.write(listefinale)
         
 
 async def affichage_Overlay(message: str):

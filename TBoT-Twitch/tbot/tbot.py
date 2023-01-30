@@ -182,14 +182,10 @@ class TBoT(commands.Bot):
         if test_survivant_exist !=None :
             dictStat= await TBOTBDD.get_stats_survivant(name)
             message = f"stat {dictStat['name']} : reputation = {dictStat['reputation']},\
-                level_arme = {dictStat['level_arme']} ;\
-                level_outil= {dictStat['level_outil']} ;\
-                level_medical= {dictStat['level_medical']} ;\
-                level_nourriture= {dictStat['level_nourriture']} ;\
-                level_automobile= {dictStat['level_automobile']} ;\
-                level_alcool= {dictStat['level_alcool']} ;\
-                level_agriculture= {dictStat['level_agriculture']} ;\
-                level_meuble = {dictStat['level_meuble']}"
+                level armement = {dictStat['level_armement']} ;\
+                level transport= {dictStat['level_transport']} ;\
+                level armure= {dictStat['level_armure']} ;\
+                level equipement= {dictStat['level_equipement']}"
             await tbot_com.message(channel,chat=message)
         else :
             await tbot_com.message(channel,overlay=f"❌- le survivant <span class='pseudo'>{name}</span> n'existe pas sur le serveur ! utilise les points de Chaine pour en creer un.",
