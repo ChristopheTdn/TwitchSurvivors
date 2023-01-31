@@ -1,24 +1,25 @@
 {
     "BOT-TWITCH":
     {
-        "BOT_USERNAME":"",
-        "BOT_TOKEN":"",
-        "BOT_REFRESH":"",
-        "BOT_VALID":"",
-
-        "BOT_ID":"",
-        "BOT_NICK":"",
-        "BOT_PREFIX":"",
-        "BOT_CHANNEL":[""],
+        "BOT_USERNAME":"tbot_terror",
+        "BOT_TOKEN":"7avqdwvhfq48n3511t21px7e7rjmjy",
+        "BOT_REFRESH":"f21prlo1p0zaxk1lkif3o2avlobi52b64nujfs1v5ag9tj7gu7",
+        "BOT_VALID":"07/01/2023",
+        "BOT_USER_ID": 858428173,
+        "BOT_ID":"gp762nuuoqcoxypju8c569th9wz7q5",
+        "BOT_NICK":"tbot_terror",
+        "BOT_PREFIX":"!",
+        "BOT_CHANNEL":"tbot_terror",
 
         "CLIENT_USERNAME":"",
         "CLIENT_TOKEN":"",
         "CLIENT_REFRESH":"",
         "CLIENT_VALID":"",
+        "CLIENT_USER_ID":,
         "CLIENT_ID":"",
         "CLIENT_NICK":"",
-        "CLIENT_PREFIX":"!",
-        "CLIENT_CHANNEL":[""]
+        "CLIENT_PREFIX":"",
+        "CLIENT_CHANNEL":""
     },
     "URLMOD" : ""
 }
