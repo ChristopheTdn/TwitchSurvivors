@@ -5,11 +5,8 @@
 * {
 	font-family: FugazOne;
 }
-body, html {
-	height: 100%;
-}
 .pseudo {
-	color: blue;
+	color: #EB8603;
 }
 #box {
 	position: absolute;
@@ -19,5 +16,9 @@ body, html {
 	flex-direction: column;
 }
 .message {
-	font-size: 5em;
+	font-size: 2em;
+	color: white;
 }
+
+
+

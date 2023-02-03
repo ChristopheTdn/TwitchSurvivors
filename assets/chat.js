@@ -5,6 +5,7 @@ setInterval("displayMessages()", 1000)
 
 function displayMessages() {
 
+// location.reload();
 fetch('assets/chat.json')
 	    .then((response) => response.json())
 	    .then((messages) => {
