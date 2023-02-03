@@ -20,7 +20,7 @@ class TBOT_BDD():
             self.config_butin_json = json.load(fichier)
         with open ('./TBOT-Twitch/tbot/config/config_ratio_butin.json', 'r',encoding="utf-8" ) as fichier:
             self.config_ratio_json = json.load(fichier)   
-                     
+
     def initTableSql(self):
         """
                 Initialise la base de donnée si elle n'existe pas
@@ -274,7 +274,7 @@ class TBOT_BDD():
             distancepourcent = (distance*100)//(distance_total)
 
             stat_survivant= await self.get_stats_survivant(name)
-            data[f"SURVIVANT_{name}"]={"NAME":f"{name}","STATS":f"{stat_survivant}","TYPE":f"{type_raid}","DISTANCE":distancepourcent,"RENFORT":f"{renfort}"}
+            data[f"SURVIVANT_{name}"]={"NAME":f"{name}","STATS":f"{stat_survivant}","TYPE":f"{type_raid}","DISTANCE":distancepourcent,"RENFORT":f"{renfort}","ALIVE":False}
             await db.execute(f'''UPDATE raid SET distance = {distance} WHERE name = "{name}"''') 
             
             if distance == michemin :
@@ -309,10 +309,7 @@ class TBOT_BDD():
         if resultat =="BUTIN":
             listebutin = "<br>"+await tbot_com.donne_butin(composition_butin)
         
-        await tbot_com.message(channel=channel,ovl=f"<span class='pseudo'>{name}</span> est revenu à la base. gain de reputation : +{gain_reputation} !!!{listebutin}",
-                        mod=f"'<radio {name}> je suis ...nfin reven... à la base...",
-                        chat=f"{name} est revenu à la base. gain de reputation : +{gain_reputation} !!!!!!!",
-                        sound="radio3.mp3")
+        await tbot_com.message("raid_win_butin",channel=channel,name=name,gain_reputation=gain_reputation,listebutin=listebutin)
         await db.execute(f'''UPDATE survivant SET reputation = reputation +{gain_reputation} WHERE name = "{name}"''')
 
     async def upgrade_aptitude(self,name,aptitude: str,cout_upgrade: int):

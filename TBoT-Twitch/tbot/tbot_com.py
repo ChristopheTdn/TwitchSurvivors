@@ -38,7 +38,7 @@ def joue_son(radio = "radio1.mp3"):
     mixer.music.load(os.path.join(TBOTPATH, "sound/"+radio))
     mixer.music.play()
 
-async def message(key="empty",channel=None,name="",mod="",chat="",ovl="",sound=""):
+async def message(key="empty",channel=None,name="",mod="",chat="",ovl="",sound="",gain_reputation="",listebutin=""):
     """    envois un message vers les différentes interfaces (twitch, overlay obs, chat in game PZ)
 
     Args:
@@ -51,11 +51,27 @@ async def message(key="empty",channel=None,name="",mod="",chat="",ovl="",sound="
     heure =  str(datetime.now().hour)
     minute = str(datetime.now().minute)
     if chat == "":
-        chat= localisation[f"{key}"]["chat"].replace("{name}",name).replace("{heure}",heure).replace("{minute}",minute)
+        chat= localisation[f"{key}"]["chat"]\
+            .replace("{name}",name)\
+            .replace("{heure}",heure)\
+            .replace("{minute}",minute)\
+            .replace("{gain_reputation}",gain_reputation)\
+            .replace("{listebutin}",listebutin)
     if ovl == "":
-        ovl = localisation[f"{key}"]["ovl"].replace("{name}",name).replace("{heure}",heure).replace("{minute}",minute)
+        ovl = localisation[f"{key}"]["ovl"]\
+            .replace("{name}",name)\
+            .replace("{heure}",heure)\
+            .replace("{minute}",minute)\
+            .replace("{gain_reputation}",gain_reputation)\
+            .replace("{listebutin}",listebutin)
+                
     if mod == "":
-        mod = localisation[f"{key}"]["mod"].replace("{name}",name).replace("{heure}",heure).replace("{minute}",minute)
+        mod = localisation[f"{key}"]["mod"]\
+            .replace("{name}",name)\
+            .replace("{heure}",heure)\
+            .replace("{minute}",minute)\
+            .replace("{gain_reputation}",gain_reputation)\
+            .replace("{listebutin}",listebutin)
     if sound == "":
         sound = localisation[f"{key}"]["sound"]
     #envoyer les messages 
@@ -88,7 +104,7 @@ async def donne_butin(butin:str) -> str:
         item=nom.split(':')
         item[0]= item[0].strip().replace ('"',"")
         item[1]= item[1].strip().replace ('"',"")
-        listefinale += " - "+item[0]+"\n"
+        listefinale += "  🔸"+item[0]+"\n"
         listeClassefinale += item[1]+"\n"
         
     async with aiofiles.open(URLMOD+"butin.txt","w",encoding="utf-8") as fichier:
