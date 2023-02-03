@@ -6,13 +6,13 @@
         "sound" : ""
     },
     "echec_creation_survivant" :{
-        "ovl"   : "❌ Echec de tentative de création du joueur <span class='pseudo'>{name}</span> sur le serveur !",
+        "ovl"   : "❌-Echec de tentative de création du joueur <span class='pseudo'>{name}</span> sur le serveur !",
         "chat"  :"❌- Echec de tentative de création du joueur {name} sur le serveur ! Le survivant existe déjà. Tapes !info_survivant",
         "mod"   : "",
         "sound" : ""
     },
     "creation_survivant" :{
-        "ovl"   : "⛹Le joueur <span class='pseudo'>{name}</span> vient d'apparaitre sur le serveur.",
+        "ovl"   : "⛹-Le joueur <span class='pseudo'>{name}</span> vient d'apparaitre sur le serveur.",
         "chat"  :"⛹ Le joueur {name} vient d'apparaitre sur le serveur !",
         "mod"   : " : ...allo ! je m'appelle {name}... Je suis un surviva....pret a aider....d'autres messages suivront...",
         "sound" : "radio1.mp3"
@@ -23,58 +23,76 @@
         "mod"   : "",
         "sound" : ""
     },
+    "raid_mi_chemin" :{
+        "ovl"   : "⛹-<span class='pseudo'>{name}</span> commence à faire demi-tour.",
+        "chat"  :"⛹ {name} retourne à la base",
+        "mod"   : "<radio {name}> allo... ..ai atteint mon object... je ...revie... a la base..",
+        "sound" : "radio5.mp3"
+    },
     "raid_deja_en_cours" :{
         "ovl"   : "",
         "chat"  :"❌-un Raid est dejà en cours pour {name} ! tapez !mon_survivant pour plus d'info.",
         "mod"   : "",
         "sound" : ""    
     },
+    "raid_blesse" :{
+        "ovl"   : "🩸-<span class='pseudo'>{name}</span> a été attaqué durant son raid. Il est bléssé ! ",
+        "chat"  :"🩸 {name} a été bléssé sur une attaque !",
+        "mod"   : "<radio {name}> Aidez moi! victim...zzz.. ne attaque... je suis ...gèrement bléssé... zzz..z...",
+        "sound" : "radio2.mp3"
+    },
+    "raid_mort" :{
+        "ovl"   : "☠️-<span class='pseudo'>{name}</span> a succombé durant son raid ! Il a tout perdu !",
+        "chat"  :"☠️ {name} a succombé durant son raid ! Il est mort !",
+        "mod"   : "<radio {name}> Arggg...partout. arghh... u secours... zzz..z...",
+        "sound" : "radio2.mp3"
+    },
     "raid_arme" : {
-        "ovl":"<radio {name}> : ...allo ! ici {name}... Je pars cherch... des arm. et des .munitions.",
+        "ovl":"🗡️-<radio {name}> : ...allo ! ici {name}... Je pars cherch... des arm. et des .munitions.",
         "chat":"🗡️- il est {heure}:{minute}, {name} part en Raid pour récupérer de l'armement.",
-        "mod":"🗡️- radio : ...allo ! ici <span class='pseudo'>{name}</span>... Je pars cherch... des arm.. et des .munitions.",
+        "mod":"radio : ...allo ! ici <span class='pseudo'>{name}</span>... Je pars cherch... des arm.. et des .munitions.",
         "sound":"radio1.mp3"
     },
     "raid_outil" : {
-        "ovl":"<radio {name}> : ...allo ! ici {name}... Je pars cherch... du materiel...t des outils.",
+        "ovl":"🔨-<radio {name}> : ...allo ! ici {name}... Je pars cherch... du materiel...t des outils.",
         "chat":"🔨- il est {heure}:{minute}, {name} part en Raid pour récupérer des outils..",
-        "mod":"🔨- radio : ...allo ! ici <span class='pseudo'>{name}</span>... Je pars cherch... du materiel...t des outils.",
+        "mod":"radio : ...allo ! ici <span class='pseudo'>{name}</span>... Je pars cherch... du materiel...t des outils.",
         "sound":"radio1.mp3"
     },
     "raid_medical" : {
-        "ovl":"<radio {name}> : ...allo ! ici {name}... Je pars cherch... de..medicaments..t des pansement.",
+        "ovl":"☣️-<radio {name}> : ...allo ! ici {name}... Je pars cherch... de..medicaments..t des pansement.",
         "chat":"☣️- il est {heure}:{minute}, {name} part en Raid pour récupérer des fournitures medicales.",
-        "mod":"☣️- radio : ...allo ! ici <span class='pseudo'>{name}</span>... Je pars cherch... de..medicaments..t des pansement.",
+        "mod":"radio : ...allo ! ici <span class='pseudo'>{name}</span>... Je pars cherch... de..medicaments..t des pansement.",
         "sound":"radio1.mp3"
     },
     "raid_nourriture":{
-        "ovl":"<radio {name}> : ...allo ! ici {name}... Je pars cherch...de..la nourriture.",
+        "ovl":"🍖-<radio {name}> : ...allo ! ici {name}... Je pars cherch...de..la nourriture.",
         "chat":"🍖- il est {heure}:{minute}, {name} part en Raid pour recuperer de la nourriture.",
-        "mod":"🍖- radio : ...allo ! ici <span class='pseudo'>{name}</span>... Je pars cherch...de..la nourriture.",
+        "mod":"radio : ...allo ! ici <span class='pseudo'>{name}</span>... Je pars cherch...de..la nourriture.",
         "sound":"radio1.mp3"
     },
     "raid_automobile":{
-        "ovl":"<radio {name}> : ...allo ! ici {name}... Je pars cherch...de...reparer ..ma bagnole.",
+        "ovl":"🚙-<radio {name}> : ...allo ! ici {name}... Je pars cherch...de...reparer ..ma bagnole.",
         "chat":"🚙- il est {heure}:{minute}, {name} part en Raid pour customiser sa voiture.",
-        "mod":"🚙- radio : ...allo ! ici <span class='pseudo'>{name}</span>... Je pars cherch...de...reparer ..ma bagnole.",
+        "mod":"radio : ...allo ! ici <span class='pseudo'>{name}</span>... Je pars cherch...de...reparer ..ma bagnole.",
         "sound":"radio1.mp3"
     },
     "raid_alcool":{
-        "ovl":"<radio {name}> : ...allo ! ici {name}... Je pars cherch...de quoi ..re la fete.",
+        "ovl":"🍹-<radio {name}> : ...allo ! ici {name}... Je pars cherch...de quoi ..re la fete.",
         "chat":"🍹- il est {heure}:{minute}, {name} part en Raid pour chercher de l alcool.",
-        "mod":"🍹- radio : ...allo ! ici <span class='pseudo'>{name}</span>... Je pars cherch...de quoi ..re la fete.",
+        "mod":"radio : ...allo ! ici <span class='pseudo'>{name}</span>... Je pars cherch...de quoi ..re la fete.",
         "sound":"radio1.mp3"
     },
     "raid_agriculture":{
-        "ovl":"<radio {name}> : ...allo ! ici {name}... Je pars cherch...de...reparer ..ma bagnole.",
+        "ovl":"🌿-<radio {name}> : ...allo ! ici {name}... Je pars cherch...de...reparer ..ma bagnole.",
         "chat":"🌿- il est {heure}:{minute}, {name} part en Raid pour chercher de quoi jardiner.",
-        "mod":"🌿- radio : ...allo ! ici <span class='pseudo'>{name}</span>... Je pars cherch...de quoi ..jardiner...",
+        "mod":"radio : ...allo ! ici <span class='pseudo'>{name}</span>... Je pars cherch...de quoi ..jardiner...",
         "sound":"radio1.mp3"
     },
     "raid_meuble":{
-        "ovl":"<radio {name}> : ...allo ! ici {name}... Je pars cherch...de quoi .equiper la base.",
+        "ovl":"🗄️-<radio {name}> : ...allo ! ici {name}... Je pars cherch...de quoi .equiper la base.",
         "chat":"🗄️- il est {heure}:{minute}, {name} part en Raid pour chercher du mobilier.",
-        "mod":"🗄️- radio : ...allo ! ici <span class='pseudo'>{name}</span>... Je pars cherch...de quoi .equiper la base.",
+        "mod":"radio : ...allo ! ici <span class='pseudo'>{name}</span>... Je pars cherch...de quoi .equiper la base.",
         "sound":"radio1.mp3"
     }
 

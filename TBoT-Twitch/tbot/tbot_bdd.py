@@ -278,20 +278,13 @@ class TBOT_BDD():
             await db.execute(f'''UPDATE raid SET distance = {distance} WHERE name = "{name}"''') 
             
             if distance == michemin :
-                await tbot_com.message(channel=channel,ovl=f"<span class='pseudo'>{name}</span> commence à faire demi-tour.",
-                                       mod=f"'<radio {name}> allo... ..ai atteint mon object... je ...revie... a la base..",
-                                       chat=f"{name} retourne à la base",sound="radio5.mp3")
+                await tbot_com.message("raid_mi_chemin",channel=channel,name=name)
 
             elif distance == blesse : 
-                await tbot_com.message(channel=channel,ovl=f"<span class='pseudo'>{name}</span> a été attaqué durant son raid. Il est bléssé ! ", mod=f"'<radio {name}> Aidez moi! victim...zzz.. ne attaque... je suis ...gèrement bléssé... zzz..z...",chat=f"{name} a été bléssé sur une attaque !",son="radio5.mp3")
-
+                await tbot_com.message("raid_blesse",channel=channel,name=name)
             elif distance == fin :
-                print (f"Le raid se termine avec pour resultat : {resultat}")
                 if fin>1 : #le joueur est mort
-                    await tbot_com.message(channel=channel,ovl=f"<span class='pseudo'>{name}</span> a succombé durant son raid ! Il a tout perdu !",
-                                           mod=f"'<radio {name}> Arggg...partout. arghh... u secours... zzz..z...",
-                                           chat=f"{name} a succombé durant son raid ! Il est mort !",
-                                           sound="radio2.mp3")
+                    await tbot_com.message("raid_mort",channel=channel,name=name)
                     await db.execute(f'''DELETE from raid WHERE name = "{name}"''')
                     await db.execute(f'''DELETE from survivant WHERE name = "{name}"''')
 
