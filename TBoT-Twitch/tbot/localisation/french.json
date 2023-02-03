@@ -1,4 +1,10 @@
 {
+    "empty" :{
+        "ovl"   : "",
+        "chat"  : "",
+        "mod"   : "",
+        "sound" : ""
+    },
     "echec_creation_survivant" :{
         "ovl"   : "❌ Echec de tentative de création du joueur <span class='pseudo'>{name}</span> sur le serveur !",
         "chat"  :"❌- Echec de tentative de création du joueur {name} sur le serveur ! Le survivant existe déjà. Tapes !info_survivant",
@@ -71,5 +77,6 @@
         "mod":"🗄️- radio : ...allo ! ici <span class='pseudo'>{name}</span>... Je pars cherch...de quoi .equiper la base.",
         "sound":"radio1.mp3"
     }
+
 
 }

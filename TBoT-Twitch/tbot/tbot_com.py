@@ -15,6 +15,14 @@ from datetime import datetime
 with open('./config.json', 'r') as fichier:
     data = json.load(fichier)
     URLMOD = data["URLMOD"]
+
+langue = "french"
+
+with open (f'./TBOT-Twitch/tbot/localisation/{langue}.json', 'r',encoding="utf-8" ) as fichier:
+    localisation = json.load(fichier)
+
+with open ('./TBOT-Twitch/tbot/config/config_raid.json', 'r',encoding="utf-8" ) as fichier:
+    config_raid_json = json.load(fichier)
     
 TBOTPATH, filename = os.path.split(__file__) 
 ligne_overlay=[]
@@ -30,7 +38,7 @@ def joue_son(radio = "radio1.mp3"):
     mixer.music.load(os.path.join(TBOTPATH, "sound/"+radio))
     mixer.music.play()
 
-async def message(channel=None,overlay ="",chat="",mod="",son="",):
+async def message(key="empty",channel=None,name="",mod="",chat="",ovl="",sound=""):
     """    envois un message vers les différentes interfaces (twitch, overlay obs, chat in game PZ)
 
     Args:
@@ -40,28 +48,53 @@ async def message(channel=None,overlay ="",chat="",mod="",son="",):
         mod (str, optional): message devant afficher le message dans le jeu via le Mod. Defaults to "".
         son (str, optional): nom du fichier se trouvant dans /sound a jouer. Defaults to "".
     """
+    heure =  str(datetime.now().hour)
+    minute = str(datetime.now().minute)
+    if chat == "":
+        chat= localisation[f"{key}"]["chat"].replace("{name}",name).replace("{heure}",heure).replace("{minute}",minute)
+    if ovl == "":
+        ovl = localisation[f"{key}"]["ovl"].replace("{name}",name).replace("{heure}",heure).replace("{minute}",minute)
+    if mod == "":
+        mod = localisation[f"{key}"]["mod"].replace("{name}",name).replace("{heure}",heure).replace("{minute}",minute)
+    if sound == "":
+        sound = localisation[f"{key}"]["sound"]
+    #envoyer les messages 
     if chat != "":
         await channel.send(chat)
-    if overlay != "" :
-        await affichage_Overlay(overlay)
+    if ovl != "" :
+        await affichage_Overlay(ovl)
     if mod != "" :
         async with aiofiles.open(URLMOD+"texte.txt","w",encoding="utf-8") as fichier:
             await fichier.write(mod)
-    if son != "" :
-        joue_son(son)
+    if sound != "" :
+        joue_son(sound)
         
-async def donne_butin(butin:str):
+async def donne_butin(butin:str) -> str:
+    """Envois le butin vers le mod PZ
+
+    Args:
+        butin (str): String qui enumere le butin (nom : class pz)
+
+    Returns:
+        str: renvois une string pour detailler les differents items du butin 
+    """    
     butin=butin.replace("{","")
     butin=butin.replace("}","")
     liste_Butin=butin.split(",")
-    listefinale = ""
+    listeClassefinale = ""
+    listefinale=""
+    
     for nom in liste_Butin:
         item=nom.split(':')
+        item[0]= item[0].strip().replace ('"',"")
         item[1]= item[1].strip().replace ('"',"")
-        listefinale += item[1]+"\n"
-
+        listefinale += " - "+item[0]+"\n"
+        listeClassefinale += item[1]+"\n"
+        
     async with aiofiles.open(URLMOD+"butin.txt","w",encoding="utf-8") as fichier:
-        await fichier.write(listefinale)
+        await fichier.write(listeClassefinale)
+    
+    return listefinale
         
 
 async def affichage_Overlay(message: str):
