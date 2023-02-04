@@ -45,17 +45,17 @@ function placeCars() {
 					cssPosition = 100;
 				} else if (position > 50) {
 					cssPosition = (100 - position) * 2;
-					img.classList.add('rotate');
 				} else if (position < 50) {
+					img.classList.add('rotate');
 					cssPosition = position * 2;
 				}
 				div.style.left = (cssPosition - 5) + "%";
 
 				p.classList.add('pseudo');
-				p.innerHTML = survivants[survivant].NAME
+				p.innerHTML = survivants[survivant].NAME+ survivants[survivant]["STATS"].level_transport 
 
 				if (survivants[survivant].ALIVE === true) {
-					img.setAttribute('src', 'assets/cars/' + survivants[survivant]["STATS"].levelCar + '.png');
+					img.setAttribute('src', 'assets/cars/' + survivants[survivant]["STATS"].level_transport+'.png');
 				} else {
 					img.setAttribute('src', 'assets/cars/fail-1.png')
 				}

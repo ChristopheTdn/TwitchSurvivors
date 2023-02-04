@@ -272,9 +272,15 @@ class TBOT_BDD():
             
             distance -=1
             distancepourcent = (distance*100)//(distance_total)
-
             stat_survivant= await self.get_stats_survivant(name)
-            data[f"SURVIVANT_{name}"]={"NAME":f"{name}","STATS":f"{stat_survivant}","TYPE":f"{type_raid}","DISTANCE":distancepourcent,"RENFORT":f"{renfort}","ALIVE":False}
+            data[f"SURVIVANT_{name}"]={"NAME":f"{name}",
+                                       "STATS":
+                                       {"level_equipement": stat_survivant["level_equipement"],
+                                        "level_armement" : stat_survivant["level_armement"],
+                                        "level_armure" : stat_survivant["level_armure"],
+                                        "level_transport": stat_survivant["level_transport"]},
+                                        "TYPE":f"{type_raid}","DISTANCE":distancepourcent,"RENFORT":f"{renfort}","ALIVE":True}
+
             await db.execute(f'''UPDATE raid SET distance = {distance} WHERE name = "{name}"''') 
             
             if distance == michemin :
@@ -307,9 +313,9 @@ class TBOT_BDD():
         gain_reputation = self.config_raid_json["raid_"+type_raid]["gain_reputation"]
         listebutin=""
         if resultat =="BUTIN":
-            listebutin = "<br>"+await tbot_com.donne_butin(composition_butin)
+            listebutin = "<br>"+await tbot_com.donne_butin(composition_butin)        
         
-        await tbot_com.message("raid_win_butin",channel=channel,name=name,gain_reputation=gain_reputation,listebutin=listebutin)
+        await tbot_com.message("raid_win_butin",channel=channel,name=name,gain_reputation=str(gain_reputation),listebutin=listebutin)
         await db.execute(f'''UPDATE survivant SET reputation = reputation +{gain_reputation} WHERE name = "{name}"''')
 
     async def upgrade_aptitude(self,name,aptitude: str,cout_upgrade: int):
