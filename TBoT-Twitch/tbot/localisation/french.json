@@ -90,16 +90,16 @@
         "sound":"radio1.mp3"
     },
     "raid_agriculture":{
-        "ovl":"🌿- <radio {name}> : ...allo ! ici {name}... Je pars cherch...de...reparer ..ma bagnole.",
+        "ovl":"🌿- <radio {name}> : ...allo ! ici <span class='pseudo'>{name}</span>... Je pars cherch...de quoi ..jardiner.",
         "chat":"🌿- il est {heure}:{minute}, {name} part en Raid pour chercher de quoi jardiner.",
-        "mod":"radio : ...allo ! ici <span class='pseudo'>{name}</span>... Je pars cherch...de quoi ..jardiner...",
+        "mod":"radio : ...allo ! ici <span class='pseudo'>{name}</span>... Je pars cherch...de quoi ..jardiner.",
         "sound":"radio1.mp3"
     },
     "raid_meuble":{
         "ovl":"🗄️- <radio {name}> : ...allo ! ici {name}... Je pars cherch...de quoi .equiper la base.",
         "chat":"🗄️- il est {heure}:{minute}, {name} part en Raid pour chercher du mobilier.",
         "mod":"radio : ...allo ! ici <span class='pseudo'>{name}</span>... Je pars cherch...de quoi .equiper la base.",
-        "sound":"radio1.mp3"
+        "sound":"radio5.mp3"
     }
 
 

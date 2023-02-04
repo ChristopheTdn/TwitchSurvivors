@@ -139,7 +139,7 @@ class TBoT(commands.Bot):
             
             if  tarif[level]<=reputation:
                 await TBOTBDD.upgrade_aptitude(name,aptitude,tarif[level])
-                await tbot_com.message(channel=channel,overlay=f"<span class='pseudo'>{name}</span> > upgrade son aptitude {aptitude} pour {tarif[level]}.",
+                await tbot_com.message(channel=channel,ovl=f"<span class='pseudo'>{name}</span> > upgrade son aptitude {aptitude} pour {tarif[level]}.",
                                        chat=f"{name} upgrade son aptitude {aptitude} pour {tarif[level]}.")
             else :
                 await tbot_com.message(channel=channel,chat=f"❌- {name} ne possède pas assez de points de réputation pour upgrade son aptitude {aptitude} (cout : {tarif[level]} pts).")  
@@ -156,8 +156,8 @@ class TBoT(commands.Bot):
         channel = ctx.channel
         message=message.replace('!parle',"")
         await tbot_com.message(channel=channel,mod=f"<radio {name}> : {message}",
-                        overlay=f"⚡&ltradio <span class='pseudo'>{name}</span> > : {message}",
-                        son="radio4.mp3")
+                        ovl=f"⚡&ltradio <span class='pseudo'>{name}</span> > : {message}",
+                        sound="radio4.mp3")
         
     @commands.command()
     async def mon_survivant(self, ctx: commands.Context):
@@ -176,7 +176,7 @@ class TBoT(commands.Bot):
                 level transport= {dictStat['level_transport']} ;\
                 level armure= {dictStat['level_armure']} ;\
                 level equipement= {dictStat['level_equipement']}"
-            await tbot_com.message(channel,chat=message)
+            await tbot_com.message(channel=channel,chat=message)
         else :
             await tbot_com.message(channel=channel,overlay=f"❌- le survivant <span class='pseudo'>{name}</span> n'existe pas sur le serveur ! utilise les points de Chaine pour en creer un.",
                                      chat=f"❌- le survivant {name} n'existe pas sur le serveur ! utilise les points de Chaine pour en creer un.")
