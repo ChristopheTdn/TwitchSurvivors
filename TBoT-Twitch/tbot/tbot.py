@@ -38,7 +38,6 @@ langue = "french"
         
 
 TBOTPATH, filename = os.path.split(__file__)    
-ligne_overlay=[]
 TBOTBDD= TBOT_BDD(TBOTPATH)
 
 class TBoT(commands.Bot):
@@ -59,6 +58,7 @@ class TBoT(commands.Bot):
         # We are logged in and ready to chat and use commands...
         print(f'Logged in as | {self.nick}')
         print(f'User id is | {self.user_id}')
+        await tbot_com.msg_init_TboT()
         await self.timer_Raid()
         
 

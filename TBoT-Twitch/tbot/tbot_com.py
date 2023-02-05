@@ -25,8 +25,18 @@ with open ('./TBOT-Twitch/tbot/config/config_raid.json', 'r',encoding="utf-8" ) 
     config_raid_json = json.load(fichier)
     
 TBOTPATH, filename = os.path.split(__file__) 
+
 ligne_overlay=[]
-messageJson={}    
+
+
+
+async def msg_init_TboT():
+    for i in range(20):
+        ligne_overlay.append("")     
+    await message(ovl="Init TBoT Done.")
+
+messageJson={}
+
 
 def joue_son(radio = "radio1.mp3"):
     """Joue un son passé en parametre 
@@ -120,28 +130,15 @@ async def donne_butin(butin:str) -> str:
         
 
 async def affichage_Overlay(message: str):
-    """Genere un fichier HTML utilisable comme OVERLAY dans OBS
+    """Genere un fichier JSON utilisable comme OVERLAY dans OBS via les scripts dans TBot_Overlay
 
     Args:
-        message (str): message à ajouter à la page html
+        message (str): message à ajouter au fichier JSON
     """        
-    template = '''
-    <!doctype html>
-    <html lang="fr">
-    <head>
-        <meta charset="utf-8">
-        <title>Overlay TBOT</title>
-        <link rel="stylesheet" href="style.css">
-        <script>
-            setTimeout(function(){location.reload()},4000);
-        </script>
-    </head>
-    <body>
-    '''
+    global ligne_overlay
     ligne_overlay.insert(0,message)
     
-    if len(ligne_overlay)>20:
-        del ligne_overlay[20]  
+    ligne_overlay = ligne_overlay[:20]  
 
     num_message = 1
     for ligne in ligne_overlay:
