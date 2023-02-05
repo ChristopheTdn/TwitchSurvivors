@@ -38,7 +38,7 @@ def joue_son(radio = "radio1.mp3"):
     mixer.music.load(os.path.join(TBOTPATH, "sound/"+radio))
     mixer.music.play()
 
-async def message(key="empty",channel=None,name="",mod="",chat="",ovl="",sound="",gain_reputation="",listebutin=""):
+async def message(key="empty",channel=None,name="",mod="",chat="",ovl="",sound="",gain_reputation="",listebutin="",aptitude="",tarif_level=""):
     """    envois un message vers les différentes interfaces (twitch, overlay obs, chat in game PZ)
 
     Args:
@@ -56,14 +56,18 @@ async def message(key="empty",channel=None,name="",mod="",chat="",ovl="",sound="
             .replace("{heure}",heure)\
             .replace("{minute}",minute)\
             .replace("{gain_reputation}",gain_reputation)\
-            .replace("{listebutin}",listebutin)
+            .replace("{listebutin}",listebutin)\
+            .replace("{aptitude}",aptitude)\
+            .replace("{tarif_level}",tarif_level)
     if ovl == "":
         ovl = localisation[f"{key}"]["ovl"]\
             .replace("{name}",name)\
             .replace("{heure}",heure)\
             .replace("{minute}",minute)\
             .replace("{gain_reputation}",gain_reputation)\
-            .replace("{listebutin}",listebutin)
+            .replace("{listebutin}",listebutin)\
+            .replace("{aptitude}",aptitude)\
+            .replace("{tarif_level}",tarif_level)
                 
     if mod == "":
         mod = localisation[f"{key}"]["mod"]\
@@ -71,7 +75,9 @@ async def message(key="empty",channel=None,name="",mod="",chat="",ovl="",sound="
             .replace("{heure}",heure)\
             .replace("{minute}",minute)\
             .replace("{gain_reputation}",gain_reputation)\
-            .replace("{listebutin}",listebutin)
+            .replace("{listebutin}",listebutin)\
+            .replace("{aptitude}",aptitude)\
+            .replace("{tarif_level}",tarif_level)
     if sound == "":
         sound = localisation[f"{key}"]["sound"]
     #envoyer les messages 

@@ -139,10 +139,9 @@ class TBoT(commands.Bot):
             
             if  tarif[level]<=reputation:
                 await TBOTBDD.upgrade_aptitude(name,aptitude,tarif[level])
-                await tbot_com.message(channel=channel,ovl=f"<span class='pseudo'>{name}</span> > upgrade son aptitude {aptitude} pour {tarif[level]}.",
-                                       chat=f"{name} upgrade son aptitude {aptitude} pour {tarif[level]}.")
+                await tbot_com.message(key="survivant_upgrade_aptitude",channel=channel,name=name,aptitude=aptitude,tarif_level=str(tarif[level]))
             else :
-                await tbot_com.message(channel=channel,chat=f"❌- {name} ne possède pas assez de points de réputation pour upgrade son aptitude {aptitude} (cout : {tarif[level]} pts).")  
+                await tbot_com.message(key="survivant_reputation_insuffisant",channel=channel,name=name,aptitude=aptitude,tarif_level=str(tarif[level])) 
                         
     @commands.command()
     async def parle(self, ctx: commands.Context):
@@ -178,8 +177,7 @@ class TBoT(commands.Bot):
                 level equipement= {dictStat['level_equipement']}"
             await tbot_com.message(channel=channel,chat=message)
         else :
-            await tbot_com.message(channel=channel,overlay=f"❌- le survivant <span class='pseudo'>{name}</span> n'existe pas sur le serveur ! utilise les points de Chaine pour en creer un.",
-                                     chat=f"❌- le survivant {name} n'existe pas sur le serveur ! utilise les points de Chaine pour en creer un.")
+            await tbot_com.message(key="survivant_no_exist",channel=channel,name=name)
     
     @commands.command()
     async def raid_arme(self, ctx: commands.Context):
