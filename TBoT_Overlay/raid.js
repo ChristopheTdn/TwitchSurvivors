@@ -1,11 +1,11 @@
 class Survivant {
 	// JSON to Object
-	constructor(name, reputation, levelGun, levelWear, levelCar, raidType, raidDistance, raidRenforts, alive) {
+	constructor(name, reputation, levelGun, levelWear, level_transport, raidType, raidDistance, raidRenforts, alive) {
 		this.name = name;
 		this.reputation = reputation;
 		this.levelGun = levelGun;
 		this.levelWear = levelWear;
-		this.levelCar = levelCar;
+		this.level_transport = level_transport;
 		this.raidType = raidType;
 		this.raidDistance = raidDistance;
 		this.raidRenforts = raidRenforts;
@@ -37,8 +37,8 @@ class Survivant {
 	// A voir = délai d'affichage décés ? comparer date du décés ? 
 	// A voir = randomiser l'affichage ?
 	setImg() {
-		if(this.alive === false) {
-			this.img.setAttribute('src', 'cars/'+this.leveltransport+'.png');
+		if(this.alive === true) {
+			this.img.setAttribute('src', 'cars/'+this.level_transport+'.png');
 		} else {
 			this.img.setAttribute('src', 'cars/fail-1.png')
 		}
