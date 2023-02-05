@@ -140,18 +140,8 @@ async def affichage_Overlay(message: str):
     '''
     ligne_overlay.insert(0,message)
     
-    if len(ligne_overlay)>10:
-        del ligne_overlay[10]  
-
-        
-    async with aiofiles.open('tbot.html',"w",encoding="utf-8") as fichier:
-        await fichier.write(template)
-        for ligne in ligne_overlay:
-            await fichier.write ("<p>"+ligne+"</p>\n")
-        await fichier.write('''
-        </body>
-        </html>
-        ''')
+    if len(ligne_overlay)>20:
+        del ligne_overlay[20]  
 
     num_message = 1
     for ligne in ligne_overlay:
