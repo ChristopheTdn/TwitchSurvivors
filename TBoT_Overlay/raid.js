@@ -92,7 +92,7 @@ window.addEventListener('load', (event) => {
 				jsonSurvivants[jsonSurvivant].STATS.reputation,
 				jsonSurvivants[jsonSurvivant].STATS.levelGun,
 				jsonSurvivants[jsonSurvivant].STATS.levelWear,
-				jsonSurvivants[jsonSurvivant].STATS.levelCar,
+				jsonSurvivants[jsonSurvivant].STATS.level_transport,
 				jsonSurvivants[jsonSurvivant].TYPE,
 				jsonSurvivants[jsonSurvivant].DISTANCE,
 				jsonSurvivants[jsonSurvivant].RENFORT,
