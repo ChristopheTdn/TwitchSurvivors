@@ -1,71 +1,105 @@
-let survivants = {};
+class Survivant {
+	// JSON to Object
+	constructor(name, reputation, levelGun, levelWear, levelCar, raidType, raidDistance, raidRenforts, alive) {
+		this.name = name;
+		this.reputation = reputation;
+		this.levelGun = levelGun;
+		this.levelWear = levelWear;
+		this.levelCar = levelCar;
+		this.raidType = raidType;
+		this.raidDistance = raidDistance;
+		this.raidRenforts = raidRenforts;
+		this.alive = alive;
+		this.box = document.createElement('div');
+		this.p = document.createElement('p');
+		this.img = document.createElement('img');
+		this.pRenforts = document.createElement('p');
+	}
 
-window.addEventListener('load', (event) => {
-	placeCars();
-})
+	setTemplate() {
+		this.box.classList.add("cars");
+		this.box.id = this.name;
+		this.p.classList.add("pseudo");
+		this.pRenforts.classList.add('renforts')
+		this.box.appendChild(this.pRenforts);
+		this.box.appendChild(this.p);
+		this.box.appendChild(this.img);
+		this.setImg();
+		this.setPseudo();
+		this.setRenforts();
+		this.setPosition();
 
-function placeCars() {
+		document.getElementById('line').appendChild(this.box)
+	}
 
-	let line = document.getElementById('line');
-	line.innerHTML = "";
+	// Si le survivant est en vie : affiche la voiture via son niveau en véhicule
+	// Sinon, affiche une image de fail
+	// A voir = délai d'affichage décés ? comparer date du décés ? 
+	// A voir = randomiser l'affichage ?
+	setImg() {
+		if(this.alive === true) {
+			this.img.setAttribute('src', 'assets/cars/'+this.levelCar+'.png');
+		} else {
+			this.img.setAttribute('src', 'assets/cars/fail-1.png')
+		}
+	}
 
-	fetch('assets/raid.json')
-		.then((response) => response.json())
-		.then((survivants) => {
-			for (let survivant in survivants) {
+	// ¯\_(ツ)_/¯
+	setPseudo(){
+		this.p.innerHTML = this.name;
+	}
 
-				let div = document.createElement('div');
-				let p = document.createElement('p');
-				let img = document.createElement('img');
-				let pRenforts = document.createElement('p');
-
-				if (JSON.stringify(survivants[survivant].RENFORT) !== '{}') {
-					pRenforts.classList.add("renforts");
-					pRenforts.innerHTML = "( ";
-
-					for (let renfort in survivants[survivant].RENFORT) {
-						pRenforts.innerHTML += survivants[survivant].RENFORT[renfort];
-
-						let values = Object.values(survivants[survivant].RENFORT);
-
-						if (survivants[survivant].RENFORT[renfort] !== values[values.length - 1]) {
-							pRenforts.innerHTML += " - ";
-						}
-					}
-					pRenforts.innerHTML += " )";
+	// Construction de la ligne renforts
+	setRenforts(){
+		if(JSON.stringify(this.raidRenforts) !== "{}") {
+			this.pRenforts.innerHTML = "( ";
+			for (var i = 0 ; i < Object.values(this.raidRenforts).length ; i++) {
+				this.pRenforts.innerHTML += Object.values(this.raidRenforts)[i];
+				if( i !== Object.values(this.raidRenforts).length -1) {
+					this.pRenforts.innerHTML += " - ";
 				}
-
-				div.appendChild(pRenforts);
-
-				div.classList.add('cars');
-				div.id = survivants[survivant].NAME;
-				let position = survivants[survivant].DISTANCE;
-				let cssPosition = 0;
-				if (position == 50) {
-					cssPosition = 100;
-				} else if (position > 50) {
-					cssPosition = (100 - position) * 2;
-				} else if (position < 50) {
-					img.classList.add('rotate');
-					cssPosition = position * 2;
-				}
-				div.style.left = (cssPosition - 5) + "%";
-
-				p.classList.add('pseudo');
-				p.innerHTML = survivants[survivant].NAME+ survivants[survivant]["STATS"].level_transport 
-
-				if (survivants[survivant].ALIVE === true) {
-					img.setAttribute('src', 'assets/cars/' + survivants[survivant]["STATS"].level_transport+'.png');
-				} else {
-					img.setAttribute('src', 'assets/cars/fail-1.png')
-				}
-
-				div.appendChild(p);
-				div.appendChild(img);
-
-				let line = document.getElementById('line');
-				line.appendChild(div);
 			}
-		});
+			this.pRenforts.innerHTML += " )";
+		}
+	}
+
+	// définition position et orientation
+	// croissant ou décroissant ?
+	setPosition(){
+		var cssPosition;
+		if (this.raidDistance == 50) {
+			cssPosition = 100;
+		} else if (this.raidDistance > 50) {
+			cssPosition = (100 - this.raidDistance) * 2;
+		} else if (this.raidDistance < 50) {
+			this.img.classList.add('rotate');
+			cssPosition = this.raidDistance * 2;
+		}
+		this.box.style.left = (cssPosition - 5) + "%";
+	}
 }
 
+// Requête au JSON et construction de Survivant
+window.addEventListener('load', (event) => {
+	let survivants = [];
+
+	fetch('assets/raid.json')
+	.then((response) => response.json())
+	.then((jsonSurvivants) => {
+		for (let jsonSurvivant in jsonSurvivants) {
+			let survivant = new Survivant(
+				jsonSurvivants[jsonSurvivant].NAME,
+				jsonSurvivants[jsonSurvivant].STATS.reputation,
+				jsonSurvivants[jsonSurvivant].STATS.levelGun,
+				jsonSurvivants[jsonSurvivant].STATS.levelWear,
+				jsonSurvivants[jsonSurvivant].STATS.levelCar,
+				jsonSurvivants[jsonSurvivant].TYPE,
+				jsonSurvivants[jsonSurvivant].DISTANCE,
+				jsonSurvivants[jsonSurvivant].RENFORT,
+				jsonSurvivants[jsonSurvivant].ALIVE,
+			)
+			survivants[survivant.name] = survivant;
+			survivant.setTemplate();
+		}
+	});
+})
