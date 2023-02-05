@@ -231,12 +231,14 @@ class TBOT_BDD():
                 if choix_loot not in butin_final:
                     butin_final[choix_loot]=self.config_butin_json[type_raid][f"tier_2"][choix_loot]
             else: #Donne un objet de Tier1
-                loot = self.config_butin_json[type_raid]["tier_3"]
+                loot = self.config_butin_json[type_raid]["tier_1"]
                 choix_loot = random.choice(tuple(loot.keys()))
                 if choix_loot not in butin_final:
-                    butin_final[choix_loot]=self.config_butin_json[type_raid][f"tier_3"][choix_loot]
+                    butin_final[choix_loot]=self.config_butin_json[type_raid][f"tier_1"][choix_loot]
+                    
             if random.randrange(100)>50 : #test si on arrete le tour (50 % de chance que oui)
                 break
+            
         return butin_final
     
     
@@ -269,17 +271,13 @@ class TBOT_BDD():
             blesse = raid[6]
             fin = raid[7]
             composition_butin = raid[8]
-            
+                
             distance -=1
             distancepourcent = (distance*100)//(distance_total)
             stat_survivant= await self.get_stats_survivant(name)
             data[f"SURVIVANT_{name}"]={"NAME":f"{name}",
-                                       "STATS":
-                                       {"level_equipement": stat_survivant["level_equipement"],
-                                        "level_armement" : stat_survivant["level_armement"],
-                                        "level_armure" : stat_survivant["level_armure"],
-                                        "level_transport": stat_survivant["level_transport"]},
-                                        "TYPE":f"{type_raid}","DISTANCE":distancepourcent,"RENFORT":f"{renfort}","ALIVE":True}
+                                       "STATS": stat_survivant,
+                                        "TYPE":f"{type_raid}","DISTANCE":distancepourcent,"RENFORT":f"{renfort}","ALIVE":True,"BLESSE":(distance<=blesse)}
 
             await db.execute(f'''UPDATE raid SET distance = {distance} WHERE name = "{name}"''') 
             
