@@ -158,7 +158,7 @@ async def affichage_Overlay(message: str):
         messageJson[f"message_{num_message}"] = ligne
         num_message +=1
         
-    async with aiofiles.open("assets/chat.json", "w",encoding="utf-8") as fichier:
+    async with aiofiles.open("TBoT_Overlay/chat.json", "w",encoding="utf-8") as fichier:
         await fichier.write(json.dumps(messageJson,indent=4,ensure_ascii=False))
 
 async def ecrit_log(msg: str):

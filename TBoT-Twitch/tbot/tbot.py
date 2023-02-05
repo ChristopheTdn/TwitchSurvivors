@@ -151,11 +151,11 @@ class TBoT(commands.Bot):
                 await tbot_com.message(key="survivant_reputation_insuffisant",channel=channel,name=name,aptitude=aptitude,tarif_level=str(tarif[level])) 
                         
     @commands.command()
-    async def parle(self, ctx: commands.Context):
+    async def radio(self, ctx: commands.Context):
         """
-        Commande !parle <message>
+        Commande !radio <message>
         -----------
-        Traite la commande twitch !parle. Envois in game le message passé en parametre avec un son radio
+        Traite la commande twitch !radio. Envois in game le message passé en parametre avec un son radio
         """
         name = ctx.author.display_name
         message = ctx.message.content

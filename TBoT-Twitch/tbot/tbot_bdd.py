@@ -304,7 +304,7 @@ class TBOT_BDD():
         await db.commit()
         await db.close()
             
-        async with aiofiles.open("assets/raid.json", "w",encoding="utf-8") as fichier:
+        async with aiofiles.open("TBoT_Overlay/raid.json", "w",encoding="utf-8") as fichier:
             await fichier.write(json.dumps(data,indent=4,ensure_ascii=False))
         
     async def gere_fin_raid(self,db,name,type_raid,resultat,composition_butin,channel):

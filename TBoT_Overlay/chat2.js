@@ -41,7 +41,7 @@ class Message {
 }
 
 let list = [];
-fetch('assets/chat.json')
+fetch('chat.json')
 		.then((response) => response.json())
 		.then((messages) => {
 			for (message in messages) {

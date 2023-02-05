@@ -6,7 +6,7 @@ function displayMessages() {
 
 	let box = document.getElementById("box");
 
-	fetch('assets/chat.json')
+	fetch('chat.json')
 		.then((response) => response.json())
 		.then((messages) => {
 
