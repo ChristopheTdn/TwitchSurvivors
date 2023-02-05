@@ -18,8 +18,26 @@
         "sound" : "radio1.mp3"
     },
     "survivant_no_exist" :{
-        "ovl"   : "",
+        "ovl"   : "❌- le survivant <span class='pseudo'>{name}</span> n'existe pas sur le serveur ! utilise les points de Chaine pour en creer un.",
         "chat"  :"❌- le survivant {name} n'existe pas sur le serveur ! Creer un nouveau survivant avec tes points de chaine.",
+        "mod"   : "",
+        "sound" : ""
+    },
+    "survivant_upgrade_aptitude" :{
+        "ovl"   :"⛹- <span class='pseudo'>{name}</span> upgrade son aptitude {aptitude} pour {tarif_level}",
+        "chat"  :"⛹- {name} upgrade son aptitude {aptitude} pour {tarif_level}.",
+        "mod"   : "",
+        "sound" : ""
+    },
+    "survivant_reputation_insuffisant" :{
+        "ovl"   :"❌- <span class='pseudo'>{name}</span> ne possède pas assez de points de réputation pour upgrade son aptitude {aptitude} (cout : {tarif_level} pts).",
+        "chat"  :"❌- {name} ne possède pas assez de points de réputation pour upgrade son aptitude {aptitude} (cout : {tarif_level} pts).",
+        "mod"   : "",
+        "sound" : ""
+    },
+    "survivant_max_aptitude" :{
+        "ovl"   :"❌- Attention <span class='pseudo'>{name}</span>, l aptitude {aptitude} est deja à son niveau maximum. !mon_survivant pour plus de renseignement.",
+        "chat"  :"❌- Attention {name}! l aptitude {aptitude} est deja à son niveau maximum. !mon_survivant pour plus de renseignement.",
         "mod"   : "",
         "sound" : ""
     },

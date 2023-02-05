@@ -125,20 +125,27 @@ class TBoT(commands.Bot):
         name = ctx.author.display_name
         channel = ctx.channel
         survivant = await TBOTBDD.get_stats_survivant(name)
+        level = survivant[f"level_{aptitude}"] 
+        if level >= 5 :
+            await tbot_com.message(key="survivant_max_aptitude",channel=channel,name=name,aptitude=aptitude)
+            return
+         
         raid = await TBOTBDD.raid_exist(name)
-        level=1
-
+        
         if survivant == None :
             await tbot_com.message("survivant_no_exist",channel=channel,name=name)
         elif raid != None :
             await tbot_com.message("raid_deja_en_cours",channel=channel,name=name)
         else :
-            level = survivant[f"level_{aptitude}"]                
+                          
             reputation = survivant["reputation"]
+            
+            
             tarif=[0,1000,2500,6000,13000]
             
             if  tarif[level]<=reputation:
                 await TBOTBDD.upgrade_aptitude(name,aptitude,tarif[level])
+                
                 await tbot_com.message(key="survivant_upgrade_aptitude",channel=channel,name=name,aptitude=aptitude,tarif_level=str(tarif[level]))
             else :
                 await tbot_com.message(key="survivant_reputation_insuffisant",channel=channel,name=name,aptitude=aptitude,tarif_level=str(tarif[level])) 
@@ -153,7 +160,7 @@ class TBoT(commands.Bot):
         name = ctx.author.display_name
         message = ctx.message.content
         channel = ctx.channel
-        message=message.replace('!parle',"")
+        message=message.replace('!radio',"")
         await tbot_com.message(channel=channel,mod=f"<radio {name}> : {message}",
                         ovl=f"⚡&ltradio <span class='pseudo'>{name}</span> > : {message}",
                         sound="radio4.mp3")
