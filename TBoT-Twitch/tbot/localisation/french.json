@@ -72,19 +72,19 @@
         "sound" : "radio2.mp3"
     },
     "raid_arme" : {
-        "ovl":"🗡️- <radio <span class='pseudo'>{name}</span>> : ...allo ! ici <span class='pseudo'>{name}</span>... Je pars cherch... des arm. et des .munitions.",
+        "ovl":"🗡️- <radio {name}> : ...allo ! ici <span class='pseudo'>{name}</span>... Je pars cherch... des arm. et des .munitions.",
         "chat":"🗡️- il est {heure}:{minute}, {name} part en Raid pour récupérer de l'armement.",
         "mod":"radio : ...allo ! ici <span class='pseudo'>{name}</span>... Je pars cherch... des arm.. et des .munitions.",
         "sound":"radio1.mp3"
     },
     "raid_outil" : {
-        "ovl":"🔨- <radio <span class='pseudo'>{name}</span>> : ...allo ! ici <span class='pseudo'>{name}</span>... Je pars cherch... du materiel...t des outils.",
+        "ovl":"🔨- <radio {name}> : ...allo ! ici <span class='pseudo'>{name}</span>... Je pars cherch... du materiel...t des outils.",
         "chat":"🔨- il est {heure}:{minute}, {name} part en Raid pour récupérer des outils..",
         "mod":"radio : ...allo ! ici <span class='pseudo'>{name}</span>... Je pars cherch... du materiel...t des outils.",
         "sound":"radio1.mp3"
     },
     "raid_medical" : {
-        "ovl":"☣️- <radio <span class='pseudo'>{name}</span>> : ...allo ! ici <span class='pseudo'>{name}</span>... Je pars cherch... de..medicaments..t des pansement.",
+        "ovl":"☣️- <radio {name}> : ...allo ! ici <span class='pseudo'>{name}</span>... Je pars cherch... de..medicaments..t des pansement.",
         "chat":"☣️- il est {heure}:{minute}, {name} part en Raid pour récupérer des fournitures medicales.",
         "mod":"radio : ...allo ! ici <span class='pseudo'>{name}</span>... Je pars cherch... de..medicaments..t des pansement.",
         "sound":"radio1.mp3"
