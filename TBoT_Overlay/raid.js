@@ -37,10 +37,10 @@ class Survivant {
 	// A voir = délai d'affichage décés ? comparer date du décés ? 
 	// A voir = randomiser l'affichage ?
 	setImg() {
-		if(this.alive === true) {
-			this.img.setAttribute('src', 'assets/cars/'+this.levelCar+'.png');
+		if(this.alive === false) {
+			this.img.setAttribute('src', 'cars/'+this.leveltransport+'.png');
 		} else {
-			this.img.setAttribute('src', 'assets/cars/fail-1.png')
+			this.img.setAttribute('src', 'cars/fail-1.png')
 		}
 	}
 
@@ -83,7 +83,7 @@ class Survivant {
 window.addEventListener('load', (event) => {
 	let survivants = [];
 
-	fetch('assets/raid.json')
+	fetch('raid.json')
 	.then((response) => response.json())
 	.then((jsonSurvivants) => {
 		for (let jsonSurvivant in jsonSurvivants) {
