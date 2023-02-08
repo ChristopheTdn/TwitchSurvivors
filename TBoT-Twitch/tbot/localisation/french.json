@@ -43,7 +43,7 @@
     },
     "raid_win_butin" :{
         "ovl"   : "⛹- <span class='pseudo'>{name}</span> est revenu à la base. gain de reputation : +{gain_reputation} !!!{listebutin}",
-        "chat"  :"⛹- {name} retourne à la base",
+        "chat"  :"⛹- {name} est revenu à la base. gain de reputation : +{gain_reputation} !!!{listebutin}",
         "mod"   : "<radio {name}> je suis ...nfin reven... à la base...",
         "sound" : "BUTIN.mp3"
     },

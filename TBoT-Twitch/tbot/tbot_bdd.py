@@ -32,6 +32,7 @@ class TBOT_BDD():
             name TEXT UNIQUE,
             profession TEXT,
             reputation INTEGER,
+            credit INTEGER,
             level_armement INTEGER,
             level_armure INTEGER,
             level_transport INTEGER,
@@ -57,11 +58,12 @@ class TBOT_BDD():
                             (name,
                             profession,
                             reputation,
+                            credit,
                             level_armement,
                             level_armure,
                             level_transport,
                             level_equipement)
-                            VALUES (?,?,?,?,?,?,?)''', (pseudo ,"",0,1,1,1,1)) 
+                            VALUES (?,?,?,?,?,?,?,?)''', (pseudo ,"",0,2500,1,1,1,1)) 
         await db.commit()
         await db.close()
     
@@ -71,6 +73,7 @@ class TBOT_BDD():
         async with db.execute (f'''SELECT name,
                             profession,
                             reputation,
+                            credit,
                             level_armement,
                             level_armure,
                             level_transport,
@@ -83,10 +86,11 @@ class TBOT_BDD():
             reponse ={"name": listeStat[0],
                     "profession" : listeStat[1],
                     "reputation": listeStat[2],
-                    "level_armement":listeStat[3],
-                    "level_armure":listeStat[4],
-                    "level_transport":listeStat[5],
-                    "level_equipement":listeStat[6]
+                    "credit" : listeStat[3],
+                    "level_armement":listeStat[4],
+                    "level_armure":listeStat[5],
+                    "level_transport":listeStat[6],
+                    "level_equipement":listeStat[7]
                     }
             return reponse
     
@@ -117,6 +121,7 @@ class TBOT_BDD():
         """        
         survivant_stat= await self.get_stats_survivant(name)
         profession = survivant_stat["profession"]
+        credit = survivant_stat["credit"]
         level_armement = survivant_stat["level_armement"]
         level_armure=survivant_stat["level_armure"]
         level_transport=survivant_stat["level_transport"]
@@ -154,6 +159,7 @@ class TBOT_BDD():
         BREDOUILLE = self.config_raid_json["raid_"+type_raid]["stats_raid"][f"niveau-1"]["BREDOUILLE"]
         BLESSE = self.config_raid_json["raid_"+type_raid]["stats_raid"][f"niveau-1"]["BLESSE"]
         MORT = self.config_raid_json["raid_"+type_raid]["stats_raid"][f"niveau-1"]["MORT"]
+        
 
         BUTIN,BREDOUILLE,BLESSE,MORT,DISTANCE = await self.calcul_ratio_raid(name,BUTIN,BREDOUILLE,BLESSE,MORT,DISTANCE)
         composition_butin={}
