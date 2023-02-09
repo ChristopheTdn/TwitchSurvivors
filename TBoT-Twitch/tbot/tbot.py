@@ -165,11 +165,11 @@ class TBoT(commands.Bot):
                         sound="radio4.mp3")
         
     @commands.command()
-    async def mon_survivant(self, ctx: commands.Context):
+    async def my_survivor(self, ctx: commands.Context):
         """
-        Commande !mon_survivant 
+        Commande !my_survivor 
         -----------
-        Traite la commande twitch !mon_survivant. retourne les stats du joueurs dans le chat Twitch
+        Traite la commande twitch !my_survivor. retourne les stats du joueurs dans le chat Twitch
         """
         name = ctx.author.display_name
         channel = ctx.channel
@@ -178,18 +178,18 @@ class TBoT(commands.Bot):
             dictStat= await TBOTBDD.get_stats_survivant(name)
             message = f"stat {dictStat['name']} : prestige = {dictStat['prestige']},\
                 credits = {dictStat['credits']},\
-                level armement = {dictStat['level_armement']} ;\
+                level weapon = {dictStat['level_weapon']} ;\
                 level transport= {dictStat['level_transport']} ;\
-                level armure= {dictStat['level_armure']} ;\
-                level equipement= {dictStat['level_equipement']}"
+                level armor= {dictStat['level_armor']} ;\
+                level gear= {dictStat['level_gear']}"
             await tbot_com.message(channel=channel,chat=message)
         else :
             await tbot_com.message(key="survivant_no_exist",channel=channel,name=name)
     
     @commands.command()
-    async def raid_weapons(self, ctx: commands.Context):
+    async def raid_weapon(self, ctx: commands.Context):
         """
-        Commande !raid_weapons
+        Commande !raid_weapon
         -----------
         Traite la commande twitch !raid_weapons
         """
@@ -223,7 +223,7 @@ class TBoT(commands.Bot):
         await self.creer_raid(ctx,"food")
         
     @commands.command()
-    async def raid_automobile(self, ctx: commands.Context):
+    async def raid_car(self, ctx: commands.Context):
         """
         Commande !raid_car
         -----------

@@ -126,7 +126,7 @@ async def donne_butin(butin:str) -> str:
         item=nom.split(':')
         item[0]= item[0].strip().replace ('"',"")
         item[1]= item[1].strip().replace ('"',"")
-        listefinale += '<p STYLE="padding:0 0 0 20px;"  🔸'+item[0]+'</p>\n'
+        listefinale += '<p STYLE="padding:0 0 0 20px;">  🔸'+item[0]+'</p>'
         listeClassefinale += item[1]+"\n"
         
     async with aiofiles.open(URLMOD+"butin.txt","w",encoding="utf-8") as fichier:
