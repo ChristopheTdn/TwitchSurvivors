@@ -98,6 +98,8 @@ class TBoT(commands.Bot):
         channel = ctx.channel
         test_survivant_exist = await TBOTBDD.get_stats_survivant(name)
         test_raid_exist = await TBOTBDD.raid_exist(name)
+        raid_name = self.config_raid_json["raid_"+type_raid]["nom_raid"]
+        
         
         if test_survivant_exist == None :
             await tbot_com.message("survivant_no_exist",channel=channel,name=name)
@@ -110,14 +112,11 @@ class TBoT(commands.Bot):
             """Création du Raid
             """
             # recupere le level du joueur en fonction du type de raid
-               
-                           
-            raid_name = self.config_raid_json["raid_"+type_raid]["nom_raid"]
-       
+
             heure =  datetime.now().hour
             minute = datetime.now().minute
             
-            await TBOTBDD.create_raid(name,raid_name)
+            await TBOTBDD.genere_raid(name,raid_name)
 
             await tbot_com.message(f"raid_{raid_name}",channel=channel,name=name)          
     async def upgrade_aptitude(self,ctx: commands.Context ,aptitude: str):
@@ -178,6 +177,7 @@ class TBoT(commands.Bot):
         if test_survivant_exist !=None :
             dictStat= await TBOTBDD.get_stats_survivant(name)
             message = f"stat {dictStat['name']} : reputation = {dictStat['reputation']},\
+                credits = {dictStat['credits']},\
                 level armement = {dictStat['level_armement']} ;\
                 level transport= {dictStat['level_transport']} ;\
                 level armure= {dictStat['level_armure']} ;\
@@ -187,49 +187,49 @@ class TBoT(commands.Bot):
             await tbot_com.message(key="survivant_no_exist",channel=channel,name=name)
     
     @commands.command()
-    async def raid_arme(self, ctx: commands.Context):
+    async def raid_weapons(self, ctx: commands.Context):
         """
-        Commande !raid_arme
+        Commande !raid_weapons
         -----------
-        Traite la commande twitch !raid_arme. 
+        Traite la commande twitch !raid_weapons
         """
-        await self.creer_raid(ctx,"arme")
+        await self.creer_raid(ctx,"weapon")
 
     @commands.command()
-    async def raid_outil(self, ctx: commands.Context):
+    async def raid_tool(self, ctx: commands.Context):
         """
-        Commande !raid_outil
+        Commande !raid_tool
         -----------
         Traite la commande twitch !raid_outil. 
         """
-        await self.creer_raid(ctx,"outil")
+        await self.creer_raid(ctx,"tool")
 
     @commands.command()
-    async def raid_medical(self, ctx: commands.Context):
+    async def raid_medic(self, ctx: commands.Context):
         """
-        Commande !raid_medical
+        Commande !raid_medic
         -----------
-        Traite la commande twitch !raid_medical. 
+        Traite la commande twitch !raid_medic. 
         """
-        await self.creer_raid(ctx,"medical")
+        await self.creer_raid(ctx,"medic")
         
     @commands.command()
-    async def raid_nourriture(self, ctx: commands.Context):
+    async def raid_food(self, ctx: commands.Context):
         """
         Commande !raid_nourriture
         -----------
-        Traite la commande twitch !raid_nourriture. 
+        Traite la commande twitch !raid_food. 
         """
-        await self.creer_raid(ctx,"nourriture")
+        await self.creer_raid(ctx,"food")
         
     @commands.command()
     async def raid_automobile(self, ctx: commands.Context):
         """
-        Commande !raid_automobile
+        Commande !raid_car
         -----------
-        Traite la commande twitch !raid_automobile. 
+        Traite la commande twitch !raid_car. 
         """
-        await self.creer_raid(ctx,"automobile")
+        await self.creer_raid(ctx,"car")
         
     @commands.command()
     async def raid_alcool(self, ctx: commands.Context):
@@ -250,31 +250,31 @@ class TBoT(commands.Bot):
         await self.creer_raid(ctx,"agriculture")
         
     @commands.command()
-    async def raid_meuble(self, ctx: commands.Context):
+    async def raid_furniture(self, ctx: commands.Context):
         """
-        Commande !raid_meuble
+        Commande !raid_furniture
         -----------
-        Traite la commande twitch !raid_meuble. 
+        Traite la commande twitch !raid_furniture. 
         """
-        await self.creer_raid(ctx,"meuble") 
+        await self.creer_raid(ctx,"furniture") 
         
     @commands.command()
     async def upgrade_armement(self, ctx: commands.Context):
         """
-        Commande !upgrade_armement
+        Commande !upgrade_weapons
         -----------
-        Traite la commande twitch !upgrade_arme. 
+        Traite la commande twitch !upgrade_weapons. 
         """
-        await self.upgrade_aptitude(ctx,"armement")
+        await self.upgrade_aptitude(ctx,"weapons")
                  
     @commands.command()
-    async def upgrade_armure(self, ctx: commands.Context):
+    async def upgrade_armor(self, ctx: commands.Context):
         """
-        Commande !upgrade_armure
+        Commande !upgrade_armor
         -----------
-        Traite la commande twitch !upgrade_armure. 
+        Traite la commande twitch !upgrade_armor. 
         """
-        await self.upgrade_aptitude(ctx,"armure") 
+        await self.upgrade_aptitude(ctx,"armor") 
         
     @commands.command()
     async def upgrade_transport(self, ctx: commands.Context):
@@ -286,13 +286,13 @@ class TBoT(commands.Bot):
         await self.upgrade_aptitude(ctx,"transport") 
 
     @commands.command()
-    async def upgrade_equipement(self, ctx: commands.Context):
+    async def upgrade_gear(self, ctx: commands.Context):
         """
-        Commande !upgrade_equipement
+        Commande !upgrade_gear
         -----------
-        Traite la commande twitch !upgrade_equipement. 
+        Traite la commande twitch !upgrade_gear. 
         """
-        await self.upgrade_aptitude(ctx,"equipement")                
+        await self.upgrade_aptitude(ctx,"gear")                
         
 if __name__ == '__main__': 
     print('Ne peut etre lancé directement')

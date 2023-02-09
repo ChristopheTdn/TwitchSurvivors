@@ -1,5 +1,5 @@
 {
-    "arme":{
+    "weapon":{
         "tier_1":{
             "Pagaie Canoé"      : "Base.CanoePadel",
             "Club Golf"         : "Base.Golfclub",
@@ -44,7 +44,7 @@
             "M16"	            : "Base.AssaultRifle"            
         }
     },
-    "outil":{
+    "tool":{
         "tier_1":{
             "Fouchette barbecue" : "Base.HandFork",
             "Hachoire viande"	 : "Base.MeatCleaver",
@@ -78,6 +78,220 @@
             "Hache bûcheron"     : "Base.WoodAxe",
             "Pied de biche"      : "Base.Crowbar"
         }
-        
+    },
+    "car":{
+        "tier_1":{
+            "Batterie standard"             :	"Base.CarBattery1",
+            "Coffre standard"               :	"Base.TrunkDoor1",
+            "Coffre sport"                  :	"Base.TrunkDoor3",
+            "Capot standard"                :	"Base.EngineDoor1",
+            "Frein usé standard"            :	"Base.OldBrake1",
+            "Frein usé heavy"               :	"Base.OldBrake2",
+            "Frein usé sport"               :	"Base.OldBrake3",
+            "Frein Normal standard"         :	"Base.NormalBrake1",
+            "Frein Normal heavy"            :	"Base.NormalBrake2",
+            "Suspension normale standard"   :	"Base.NormalSuspension1",
+            "Suspension normale heavy"      :	"Base.NormalSuspension2",
+            "Pompe à pneu"                  :	"Base.TirePump",
+            "Pièce moteur"                  :   "Base.EngineParts",
+            "Pneu usé standard"             :	"Base.OldTire1",
+            "Pneu usé heavy"                :	"Base.OldTire2",
+            "Pneu usé sport"                :	"Base.OldTire3",
+            "Pneu Normal standard"          :	"Base.NormalTire1",
+            "Pneu Normal heavy"             :	"Base.NormalTire2",
+            "Pare Brise standard"           :	"Base.Windshield1"
+        },
+        "tier_2":{
+            "Batterie heavy"                    :	"Base.CarBattery2",
+            "Coffre heavy"	                    :   "Base.TrunkDoor2",
+            "Capot heavy"                       :	"Base.EngineDoor2",
+            "Frein Normal sport"                :	"Base.NormalBrake3",
+            "Frein Performant standard"	        :   "Base.ModernBrake1",
+            "Suspension normale sport"          :	"Base.NormalSuspension3",
+            "Suspension performante standard"	:   "Base.ModernSuspension1",
+            "Pneu Normal sport"                 :	"Base.NormalTire3",
+            "Pneu Performant standard"          :	"Base.ModernTire1",
+            "Pare Brise heavy"                  :	"Base.Windshield2",
+            "Cric"	                            :   "Base.Jack",
+            "Jerrican plein"                    :	"Base.PetrolCan"
+        },
+        "tier_3":{
+            "Batterie sport"	                :   "Base.CarBattery3",
+            "Capot sport"                       :   "Base.EngineDoor3",
+            "Frein Performant heavy"            :   "Base.ModernBrake2",
+            "Frein Performant sport"            :   "Base.ModernBrake3",
+            "Suspension performante heavy"      :   "Base.ModernSuspension2",
+            "Suspension performante sport"      :   "Base.ModernSuspension3",
+            "Pneu Performant heavy"	            :   "Base.ModernTire2",
+            "Pneu Performant sport"	            :   "Base.ModernTire3",
+            "Pare Brise sport"	                :   "Base.Windshield3",
+            "Chargeur batterie"	                :   "Base.CarBatteryCharger"
+        }    
+    },
+    "food":{
+        "tier_1":{
+            "boite Carottes"	        :   "Base.CannedCarrots",
+            "boite Chili"	            :   "Base.CannedChili",
+            "boite Maïs"	            :   "Base.CannedCorn",
+            "boite Salade fruits"	    :   "Base.CannedFruitCocktail",
+            "boite Soupe champignons"	:   "Base.CannedMushroomSoup",
+            "boite Pêches"	            :   "Base.CannedPeaches",
+            "boite Petits pois"	        :   "Base.CannedPeas",
+            "boite Sardines"	        :   "Base.CannedSardines",
+            "boite Tomates"	            :   "Base.CannedTomato2",
+            "boite Ananas"	            :   "Base.CannedPineapple",
+            "Muffin"	                :   "Base.MuffinGeneric",
+            "Sauce épicée"	            :   "Base.Hotsauce",
+            "Ketchup"	                :   "Base.Ketchup",
+            "Moutarde"	                :   "Base.Mustard",
+            "Poivre"	                :   "Base.Pepper",
+            "Sauce Soy"	                :   "Base.Soysauce",
+            "Huile Végétale"	        :   "Base.OilVegetable",
+            "Jus de fruit"	            :   "Base.JuiceBox",
+            "Bouteille Eau"	            :   "Base.WaterBottleFull",
+            "Pomme"                     :   "Base.Apple",
+            "Citron"	                :   "Base.Lemon",
+            "Orange"	                :   "Base.Orange",
+            "Pêches"	                :   "Base.Peach",
+            "Poire"	                    :   "Base.Pear",
+            "Bonbon"	                :   "Base.Peppermint",
+            "Cookie"	                :   "Base.CookieChocolateChip",
+            "Glace"	                    :   "Base.Icecream"
+        },
+        "tier_2":{
+            "Paté pour chien"       :	"Base.Dogfood",
+            "Pomme de terre"	    :   "Base.CannedPotato2",
+            "Thon"	                :   "Base.TunaTin",
+            "Part gateau"	        :   "Base.CakeSlice",
+            "Marinara"	            :   "Base.Marinara",
+            "Huile Olive"	        :   "Base.OilOlive",
+            "Vinaigre de Riz"	    :   "Base.RiceVinegar",
+            "Sucre brun"	        :   "Base.Sugar",
+            "Sel"	                :   "Base.Salt",
+            "Soda Orange"	        :   "Base.Pop2",
+            "Banane"	            :   "Base.Banana",
+            "Chips"	                :   "Base.Crisps3",
+            "Chocolat"	            :   "Base.Chocolate",
+            "Cacao"	                :   "Base.CocoaPowder",
+            "Café"	                :   "Base.Coffee2",
+            "Confiture"	            :   "Base.JamFruit",
+            "Miel"	                :   "Base.Honey",
+            "Beurre de cacahuète"	:   "Base.PeanutButter",
+            "Sachet thé"	        :   "Base.Teabag2",
+            "Beurre"	            :   "Base.Butter",
+            "Burrito"	            :   "Base.BurritoRecipe"
+        },
+        "tier_3":{
+            "Haricots"	            :   "Base.TinnedBeans",
+            "Corned Beef"	        :   "Base.CannedCornedBeef",
+            "Soupe"	                :   "Base.TinnedSoup",
+            "Spaghetti Bolognese"	:   "Base.CannedBolognese",
+            "Burger"	            :   "Base.BurgerRecipe",
+            "Taco"	                :   "Base.Taco",
+            "Sirop érable"	        :   "Base.MapleSyrup",
+            "Mayonnaise"	        :   "farming.MayonnaiseFull",
+            "Wasabi"	            :   "Base.Wasabi",
+            "Soda Orange"	        :   "Base.Pop2",
+            "Lait"	                :   "Base.Milk",
+            "Mange"	                :   "Base.Mango",
+            "Ananas"	            :   "Base.Pineapple",
+            "Pâtes"	                :   "Base.Pasta",
+            "Riz"	                :   "Base.Rice",
+            "Flocon avoine"	        :   "Base.OatsRaw",
+            "Céréales"	            :   "Base.Cereal",
+            "Guacamole"	            :   "Base.Guacamole",
+            "Haricots secs"	        :   "Base.DriedBlackBeans"
+        }    
+    },
+    "medic":{
+        "tier_1":{
+            "Pansement"             :	"Base.Bandaid",
+            "Balle coton"           :	"Base.AlcoholedCottonBalls",
+            "Tissu"                 :	"Base.Tissue",
+            "Pince épiler"          :	"Base.Tweezers",
+            "Serviette bain"        :	"Base.BathTowel",
+            "Attelle"               :	"Base.Splint",
+            "Tissu déchiré"         :	"Base.RippedSheets",
+            "Lingette désinfectante":   "Base.AlcoholWipes"
+        },
+        "tier_2":{
+            "Bandage"	            :   "Base.Bandage",
+            "Bouteille désinfectant":	"Base.Disinfectant",
+            "Pince suture"	        :   "Base.SutureNeedleHolder",
+            "Antidépresseur"	    :   "Base.PillsAntiDep",
+            "Beta bloquant"	        :   "Base.PillsBeta",
+            "Antidouleur"	        :   "Base.Pills",
+            "Somnifère"	            :   "Base.PillsSleepingTablets"
+            
+        },
+        "tier_3":{
+            "Antibiotics"	    :   "Base.Antibiotics",
+            "Bandage stérile"	:   "Base.AlcoholBandage",
+            "Aiguille suture"	:   "Base.SutureNeedle",
+            "Vitamines"	        :   "Base.PillsVitamins"
+        }    
+    },
+    "alcool":{
+        "tier_1":{
+            "Bouteille bière"   :   "Base.BeerBottle",	
+            "Cannette bière"    :   "Base.BeerCan"
+            
+        },
+        "tier_2":{
+            "Bouteille Vin Rouge"         :   "Base.Wine2",	
+            "Bouteille Vin Blanc"         :   "Base.Wine"	
+        },
+        "tier_3":{
+            "Bouteille Whisky"            :   "Base.WhiskeyFull"	
+        }    
+    },
+    "agriculture":{
+        "tier_1":{
+            "Truelle"	        :   "farming.HandShovel",
+            "Sac compost"	    :   "Base.CompostBag",
+            "Graines radis"	    :   "Base.RedRadishBagSeed",
+            "Graines fraises"	:   "Base.StrewberrieBagSeed"
+        },
+        "tier_2":{
+            "Graines carrotes"	:   "Base.CarrotBagSeed",
+            "Graines tomates"	:   "Base.TomatoBagSeed",
+            "Graines patates"	:   "Base.PotatoBagSeed",
+            "Arrosoir"	        :   "farming.WateredCan",
+            "Pelle"	            :   "farming.Shovel"
+        },
+        "tier_3":{
+            "Insecticide"	    :   "farming.GardeningSprayCigarettes",
+            "Spray Milidou"	    :   "farming.GardeningSprayMilk",
+            "Fertilisant"	    :   "Base.Fertilizer",
+            "Graines choux"	    :   "Base.CabbageBagSeed",
+            "Graines Brocoli"	:   "Base.BroccoliBagSeed"
+        }    
+    },
+    "furniture":{
+        "tier_1":{
+            "Bouteille bière"   :   "Base.BeerBottle",
+            "Truelle"	        :   "farming.HandShovel",
+            "Sac compost"	    :   "Base.CompostBag",
+            "Graines radis"	    :   "Base.RedRadishBagSeed",
+            "Graines fraises"	:   "Base.StrewberrieBagSeed"
+        },
+        "tier_2":{
+            "Graines carrotes"	:   "Base.CarrotBagSeed",
+            "Graines tomates"	:   "Base.TomatoBagSeed",
+            "Bouteille désinfectant":	"Base.Disinfectant",
+            "Graines patates"	:   "Base.PotatoBagSeed",
+            "Arrosoir"	        :   "farming.WateredCan",
+            "Pelle"	            :   "farming.Shovel"
+        },
+        "tier_3":{
+            "Insecticide"	    :   "farming.GardeningSprayCigarettes",
+            "Spray Milidou"	    :   "farming.GardeningSprayMilk",
+            "Fertilisant"	    :   "Base.Fertilizer",
+            "Graines choux"	    :   "Base.CabbageBagSeed",
+            "Graines Brocoli"	:   "Base.BroccoliBagSeed",
+            "Haricots secs"	    :   "Base.DriedBlackBeans"
+        }    
     }
+
 }
+

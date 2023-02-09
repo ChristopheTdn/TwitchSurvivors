@@ -1,7 +1,7 @@
 {
-    "raid_arme":
+    "raid_weapon":
     {
-        "nom_raid":"arme",
+        "nom_raid":"weapon",
         "gain_reputation":1200,
         "distance_raid":105,
         "stats_raid":{
@@ -13,9 +13,9 @@
             }
         }
     },
-    "raid_outil":
+    "raid_tool":
     {
-        "nom_raid":"outil",
+        "nom_raid":"tool",
         "gain_reputation":1000,
         "distance_raid":105,
         "stats_raid":{
@@ -27,9 +27,9 @@
             }
         }
     },
-    "raid_medical":
+    "raid_medic":
     {
-        "nom_raid":"medical",
+        "nom_raid":"medic",
         "gain_reputation":800,
         "distance_raid":105,
         "stats_raid":{
@@ -41,9 +41,9 @@
             }
         }
     },
-    "raid_nourriture":
+    "raid_food":
     {
-        "nom_raid":"nourriture",
+        "nom_raid":"food",
         "gain_reputation":600,
         "distance_raid":105,
         "stats_raid":{
@@ -55,9 +55,9 @@
             }
         }
     },
-    "raid_automobile":
+    "raid_car":
     {
-        "nom_raid":"automobile",
+        "nom_raid":"car",
         "gain_reputation":500,
         "distance_raid":105,
         "stats_raid":{
@@ -97,9 +97,9 @@
             }
         }
     },
-    "raid_meuble":
+    "raid_furniture":
     {
-        "nom_raid":"meuble",
+        "nom_raid":"furniture",
         "gain_reputation":200,
         "distance_raid":105,
         "stats_raid":{
