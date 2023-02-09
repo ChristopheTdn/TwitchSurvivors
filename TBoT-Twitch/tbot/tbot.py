@@ -92,21 +92,41 @@ class TBoT(commands.Bot):
             await TBOTBDD.create_survivant(name)
             await tbot_com.message("creation_survivant",channel=channel,name=name)
             
-    async def creer_raid(self,ctx: commands.Context,type_raid: str):
+    async def ajout_credit(self,name: str,channel): 
+           
+        name_survivant = await TBOTBDD.get_stats_survivant(name)
+        if name_survivant == None : #le pseudo n'existe pas dans la base de donnée
+            await tbot_com.message("survivant_echec_achat_credit",channel=channel,name=name)
         
+        else :
+            await TBOTBDD.add_credit(name,credit=2500)
+            await tbot_com.message("survivant_ajout_credit",credit="2500",channel=channel,name=name)
+    
+            
+    async def creer_raid(self,ctx: commands.Context,type_raid: str):
+        """Test la validité de la demande et créer un raid
+        Args:
+            ctx (commands.Context): environnement twitchIO pour récupérer les informations
+            type_raid (str): nom du raid
+        """        
         name = ctx.author.display_name
         channel = ctx.channel
-        test_survivant_exist = await TBOTBDD.get_stats_survivant(name)
+        survivor = await TBOTBDD.get_stats_survivant(name)
         test_raid_exist = await TBOTBDD.raid_exist(name)
         raid_name = self.config_raid_json["raid_"+type_raid]["nom_raid"]
         
         
-        if test_survivant_exist == None :
+        
+        
+        if survivor == None :
             await tbot_com.message("survivant_no_exist",channel=channel,name=name)
 
         elif test_raid_exist != None :
 
             await tbot_com.message("raid_deja_en_cours",channel=channel,name=name)
+
+        elif survivor["credit"]<1000 : 
+            await tbot_com.message("raid_credit_insuffisant",channel=channel,name=name)
 
         else :
             """Création du Raid

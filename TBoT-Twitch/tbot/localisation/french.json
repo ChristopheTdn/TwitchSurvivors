@@ -7,7 +7,7 @@
     },
     "echec_creation_survivant" :{
         "ovl"   : "❌- Echec de tentative de création du joueur <span class='pseudo'>{name}</span> sur le serveur !",
-        "chat"  :"❌- Echec de tentative de création du joueur {name} sur le serveur ! Le survivant existe déjà. Tapes !info_survivant",
+        "chat"  :"❌- Echec de tentative de création du joueur {name} sur le serveur ! Le survivant existe déjà. Tapes !my_survivor",
         "mod"   : "",
         "sound" : ""
     },
@@ -36,8 +36,26 @@
         "sound" : ""
     },
     "survivant_max_aptitude" :{
-        "ovl"   :"❌- Attention <span class='pseudo'>{name}</span>, l aptitude {aptitude} est deja à son niveau maximum. !mon_survivant pour plus de renseignement.",
-        "chat"  :"❌- Attention {name}! l aptitude {aptitude} est deja à son niveau maximum. !mon_survivant pour plus de renseignement.",
+        "ovl"   :"❌- Attention <span class='pseudo'>{name}</span>, l aptitude {aptitude} est deja à son niveau maximum. !my_survivor pour plus de renseignement.",
+        "chat"  :"❌- Attention {name}! l aptitude {aptitude} est deja à son niveau maximum. !my_survivor pour plus de renseignement.",
+        "mod"   : "",
+        "sound" : ""
+    },
+    "survivant_echec_achat_credit" : {
+        "ovl"   :"❌- le survivant <span class='pseudo'>{name}</span> n'existe pas sur le serveur ! utilise les points de Chaine pour en creer un avant d'acheter des credits",
+        "chat"  :"❌- le survivant {name} n'existe pas sur le serveur ! utilise les points de Chaine pour en creer un avant d'acheter des crédits",
+        "mod"   : "",
+        "sound" : "" 
+    },
+    "survivant_ajout_credit" : {
+        "ovl"   :"💰- le survivant <span class='pseudo'>{name}</span> obtient {credit} crédits !",
+        "chat"  :"💰- le survivant {name} obtient {credit} crédits !",
+        "mod"   : "",
+        "sound" : "" 
+    },
+    "raid_credit_insuffisant" :{
+        "ovl"   :"❌- Attention <span class='pseudo'>{name}</span>, tu n'as pas assez de credit suffisant pour créer un raid (1000 credits). Tu peux obtenir des credits en depensant des points de chaine",
+        "chat"  :"❌- Attention {name}, tu n'as pas assez de crédit suffisant pour créer un raid (1000 credits). Tu peux obtenir des credits en depensant des points de chaine",
         "mod"   : "",
         "sound" : ""
     },

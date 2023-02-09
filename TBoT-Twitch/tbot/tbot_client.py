@@ -1,10 +1,7 @@
-import twitchio
-import asyncio
 from twitchio.ext import pubsub,sounds,commands
 import json
 import os
-import pygame
-from . import tbot_com
+
 
 with open('./config.json', 'r') as fichier:
     data = json.load(fichier)
@@ -53,6 +50,9 @@ class TBoT_Client(commands.Cog):
         if event.reward.title == "Créer un survivant":
             channel = self.bot.get_channel(CLIENT_CHANNEL)
             await self.bot.creation_survivant(event.user.name,channel)
+        if event.reward.title == "Acheter des crédits":
+            channel = self.bot.get_channel(CLIENT_CHANNEL)
+            await self.bot.ajout_credit(event.user.name,channel)
 
     @commands.Cog.event()
     async def event_pubsub_channel_points(self, event: pubsub.PubSubChannelPointsMessage):
