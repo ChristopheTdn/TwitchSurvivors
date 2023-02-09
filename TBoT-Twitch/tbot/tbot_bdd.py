@@ -30,13 +30,13 @@ class TBOT_BDD():
         curseur.execute('''CREATE TABLE IF NOT EXISTS survivant(
             id INTEGER PRIMARY KEY AUTOINCREMENT UNIQUE,
             name TEXT UNIQUE,
-            profession TEXT,
-            reputation INTEGER,
+            career TEXT,
+            prestige INTEGER,
             credit INTEGER,
-            level_armement INTEGER,
-            level_armure INTEGER,
+            level_weapon INTEGER,
+            level_armor INTEGER,
             level_transport INTEGER,
-            level_equipement INTEGER)''')
+            level_gear INTEGER)''')
         
         curseur.execute('''CREATE TABLE IF NOT EXISTS raid(
             id INTEGER PRIMARY KEY AUTOINCREMENT UNIQUE,
@@ -56,13 +56,13 @@ class TBOT_BDD():
         db = await aiosqlite.connect(os.path.join(self.TBOTPATH, self.NAMEBDD))
         await db.execute('''INSERT OR IGNORE INTO survivant
                             (name,
-                            profession,
-                            reputation,
+                            career,
+                            prestige,
                             credit,
-                            level_armement,
-                            level_armure,
+                            level_weapon,
+                            level_armor,
                             level_transport,
-                            level_equipement)
+                            level_gear)
                             VALUES (?,?,?,?,?,?,?,?)''', (pseudo ,"",0,2500,1,1,1,1)) 
         await db.commit()
         await db.close()
@@ -71,26 +71,26 @@ class TBOT_BDD():
         reponse = {}
         db = await aiosqlite.connect(os.path.join(self.TBOTPATH, self.NAMEBDD))
         async with db.execute (f'''SELECT name,
-                            profession,
-                            reputation,
+                            career,
+                            prestige,
                             credit,
-                            level_armement,
-                            level_armure,
+                            level_weapon,
+                            level_armor,
                             level_transport,
-                            level_equipement FROM 'survivant' WHERE name='{name}' ''') as cur:
+                            level_gear FROM 'survivant' WHERE name='{name}' ''') as cur:
             listeStat = await cur.fetchone()
         await db.close()
         if listeStat==None:
             return None
         else:                
             reponse ={"name": listeStat[0],
-                    "profession" : listeStat[1],
-                    "reputation": listeStat[2],
+                    "career" : listeStat[1],
+                    "prestige": listeStat[2],
                     "credit" : listeStat[3],
-                    "level_armement":listeStat[4],
-                    "level_armure":listeStat[5],
+                    "level_weapon":listeStat[4],
+                    "level_armor":listeStat[5],
                     "level_transport":listeStat[6],
-                    "level_equipement":listeStat[7]
+                    "level_gear":listeStat[7]
                     }
             return reponse
     
@@ -120,24 +120,24 @@ class TBOT_BDD():
             -> BUTIN,BREDOUILLE,BLESSE,MORT,DISTANCE
         """        
         survivant_stat= await self.get_stats_survivant(name)
-        profession = survivant_stat["profession"]
+        career = survivant_stat["career"]
         credit = survivant_stat["credit"]
-        level_armement = survivant_stat["level_armement"]
-        level_armure=survivant_stat["level_armure"]
+        level_weapon = survivant_stat["level_weapon"]
+        level_armor=survivant_stat["level_armor"]
         level_transport=survivant_stat["level_transport"]
-        level_equipement=survivant_stat["level_equipement"]
+        level_gear=survivant_stat["level_gear"]
         
-        if level_armement>1:
-            BUTIN=BUTIN+(5*level_armement)-5 
-            BLESSE=BLESSE-(5*level_armement)+5 
+        if level_weapon>1:
+            BUTIN=BUTIN+(5*level_weapon)-5 
+            BLESSE=BLESSE-(5*level_weapon)+5 
             if BLESSE<5:
                 delta = abs(BLESSE-5) 
                 BLESSE = 5
                 BUTIN -= delta
 
-        if level_armure>1:
-            BREDOUILLE=BREDOUILLE+(5*level_armure)-5
-            MORT=MORT-(5*level_armure)+5
+        if level_armor>1:
+            BREDOUILLE=BREDOUILLE+(5*level_armor)-5
+            MORT=MORT-(5*level_armor)+5
             if MORT<5:
                 delta = abs(MORT-5) 
                 MORT = 5
@@ -151,7 +151,14 @@ class TBOT_BDD():
         return (BUTIN,BREDOUILLE,BLESSE,MORT,DISTANCE) 
     
         
-    async def create_raid(self,name: str,type_raid: str):
+    async def genere_raid(self,name: str,type_raid: str):
+        """Genere les Stats du RAID et son resultat
+
+        Args:
+            name (str): nom du survivant
+            type_raid (str): type du raid
+        """        
+        
         # determine si le RAID sera un succes
         
         DISTANCE = self.config_raid_json["raid_"+type_raid]["distance_raid"]
@@ -216,15 +223,15 @@ class TBOT_BDD():
             dict: dictionnaire renvoyant le nom et la class du loot.
         """        
         survivant = await self.get_stats_survivant(name)
-        level_equipement = survivant["level_equipement"]
-        level_armement=survivant["level_armement"]
+        level_gear = survivant["level_gear"]
+        level_weapon=survivant["level_weapon"]
         butin_final={}
         
-        for i in range(level_equipement): # Autant de tour que le niveau d'equipement
+        for i in range(level_gear): # Autant de tour que le niveau d'equipement
             hasard=random.randrange(100)
-            object_tier1=self.config_ratio_json[f"objet_{i+1}"][f"armement_{level_armement}"]["tier_1"]
-            object_tier2=self.config_ratio_json[f"objet_{i+1}"][f"armement_{level_armement}"]["tier_2"]
-            object_tier3=self.config_ratio_json[f"objet_{i+1}"][f"armement_{level_armement}"]["tier_3"]
+            object_tier1=self.config_ratio_json[f"objet_{i+1}"][f"armement_{level_weapon}"]["tier_1"]
+            object_tier2=self.config_ratio_json[f"objet_{i+1}"][f"armement_{level_weapon}"]["tier_2"]
+            object_tier3=self.config_ratio_json[f"objet_{i+1}"][f"armement_{level_weapon}"]["tier_3"]
             if hasard<object_tier3: #Donne un objet de Tier3
                 loot = self.config_butin_json[type_raid]["tier_3"]
                 choix_loot = random.choice(tuple(loot.keys()))
@@ -314,17 +321,17 @@ class TBOT_BDD():
     async def gere_fin_raid(self,db,name,type_raid,resultat,composition_butin,channel):
         
                 
-        gain_reputation = self.config_raid_json["raid_"+type_raid]["gain_reputation"]
+        gain_prestige = self.config_raid_json["raid_"+type_raid]["gain_prestige"]
         listebutin=""
         if resultat =="BUTIN":
             listebutin = "<br>"+await tbot_com.donne_butin(composition_butin)        
         
-        await tbot_com.message("raid_win_butin",channel=channel,name=name,gain_reputation=str(gain_reputation),listebutin=listebutin)
-        await db.execute(f'''UPDATE survivant SET reputation = reputation +{gain_reputation} WHERE name = "{name}"''')
+        await tbot_com.message("raid_win_butin",channel=channel,name=name,gain_prestige=str(gain_prestige),listebutin=listebutin)
+        await db.execute(f'''UPDATE survivant SET prestige = prestige +{gain_prestige} WHERE name = "{name}"''')
 
     async def upgrade_aptitude(self,name,aptitude: str,cout_upgrade: int):
         db = await aiosqlite.connect(os.path.join(self.TBOTPATH, self.NAMEBDD))
-        await db.execute(f'''UPDATE survivant SET reputation = reputation - {cout_upgrade} WHERE name = "{name}"''')
+        await db.execute(f'''UPDATE survivant SET prestige = prestige - {cout_upgrade} WHERE name = "{name}"''')
         await db.execute(f'''UPDATE survivant SET level_{aptitude} = level_{aptitude} + 1 WHERE name = "{name}"''') 
         await db.commit()
         await db.close()

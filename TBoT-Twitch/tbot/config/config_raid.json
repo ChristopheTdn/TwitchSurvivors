@@ -2,7 +2,7 @@
     "raid_weapon":
     {
         "nom_raid":"weapon",
-        "gain_reputation":1200,
+        "gain_prestige":1200,
         "distance_raid":105,
         "stats_raid":{
             "niveau-1":{
@@ -16,7 +16,7 @@
     "raid_tool":
     {
         "nom_raid":"tool",
-        "gain_reputation":1000,
+        "gain_prestige":1000,
         "distance_raid":105,
         "stats_raid":{
             "niveau-1":{
@@ -30,7 +30,7 @@
     "raid_medic":
     {
         "nom_raid":"medic",
-        "gain_reputation":800,
+        "gain_prestige":800,
         "distance_raid":105,
         "stats_raid":{
             "niveau-1":{
@@ -44,7 +44,7 @@
     "raid_food":
     {
         "nom_raid":"food",
-        "gain_reputation":600,
+        "gain_prestige":600,
         "distance_raid":105,
         "stats_raid":{
             "niveau-1":{
@@ -58,7 +58,7 @@
     "raid_car":
     {
         "nom_raid":"car",
-        "gain_reputation":500,
+        "gain_prestige":500,
         "distance_raid":105,
         "stats_raid":{
             "niveau-1":{
@@ -72,7 +72,7 @@
     "raid_alcool":
     {
         "nom_raid":"alcool",
-        "gain_reputation":400,
+        "gain_prestige":400,
         "distance_raid":105,
         "stats_raid":{
             "niveau-1":{
@@ -86,21 +86,7 @@
     "raid_agriculture":
     {
         "nom_raid":"agriculture",
-        "gain_reputation":300,
-        "distance_raid":105,
-        "stats_raid":{
-            "niveau-1":{
-                "BUTIN":20,
-                "BREDOUILLE":35,
-                "BLESSE":25,
-                "MORT":20
-            }
-        }
-    },
-    "raid_furniture":
-    {
-        "nom_raid":"furniture",
-        "gain_reputation":200,
+        "gain_prestige":300,
         "distance_raid":105,
         "stats_raid":{
             "niveau-1":{

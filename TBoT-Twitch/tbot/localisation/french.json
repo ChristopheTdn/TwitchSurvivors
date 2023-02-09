@@ -29,7 +29,7 @@
         "mod"   : "",
         "sound" : ""
     },
-    "survivant_reputation_insuffisant" :{
+    "survivant_prestige_insuffisant" :{
         "ovl"   :"❌- <span class='pseudo'>{name}</span> ne possède pas assez de points de réputation pour upgrade son aptitude {aptitude} (cout : {tarif_level} pts).",
         "chat"  :"❌- {name} ne possède pas assez de points de réputation pour upgrade son aptitude {aptitude} (cout : {tarif_level} pts).",
         "mod"   : "",
@@ -42,14 +42,14 @@
         "sound" : ""
     },
     "raid_win_butin" :{
-        "ovl"   : "⛹- <span class='pseudo'>{name}</span> est revenu à la base. gain de reputation : +{gain_reputation} !!!{listebutin}",
-        "chat"  :"⛹- {name} est revenu à la base. gain de reputation : +{gain_reputation} !!!{listebutin}",
+        "ovl"   : "⛹- <span class='pseudo'>{name}</span> est revenu à la base. gain de prestige : +{gain_prestige} !!!{listebutin}",
+        "chat"  :"⛹- {name} est revenu à la base. gain de prestige : +{gain_prestige} !!!",
         "mod"   : "<radio {name}> je suis ...nfin reven... à la base...",
         "sound" : "BUTIN.mp3"
     },
     "raid_mi_chemin" :{
         "ovl"   : "⛹- <span class='pseudo'>{name}</span> commence à faire demi-tour.",
-        "chat"  :"⛹- {name} retourne à la base",
+        "chat"  :"⛹- {name} commence à faire demi-tour",
         "mod"   : "<radio {name}> allo... ..ai atteint mon object... je ...revie... a la base..",
         "sound" : "MI-RAID.mp3"
     },
@@ -71,31 +71,31 @@
         "mod"   : "<radio {name}> Arggg...partout. arghh... u secours... zzz..z...",
         "sound" : "mort.mp3"
     },
-    "raid_arme" : {
+    "raid_weapon" : {
         "ovl":"🗡️- <radio {name}> : ...allo ! ici <span class='pseudo'>{name}</span>... Je pars cherch... des arm. et des .munitions.",
         "chat":"🗡️- il est {heure}:{minute}, {name} part en Raid pour récupérer de l'armement.",
         "mod":"radio : ...allo ! ici <span class='pseudo'>{name}</span>... Je pars cherch... des arm.. et des .munitions.",
         "sound":"DEPART RAID JOUR.mp3"
     },
-    "raid_outil" : {
+    "raid_tool" : {
         "ovl":"🔨- <radio {name}> : ...allo ! ici <span class='pseudo'>{name}</span>... Je pars cherch... du materiel...t des outils.",
         "chat":"🔨- il est {heure}:{minute}, {name} part en Raid pour récupérer des outils..",
         "mod":"radio : ...allo ! ici <span class='pseudo'>{name}</span>... Je pars cherch... du materiel...t des outils.",
         "sound":"DEPART RAID JOUR.mp3"
     },
-    "raid_medical" : {
+    "raid_medic" : {
         "ovl":"☣️- <radio {name}> : ...allo ! ici <span class='pseudo'>{name}</span>... Je pars cherch... de..medicaments..t des pansement.",
         "chat":"☣️- il est {heure}:{minute}, {name} part en Raid pour récupérer des fournitures medicales.",
         "mod":"radio : ...allo ! ici <span class='pseudo'>{name}</span>... Je pars cherch... de..medicaments..t des pansement.",
         "sound":"DEPART RAID JOUR.mp3"
     },
-    "raid_nourriture":{
+    "raid_food":{
         "ovl":"🍖- <radio {name}> : ...allo ! ici <span class='pseudo'>{name}</span>... Je pars cherch...de..la nourriture.",
         "chat":"🍖- il est {heure}:{minute}, {name} part en Raid pour recuperer de la nourriture.",
         "mod":"radio : ...allo ! ici <span class='pseudo'>{name}</span>... Je pars cherch...de..la nourriture.",
         "sound":"DEPART RAID JOUR.mp3"
     },
-    "raid_automobile":{
+    "raid_car":{
         "ovl":"🚙- <radio {name}> : ...allo ! ici <span class='pseudo'>{name}</span>... Je pars cherch...de...reparer ..ma bagnole.",
         "chat":"🚙- il est {heure}:{minute}, {name} part en Raid pour customiser sa voiture.",
         "mod":"radio : ...allo ! ici <span class='pseudo'>{name}</span>... Je pars cherch...de...reparer ..ma bagnole.",
@@ -113,7 +113,7 @@
         "mod":"radio : ...allo ! ici <span class='pseudo'>{name}</span>... Je pars cherch...de quoi ..jardiner.",
         "sound":"DEPART RAID JOUR.mp3"
     },
-    "raid_meuble":{
+    "raid_furniture":{
         "ovl":"🗄️- <radio {name}> : ...allo ! ici <span class='pseudo'>{name}</span>... Je pars cherch...de quoi .equiper la base.",
         "chat":"🗄️- il est {heure}:{minute}, {name} part en Raid pour chercher du mobilier.",
         "mod":"radio : ...allo ! ici <span class='pseudo'>{name}</span>... Je pars cherch...de quoi .equiper la base.",

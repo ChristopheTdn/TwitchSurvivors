@@ -48,7 +48,7 @@ def joue_son(radio = "radio1.mp3"):
     mixer.music.load(os.path.join(TBOTPATH, "sound/"+radio))
     mixer.music.play()
 
-async def message(key="empty",channel=None,name="",mod="",chat="",ovl="",sound="",gain_reputation="",listebutin="",aptitude="",tarif_level=""):
+async def message(key="empty",channel=None,name="",mod="",chat="",ovl="",sound="",gain_prestige="",listebutin="",aptitude="",tarif_level="",credit=""):
     """    envois un message vers les différentes interfaces (twitch, overlay obs, chat in game PZ)
 
     Args:
@@ -65,29 +65,35 @@ async def message(key="empty",channel=None,name="",mod="",chat="",ovl="",sound="
             .replace("{name}",name)\
             .replace("{heure}",heure)\
             .replace("{minute}",minute)\
-            .replace("{gain_reputation}",gain_reputation)\
+            .replace("{gain_prestige}",gain_prestige)\
             .replace("{listebutin}",listebutin)\
             .replace("{aptitude}",aptitude)\
-            .replace("{tarif_level}",tarif_level)
+            .replace("{tarif_level}",tarif_level)\
+            .replace("{credit}",credit)
+            
     if ovl == "":
         ovl = localisation[f"{key}"]["ovl"]\
             .replace("{name}",name)\
             .replace("{heure}",heure)\
             .replace("{minute}",minute)\
-            .replace("{gain_reputation}",gain_reputation)\
+            .replace("{gain_prestige}",gain_prestige)\
             .replace("{listebutin}",listebutin)\
             .replace("{aptitude}",aptitude)\
-            .replace("{tarif_level}",tarif_level)
+            .replace("{tarif_level}",tarif_level)\
+            .replace("{credit}",credit)
+
                 
     if mod == "":
         mod = localisation[f"{key}"]["mod"]\
             .replace("{name}",name)\
             .replace("{heure}",heure)\
             .replace("{minute}",minute)\
-            .replace("{gain_reputation}",gain_reputation)\
+            .replace("{gain_prestige}",gain_prestige)\
             .replace("{listebutin}",listebutin)\
             .replace("{aptitude}",aptitude)\
-            .replace("{tarif_level}",tarif_level)
+            .replace("{tarif_level}",tarif_level)\
+            .replace("{credit}",credit)
+            
     if sound == "":
         sound = localisation[f"{key}"]["sound"]
     #envoyer les messages 
@@ -120,7 +126,7 @@ async def donne_butin(butin:str) -> str:
         item=nom.split(':')
         item[0]= item[0].strip().replace ('"',"")
         item[1]= item[1].strip().replace ('"',"")
-        listefinale += "  🔸"+item[0]+"\n"
+        listefinale += '<p STYLE="padding:0 0 0 20px;"  🔸'+item[0]+'</p>\n'
         listeClassefinale += item[1]+"\n"
         
     async with aiofiles.open(URLMOD+"butin.txt","w",encoding="utf-8") as fichier:

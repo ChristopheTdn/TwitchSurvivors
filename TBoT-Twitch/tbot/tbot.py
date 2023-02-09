@@ -137,17 +137,17 @@ class TBoT(commands.Bot):
             await tbot_com.message("raid_deja_en_cours",channel=channel,name=name)
         else :
                           
-            reputation = survivant["reputation"]
+            prestige = survivant["prestige"]
             
             
             tarif=[0,1000,2500,6000,13000]
             
-            if  tarif[level]<=reputation:
+            if  tarif[level]<=prestige:
                 await TBOTBDD.upgrade_aptitude(name,aptitude,tarif[level])
                 
                 await tbot_com.message(key="survivant_upgrade_aptitude",channel=channel,name=name,aptitude=aptitude,tarif_level=str(tarif[level]))
             else :
-                await tbot_com.message(key="survivant_reputation_insuffisant",channel=channel,name=name,aptitude=aptitude,tarif_level=str(tarif[level])) 
+                await tbot_com.message(key="survivant_prestige_insuffisant",channel=channel,name=name,aptitude=aptitude,tarif_level=str(tarif[level])) 
                         
     @commands.command()
     async def radio(self, ctx: commands.Context):
@@ -176,7 +176,7 @@ class TBoT(commands.Bot):
         test_survivant_exist = await TBOTBDD.get_stats_survivant(name)
         if test_survivant_exist !=None :
             dictStat= await TBOTBDD.get_stats_survivant(name)
-            message = f"stat {dictStat['name']} : reputation = {dictStat['reputation']},\
+            message = f"stat {dictStat['name']} : prestige = {dictStat['prestige']},\
                 credits = {dictStat['credits']},\
                 level armement = {dictStat['level_armement']} ;\
                 level transport= {dictStat['level_transport']} ;\
@@ -250,22 +250,13 @@ class TBoT(commands.Bot):
         await self.creer_raid(ctx,"agriculture")
         
     @commands.command()
-    async def raid_furniture(self, ctx: commands.Context):
+    async def upgrade_weapon(self, ctx: commands.Context):
         """
-        Commande !raid_furniture
+        Commande !upgrade_weapon
         -----------
-        Traite la commande twitch !raid_furniture. 
+        Traite la commande twitch !upgrade_weapon. 
         """
-        await self.creer_raid(ctx,"furniture") 
-        
-    @commands.command()
-    async def upgrade_armement(self, ctx: commands.Context):
-        """
-        Commande !upgrade_weapons
-        -----------
-        Traite la commande twitch !upgrade_weapons. 
-        """
-        await self.upgrade_aptitude(ctx,"weapons")
+        await self.upgrade_aptitude(ctx,"weapon")
                  
     @commands.command()
     async def upgrade_armor(self, ctx: commands.Context):
