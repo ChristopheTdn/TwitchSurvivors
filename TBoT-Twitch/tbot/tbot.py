@@ -197,7 +197,7 @@ class TBoT(commands.Bot):
         if test_survivant_exist !=None :
             dictStat= await TBOTBDD.get_stats_survivant(name)
             message = f"stat {dictStat['name']} : prestige = {dictStat['prestige']},\
-                credits = {dictStat['credits']},\
+                credit = {dictStat['credit']},\
                 level weapon = {dictStat['level_weapon']} ;\
                 level transport= {dictStat['level_transport']} ;\
                 level armor= {dictStat['level_armor']} ;\
