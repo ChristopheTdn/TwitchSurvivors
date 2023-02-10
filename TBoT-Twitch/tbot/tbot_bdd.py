@@ -151,12 +151,14 @@ class TBOT_BDD():
         return (BUTIN,BREDOUILLE,BLESSE,MORT,DISTANCE) 
     
         
-    async def genere_raid(self,name: str,type_raid: str):
+    async def genere_raid(self,name: str,type_raid: str,cout_raid: int):
         """Genere les Stats du RAID et son resultat
 
         Args:
             name (str): nom du survivant
             type_raid (str): type du raid
+            cout_raid (int): prix en credit du raid
+
         """        
         
         # determine si le RAID sera un succes
@@ -209,6 +211,7 @@ class TBOT_BDD():
                         fin,
                         composition_butin)
                         VALUES (?,?,?,?,?,?,?,?,?)''', (name,type_raid,DISTANCE,DISTANCE//2,'{}',resultat,blesse,fin,json.dumps(composition_butin)))
+        await db.execute(f'''UPDATE survivant SET credit = credit - {cout_raid} WHERE name = "{name}"''')
         await db.commit()
         await db.close()
         

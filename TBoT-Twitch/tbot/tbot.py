@@ -93,7 +93,7 @@ class TBoT(commands.Bot):
             await tbot_com.message("creation_survivant",channel=channel,name=name)
             
     async def ajout_credit(self,name: str,channel): 
-           
+
         name_survivant = await TBOTBDD.get_stats_survivant(name)
         if name_survivant == None : #le pseudo n'existe pas dans la base de donnée
             await tbot_com.message("survivant_echec_achat_credit",channel=channel,name=name)
@@ -104,7 +104,7 @@ class TBoT(commands.Bot):
     
             
     async def creer_raid(self,ctx: commands.Context,type_raid: str):
-        """Test la validité de la demande et créer un raid
+        """Test la validité de la demande pour creer un raid
         Args:
             ctx (commands.Context): environnement twitchIO pour récupérer les informations
             type_raid (str): nom du raid
@@ -136,7 +136,7 @@ class TBoT(commands.Bot):
             heure =  datetime.now().hour
             minute = datetime.now().minute
             
-            await TBOTBDD.genere_raid(name,raid_name)
+            await TBOTBDD.genere_raid(name,raid_name,1000)
 
             await tbot_com.message(f"raid_{raid_name}",channel=channel,name=name)          
     async def upgrade_aptitude(self,ctx: commands.Context ,aptitude: str):
