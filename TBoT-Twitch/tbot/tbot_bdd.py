@@ -47,8 +47,9 @@ class TBOT_BDD():
             renfort TEXT,
             resultat TEXT,
             blesse INTEGER,
-            fin INTEGER,
-            composition_butin text)''')
+            mort INTEGER,
+            composition_butin TEXT,
+            gfx_car TEXT)''')
         self.connexionSQL.commit()
         self.connexionSQL.close()
         
@@ -181,7 +182,7 @@ class TBOT_BDD():
             blesse = random.randrange(DISTANCE-50,DISTANCE-10)
             if blesse == DISTANCE//2 :
                 blesse +=2
-            fin = random.randrange(4,blesse-2)
+            fin = random.randrange(2,blesse-2)
             
         elif resultRAID < MORT+BLESSE :
             resultat = 'BLESSE' 
@@ -208,9 +209,10 @@ class TBOT_BDD():
                         renfort,
                         resultat,
                         blesse,
-                        fin,
-                        composition_butin)
-                        VALUES (?,?,?,?,?,?,?,?,?)''', (name,type_raid,DISTANCE,DISTANCE//2,'{}',resultat,blesse,fin,json.dumps(composition_butin)))
+                        mort,
+                        composition_butin,
+                        gfx_car)
+                        VALUES (?,?,?,?,?,?,?,?,?,?)''', (name,type_raid,DISTANCE,DISTANCE//2,'{}',resultat,blesse,fin,json.dumps(composition_butin),""))
         await db.execute(f'''UPDATE survivant SET credit = credit - {cout_raid} WHERE name = "{name}"''')
         await db.commit()
         await db.close()
@@ -275,8 +277,9 @@ class TBOT_BDD():
                         renfort,
                         resultat,
                         blesse,
-                        fin,
-                        composition_butin FROM 'raid' ''') as cur:
+                        mort,
+                        composition_butin,
+                        gfx_car FROM 'raid' ''') as cur:
             listeRaid = await cur.fetchall()
         await db.close()  
 
@@ -291,7 +294,7 @@ class TBOT_BDD():
             renfort = raid[4]
             resultat = raid[5]
             blesse = raid[6]
-            fin = raid[7]
+            mort = raid[7]
             composition_butin = raid[8]
                 
             distance -=1
@@ -299,27 +302,27 @@ class TBOT_BDD():
             stat_survivant= await self.get_stats_survivant(name)
             data[f"SURVIVANT_{name}"]={"NAME":f"{name}",
                                        "STATS": stat_survivant,
-                                        "TYPE":f"{type_raid}","DISTANCE":distancepourcent,"RENFORT":f"{renfort}","ALIVE":True,"BLESSE":(distance<=blesse)}
+                                        "TYPE":f"{type_raid}","DISTANCE":distancepourcent,"RENFORT":f"{renfort}","DEAD":(distance<=mort),"BLESSE":(distance<=blesse)}
 
             await db.execute(f'''UPDATE raid SET distance = {distance} WHERE name = "{name}"''') 
             
-            if distance == michemin :
-                await tbot_com.message("raid_mi_chemin",channel=channel,name=name)
-
-            elif distance == blesse : 
-                await tbot_com.message("raid_blesse",channel=channel,name=name)
-            elif distance == fin :
-                if fin>1 : #le joueur est mort
-                    await tbot_com.message("raid_mort",channel=channel,name=name)
+            if distance == 0:
+                if mort >1 :
+                    await tbot_com.message("raid_retour_base_mort",channel=channel,name=name)
                     await db.execute(f'''DELETE from raid WHERE name = "{name}"''')
                     await db.execute(f'''DELETE from survivant WHERE name = "{name}"''')
-
-                if distance <= 0 : #le joueur est revenu a la base
-
+                else :
                     await self.gere_fin_raid(db,name,type_raid,resultat,composition_butin,channel)
-                        
                     await db.execute(f'''DELETE from raid WHERE name = "{name}"''')
                     
+            elif distance == michemin :
+                await tbot_com.message("raid_mi_chemin",channel=channel,name=name)
+            elif distance == blesse : 
+                await tbot_com.message("raid_blesse",channel=channel,name=name)
+            elif distance == mort :
+                await tbot_com.message("raid_mort_enroute",channel=channel,name=name)
+                await db.execute(f'''DELETE from raid WHERE name = "{name}"''')
+                await db.execute(f'''DELETE from survivant WHERE name = "{name}"''')
 
         await db.commit()
         await db.close()
@@ -333,11 +336,17 @@ class TBOT_BDD():
         gain_prestige = self.config_raid_json["raid_"+type_raid]["gain_prestige"]
         listebutin=""
         if resultat =="BUTIN":
-            listebutin = "<br>"+await tbot_com.donne_butin(composition_butin)        
-        
-        await tbot_com.message("raid_win_butin",channel=channel,name=name,gain_prestige=str(gain_prestige),listebutin=listebutin)
-        await db.execute(f'''UPDATE survivant SET prestige = prestige +{gain_prestige} WHERE name = "{name}"''')
+            listebutin = "<br>"+await tbot_com.donne_butin(composition_butin) 
+            await tbot_com.message("raid_win_butin",channel=channel,name=name,gain_prestige=str(gain_prestige),listebutin=listebutin)
+            await db.execute(f'''UPDATE survivant SET prestige = prestige +{gain_prestige} WHERE name = "{name}"''')
+        if resultat =="BREDOUILLE":
+            await tbot_com.message("raid_win_bredouille",channel=channel,name=name,gain_prestige=str(gain_prestige//2))
+            await db.execute(f'''UPDATE survivant SET prestige = prestige +{gain_prestige//2} WHERE name = "{name}"''')
+        if resultat =="BLESSE": 
+            await tbot_com.message("raid_win_blesse",channel=channel,name=name,gain_prestige=str(gain_prestige//4))
+            await db.execute(f'''UPDATE survivant SET prestige = prestige +{gain_prestige//4} WHERE name = "{name}"''')
 
+            
     async def upgrade_aptitude(self,name,aptitude: str,cout_upgrade: int):
         db = await aiosqlite.connect(os.path.join(self.TBOTPATH, self.NAMEBDD))
         await db.execute(f'''UPDATE survivant SET prestige = prestige - {cout_upgrade} WHERE name = "{name}"''')

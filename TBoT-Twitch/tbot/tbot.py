@@ -33,7 +33,7 @@ with open('./config.json', 'r') as fichier:
     CLIENT_PREFIX = data["BOT-TWITCH"]["CLIENT_PREFIX"]
     CLIENT_CHANNEL = data["BOT-TWITCH"]["CLIENT_CHANNEL"]
 
-langue = "french"    
+langue = "french"    # A ajouter dans un fichier config
 
         
 

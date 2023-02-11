@@ -65,6 +65,18 @@
         "mod"   : "radio {name} : je suis ...enfin reven... à la base...",
         "sound" : "BUTIN.mp3"
     },
+    "raid_win_bredouille":{
+    "ovl"   : "⛹- <span class='pseudo'>{name}</span> est revenu à la base sans avoir trouvé grand chose. gain de prestige : +{gain_prestige} !!!",
+    "chat"  :"⛹- {name} est revenu à la base sans avoir trouvé grand chose. gain de prestige : +{gain_prestige} : +{gain_prestige} !!!",
+    "mod"   : "radio {name} : je suis .enfin revenu... à la base...",
+    "sound" : "BREDOUILLE.mp3"
+    },
+    "raid_win_blesse":{
+    "ovl"   : "⛹- <span class='pseudo'>{name}</span> est revenu à la base. Il y a des bléssés... gain de prestige : +{gain_prestige} !!!",
+    "chat"  :"⛹- {name} est revenu à la base. Il y a des bléssés... gain de prestige : +{gain_prestige} : +{gain_prestige} !!!",
+    "mod"   : "radio {name} : je suis .enfin revenu... à la base...",
+    "sound" : "BLESSE.mp3"
+    },
     "raid_mi_chemin" :{
         "ovl"   : "⛹- <span class='pseudo'>{name}</span> commence à faire demi-tour.",
         "chat"  :"⛹- {name} commence à faire demi-tour",
@@ -81,12 +93,18 @@
         "ovl"   : "🩸- <span class='pseudo'>{name}</span> a été attaqué durant son raid. Il est bléssé ! ",
         "chat"  :"🩸- {name} a été bléssé sur une attaque !",
         "mod"   : "radio {name} : Aidez moi! victim...zzz.. ne attaque... je suis ...gèrement bléssé... zzz..z...",
-        "sound" : "BLESSE.mp3"
+        "sound" : "radio5.mp3"
     },
-    "raid_mort" :{
-        "ovl"   : "☠️-<span class='pseudo'>{name}</span> a succombé durant son raid ! Il a tout perdu !",
-        "chat"  :"☠️- {name} a succombé durant son raid ! Il est mort !",
+    "raid_mort_enroute" :{
+        "ovl"   : "☠️- <span class='pseudo'>{name}</span> succombe lors d'une attaque de zombi ! son corps est ramené a la base !",
+        "chat"  :"☠️- {name} succombe lors d'une attaque de zombi ! son corps est ramené a la base !",
         "mod"   : "radio {name} :  Arggg...partout. arghh... u secours... zzz..z...",
+        "sound" : "radio2.mp3"
+    },
+    "raid_retour_base_mort" :{
+        "ovl"   : "☠️-Le corps de <span class='pseudo'>{name}</span> est revenu à la base ! il a tout perdu !",
+        "chat"  :"☠️- Le corps de {name} est revenu à la base ! il a tout perdu !",
+        "mod"   : "",
         "sound" : "mort.mp3"
     },
     "raid_weapon" : {
