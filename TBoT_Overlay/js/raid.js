@@ -1,6 +1,6 @@
 class Survivant {
 	// JSON to Object
-	constructor(name, career, prestige, credit, levelWeapon, levelArmor, levelTransport, levelGear, raidType, raidDistance, aids, alive, hurt) {
+	constructor(name, career, prestige, credit, levelWeapon, levelArmor, levelTransport, levelGear, raidType, raidDistance, aids, dead, hurt) {
 		this.name = name;
 		this.career = career;
 		this.prestige = prestige;
@@ -12,7 +12,7 @@ class Survivant {
 		this.raidType = raidType;
 		this.raidDistance = raidDistance;
 		this.aids = aids;
-		this.alive = alive;
+		this.dead = dead;
 		this.hurt = hurt;
 		this.box = document.createElement('div');
 		this.p = document.createElement('p');
@@ -28,6 +28,7 @@ class Survivant {
 		this.box.id = this.name;
 		this.setRenforts();
 		this.box.appendChild(this.pseudoBox);
+		this.pseudoBox.classList.add('pseudoBox')
 		this.setBadge();
 		this.setStatus();
 		this.setImg();
@@ -47,25 +48,24 @@ class Survivant {
 
 	//
 	setStatus() {
-		if(!this.alive) {
+		if(this.dead) {
 			this.status.setAttribute('src', '../assets/img/badges/skull.png');
 			this.status.classList.add('badge')
-			this.status.classList.add('badge')
+			this.pseudoBox.appendChild(this.status);
 		} else {
 			if(this.hurt) {
 				this.status.setAttribute('src', '../assets/img/badges/blood.png');
 				this.status.classList.add('badge')
+				this.pseudoBox.appendChild(this.status);
 			}
 		}
-		this.pseudoBox.appendChild(this.badge);
-		this.pseudoBox.classList.add('pseudoBox')
 	}
 
 	//
 	setBadge() {
 			this.badge.setAttribute('src', '../assets/img/badges/'+this.raidType+'.png');
 			this.badge.classList.add('badge')
-			this.pseudoBox.appendChild(this.status);
+			this.pseudoBox.appendChild(this.badge);
 	}
 
 	// ¯\_(ツ)_/¯
@@ -138,8 +138,8 @@ window.addEventListener('load', (event) => {
 				jsonSurvivants[jsonSurvivant].TYPE,
 				jsonSurvivants[jsonSurvivant].DISTANCE,
 				jsonSurvivants[jsonSurvivant].RENFORT,
-				jsonSurvivants[jsonSurvivant].ALIVE,
-				jsonSurvivants[jsonSurvivant].BLESSE,
+				jsonSurvivants[jsonSurvivant].DEAD,
+				jsonSurvivants[jsonSurvivant].HURT,
 			)
 			survivants[survivant.name] = survivant;
 			survivant.setTemplate();
