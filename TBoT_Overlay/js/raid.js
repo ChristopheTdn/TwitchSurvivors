@@ -17,20 +17,21 @@ class Survivant {
 		this.box = document.createElement('div');
 		this.p = document.createElement('p');
 		this.img = document.createElement('img');
+		this.badge = document.createElement('img');
+		this.status = document.createElement('img');
 		this.pAids = document.createElement('p');
+		this.pseudoBox = document.createElement('div');
 	}
 
 	setTemplate() {
 		this.box.classList.add("cars");
 		this.box.id = this.name;
-		this.p.classList.add("pseudo");
-		this.pAids.classList.add('renforts')
-		this.box.appendChild(this.pAids);
-		this.box.appendChild(this.p);
-		this.box.appendChild(this.img);
+		this.setRenforts();
+		this.box.appendChild(this.pseudoBox);
+		this.setBadge();
+		this.setStatus();
 		this.setImg();
 		this.setPseudo();
-		this.setRenforts();
 		this.setPosition();
 
 		document.getElementById('line').appendChild(this.box)
@@ -39,13 +40,32 @@ class Survivant {
 	// Si le survivant est en vie : affiche la voiture via son niveau en véhicule
 	// Sinon, affiche une image de fail
 	setImg() {
+			this.img.setAttribute('src', '../assets/img/cars/'+this.levelTransport+'.png');
+			this.img.style.width = (config.sizes.cars.car*100)+"px";
+			this.box.appendChild(this.img);
+	}
 
-		if(this.alive) {
-			this.img.setAttribute('src', '../assets/img/'+this.levelTransport+'.png');
+	//
+	setStatus() {
+		if(!this.alive) {
+			this.status.setAttribute('src', '../assets/img/badges/skull.png');
+			this.status.classList.add('badge')
+			this.status.classList.add('badge')
 		} else {
-			this.img.setAttribute('src', '../assets/img/fail-1.png')
+			if(this.hurt) {
+				this.status.setAttribute('src', '../assets/img/badges/blood.png');
+				this.status.classList.add('badge')
+			}
 		}
-		this.img.style.width = (config.sizes.cars.car*100)+"px";
+		this.pseudoBox.appendChild(this.badge);
+		this.pseudoBox.classList.add('pseudoBox')
+	}
+
+	//
+	setBadge() {
+			this.badge.setAttribute('src', '../assets/img/badges/'+this.raidType+'.png');
+			this.badge.classList.add('badge')
+			this.pseudoBox.appendChild(this.status);
 	}
 
 	// ¯\_(ツ)_/¯
@@ -55,6 +75,8 @@ class Survivant {
 		this.p.style.fontFamily = config.font.name;
 		this.p.style.color = config.colors.pseudo_cars;
 		this.p.style.fontWeight = config.font_weight.pseudo_cars;
+		this.p.classList.add("pseudo");
+		this.pseudoBox.appendChild(this.p);
 	}
 
 	// Construction de la ligne renforts
@@ -70,6 +92,9 @@ class Survivant {
 			this.pAids.innerHTML += " )";
 			this.pAids.style.fontSize = config.sizes.cars.aids+'em';
 			this.pAids.style.fontFamily = config.font.name;
+			this.pAids.style.color = config.colors.pseudo_aids;
+			this.pAids.classList.add('renforts')
+			this.box.appendChild(this.pAids);
 		}
 	}
 

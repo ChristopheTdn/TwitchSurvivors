@@ -1,20 +1,33 @@
+body { background: #000;}
 .cars{
 	text-align: center;
 	width: 100px;
 	bottom: 0;
 	position: fixed;
-	background: transparent;
+	/* background: transparent; */
 }
 .cars > img {
 	width: 100%;
-	background: transparent;
+	/* background: transparent; */
 }
-.pseudo {
+/* .pseudo {
 	background: transparent;
+} */
+
+.pseudoBox {
+	display: flex;
+    justify-content: space-around;
+	padding-bottom: 0.5em;
 }
+
+.badge {
+	width: 20%;
+}
+
 .renforts {
 	white-space: nowrap;
 }
 .rotate {
 	transform: scaleX(-1);
 }
+
