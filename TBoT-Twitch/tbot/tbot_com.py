@@ -1,10 +1,6 @@
 '''
 Module de gestion des communication twitch chat, Mod, overlay Obs pour le Projet TBoT_Terror
 '''
-
-import twitchio
-import asyncio
-from twitchio.ext import pubsub,sounds,commands
 import json
 import os
 from pygame import mixer

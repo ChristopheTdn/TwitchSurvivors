@@ -33,7 +33,7 @@ with open('./config.json', 'r') as fichier:
     CLIENT_PREFIX = data["BOT-TWITCH"]["CLIENT_PREFIX"]
     CLIENT_CHANNEL = data["BOT-TWITCH"]["CLIENT_CHANNEL"]
 
-langue = "french"    
+langue = "french"    # A ajouter dans un fichier config
 
         
 
@@ -252,11 +252,11 @@ class TBoT(commands.Bot):
         await self.creer_raid(ctx,"car")
         
     @commands.command()
-    async def raid_alcool(self, ctx: commands.Context):
+    async def raid_alcohol(self, ctx: commands.Context):
         """
-        Commande !raid_alcool
+        Commande !raid_alcohol
         -----------
-        Traite la commande twitch !raid_alcool. 
+        Traite la commande twitch !raid_alcohol. 
         """
         await self.creer_raid(ctx,"alcohol")
 
