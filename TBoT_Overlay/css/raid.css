@@ -1,11 +1,3 @@
-@font-face {
-	font-family: 'FugazOne';
-	src: url('FugazOne-Regular.ttf');
-}
-
-* {
-	font-family: FugazOne;
-}
 .cars{
 	text-align: center;
 	width: 100px;
@@ -19,11 +11,9 @@
 }
 .pseudo {
 	background: transparent;
-	font-size: 0.9em;
 }
 .renforts {
 	white-space: nowrap;
-	font-size: 0.7em;
 }
 .rotate {
 	transform: scaleX(-1);
