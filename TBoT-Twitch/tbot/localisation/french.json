@@ -119,7 +119,7 @@
         "mod":"radio {name} : ...Je pars cherch...de...reparer ..ma bagnole.",
         "sound":"DEPART RAID JOUR.mp3"
     },
-    "raid_alcool":{
+    "raid_alcohol":{
         "ovl":"🍹- <radio {name}> : ...allo ! ici <span class='pseudo'>{name}</span>... Je pars cherch...de quoi ..re la fete.",
         "chat":"🍹- il est {heure}:{minute}, {name} part en Raid pour chercher de l alcool.",
         "mod":"radio {name} :...allo ! Je pars cherch...de quoi .faire la fete.",

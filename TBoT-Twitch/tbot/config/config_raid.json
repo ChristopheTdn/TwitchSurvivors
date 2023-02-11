@@ -69,9 +69,9 @@
             }
         }
     },
-    "raid_alcool":
+    "raid_alcohol":
     {
-        "nom_raid":"alcool",
+        "nom_raid":"alcohol",
         "gain_prestige":400,
         "distance_raid":105,
         "stats_raid":{

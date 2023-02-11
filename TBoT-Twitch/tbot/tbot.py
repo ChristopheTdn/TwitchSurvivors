@@ -258,7 +258,7 @@ class TBoT(commands.Bot):
         -----------
         Traite la commande twitch !raid_alcool. 
         """
-        await self.creer_raid(ctx,"alcool")
+        await self.creer_raid(ctx,"alcohol")
 
     @commands.command()
     async def raid_agriculture(self, ctx: commands.Context):

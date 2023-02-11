@@ -231,7 +231,7 @@
             "Vitamines"	        :   "Base.PillsVitamins"
         }    
     },
-    "alcool":{
+    "alcohol":{
         "tier_1":{
             "Bouteille bière"   :   "Base.BeerBottle",	
             "Cannette bière"    :   "Base.BeerCan"
