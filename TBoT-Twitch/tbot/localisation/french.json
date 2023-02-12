@@ -108,49 +108,49 @@
         "sound" : "mort.mp3"
     },
     "raid_weapon" : {
-        "ovl":"🗡️- <radio {name}> : ...allo ! ici <span class='pseudo'>{name}</span>... Je pars cherch... des arm. et des .munitions.",
+        "ovl":"🗡️- radio {name} : ...allo ! ici <span class='pseudo'>{name}</span>... Je pars cherch... des arm. et des .munitions.",
         "chat":"🗡️- il est {heure}:{minute}, {name} part en Raid pour récupérer de l'armement.",
         "mod":"radio {name} :  Je pars cherch... des armes.. et des .munitions.",
         "sound":"DEPART RAID JOUR.mp3"
     },
     "raid_tool" : {
-        "ovl":"🔨- <radio {name}> : ...allo ! ici <span class='pseudo'>{name}</span>... Je pars cherch... du materiel...t des outils.",
+        "ovl":"🔨- radio {name} : ...allo ! ici <span class='pseudo'>{name}</span>... Je pars cherch... du materiel...t des outils.",
         "chat":"🔨- il est {heure}:{minute}, {name} part en Raid pour récupérer des outils..",
         "mod":"radio {name} :  Je pars cherch... du materiel...t des outils.",
         "sound":"DEPART RAID JOUR.mp3"
     },
     "raid_medic" : {
-        "ovl":"☣️- <radio {name}> : ...allo ! ici <span class='pseudo'>{name}</span>... Je pars cherch... de..medicaments..t des pansement.",
+        "ovl":"☣️- radio {name} : ...allo ! ici <span class='pseudo'>{name}</span>... Je pars cherch... de..medicaments..t des pansement.",
         "chat":"☣️- il est {heure}:{minute}, {name} part en Raid pour récupérer des fournitures medicales.",
         "mod":"radio {name} :  Je pars chercher... de..medicaments..t des pansement.",
         "sound":"DEPART RAID JOUR.mp3"
     },
     "raid_food":{
-        "ovl":"🍖- <radio {name}> : ...allo ! ici <span class='pseudo'>{name}</span>... Je pars cherch...de..la nourriture.",
+        "ovl":"🍖- radio {name} : ...allo ! ici <span class='pseudo'>{name}</span>... Je pars cherch...de..la nourriture.",
         "chat":"🍖- il est {heure}:{minute}, {name} part en Raid pour recuperer de la nourriture.",
         "mod":"radio {name} : ... Je pars cherch...de..la nourriture.",
         "sound":"DEPART RAID JOUR.mp3"
     },
     "raid_car":{
-        "ovl":"🚙- <radio {name}> : ...allo ! ici <span class='pseudo'>{name}</span>... Je pars cherch...de...reparer ..ma bagnole.",
+        "ovl":"🚙- radio {name} : ...allo ! ici <span class='pseudo'>{name}</span>... Je pars cherch...de...reparer ..ma bagnole.",
         "chat":"🚙- il est {heure}:{minute}, {name} part en Raid pour customiser sa voiture.",
         "mod":"radio {name} : ...Je pars cherch...de...reparer ..ma bagnole.",
         "sound":"DEPART RAID JOUR.mp3"
     },
     "raid_alcohol":{
-        "ovl":"🍹- <radio {name}> : ...allo ! ici <span class='pseudo'>{name}</span>... Je pars cherch...de quoi ..re la fete.",
+        "ovl":"🍹- radio {name} : ...allo ! ici <span class='pseudo'>{name}</span>... Je pars cherch...de quoi ..re la fete.",
         "chat":"🍹- il est {heure}:{minute}, {name} part en Raid pour chercher de l alcool.",
         "mod":"radio {name} :...allo ! Je pars cherch...de quoi .faire la fete.",
         "sound":"DEPART RAID JOUR.mp3"
     },
     "raid_agriculture":{
-        "ovl":"🌿- <radio {name}> : ...allo ! ici <span class='pseudo'>{name}</span>... Je pars cherch...de quoi ..jardiner.",
+        "ovl":"🌿- radio {name} : ...allo ! ici <span class='pseudo'>{name}</span>... Je pars cherch...de quoi ..jardiner.",
         "chat":"🌿- il est {heure}:{minute}, {name} part en Raid pour chercher de quoi jardiner.",
         "mod":"radio {name} : ...allo ! Je pars cherch...de quoi ..jardiner.",
         "sound":"DEPART RAID JOUR.mp3"
     },
     "raid_furniture":{
-        "ovl":"🗄️- <radio {name}> : ...allo ! ici <span class='pseudo'>{name}</span>... Je pars cherch...de quoi .equiper la base.",
+        "ovl":"🗄️- radio {name} : ...allo ! ici <span class='pseudo'>{name}</span>... Je pars cherch...de quoi .equiper la base.",
         "chat":"🗄️- il est {heure}:{minute}, {name} part en Raid pour chercher du mobilier.",
         "mod":"radio {name} : ...allo !  Je pars cherch...de quoi .equiper la base.",
         "sound":"DEPART RAID JOUR.mp3"
