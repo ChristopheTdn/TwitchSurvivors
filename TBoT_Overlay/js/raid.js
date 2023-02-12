@@ -81,23 +81,23 @@ class Survivant {
 	}
 
 	// Construction de la ligne renforts
-	setRenforts(){
-		if(Object.keys(this.aids).length > 0) {
-			this.pAids.innerHTML = "( ";
-			for (var i = 0 ; i <= Object.values(this.pAids).length ; i++) {
-				this.pAids.innerHTML += Object.values(this.aids)[i];
-				if( i !== Object.values(this.aids).length -1) {
-					this.pAids.innerHTML += " - ";
-				}
-			}
-			this.pAids.innerHTML += " )";
-			this.pAids.style.fontSize = config.sizes.cars.aids+'em';
-			this.pAids.style.fontFamily = config.font.name;
-			this.pAids.style.color = config.colors.pseudo_aids;
-			this.pAids.classList.add('renforts')
-			this.box.appendChild(this.pAids);
-		}
-	}
+	// setRenforts(){
+	// 	if(Object.keys(this.aids).length > 0) {
+	// 		this.pAids.innerHTML = "( ";
+	// 		for (var i = 0 ; i <= Object.values(this.pAids).length ; i++) {
+	// 			this.pAids.innerHTML += Object.values(this.aids)[i];
+	// 			if( i !== Object.values(this.aids).length -1) {
+	// 				this.pAids.innerHTML += " - ";
+	// 			}
+	// 		}
+	// 		this.pAids.innerHTML += " )";
+	// 		this.pAids.style.fontSize = config.sizes.cars.aids+'em';
+	// 		this.pAids.style.fontFamily = config.font.name;
+	// 		this.pAids.style.color = config.colors.pseudo_aids;
+	// 		this.pAids.classList.add('renforts')
+	// 		this.box.appendChild(this.pAids);
+	// 	}
+	// }
 
 	// définition position et orientation
 	setPosition(){
