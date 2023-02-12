@@ -27,7 +27,7 @@ class Survivant {
 	setTemplate() {
 		this.box.classList.add("cars");
 		this.box.id = this.name;
-		this.setRenforts();
+		// this.setRenforts();
 		this.box.appendChild(this.pseudoBox);
 		this.pseudoBox.classList.add('pseudoBox')
 		this.setBadge();
