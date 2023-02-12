@@ -136,8 +136,7 @@ class TBoT(commands.Bot):
             heure =  datetime.now().hour
             minute = datetime.now().minute
             
-            await TBOTBDD.genere_raid(name,raid_name,1000)
-
+            await TBOTBDD.genere_raid(name,raid_name,1000,survivor["level_transport"])
             await tbot_com.message(f"raid_{raid_name}",channel=channel,name=name)          
     async def upgrade_aptitude(self,ctx: commands.Context ,aptitude: str):
         

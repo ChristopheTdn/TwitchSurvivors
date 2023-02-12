@@ -152,7 +152,8 @@ class TBOT_BDD():
         return (BUTIN,BREDOUILLE,BLESSE,MORT,DISTANCE) 
     
         
-    async def genere_raid(self,name: str,type_raid: str,cout_raid: int):
+    async def genere_raid(self,name: str,type_raid: str,cout_raid: int,level_transport: int) -> None:
+
         """Genere les Stats du RAID et son resultat
 
         Args:
@@ -173,6 +174,7 @@ class TBOT_BDD():
 
         BUTIN,BREDOUILLE,BLESSE,MORT,DISTANCE = await self.calcul_ratio_raid(name,BUTIN,BREDOUILLE,BLESSE,MORT,DISTANCE)
         composition_butin={}
+        gfx_car = f"{level_transport}-{(random.randrange(4)+1)}.png"
 
         #determine le resultat du raid
         resultRAID = random.randrange(100) # un nombre entre 0 et 99
@@ -212,7 +214,7 @@ class TBOT_BDD():
                         mort,
                         composition_butin,
                         gfx_car)
-                        VALUES (?,?,?,?,?,?,?,?,?,?)''', (name,type_raid,DISTANCE,DISTANCE//2,'{}',resultat,blesse,fin,json.dumps(composition_butin),""))
+                        VALUES (?,?,?,?,?,?,?,?,?,?)''', (name,type_raid,DISTANCE,DISTANCE//2,'{}',resultat,blesse,fin,json.dumps(composition_butin),gfx_car))
         await db.execute(f'''UPDATE survivant SET credit = credit - {cout_raid} WHERE name = "{name}"''')
         await db.commit()
         await db.close()
@@ -296,13 +298,19 @@ class TBOT_BDD():
             blesse = raid[6]
             mort = raid[7]
             composition_butin = raid[8]
+            gfx_car=raid[9]
                 
             distance -=1
             distancepourcent = (distance*100)//(distance_total)
             stat_survivant= await self.get_stats_survivant(name)
             data[f"SURVIVANT_{name}"]={"NAME":f"{name}",
                                        "STATS": stat_survivant,
-                                        "TYPE":f"{type_raid}","DISTANCE":distancepourcent,"RENFORT":f"{renfort}","DEAD":(distance<=mort),"BLESSE":(distance<=blesse)}
+                                        "TYPE":f"{type_raid}",
+                                        "DISTANCE":distancepourcent,
+                                        "RENFORT":f"{renfort}",
+                                        "DEAD":(distance<=mort),
+                                        "BLESSE":(distance<=blesse),
+                                        "GFX_CAR":gfx_car}
 
             await db.execute(f'''UPDATE raid SET distance = {distance} WHERE name = "{name}"''') 
             
