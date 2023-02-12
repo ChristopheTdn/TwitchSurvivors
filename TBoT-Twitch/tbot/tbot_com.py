@@ -140,7 +140,7 @@ async def affichage_Overlay(message: str):
     global ligne_overlay
     ligne_overlay.insert(0,message)
     
-    ligne_overlay = ligne_overlay[:20]  
+    ligne_overlay = ligne_overlay[:30]  
 
     num_message = 1
     for ligne in ligne_overlay:

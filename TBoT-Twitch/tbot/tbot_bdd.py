@@ -309,7 +309,7 @@ class TBOT_BDD():
                                         "DISTANCE":distancepourcent,
                                         "RENFORT":f"{renfort}",
                                         "DEAD":(distance<=mort),
-                                        "BLESSE":(distance<=blesse),
+                                        "HURT":(distance<=blesse),
                                         "GFX_CAR":gfx_car}
 
             await db.execute(f'''UPDATE raid SET distance = {distance} WHERE name = "{name}"''') 
@@ -329,8 +329,6 @@ class TBOT_BDD():
                 await tbot_com.message("raid_blesse",channel=channel,name=name)
             elif distance == mort :
                 await tbot_com.message("raid_mort_enroute",channel=channel,name=name)
-                await db.execute(f'''DELETE from raid WHERE name = "{name}"''')
-                await db.execute(f'''DELETE from survivant WHERE name = "{name}"''')
 
         await db.commit()
         await db.close()
