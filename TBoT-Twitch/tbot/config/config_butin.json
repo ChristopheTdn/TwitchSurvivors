@@ -1,17 +1,17 @@
 {
     "weapon":{
         "tier_1":{
-            "Pagaie Canoé"      : "Base.CanoePadel",
+            "Pagaie Canoe"      : "Base.CanoePadel",
             "Club Golf"         : "Base.Golfclub",
             "Cross Hockey"      : "Base.HockeyStick",
             "Cross Hockey glace": "Base.IceHockeyStick",
             "Baton Lacross"     : "Base.LaCrosseStick",
             "Queue billard"     : "Base.Poolcue",
             "Planche"           : "Base.Plank",
-            "Planche cloutée"   : "Base.PlankNail",
+            "Planche cloutee"   : "Base.PlankNail",
             "Raquette Tennis"   : "Base.TennisRacket",
             "Tuyau plomb"       : "Base.LeadPipe",
-            "Tuyau métal"       : "Base.MetalPipe",
+            "Tuyau metal"       : "Base.MetalPipe",
             "Couteau beurre"    : "Base.ButterKnife",
             "Hachoire viande"   : "Base.MeatCleaver",
             "Couteau pierre"    : "Base.FlintKnife",
@@ -24,7 +24,7 @@
         },
         "tier_2":{
             "Hachette"          : "Base.HandAxe",
-            "Hache bûcheron"	: "Base.WoodAxe",
+            "Hache bucheron"	: "Base.WoodAxe",
             "Matraque"	        : "Base.Nightstick",
             "Couteau chasse"	: "Base.HuntingKnife",
             "Pistolet M9"	    : "Base.Pistol",
@@ -66,16 +66,16 @@
         "tier_2":{
             "Hachette pierre"    : "Base.AxeStone",
             "Pelle"	             : "Base.Shovel",
-            "Bêche"	             : "Base.Shovel2",
-            "Canne à pêche"	     : "Base.FishingRod",
+            "Beche"	             : "Base.Shovel2",
+            "Canne a peche"	     : "Base.FishingRod",
             "Marteau rond"	     : "Base.BallPeenHammer",
             "Marteau"	         : "Base.Hammer",
-            "Clef à molette"	 : "Base.Wrench",
+            "Clef a molette"	 : "Base.Wrench",
             "Clef anglaise"	     : "Base.PipeWrench"        
         },
         "tier_3":{
-            "Masse à deux mains" : "Base.Sledgehammer",
-            "Hache bûcheron"     : "Base.WoodAxe",
+            "Masse a deux mains" : "Base.Sledgehammer",
+            "Hache bucheron"     : "Base.WoodAxe",
             "Pied de biche"      : "Base.Crowbar"
         }
     },
@@ -85,18 +85,18 @@
             "Coffre standard"               :	"Base.TrunkDoor1",
             "Coffre sport"                  :	"Base.TrunkDoor3",
             "Capot standard"                :	"Base.EngineDoor1",
-            "Frein usé standard"            :	"Base.OldBrake1",
-            "Frein usé heavy"               :	"Base.OldBrake2",
-            "Frein usé sport"               :	"Base.OldBrake3",
+            "Frein use standard"            :	"Base.OldBrake1",
+            "Frein use heavy"               :	"Base.OldBrake2",
+            "Frein use sport"               :	"Base.OldBrake3",
             "Frein Normal standard"         :	"Base.NormalBrake1",
             "Frein Normal heavy"            :	"Base.NormalBrake2",
             "Suspension normale standard"   :	"Base.NormalSuspension1",
             "Suspension normale heavy"      :	"Base.NormalSuspension2",
-            "Pompe à pneu"                  :	"Base.TirePump",
-            "Pièce moteur"                  :   "Base.EngineParts",
-            "Pneu usé standard"             :	"Base.OldTire1",
-            "Pneu usé heavy"                :	"Base.OldTire2",
-            "Pneu usé sport"                :	"Base.OldTire3",
+            "Pompe a pneu"                  :	"Base.TirePump",
+            "Piece moteur"                  :   "Base.EngineParts",
+            "Pneu use standard"             :	"Base.OldTire1",
+            "Pneu use heavy"                :	"Base.OldTire2",
+            "Pneu use sport"                :	"Base.OldTire3",
             "Pneu Normal standard"          :	"Base.NormalTire1",
             "Pneu Normal heavy"             :	"Base.NormalTire2",
             "Pare Brise standard"           :	"Base.Windshield1"
@@ -132,21 +132,21 @@
         "tier_1":{
             "boite Carottes"	        :   "Base.CannedCarrots",
             "boite Chili"	            :   "Base.CannedChili",
-            "boite Maïs"	            :   "Base.CannedCorn",
+            "boite Mais"	            :   "Base.CannedCorn",
             "boite Salade fruits"	    :   "Base.CannedFruitCocktail",
             "boite Soupe champignons"	:   "Base.CannedMushroomSoup",
-            "boite Pêches"	            :   "Base.CannedPeaches",
+            "boite Peches"	            :   "Base.CannedPeaches",
             "boite Petits pois"	        :   "Base.CannedPeas",
             "boite Sardines"	        :   "Base.CannedSardines",
             "boite Tomates"	            :   "Base.CannedTomato2",
             "boite Ananas"	            :   "Base.CannedPineapple",
             "Muffin"	                :   "Base.MuffinGeneric",
-            "Sauce épicée"	            :   "Base.Hotsauce",
+            "Sauce epicee"	            :   "Base.Hotsauce",
             "Ketchup"	                :   "Base.Ketchup",
             "Moutarde"	                :   "Base.Mustard",
             "Poivre"	                :   "Base.Pepper",
             "Sauce Soy"	                :   "Base.Soysauce",
-            "Huile Végétale"	        :   "Base.OilVegetable",
+            "Huile Vegetale"	        :   "Base.OilVegetable",
             "Jus de fruit"	            :   "Base.JuiceBox",
             "Bouteille Eau"	            :   "Base.WaterBottleFull",
             "Pomme"                     :   "Base.Apple",
@@ -159,7 +159,7 @@
             "Glace"	                    :   "Base.Icecream"
         },
         "tier_2":{
-            "Paté pour chien"       :	"Base.Dogfood",
+            "Pate pour chien"       :	"Base.Dogfood",
             "Pomme de terre"	    :   "Base.CannedPotato2",
             "Thon"	                :   "Base.TunaTin",
             "Part gateau"	        :   "Base.CakeSlice",
@@ -173,11 +173,11 @@
             "Chips"	                :   "Base.Crisps3",
             "Chocolat"	            :   "Base.Chocolate",
             "Cacao"	                :   "Base.CocoaPowder",
-            "Café"	                :   "Base.Coffee2",
+            "Cafe"	                :   "Base.Coffee2",
             "Confiture"	            :   "Base.JamFruit",
             "Miel"	                :   "Base.Honey",
-            "Beurre de cacahuète"	:   "Base.PeanutButter",
-            "Sachet thé"	        :   "Base.Teabag2",
+            "Beurre de cacahuete"	:   "Base.PeanutButter",
+            "Sachet the"	        :   "Base.Teabag2",
             "Beurre"	            :   "Base.Butter",
             "Burrito"	            :   "Base.BurritoRecipe"
         },
@@ -188,7 +188,7 @@
             "Spaghetti Bolognese"	:   "Base.CannedBolognese",
             "Burger"	            :   "Base.BurgerRecipe",
             "Taco"	                :   "Base.Taco",
-            "Sirop érable"	        :   "Base.MapleSyrup",
+            "Sirop erable"	        :   "Base.MapleSyrup",
             "Mayonnaise"	        :   "farming.MayonnaiseFull",
             "Wasabi"	            :   "Base.Wasabi",
             "Soda Orange"	        :   "Base.Pop2",
@@ -198,7 +198,7 @@
             "Pâtes"	                :   "Base.Pasta",
             "Riz"	                :   "Base.Rice",
             "Flocon avoine"	        :   "Base.OatsRaw",
-            "Céréales"	            :   "Base.Cereal",
+            "Cereales"	            :   "Base.Cereal",
             "Guacamole"	            :   "Base.Guacamole",
             "Haricots secs"	        :   "Base.DriedBlackBeans"
         }    
@@ -208,33 +208,33 @@
             "Pansement"             :	"Base.Bandaid",
             "Balle coton"           :	"Base.AlcoholedCottonBalls",
             "Tissu"                 :	"Base.Tissue",
-            "Pince épiler"          :	"Base.Tweezers",
+            "Pince epiler"          :	"Base.Tweezers",
             "Serviette bain"        :	"Base.BathTowel",
             "Attelle"               :	"Base.Splint",
-            "Tissu déchiré"         :	"Base.RippedSheets",
-            "Lingette désinfectante":   "Base.AlcoholWipes"
+            "Tissu dechire"         :	"Base.RippedSheets",
+            "Lingette desinfectante":   "Base.AlcoholWipes"
         },
         "tier_2":{
             "Bandage"	            :   "Base.Bandage",
-            "Bouteille désinfectant":	"Base.Disinfectant",
+            "Bouteille desinfectant":	"Base.Disinfectant",
             "Pince suture"	        :   "Base.SutureNeedleHolder",
-            "Antidépresseur"	    :   "Base.PillsAntiDep",
+            "Antidepresseur"	    :   "Base.PillsAntiDep",
             "Beta bloquant"	        :   "Base.PillsBeta",
             "Antidouleur"	        :   "Base.Pills",
-            "Somnifère"	            :   "Base.PillsSleepingTablets"
+            "Somnifere"	            :   "Base.PillsSleepingTablets"
             
         },
         "tier_3":{
             "Antibiotics"	    :   "Base.Antibiotics",
-            "Bandage stérile"	:   "Base.AlcoholBandage",
+            "Bandage sterile"	:   "Base.AlcoholBandage",
             "Aiguille suture"	:   "Base.SutureNeedle",
             "Vitamines"	        :   "Base.PillsVitamins"
         }    
     },
     "alcohol":{
         "tier_1":{
-            "Bouteille bière"   :   "Base.BeerBottle",	
-            "Cannette bière"    :   "Base.BeerCan"
+            "Bouteille biere"   :   "Base.BeerBottle",	
+            "Cannette biere"    :   "Base.BeerCan"
             
         },
         "tier_2":{
@@ -269,7 +269,7 @@
     },
     "furniture":{
         "tier_1":{
-            "Bouteille bière"   :   "Base.BeerBottle",
+            "Bouteille biere"   :   "Base.BeerBottle",
             "Truelle"	        :   "farming.HandShovel",
             "Sac compost"	    :   "Base.CompostBag",
             "Graines radis"	    :   "Base.RedRadishBagSeed",
@@ -278,7 +278,7 @@
         "tier_2":{
             "Graines carrotes"	:   "Base.CarrotBagSeed",
             "Graines tomates"	:   "Base.TomatoBagSeed",
-            "Bouteille désinfectant":	"Base.Disinfectant",
+            "Bouteille desinfectant":	"Base.Disinfectant",
             "Graines patates"	:   "Base.PotatoBagSeed",
             "Arrosoir"	        :   "farming.WateredCan",
             "Pelle"	            :   "farming.Shovel"
