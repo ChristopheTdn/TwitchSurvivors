@@ -1,6 +1,6 @@
 class Survivant {
 	// JSON to Object
-	constructor(name, career, prestige, credit, levelWeapon, levelArmor, levelTransport, levelGear, raidType, raidDistance, aids, dead, hurt) {
+	constructor(name, career, prestige, credit, levelWeapon, levelArmor, levelTransport, levelGear, raidType, raidDistance, aids, dead, hurt, imgCar) {
 		this.name = name;
 		this.career = career;
 		this.prestige = prestige;
@@ -14,6 +14,7 @@ class Survivant {
 		this.aids = aids;
 		this.dead = dead;
 		this.hurt = hurt;
+		this.imgCar = imgCar;
 		this.box = document.createElement('div');
 		this.p = document.createElement('p');
 		this.img = document.createElement('img');
@@ -41,7 +42,7 @@ class Survivant {
 	// Si le survivant est en vie : affiche la voiture via son niveau en véhicule
 	// Sinon, affiche une image de fail
 	setImg() {
-			this.img.setAttribute('src', '../assets/img/cars/'+this.levelTransport+'.png');
+			this.img.setAttribute('src', '../assets/img/cars/'+this.imgCar);
 			this.img.style.width = (config.sizes.cars.car*100)+"px";
 			this.box.appendChild(this.img);
 	}
@@ -140,6 +141,7 @@ window.addEventListener('load', (event) => {
 				jsonSurvivants[jsonSurvivant].RENFORT,
 				jsonSurvivants[jsonSurvivant].DEAD,
 				jsonSurvivants[jsonSurvivant].HURT,
+				jsonSurvivants[jsonSurvivant].GFX_CAR,
 			)
 			survivants[survivant.name] = survivant;
 			survivant.setTemplate();
