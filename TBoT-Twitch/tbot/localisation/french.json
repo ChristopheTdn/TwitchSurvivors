@@ -6,79 +6,79 @@
         "sound" : ""
     },
     "echec_creation_survivant" :{
-        "ovl"   : "❌- Echec de tentative de création du joueur <span class='pseudo'>{name}</span> sur le serveur !",
+        "ovl"   : "❌- Echec de tentative de création du joueur {name} sur le serveur !",
         "chat"  :"❌- Echec de tentative de création du joueur {name} sur le serveur ! Le survivant existe déjà. Tapes !my_survivor",
         "mod"   : "",
         "sound" : ""
     },
     "creation_survivant" :{
-        "ovl"   : "⛹- Le joueur <span class='pseudo'>{name}</span> vient d'apparaitre sur le serveur.",
+        "ovl"   : "⛹- Le joueur {name} vient d'apparaitre sur le serveur.",
         "chat"  :"⛹- Le joueur {name} vient d'apparaitre sur le serveur !",
         "mod"   : "radio {name} : ...allo !  Je suis un surviva....pret a aider....d'autres messages suivront...",
         "sound" : "NOUVEAU SURVIVANT.mp3"
     },
     "survivant_no_exist" :{
-        "ovl"   : "❌- le survivant <span class='pseudo'>{name}</span> n'existe pas sur le serveur ! utilise les points de Chaine pour en creer un.",
+        "ovl"   : "❌- le survivant {name} n'existe pas sur le serveur ! utilise les points de Chaine pour en creer un.",
         "chat"  :"❌- le survivant {name} n'existe pas sur le serveur ! Creer un nouveau survivant avec tes points de chaine.",
         "mod"   : "",
         "sound" : ""
     },
     "survivant_upgrade_aptitude" :{
-        "ovl"   :"⛹- <span class='pseudo'>{name}</span> upgrade son aptitude {aptitude} pour {tarif_level}",
+        "ovl"   :"⛹- {name} upgrade son aptitude {aptitude} pour {tarif_level}",
         "chat"  :"⛹- {name} upgrade son aptitude {aptitude} pour {tarif_level}.",
         "mod"   : "",
         "sound" : ""
     },
     "survivant_prestige_insuffisant" :{
-        "ovl"   :"❌- <span class='pseudo'>{name}</span> ne possède pas assez de points de réputation pour upgrade son aptitude {aptitude} (cout : {tarif_level} pts).",
+        "ovl"   :"❌- {name} ne possède pas assez de points de réputation pour upgrade son aptitude {aptitude} (cout : {tarif_level} pts).",
         "chat"  :"❌- {name} ne possède pas assez de points de réputation pour upgrade son aptitude {aptitude} (cout : {tarif_level} pts).",
         "mod"   : "",
         "sound" : ""
     },
     "survivant_max_aptitude" :{
-        "ovl"   :"❌- Attention <span class='pseudo'>{name}</span>, l aptitude {aptitude} est deja à son niveau maximum. !my_survivor pour plus de renseignement.",
+        "ovl"   :"❌- Attention {name}, l aptitude {aptitude} est deja à son niveau maximum. !my_survivor pour plus de renseignement.",
         "chat"  :"❌- Attention {name}! l aptitude {aptitude} est deja à son niveau maximum. !my_survivor pour plus de renseignement.",
         "mod"   : "",
         "sound" : ""
     },
     "survivant_echec_achat_credit" : {
-        "ovl"   :"❌- le survivant <span class='pseudo'>{name}</span> n'existe pas sur le serveur ! utilise les points de Chaine pour en creer un avant d'acheter des credits",
+        "ovl"   :"❌- le survivant {name} n'existe pas sur le serveur ! utilise les points de Chaine pour en creer un avant d'acheter des credits",
         "chat"  :"❌- le survivant {name} n'existe pas sur le serveur ! utilise les points de Chaine pour en creer un avant d'acheter des crédits",
         "mod"   : "",
         "sound" : "" 
     },
     "survivant_ajout_credit" : {
-        "ovl"   :"💰- le survivant <span class='pseudo'>{name}</span> obtient {credit} crédits !",
+        "ovl"   :"💰- le survivant {name} obtient {credit} crédits !",
         "chat"  :"💰- le survivant {name} obtient {credit} crédits !",
         "mod"   : "",
         "sound" : "" 
     },
     "raid_credit_insuffisant" :{
-        "ovl"   :"❌- Attention <span class='pseudo'>{name}</span>, tu n'as pas assez de credit suffisant pour créer un raid (1000 credits). Tu peux obtenir des credits en depensant des points de chaine",
+        "ovl"   :"❌- Attention {name}, tu n'as pas assez de credit suffisant pour créer un raid (1000 credits). Tu peux obtenir des credits en depensant des points de chaine",
         "chat"  :"❌- Attention {name}, tu n'as pas assez de crédit suffisant pour créer un raid (1000 credits). Tu peux obtenir des credits en depensant des points de chaine",
         "mod"   : "",
         "sound" : ""
     },
     "raid_win_butin" :{
-        "ovl"   : "⛹- <span class='pseudo'>{name}</span> est revenu à la base. gain de prestige : +{gain_prestige} !!!{listebutin}",
+        "ovl"   : "⛹- {name} est revenu à la base. gain de prestige : +{gain_prestige} !!!{listebutin}",
         "chat"  :"⛹- {name} est revenu à la base. gain de prestige : +{gain_prestige} !!!",
         "mod"   : "radio {name} : je suis ...enfin reven... à la base...",
         "sound" : "BUTIN.mp3"
     },
     "raid_win_bredouille":{
-    "ovl"   : "⛹- <span class='pseudo'>{name}</span> est revenu à la base sans avoir trouvé grand chose. gain de prestige : +{gain_prestige} !!!",
+    "ovl"   : "⛹- {name} est revenu à la base sans avoir trouvé grand chose. gain de prestige : +{gain_prestige} !!!",
     "chat"  :"⛹- {name} est revenu à la base sans avoir trouvé grand chose. gain de prestige : +{gain_prestige} : +{gain_prestige} !!!",
     "mod"   : "radio {name} : je suis .enfin revenu... à la base...",
     "sound" : "BREDOUILLE.mp3"
     },
     "raid_win_blesse":{
-    "ovl"   : "⛹- <span class='pseudo'>{name}</span> est revenu à la base. Il y a des bléssés... gain de prestige : +{gain_prestige} !!!",
+    "ovl"   : "⛹- {name} est revenu à la base. Il y a des bléssés... gain de prestige : +{gain_prestige} !!!",
     "chat"  :"⛹- {name} est revenu à la base. Il y a des bléssés... gain de prestige : +{gain_prestige} : +{gain_prestige} !!!",
     "mod"   : "radio {name} : je suis .enfin revenu... à la base...",
     "sound" : "BLESSE.mp3"
     },
     "raid_mi_chemin" :{
-        "ovl"   : "⛹- <span class='pseudo'>{name}</span> commence à faire demi-tour.",
+        "ovl"   : "⛹- {name} commence à faire demi-tour.",
         "chat"  :"⛹- {name} commence à faire demi-tour",
         "mod"   : "radio {name} : allo... ..ai atteint mon objectif... je ...reviens... a la base..",
         "sound" : "MI-RAID.mp3"
@@ -90,67 +90,67 @@
         "sound" : ""    
     },
     "raid_blesse" :{
-        "ovl"   : "🩸- <span class='pseudo'>{name}</span> a été attaqué durant son raid. Il est bléssé ! ",
+        "ovl"   : "🩸- {name} a été attaqué durant son raid. Il est bléssé ! ",
         "chat"  :"🩸- {name} a été bléssé sur une attaque !",
         "mod"   : "radio {name} : Aidez moi! victim...zzz.. ne attaque... je suis ...gèrement bléssé... zzz..z...",
         "sound" : "radio5.mp3"
     },
     "raid_mort_enroute" :{
-        "ovl"   : "☠️- <span class='pseudo'>{name}</span> succombe lors d'une attaque de zombi ! son corps est ramené a la base !",
+        "ovl"   : "☠️- {name} succombe lors d'une attaque de zombi ! son corps est ramené a la base !",
         "chat"  :"☠️- {name} succombe lors d'une attaque de zombi ! son corps est ramené a la base !",
         "mod"   : "radio {name} :  Arggg...partout. arghh... u secours... zzz..z...",
         "sound" : "radio2.mp3"
     },
     "raid_retour_base_mort" :{
-        "ovl"   : "☠️-Le corps de <span class='pseudo'>{name}</span> est revenu à la base ! il a tout perdu !",
+        "ovl"   : "☠️-Le corps de {name} est revenu à la base ! il a tout perdu !",
         "chat"  :"☠️- Le corps de {name} est revenu à la base ! il a tout perdu !",
         "mod"   : "",
         "sound" : "mort.mp3"
     },
     "raid_weapon" : {
-        "ovl":"🗡️- radio {name} : ...allo ! ici <span class='pseudo'>{name}</span>... Je pars cherch... des arm. et des .munitions.",
+        "ovl":"🗡️- radio {name} : ...allo ! ici {name}... Je pars cherch... des arm. et des .munitions.",
         "chat":"🗡️- il est {heure}:{minute}, {name} part en Raid pour récupérer de l'armement.",
         "mod":"radio {name} :  Je pars cherch... des armes.. et des .munitions.",
         "sound":"DEPART RAID JOUR.mp3"
     },
     "raid_tool" : {
-        "ovl":"🔨- radio {name} : ...allo ! ici <span class='pseudo'>{name}</span>... Je pars cherch... du materiel...t des outils.",
+        "ovl":"🔨- radio {name} : ...allo ! ici {name}... Je pars cherch... du materiel...t des outils.",
         "chat":"🔨- il est {heure}:{minute}, {name} part en Raid pour récupérer des outils..",
         "mod":"radio {name} :  Je pars cherch... du materiel...t des outils.",
         "sound":"DEPART RAID JOUR.mp3"
     },
     "raid_medic" : {
-        "ovl":"☣️- radio {name} : ...allo ! ici <span class='pseudo'>{name}</span>... Je pars cherch... de..medicaments..t des pansement.",
+        "ovl":"☣️- radio {name} : ...allo ! ici {name}... Je pars cherch... de..medicaments..t des pansement.",
         "chat":"☣️- il est {heure}:{minute}, {name} part en Raid pour récupérer des fournitures medicales.",
         "mod":"radio {name} :  Je pars chercher... de..medicaments..t des pansement.",
         "sound":"DEPART RAID JOUR.mp3"
     },
     "raid_food":{
-        "ovl":"🍖- radio {name} : ...allo ! ici <span class='pseudo'>{name}</span>... Je pars cherch...de..la nourriture.",
+        "ovl":"🍖- radio {name} : ...allo ! ici {name}... Je pars cherch...de..la nourriture.",
         "chat":"🍖- il est {heure}:{minute}, {name} part en Raid pour recuperer de la nourriture.",
         "mod":"radio {name} : ... Je pars cherch...de..la nourriture.",
         "sound":"DEPART RAID JOUR.mp3"
     },
     "raid_car":{
-        "ovl":"🚙- radio {name} : ...allo ! ici <span class='pseudo'>{name}</span>... Je pars cherch...de...reparer ..ma bagnole.",
+        "ovl":"🚙- radio {name} : ...allo ! ici {name}... Je pars cherch...de...reparer ..ma bagnole.",
         "chat":"🚙- il est {heure}:{minute}, {name} part en Raid pour customiser sa voiture.",
         "mod":"radio {name} : ...Je pars cherch...de...reparer ..ma bagnole.",
         "sound":"DEPART RAID JOUR.mp3"
     },
     "raid_alcohol":{
-        "ovl":"🍹- radio {name} : ...allo ! ici <span class='pseudo'>{name}</span>... Je pars cherch...de quoi ..re la fete.",
+        "ovl":"🍹- radio {name} : ...allo ! ici {name}... Je pars cherch...de quoi ..re la fete.",
         "chat":"🍹- il est {heure}:{minute}, {name} part en Raid pour chercher de l alcool.",
         "mod":"radio {name} :...allo ! Je pars cherch...de quoi .faire la fete.",
         "sound":"DEPART RAID JOUR.mp3"
     },
     "raid_agriculture":{
-        "ovl":"🌿- radio {name} : ...allo ! ici <span class='pseudo'>{name}</span>... Je pars cherch...de quoi ..jardiner.",
+        "ovl":"🌿- radio {name} : ...allo ! ici {name}... Je pars cherch...de quoi ..jardiner.",
         "chat":"🌿- il est {heure}:{minute}, {name} part en Raid pour chercher de quoi jardiner.",
         "mod":"radio {name} : ...allo ! Je pars cherch...de quoi ..jardiner.",
         "sound":"DEPART RAID JOUR.mp3"
     },
     "raid_furniture":{
-        "ovl":"🗄️- radio {name} : ...allo ! ici <span class='pseudo'>{name}</span>... Je pars cherch...de quoi .equiper la base.",
+        "ovl":"🗄️- radio {name} : ...allo ! ici {name}... Je pars cherch...de quoi .equiper la base.",
         "chat":"🗄️- il est {heure}:{minute}, {name} part en Raid pour chercher du mobilier.",
         "mod":"radio {name} : ...allo !  Je pars cherch...de quoi .equiper la base.",
         "sound":"DEPART RAID JOUR.mp3"

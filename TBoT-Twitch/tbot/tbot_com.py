@@ -69,7 +69,7 @@ async def message(key="empty",channel=None,name="",mod="",chat="",ovl="",sound="
             
     if ovl == "":
         ovl = localisation[f"{key}"]["ovl"]\
-            .replace("{name}",name)\
+            .replace("{name}",f"<span class='pseudo'>{name}</span>")\
             .replace("{heure}",heure)\
             .replace("{minute}",minute)\
             .replace("{gain_prestige}",gain_prestige)\
