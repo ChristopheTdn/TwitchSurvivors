@@ -9,7 +9,7 @@ class Chat {
 	}
 	setOpacity() {
 		let messages = this.box.children;
-		if(messages.length == 20) {
+		if(messages.length > 20) {
 			for (let i = 0; i < 6; i++) {
 				if(i < 3) {
 					messages[i].style.opacity = 0.3;
@@ -33,12 +33,10 @@ class Message {
 		this.p.innerHTML = this.content;
 		this.p.style.fontFamily = config.font.name;
 		this.p.style.fontSize = config.sizes.chat.text_size+"em";
-		this.p.firstElementChild.style.color = config.colors.pseudo_chat;
 		chat.insert(this.p);
-	}
-
-	setOpacity() {
-		this.p.style.opacity = 0.5;
+		if(this.p.firstElementChild){
+			this.p.firstElementChild.style.color = config.colors.pseudo_chat
+		}
 	}
 }
 
