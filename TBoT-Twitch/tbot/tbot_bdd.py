@@ -49,6 +49,7 @@ class TBOT_BDD():
             blesse INTEGER,
             mort INTEGER,
             composition_butin TEXT,
+            bonus_butin INTEGER,
             gfx_car TEXT)''')
         self.connexionSQL.commit()
         self.connexionSQL.close()
@@ -64,7 +65,7 @@ class TBOT_BDD():
                             level_armor,
                             level_transport,
                             level_gear)
-                            VALUES (?,?,?,?,?,?,?,?)''', (pseudo ,"",0,2500,1,1,1,1)) 
+                            VALUES (?,?,?,?,?,?,?,?)''', (pseudo ,"",0,1500,1,1,1,1)) 
         await db.commit()
         await db.close()
     
@@ -174,6 +175,7 @@ class TBOT_BDD():
 
         BUTIN,BREDOUILLE,BLESSE,MORT,DISTANCE = await self.calcul_ratio_raid(name,BUTIN,BREDOUILLE,BLESSE,MORT,DISTANCE)
         composition_butin={}
+        bonus_butin=0
         gfx_car = f"{level_transport}-{(random.randrange(4)+1)}.png"
 
         #determine le resultat du raid
@@ -200,7 +202,7 @@ class TBOT_BDD():
             resultat = 'BUTIN' 
             blesse=-1
             fin = 0
-            composition_butin = await self.genere_butin(name,type_raid)     
+            (composition_butin,bonus_butin) = await self.genere_butin(name,type_raid)     
         
         db = await aiosqlite.connect(os.path.join(self.TBOTPATH, self.NAMEBDD))
         await db.execute ('''INSERT OR IGNORE INTO raid
@@ -213,8 +215,9 @@ class TBOT_BDD():
                         blesse,
                         mort,
                         composition_butin,
+                        bonus_butin,
                         gfx_car)
-                        VALUES (?,?,?,?,?,?,?,?,?,?)''', (name,type_raid,DISTANCE,DISTANCE//2,'{}',resultat,blesse,fin,json.dumps(composition_butin),gfx_car))
+                        VALUES (?,?,?,?,?,?,?,?,?,?,?)''', (name,type_raid,DISTANCE,DISTANCE//2,'{}',resultat,blesse,fin,json.dumps(composition_butin),bonus_butin,gfx_car))
         await db.execute(f'''UPDATE survivant SET credit = credit - {cout_raid} WHERE name = "{name}"''')
         await db.commit()
         await db.close()
@@ -225,7 +228,7 @@ class TBOT_BDD():
         await db.commit()
         await db.close()
         
-    async def genere_butin(self,name: str,type_raid:str)->dict:
+    async def genere_butin(self,name: str,type_raid:str)->tuple:
         """Determine le Butin en fonction du level et du type de Raid
 
         Args:
@@ -233,12 +236,14 @@ class TBOT_BDD():
             type_raid (str): type de raid
 
         Returns:
-            dict: dictionnaire renvoyant le nom et la class du loot.
+            tuple: (dictionnaire renvoyant le nom et la class du loot,bonus_butin).
         """        
         survivant = await self.get_stats_survivant(name)
         level_gear = survivant["level_gear"]
         level_weapon=survivant["level_weapon"]
         butin_final={}
+        bonus_butin=0
+
         
         for i in range(level_gear): # Autant de tour que le niveau d'equipement
             hasard=random.randrange(100)
@@ -248,24 +253,24 @@ class TBOT_BDD():
             if hasard<object_tier3: #Donne un objet de Tier3
                 loot = self.config_butin_json[type_raid]["tier_3"]
                 choix_loot = random.choice(tuple(loot.keys()))
-                if choix_loot not in butin_final:
-                    butin_final[choix_loot]=self.config_butin_json[type_raid][f"tier_3"][choix_loot]
+                butin_final[choix_loot]=self.config_butin_json[type_raid][f"tier_3"][choix_loot]
+                bonus_butin+=200
             elif hasard<object_tier2+object_tier3 :
                 #Donne un objet de Tier2
                 loot = self.config_butin_json[type_raid]["tier_2"]
                 choix_loot = random.choice(tuple(loot.keys()))
-                if choix_loot not in butin_final:
-                    butin_final[choix_loot]=self.config_butin_json[type_raid][f"tier_2"][choix_loot]
+                butin_final[choix_loot]=self.config_butin_json[type_raid][f"tier_2"][choix_loot]
+                bonus_butin+=100
             else: #Donne un objet de Tier1
                 loot = self.config_butin_json[type_raid]["tier_1"]
                 choix_loot = random.choice(tuple(loot.keys()))
-                if choix_loot not in butin_final:
-                    butin_final[choix_loot]=self.config_butin_json[type_raid][f"tier_1"][choix_loot]
+                butin_final[choix_loot]=self.config_butin_json[type_raid][f"tier_1"][choix_loot]
+                bonus_butin+=50
                     
             if random.randrange(100)>50 : #test si on arrete le tour (50 % de chance que oui)
                 break
             
-        return butin_final
+        return (butin_final,bonus_butin)
     
     
         
@@ -281,6 +286,7 @@ class TBOT_BDD():
                         blesse,
                         mort,
                         composition_butin,
+                        bonus_butin,
                         gfx_car FROM 'raid' ''') as cur:
             listeRaid = await cur.fetchall()
         await db.close()  
@@ -298,7 +304,8 @@ class TBOT_BDD():
             blesse = raid[6]
             mort = raid[7]
             composition_butin = raid[8]
-            gfx_car=raid[9]
+            bonus_butin = raid[9]
+            gfx_car=raid[10]
                 
             distance -=1
             distancepourcent = (distance*100)//(distance_total)
@@ -320,7 +327,7 @@ class TBOT_BDD():
                     await db.execute(f'''DELETE from raid WHERE name = "{name}"''')
                     await db.execute(f'''DELETE from survivant WHERE name = "{name}"''')
                 else :
-                    await self.gere_fin_raid(db,name,type_raid,resultat,composition_butin,channel)
+                    await self.gere_fin_raid(db,name,type_raid,resultat,composition_butin,bonus_butin,channel)
                     await db.execute(f'''DELETE from raid WHERE name = "{name}"''')
                     
             elif distance == michemin :
@@ -336,21 +343,23 @@ class TBOT_BDD():
         async with aiofiles.open("TBoT_Overlay/raid.json", "w",encoding="utf-8") as fichier:
             await fichier.write(json.dumps(data,indent=4,ensure_ascii=False))
         
-    async def gere_fin_raid(self,db,name,type_raid,resultat,composition_butin,channel):
+    async def gere_fin_raid(self,db,name,type_raid,resultat,composition_butin,bonus_butin,channel):
         
                 
         gain_prestige = self.config_raid_json["raid_"+type_raid]["gain_prestige"]
         listebutin=""
         if resultat =="BUTIN":
+            gain_prestige = (gain_prestige*2)
             listebutin = "<br>"+await tbot_com.donne_butin(composition_butin) 
-            await tbot_com.message("raid_win_butin",channel=channel,name=name,gain_prestige=str(gain_prestige),listebutin=listebutin)
-            await db.execute(f'''UPDATE survivant SET prestige = prestige +{gain_prestige} WHERE name = "{name}"''')
+            await tbot_com.message("raid_win_butin",channel=channel,name=name,gain_prestige=str(gain_prestige),listebutin=listebutin,bonus_butin=str(bonus_butin))
+            await db.execute(f'''UPDATE survivant SET prestige = prestige +{gain_prestige+bonus_butin} WHERE name = "{name}"''')
         if resultat =="BREDOUILLE":
             await tbot_com.message("raid_win_bredouille",channel=channel,name=name,gain_prestige=str(gain_prestige//2))
-            await db.execute(f'''UPDATE survivant SET prestige = prestige +{gain_prestige//2} WHERE name = "{name}"''')
+            await db.execute(f'''UPDATE survivant SET prestige = prestige +{gain_prestige} WHERE name = "{name}"''')
         if resultat =="BLESSE": 
+            gain_prestige = gain_prestige//2
             await tbot_com.message("raid_win_blesse",channel=channel,name=name,gain_prestige=str(gain_prestige//4))
-            await db.execute(f'''UPDATE survivant SET prestige = prestige +{gain_prestige//4} WHERE name = "{name}"''')
+            await db.execute(f'''UPDATE survivant SET prestige = prestige +{gain_prestige} WHERE name = "{name}"''')
 
             
     async def upgrade_aptitude(self,name,aptitude: str,cout_upgrade: int):

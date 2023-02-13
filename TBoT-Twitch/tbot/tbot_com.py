@@ -29,7 +29,7 @@ ligne_overlay=[]
 async def msg_init_TboT():
     for i in range(20):
         ligne_overlay.append("")     
-    await message(ovl="Init TBoT Done.")
+    await message(ovl="🤖- Init TBoT Done. Enjoy...")
 
 messageJson={}
 
@@ -44,7 +44,7 @@ def joue_son(radio = "radio1.mp3"):
     mixer.music.load(os.path.join(TBOTPATH, "sound/"+radio))
     mixer.music.play()
 
-async def message(key="empty",channel=None,name="",mod="",chat="",ovl="",sound="",gain_prestige="",listebutin="",aptitude="",tarif_level="",credit=""):
+async def message(key="empty",channel=None,name="",mod="",chat="",ovl="",sound="",gain_prestige="",listebutin="",aptitude="",tarif_level="",credit="",bonus_butin=""):
     """    envois un message vers les différentes interfaces (twitch, overlay obs, chat in game PZ)
 
     Args:
@@ -56,6 +56,9 @@ async def message(key="empty",channel=None,name="",mod="",chat="",ovl="",sound="
     """
     heure =  str(datetime.now().hour)
     minute = str(datetime.now().minute)
+    if bonus_butin != "":
+        bonus_butin = f" +{bonus_butin} pts de prestige pour les items ramenés."
+        
     if chat == "":
         chat= localisation[f"{key}"]["chat"]\
             .replace("{name}",name)\
@@ -66,6 +69,7 @@ async def message(key="empty",channel=None,name="",mod="",chat="",ovl="",sound="
             .replace("{aptitude}",aptitude)\
             .replace("{tarif_level}",tarif_level)\
             .replace("{credit}",credit)
+
             
     if ovl == "":
         ovl = localisation[f"{key}"]["ovl"]\
@@ -76,7 +80,8 @@ async def message(key="empty",channel=None,name="",mod="",chat="",ovl="",sound="
             .replace("{listebutin}",listebutin)\
             .replace("{aptitude}",aptitude)\
             .replace("{tarif_level}",tarif_level)\
-            .replace("{credit}",credit)
+            .replace("{credit}",credit)\
+            .replace("{bonus_butin}",bonus_butin)
 
                 
     if mod == "":
@@ -117,6 +122,8 @@ async def donne_butin(butin:str) -> str:
     liste_Butin=butin.split(",")
     listeClassefinale = ""
     listefinale=""
+   
+
     
     for nom in liste_Butin:
         item=nom.split(':')
