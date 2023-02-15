@@ -1,5 +1,5 @@
 # TBoT
-Systeme d interation TWITCH-PROJECT ZOMBOID
+Systeme d integration TWITCH-PROJECT ZOMBOID
 
 
 1 - Environnement de developpement : 
