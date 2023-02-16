@@ -66,7 +66,7 @@ class TBoT(commands.Bot):
         channel = self.get_channel(CLIENT_CHANNEL)
         while True:
             await TBOTBDD.actualise_statRaid(channel)
-            await asyncio.sleep(1)
+            await asyncio.sleep(5)
 
     async def event_message(self,message: twitchio.Message):
         
