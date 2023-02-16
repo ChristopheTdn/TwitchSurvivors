@@ -15,6 +15,9 @@ Systeme d integration TWITCH-PROJECT ZOMBOID
 2- connaitre son n° identifiant :
 https://streamscharts.com/tools/convert-username
 
+3- Generer un token :
+https://twitchtokengenerator.com/ avec tous les droits
+
 
 pour permettre une utilisation sereine du MODS et un suivi des mises a jours, je vous invite a faire appel aux lien symbolique.
 
