@@ -30,8 +30,8 @@
         "sound" : ""
     },
     "survivant_prestige_insuffisant" :{
-        "ovl"   :"❌- {name} ne possède pas assez de points de réputation pour upgrade son aptitude {aptitude} (cout : {tarif_level} pts).",
-        "chat"  :"❌- {name} ne possède pas assez de points de réputation pour upgrade son aptitude {aptitude} (cout : {tarif_level} pts).",
+        "ovl"   :"❌- {name} ne possède pas assez de points de prestige pour upgrade son aptitude {aptitude} (cout : {tarif_level} pts).",
+        "chat"  :"❌- {name} ne possède pas assez de points de prestige pour upgrade son aptitude {aptitude} (cout : {tarif_level} pts).",
         "mod"   : "",
         "sound" : ""
     },
@@ -54,33 +54,33 @@
         "sound" : "" 
     },
     "raid_credit_insuffisant" :{
-        "ovl"   :"❌- Attention {name}, tu n'as pas assez de credit suffisant pour créer un raid (1000 credits). Tu peux obtenir des credits en depensant des points de chaine",
-        "chat"  :"❌- Attention {name}, tu n'as pas assez de crédit suffisant pour créer un raid (1000 credits). Tu peux obtenir des credits en depensant des points de chaine",
+        "ovl"   :"❌- Attention {name}, tu n'as pas assez de credit suffisant pour créer un raid ({gain_prestige} credits). Tu peux obtenir des credits en depensant des points de chaine",
+        "chat"  :"❌- Attention {name}, tu n'as pas assez de crédit suffisant pour créer un raid ({gain_prestige} credits). Tu peux obtenir des credits en depensant des points de chaine",
         "mod"   : "",
         "sound" : ""
     },
     "raid_win_butin" :{
         "ovl"   : "⛹- {name} est revenu à la base. gain de prestige : +{gain_prestige} !!!{bonus_butin}{listebutin}",
         "chat"  :"",
-        "mod"   : "radio {name} : je suis ...enfin reven... à la base...",
+        "mod"   : "radio {name} : je suis ...enfin revenu.. à la base...",
         "sound" : "BUTIN.mp3"
     },
     "raid_win_bredouille":{
     "ovl"   : "⛹- {name} est revenu à la base sans avoir trouvé grand chose. gain de prestige : +{gain_prestige} !!!",
     "chat"  :"",
-    "mod"   : "radio {name} : je suis .enfin revenu... à la base...",
+    "mod"   : "radio {name} : je suis enfin revenu à la base.",
     "sound" : "BREDOUILLE.mp3"
     },
     "raid_win_blesse":{
     "ovl"   : "⛹- {name} est revenu à la base. Il y a des bléssés... gain de prestige : +{gain_prestige} !!!",
     "chat"  :"",
-    "mod"   : "radio {name} : je suis .enfin revenu... à la base...",
+    "mod"   : "radio {name} : je suis enfin revenu à la base.",
     "sound" : "BLESSE.mp3"
     },
     "raid_mi_chemin" :{
         "ovl"   : "⛹- {name} commence à faire demi-tour.",
         "chat"  :"",
-        "mod"   : "radio {name} : allo... j'ai atteint mon objectif... je ...reviens... a la base..",
+        "mod"   : "radio {name} : allo... j'ai atteint mon objectif... je reviens à la base..",
         "sound" : "MI-RAID.mp3"
     },
     "raid_deja_en_cours" :{
@@ -108,51 +108,51 @@
         "sound" : "mort.mp3"
     },
     "raid_weapon" : {
-        "ovl":"🗡️- radio {name} : ...allo ! ici {name}... Je pars chercher... des arm. et des .munitions.",
+        "ovl":"🗡️- radio {name} : allo ! ici {name}... Je pars chercher des armes et des munitions. (-{gain_prestige} crédits)",
         "chat":"",
-        "mod":"radio {name} :  Je pars cherch... des armes.. et des .munitions.",
+        "mod":"radio {name} :  Je pars chercher des armes et des .munitions.",
         "sound":"DEPART RAID JOUR.mp3"
     },
     "raid_tool" : {
-        "ovl":"🔨- radio {name} : ...allo ! ici {name}... Je pars chercher... du materiel...t des outils.",
+        "ovl":"🔨- radio {name} : allo ! ici {name}... Je pars chercher du materiel et des outils. (-{gain_prestige} crédits)",
         "chat":"",
-        "mod":"radio {name} :  Je pars cherch... du materiel...t des outils.",
+        "mod":"radio {name} :  Je pars chercher du materiel et des outils.",
         "sound":"DEPART RAID JOUR.mp3"
     },
     "raid_medic" : {
-        "ovl":"☣️- radio {name} : ...allo ! ici {name}... Je pars chercher... de..medicaments..t des pansement.",
+        "ovl":"☣️- radio {name} : allo ! ici {name}...... Je pars chercher... des..medicaments et des pansement. (-{gain_prestige} crédits)",
         "chat":"",
-        "mod":"radio {name} :  Je pars chercher... de..medicaments..t des pansement.",
+        "mod":"radio {name} :  Je pars chercher des médicaments et des pansement.",
         "sound":"DEPART RAID JOUR.mp3"
     },
     "raid_food":{
-        "ovl":"🍖- radio {name} : ...allo ! ici {name}... Je pars chercher...de..la nourriture.",
+        "ovl":"🍖- radio {name} : allo ! ici {name}...... Je pars chercher...de..la nourriture. (-{gain_prestige} crédits)",
         "chat":"",
-        "mod":"radio {name} : ... Je pars cherch...de..la nourriture.",
+        "mod":"radio {name} : Je pars chercher de la nourriture.",
         "sound":"DEPART RAID JOUR.mp3"
     },
     "raid_car":{
-        "ovl":"🚙- radio {name} : ...allo ! ici {name}... Je pars chercher...de...reparer ..ma bagnole.",
+        "ovl":"🚙- radio {name} : allo ! ici {name}...... Je pars chercher de quoi réparer ma caisse. (-{gain_prestige} crédits)",
         "chat":"",
-        "mod":"radio {name} : ...Je pars cherch...de...reparer ..ma bagnole.",
+        "mod":"radio {name} : Je pars chercher de quoi réparer ma caisse.",
         "sound":"DEPART RAID JOUR.mp3"
     },
     "raid_alcohol":{
-        "ovl":"🍹- radio {name} : ...allo ! ici {name}... Je pars chercher...de quoi .faire la fete.",
+        "ovl":"🍹- radio {name} : allo ! ici {name}... Je pars chercher de quoi  faire la fete. (-{gain_prestige} crédits)",
         "chat":"",
-        "mod":"radio {name} :...allo ! Je pars cherch...de quoi .faire la fete.",
+        "mod":"radio {name} :...allo ! Je pars chercher..de quoi .faire la fete.",
         "sound":"DEPART RAID JOUR.mp3"
     },
     "raid_agriculture":{
-        "ovl":"🌿- radio {name} : ...allo ! ici {name}... Je pars chercher...de quoi ..jardiner.",
+        "ovl":"🌿- radio {name} : allo ! ici {name}...... Je pars chercher...de quoi ..jardiner. (-{gain_prestige} crédits)",
         "chat":"",
         "mod":"radio {name} : ...allo ! Je pars chercher...de quoi ..jardiner.",
         "sound":"DEPART RAID JOUR.mp3"
     },
     "raid_furniture":{
-        "ovl":"🗄️- radio {name} : ...allo ! ici {name}... Je pars cherch...de quoi .equiper la base.",
+        "ovl":"🗄️- radio {name} : allo ! ici {name}... Je pars chercher de quoi équiper la base. (-{gain_prestige} crédits)",
         "chat":"",
-        "mod":"radio {name} : ...allo !  Je pars chercher de quoi equiper la base.",
+        "mod":"radio {name} : ...allo !  Je pars chercher de quoi équiper la base.",
         "sound":"DEPART RAID JOUR.mp3"
     }
 }

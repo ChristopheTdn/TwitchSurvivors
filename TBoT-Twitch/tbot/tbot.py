@@ -66,7 +66,7 @@ class TBoT(commands.Bot):
         channel = self.get_channel(CLIENT_CHANNEL)
         while True:
             await TBOTBDD.actualise_statRaid(channel)
-            await asyncio.sleep(5)
+            await asyncio.sleep(1)
 
     async def event_message(self,message: twitchio.Message):
         
@@ -114,7 +114,7 @@ class TBoT(commands.Bot):
         survivor = await TBOTBDD.get_stats_survivant(name)
         test_raid_exist = await TBOTBDD.raid_exist(name)
         raid_name = self.config_raid_json["raid_"+type_raid]["nom_raid"]
-        
+        gain_prestige = self.config_raid_json["raid_"+type_raid]["gain_prestige"]
         
         
         
@@ -125,8 +125,8 @@ class TBoT(commands.Bot):
 
             await tbot_com.message("raid_deja_en_cours",channel=channel,name=name)
 
-        elif survivor["credit"]<1000 : 
-            await tbot_com.message("raid_credit_insuffisant",channel=channel,name=name)
+        elif survivor["credit"]<gain_prestige : 
+            await tbot_com.message("raid_credit_insuffisant",channel=channel,name=name,gain_prestige=str(gain_prestige))
 
         else :
             """Création du Raid
@@ -136,8 +136,9 @@ class TBoT(commands.Bot):
             heure =  datetime.now().hour
             minute = datetime.now().minute
             
-            await TBOTBDD.genere_raid(name,raid_name,1000,survivor["level_transport"])
-            await tbot_com.message(f"raid_{raid_name}",channel=channel,name=name)          
+            await TBOTBDD.genere_raid(name,raid_name,gain_prestige,survivor["level_transport"])
+            await tbot_com.message(f"raid_{raid_name}",channel=channel,name=name,gain_prestige=str(gain_prestige)) 
+                     
     async def upgrade_aptitude(self,ctx: commands.Context ,aptitude: str):
         
         name = ctx.author.display_name
