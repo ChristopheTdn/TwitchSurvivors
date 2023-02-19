@@ -46,7 +46,7 @@ class Message {
 	display(chat) {
 		let currentDate = new Date();
 		let timestamp = currentDate.getTime();
-		this.p.innerHTML = (timestamp - this.date);
+		this.p.innerHTML = this.content;
 		this.p.style.fontFamily = config.font.name;
 		this.p.style.fontSize = config.chat.text_size+"em";
 		if(this.isInDelay) {
@@ -74,15 +74,14 @@ class Message {
 	setOpacity() {
 		let currentDate = new Date();
 		let timestamp = currentDate.getTime();
-		if((timestamp - this.date) < (0.33*config.chat.delay_to_display)) {
+		let configTime = config.chat.delay_to_display*1000;
+		if((timestamp - this.date) < (0.33*configTime)) {
 			this.p.style.opacity = 1;
 		} else {
-			if((timestamp - this.date) < (0.66*config.chat.delay_to_display)) {
+			if((timestamp - this.date) < (0.66*configTime)) {
 				this.p.style.opacity = 0.6;
 			} else {
-				if((timestamp - (this.date/1000)) < (0.99*config.chat.delay_to_display)) {
 					this.p.style.opacity = 0.3;
-				}
 			}
 		}
 	}
