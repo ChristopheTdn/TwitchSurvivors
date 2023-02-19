@@ -27,8 +27,11 @@ ligne_overlay=[]
 
 
 async def msg_init_TboT():
-    for i in range(20):
-        ligne_overlay.append("")     
+    for i in range(30):
+        ligne_overlay.append({
+        "date": 0,
+        "message": ""
+    })     
     await message(ovl="🤖- Init TBoT Done. Enjoy...")
 
 messageJson={}
@@ -145,7 +148,7 @@ async def affichage_Overlay(message: str):
         message (str): message à ajouter au fichier JSON
     """        
     global ligne_overlay
-    ligne_overlay.insert(0,message)
+    ligne_overlay.insert(0,{"date":datetime.timestamp(datetime.now()),"message":message})
     
     ligne_overlay = ligne_overlay[:30]  
 
