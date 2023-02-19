@@ -148,8 +148,8 @@ async def affichage_Overlay(message: str):
         message (str): message à ajouter au fichier JSON
     """        
     global ligne_overlay
-    ligne_overlay.insert(0,{"date":datetime.timestamp(datetime.now()),"message":message})
-    
+    ligne_overlay.insert(0,{"date":int(round(datetime.now().timestamp()*1000)),"message":message})
+
     ligne_overlay = ligne_overlay[:30]  
 
     num_message = 1
