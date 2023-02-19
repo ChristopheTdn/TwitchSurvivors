@@ -1,43 +1,43 @@
 {
     "message_1": {
-        "date": 1676767046.250573,
-        "message": "⛹- <span class='pseudo'>GToF_</span> est revenu à la base. Il y a des bléssés... gain de prestige : +75 !!!"
+        "date": 1676819731959,
+        "message": "⛹- <span class='pseudo'>GToF_</span> commence à faire demi-tour."
     },
     "message_2": {
-        "date": 1676766993.476751,
-        "message": "⛹- <span class='pseudo'>GToF_</span> commence à faire demi-tour."
-    },
-    "message_3": {
-        "date": 1676766965.08355,
+        "date": 1676819693413,
         "message": "🩸- <span class='pseudo'>GToF_</span> a été attaqué durant son raid. Il est bléssé ! "
     },
+    "message_3": {
+        "date": 1676819679105,
+        "message": "🗡️- radio <span class='pseudo'>GToF_</span> : allo ! ici <span class='pseudo'>GToF_</span>... Je pars chercher des armes et des munitions. (-1200 crédits)"
+    },
     "message_4": {
-        "date": 1676766940.581962,
-        "message": "🍖- radio <span class='pseudo'>GToF_</span> : allo ! ici <span class='pseudo'>GToF_</span>...... Je pars chercher...de..la nourriture. (-600 crédits)"
+        "date": 1676819651804,
+        "message": "💰- le survivant <span class='pseudo'>GToF_</span> obtient 2500 crédits !"
     },
     "message_5": {
-        "date": 1676766735.385095,
-        "message": "⛹- <span class='pseudo'>GToF_</span> est revenu à la base. gain de prestige : +1200 !!! +50 pts de prestige pour les items ramenés.<br><p STYLE=\"padding:0 0 0 20px;\">  🔸Poire</p>"
+        "date": 1676819642932,
+        "message": "❌- Attention <span class='pseudo'>GToF_</span>, tu n'as pas assez de credit suffisant pour créer un raid (1200 credits). Tu peux obtenir des credits en depensant des points de chaine"
     },
     "message_6": {
-        "date": 1676766682.615032,
-        "message": "⛹- <span class='pseudo'>GToF_</span> commence à faire demi-tour."
+        "date": 1676819592212,
+        "message": "🤖- Init TBoT Done. Enjoy..."
     },
     "message_7": {
-        "date": 1676766668.338421,
-        "message": "⚡&ltradio <span class='pseudo'>GToF_</span> > :  test radio !!!"
+        "date": 0,
+        "message": ""
     },
     "message_8": {
-        "date": 1676766629.250993,
-        "message": "🍖- radio <span class='pseudo'>GToF_</span> : allo ! ici <span class='pseudo'>GToF_</span>...... Je pars chercher...de..la nourriture. (-600 crédits)"
+        "date": 0,
+        "message": ""
     },
     "message_9": {
-        "date": 1676766616.23574,
-        "message": "❌- Echec de tentative de réanimation du joueur <span class='pseudo'>GToF_</span> sur le serveur !"
+        "date": 0,
+        "message": ""
     },
     "message_10": {
-        "date": 1676766590.385305,
-        "message": "🤖- Init TBoT Done. Enjoy..."
+        "date": 0,
+        "message": ""
     },
     "message_11": {
         "date": 0,

@@ -35,9 +35,9 @@ class Chat {
 class Message {
 	constructor(content, date) {
 		this.content = content;
-		this.date = date;
 		let currentDate = new Date();
 		let timestamp = currentDate.getTime();
+		this.date = timestamp;
 		this.isInDelay = this.setIsInDelay(timestamp);
 		this.p = document.createElement('p');
 		this.p.classList.add('message');
@@ -74,14 +74,16 @@ class Message {
 	setOpacity() {
 		let currentDate = new Date();
 		let timestamp = currentDate.getTime();
-		if((timestamp - this.date) > (0.33*config.chat.delay_to_display)) {
+		if((timestamp - this.date) < (0.33*config.chat.delay_to_display)) {
 			this.p.style.opacity = 1;
-		}
-		if((timestamp - this.date) > (0.66*config.chat.delay_to_display)) {
-			this.p.style.opacity = 0.6;
-		}
-		if((timestamp - (this.date/1000)) > (0.99*config.chat.delay_to_display)) {
-			this.p.style.opacity = 0.3;
+		} else {
+			if((timestamp - this.date) < (0.66*config.chat.delay_to_display)) {
+				this.p.style.opacity = 0.6;
+			} else {
+				if((timestamp - (this.date/1000)) < (0.99*config.chat.delay_to_display)) {
+					this.p.style.opacity = 0.3;
+				}
+			}
 		}
 	}
 }
