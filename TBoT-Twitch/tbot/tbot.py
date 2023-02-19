@@ -84,10 +84,13 @@ class TBoT(commands.Bot):
         await self.handle_commands(message)
         
     async def creation_survivant(self,name: str,channel):
-        name_survivant = await TBOTBDD.get_stats_survivant(name)
-        if name_survivant != None : #le pseudo existe deja dans la base de donnée
-            await tbot_com.message("echec_creation_survivant",channel=channel,name=name)
-        
+        survivant = await TBOTBDD.get_stats_survivant(name)
+        if survivant != None and survivant["alive"] == 1: #le pseudo existe deja dans la base de donnée
+            await tbot_com.message("echec_creation_survivant",channel=channel,name=name,credit=str(2500))
+            await TBOTBDD.add_credit(name,credit=2500)
+        elif survivant != None and survivant["alive"] == 0: #le survivant doit etre ressucité
+            await TBOTBDD.revive_survivant(name)
+            await tbot_com.message("revive_survivant",channel=channel,name=name)
         else :
             await TBOTBDD.create_survivant(name)
             await tbot_com.message("creation_survivant",channel=channel,name=name)
@@ -116,13 +119,10 @@ class TBoT(commands.Bot):
         raid_name = self.config_raid_json["raid_"+type_raid]["nom_raid"]
         gain_prestige = self.config_raid_json["raid_"+type_raid]["gain_prestige"]
         
-        
-        
-        if survivor == None :
+        if survivor == None or survivor["alive"] == False :
             await tbot_com.message("survivant_no_exist",channel=channel,name=name)
 
         elif test_raid_exist != None :
-
             await tbot_com.message("raid_deja_en_cours",channel=channel,name=name)
 
         elif survivor["credit"]<gain_prestige : 
@@ -151,15 +151,13 @@ class TBoT(commands.Bot):
          
         raid = await TBOTBDD.raid_exist(name)
         
-        if survivant == None :
+        if survivant == None or survivant["alive"] == False :
             await tbot_com.message("survivant_no_exist",channel=channel,name=name)
         elif raid != None :
             await tbot_com.message("raid_deja_en_cours",channel=channel,name=name)
         else :
                           
             prestige = survivant["prestige"]
-            
-            
             tarif=[0,1000,2500,6000,13000]
             
             if  tarif[level]<=prestige:

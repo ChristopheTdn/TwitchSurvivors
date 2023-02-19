@@ -6,10 +6,16 @@
         "sound" : ""
     },
     "echec_creation_survivant" :{
-        "ovl"   : "❌- Echec de tentative de création du joueur {name} sur le serveur !",
-        "chat"  :"❌- Echec de tentative de création du joueur {name} sur le serveur ! Le survivant existe déjà. Tapes !my_survivor",
+        "ovl"   : "❌- Echec de tentative de réanimation du joueur {name} sur le serveur !",
+        "chat"  :"❌- Echec de tentative de réanimation du joueur {name} sur le serveur ! Le survivant n'est pas mort. Les points de chaine sont transformés en crédit (+{credit} crédits). Tapes !my_survivor",
         "mod"   : "",
         "sound" : ""
+    },
+    "revive_survivant" :{
+        "ovl"   : "⛹- Le joueur {name} vient de réapparaitre sur le serveur.",
+        "chat"  :"⛹- Le joueur {name} vient de réapparaitre sur le serveur !",
+        "mod"   : "radio {name} : ...allo !  Je suis un surviva....pret a aider....d'autres messages suivront...",
+        "sound" : "NOUVEAU SURVIVANT.mp3"
     },
     "creation_survivant" :{
         "ovl"   : "⛹- Le joueur {name} vient d'apparaitre sur le serveur.",
@@ -18,8 +24,8 @@
         "sound" : "NOUVEAU SURVIVANT.mp3"
     },
     "survivant_no_exist" :{
-        "ovl"   : "❌- le survivant {name} n'existe pas sur le serveur ! utilise les points de Chaine pour en creer un.",
-        "chat"  :"❌- le survivant {name} n'existe pas sur le serveur ! Creer un nouveau survivant avec tes points de chaine.",
+        "ovl"   : "❌- le survivant {name} n'existe pas sur le serveur ! utilise les points de Chaine pour en générer un.",
+        "chat"  :"❌- le survivant {name} n'existe pas sur le serveur ! génère un nouveau survivant avec tes points de chaine.",
         "mod"   : "",
         "sound" : ""
     },

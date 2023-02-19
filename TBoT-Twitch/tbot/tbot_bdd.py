@@ -36,7 +36,9 @@ class TBOT_BDD():
             level_weapon INTEGER,
             level_armor INTEGER,
             level_transport INTEGER,
-            level_gear INTEGER)''')
+            level_gear INTEGER,
+            alive BOOLEAN
+            )''')
         
         curseur.execute('''CREATE TABLE IF NOT EXISTS raid(
             id INTEGER PRIMARY KEY AUTOINCREMENT UNIQUE,
@@ -64,11 +66,26 @@ class TBOT_BDD():
                             level_weapon,
                             level_armor,
                             level_transport,
-                            level_gear)
-                            VALUES (?,?,?,?,?,?,?,?)''', (pseudo ,"",0,1500,1,1,1,1)) 
+                            level_gear,
+                            alive)
+                            VALUES (?,?,?,?,?,?,?,?,?)''', (pseudo ,"",0,1500,1,1,1,1,True)) 
         await db.commit()
         await db.close()
-    
+        
+    async def revive_survivant(self,name):
+        db = await aiosqlite.connect(os.path.join(self.TBOTPATH, self.NAMEBDD))
+        await db.execute(f'''UPDATE survivant SET 
+                        career          = "",
+                        prestige        = 0,
+                        level_weapon    = 1,
+                        level_armor     = 1,
+                        level_transport = 1,
+                        level_gear      = 1,
+                        alive           = True                  
+                        WHERE name = "{name}"''')
+        await db.commit()
+        await db.close()
+        
     async def get_stats_survivant(self,name: str)->dict:
         reponse = {}
         db = await aiosqlite.connect(os.path.join(self.TBOTPATH, self.NAMEBDD))
@@ -79,7 +96,8 @@ class TBOT_BDD():
                             level_weapon,
                             level_armor,
                             level_transport,
-                            level_gear FROM 'survivant' WHERE name='{name}' ''') as cur:
+                            level_gear,
+                            alive FROM 'survivant' WHERE name='{name}' ''') as cur:
             listeStat = await cur.fetchone()
         await db.close()
         if listeStat==None:
@@ -92,7 +110,8 @@ class TBOT_BDD():
                     "level_weapon":listeStat[4],
                     "level_armor":listeStat[5],
                     "level_transport":listeStat[6],
-                    "level_gear":listeStat[7]
+                    "level_gear":listeStat[7],
+                    "alive":listeStat[8]
                     }
             return reponse
     
@@ -325,7 +344,7 @@ class TBOT_BDD():
                 if mort >1 :
                     await tbot_com.message("raid_retour_base_mort",channel=channel,name=name)
                     await db.execute(f'''DELETE from raid WHERE name = "{name}"''')
-                    await db.execute(f'''DELETE from survivant WHERE name = "{name}"''')
+                    await db.execute(f'''UPDATE survivant SET alive = 0 WHERE name = "{name}"''')
                 else :
                     await self.gere_fin_raid(db,name,type_raid,resultat,composition_butin,bonus_butin,channel)
                     await db.execute(f'''DELETE from raid WHERE name = "{name}"''')
