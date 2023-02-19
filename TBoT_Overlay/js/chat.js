@@ -7,23 +7,14 @@ class Chat {
 		this.box.style.fontFamily
 		this.box.insertBefore(p, this.box.firstChild);
 	}
-	setOpacity() {
-		let messages = this.box.children;
-		if(messages.length > 20) {
-			for (let i = 0; i < 6; i++) {
-				if(i < 3) {
-					messages[i].style.opacity = 0.3;
-				} else {
-					messages[i].style.opacity = 0.6;
-				}
-			}
-		}
-	}
 }
 
 class Message {
-	constructor(content) {
+	constructor(content, date) {
 		this.content = content;
+		this.date = date;
+		this.isInDelay = this.setIsInDelay(date);
+		console.log(this.isInDelay)
 		this.p = document.createElement('p');
 		this.p.classList.add('message');
 	}
@@ -33,9 +24,36 @@ class Message {
 		this.p.innerHTML = this.content;
 		this.p.style.fontFamily = config.font.name;
 		this.p.style.fontSize = config.sizes.chat.text_size+"em";
-		chat.insert(this.p);
-		if(this.p.firstElementChild){
-			this.p.firstElementChild.style.color = config.colors.pseudo_chat
+		if(this.isInDelay) {
+			this.setOpacity();
+			chat.insert(this.p);
+			if(this.p.firstElementChild){
+				this.p.firstElementChild.style.color = config.colors.pseudo_chat
+			}
+		}
+	}
+
+	setIsInDelay(date) {
+		let currentDate = new Date();
+		let timestamp = currentDate.getTime();
+		if((timestamp - date) > config.chat.delay_to_display) {
+			return false;
+		} else {
+			return true;
+		}
+	}
+
+	setOpacity() {
+		let currentDate = new Date();
+		let timestamp = currentDate.getTime();
+		if((timestamp - this.date) > (0.33*config.chat.delay_to_display)) {
+			this.p.style.opacity = 0.6;
+		}
+		if((timestamp - this.date) > (0.66*config.chat.delay_to_display)) {
+			this.p.style.opacity = 0.3;
+		}
+		if((timestamp - this.date) > (0.99*config.chat.delay_to_display)) {
+			this.p.style.opacity = 0.1;
 		}
 	}
 }
@@ -56,12 +74,10 @@ window.addEventListener('load', (event) => {
 			list = Object.values(messages);
 
 			for (let i = 0; i < list.length; i++) {
-				let message = new Message(list[i]);
+				let message = new Message(list[i].message, list[i].date);
 				if(message.content !=="") {
 					message.display();
 				}
 			}
-			let chat = new Chat();
-			chat.setOpacity();
 		})
 })
