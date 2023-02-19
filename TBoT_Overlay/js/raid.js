@@ -1,3 +1,5 @@
+const SURVIVORS = [];
+
 class Survivant {
 	// JSON to Object
 	constructor(name, career, prestige, credit, levelWeapon, levelArmor, levelTransport, levelGear, raidType, raidDistance, aids, dead, hurt, imgCar) {
@@ -15,6 +17,7 @@ class Survivant {
 		this.dead = dead;
 		this.hurt = hurt;
 		this.imgCar = imgCar;
+		this.gap = 0;
 		this.box = document.createElement('div');
 		this.p = document.createElement('p');
 		this.img = document.createElement('img');
@@ -22,6 +25,7 @@ class Survivant {
 		this.status = document.createElement('img');
 		this.pAids = document.createElement('p');
 		this.pseudoBox = document.createElement('div');
+		this.line = document.createElement('div');
 	}
 
 	setTemplate() {
@@ -29,6 +33,7 @@ class Survivant {
 		this.box.id = this.name;
 		// this.setRenforts();
 		this.box.appendChild(this.pseudoBox);
+		this.box.appendChild(this.line);
 		this.pseudoBox.classList.add('pseudoBox')
 		this.setBadge();
 		this.setStatus();
@@ -39,11 +44,9 @@ class Survivant {
 		document.getElementById('line').appendChild(this.box)
 	}
 
-	// Si le survivant est en vie : affiche la voiture via son niveau en véhicule
-	// Sinon, affiche une image de fail
 	setImg() {
 			this.img.setAttribute('src', '../assets/img/cars/'+this.imgCar);
-			this.img.style.width = (config.sizes.cars.car*100)+"px";
+			this.img.style.width = (config.cars.car_size*100)+"px";
 			this.box.appendChild(this.img);
 	}
 
@@ -72,10 +75,10 @@ class Survivant {
 	// ¯\_(ツ)_/¯
 	setPseudo(){
 		this.p.innerHTML = this.name;
-		this.p.style.fontSize = config.sizes.cars.pseudo+'em';
+		this.p.style.fontSize = config.carspseudo_size+'em';
 		this.p.style.fontFamily = config.font.name;
-		this.p.style.color = config.colors.pseudo_cars;
-		this.p.style.fontWeight = config.font_weight.pseudo_cars;
+		this.p.style.color = config.cars.pseudo_color;
+		this.p.style.fontWeight = config.cars.pseudo_cars;
 		this.p.classList.add("pseudo");
 		this.pseudoBox.appendChild(this.p);
 	}
@@ -91,9 +94,9 @@ class Survivant {
 	// 			}
 	// 		}
 	// 		this.pAids.innerHTML += " )";
-	// 		this.pAids.style.fontSize = config.sizes.cars.aids+'em';
+	// 		this.pAids.style.fontSize = config.cars.aid_size+'em';
 	// 		this.pAids.style.fontFamily = config.font.name;
-	// 		this.pAids.style.color = config.colors.pseudo_aids;
+	// 		this.pAids.style.color = config.cars.aid_color;
 	// 		this.pAids.classList.add('renforts')
 	// 		this.box.appendChild(this.pAids);
 	// 	}
@@ -111,6 +114,24 @@ class Survivant {
 			cssPosition = this.raidDistance * 2;
 		}
 		this.box.style.left = (cssPosition - 5) + "%";
+		this.setSuperposition();
+	}
+
+	setSuperposition() {
+		for (let survivor in SURVIVORS) {
+			if(this.name !== SURVIVORS[survivor].name) {
+				if((this.raidDistance - SURVIVORS[survivor].raidDistance) <= 2 || (SURVIVORS[survivor].raidDistance - this.raidDistance) <= 2 ) {
+					if(this.gap === SURVIVORS[survivor].gap) {
+						this.gap +=2;
+						this.line.style.height = this.gap+"em";
+						this.line.style.height = this.gap+"em";
+						this.line.classList.add('car-line');
+						this.line.style.background = config.cars.line_color;
+						this.pseudoBox.style.paddingBottom = "0em";
+					}
+				}
+			}
+		}
 	}
 } 
 
@@ -120,8 +141,6 @@ window.addEventListener('load', (event) => {
 	// Import the font define in front.ini
 	let font = new FontFace(config.font.name, "url(../assets/fonts/"+config.font.file+")");
 	document.fonts.add(font);
-
-	let survivants = [];
 
 	fetch('../raid.json')
 	.then((response) => response.json())
@@ -143,7 +162,7 @@ window.addEventListener('load', (event) => {
 				jsonSurvivants[jsonSurvivant].HURT,
 				jsonSurvivants[jsonSurvivant].GFX_CAR,
 			)
-			survivants[survivant.name] = survivant;
+			SURVIVORS[survivant.name] = survivant;
 			survivant.setTemplate();
 		}
 	});

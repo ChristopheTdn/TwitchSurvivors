@@ -1,23 +1,26 @@
 body { background: #000;}
+
 .cars{
+	display: flex;
+	flex-direction: column;
 	text-align: center;
 	width: 100px;
 	bottom: 0;
 	position: fixed;
-	/* background: transparent; */
 }
+
 .cars > img {
 	width: 100%;
-	/* background: transparent; */
 }
-/* .pseudo {
-	background: transparent;
-} */
 
 .pseudoBox {
 	display: flex;
-    justify-content: space-around;
+    justify-content: center;
 	padding-bottom: 0.5em;
+}
+
+.pseudo {
+	z-index: 5;
 }
 
 .badge {
@@ -31,3 +34,9 @@ body { background: #000;}
 	transform: scaleX(-1);
 }
 
+.car-line {
+	z-index: -5;
+	align-self: center;
+	height: 50px;
+	width: 2px;
+}
