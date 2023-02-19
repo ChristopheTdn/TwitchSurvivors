@@ -37,7 +37,7 @@ class Message {
 		this.content = content;
 		let currentDate = new Date();
 		let timestamp = currentDate.getTime();
-		this.date = timestamp;
+		this.date = date;
 		this.isInDelay = this.setIsInDelay(timestamp);
 		this.p = document.createElement('p');
 		this.p.classList.add('message');
