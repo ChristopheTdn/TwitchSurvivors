@@ -74,14 +74,14 @@ class Message {
 	setOpacity() {
 		let currentDate = new Date();
 		let timestamp = currentDate.getTime();
-		if((timestamp - this.date) > (0.99*config.chat.delay_to_display)) {
-			this.p.style.opacity = 0.3;
+		if((timestamp - this.date) > (0.33*config.chat.delay_to_display)) {
+			this.p.style.opacity = 1;
 		}
 		if((timestamp - this.date) > (0.66*config.chat.delay_to_display)) {
 			this.p.style.opacity = 0.6;
 		}
-		if((timestamp - this.date) > (0.33*config.chat.delay_to_display)) {
-			this.p.style.opacity = 1;
+		if((timestamp - (this.date/1000)) > (0.99*config.chat.delay_to_display)) {
+			this.p.style.opacity = 0.3;
 		}
 	}
 }
