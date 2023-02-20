@@ -68,7 +68,7 @@ class TBOT_BDD():
                             level_transport,
                             level_gear,
                             alive)
-                            VALUES (?,?,?,?,?,?,?,?,?)''', (pseudo ,"",0,1500,1,1,1,1,True)) 
+                            VALUES (?,?,?,?,?,?,?,?,?)''', (pseudo ,"",0,0,1,1,1,1,False)) 
         await db.commit()
         await db.close()
         

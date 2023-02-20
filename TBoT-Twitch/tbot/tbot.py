@@ -32,6 +32,11 @@ with open('./config.json', 'r') as fichier:
     CLIENT_NICK = data["BOT-TWITCH"]["CLIENT_NICK"]
     CLIENT_PREFIX = data["BOT-TWITCH"]["CLIENT_PREFIX"]
     CLIENT_CHANNEL = data["BOT-TWITCH"]["CLIENT_CHANNEL"]
+    
+    COUT_REVIVE = data["COUT_REVIVE"]
+    AJOUT_CREDIT = data["AJOUT_CREDIT"]
+
+
 
 langue = "french"    # A ajouter dans un fichier config
 
@@ -86,24 +91,33 @@ class TBoT(commands.Bot):
     async def creation_survivant(self,name: str,channel):
         survivant = await TBOTBDD.get_stats_survivant(name)
         if survivant != None and survivant["alive"] == 1: #le pseudo existe deja dans la base de donnée
-            await tbot_com.message("echec_creation_survivant",channel=channel,name=name,credit=str(2500))
-            await TBOTBDD.add_credit(name,credit=2500)
+            await tbot_com.message("echec_creation_survivant",channel=channel,name=name)
         elif survivant != None and survivant["alive"] == 0: #le survivant doit etre ressucité
-            await TBOTBDD.revive_survivant(name)
-            await tbot_com.message("revive_survivant",channel=channel,name=name)
+            if survivant["credit"]<COUT_REVIVE: #pas assez de credit
+                await tbot_com.message("survivant_credit_insuffisant",channel=channel,name=name,credit=str(COUT_REVIVE))
+            else : #on peut faire revivre le survivant
+                await TBOTBDD.revive_survivant(name)
+                await tbot_com.message("revive_survivant",channel=channel,name=name,credit=str(COUT_REVIVE))
         else :
-            await TBOTBDD.create_survivant(name)
-            await tbot_com.message("creation_survivant",channel=channel,name=name)
+            await tbot_com.message("survivant_no_exist",channel=channel,name=name)
+
             
     async def ajout_credit(self,name: str,channel): 
 
-        name_survivant = await TBOTBDD.get_stats_survivant(name)
-        if name_survivant == None : #le pseudo n'existe pas dans la base de donnée
-            await tbot_com.message("survivant_echec_achat_credit",channel=channel,name=name)
-        
-        else :
-            await TBOTBDD.add_credit(name,credit=2500)
-            await tbot_com.message("survivant_ajout_credit",credit="2500",channel=channel,name=name)
+        CREDIT = AJOUT_CREDIT
+        survivant = await TBOTBDD.get_stats_survivant(name)
+        if survivant == None : #le pseudo n'existe pas dans la base de donnée
+            await TBOTBDD.create_survivant(name)
+            await TBOTBDD.revive_survivant(name)
+            await tbot_com.message("revive_survivant",channel=channel,name=name,credit=str(COUT_REVIVE))
+            CREDIT = CREDIT - COUT_REVIVE
+        elif survivant["alive"]==False:
+            await TBOTBDD.revive_survivant(name)
+            await tbot_com.message("revive_survivant",channel=channel,name=name,credit=str(COUT_REVIVE))
+            CREDIT = CREDIT - COUT_REVIVE
+            
+        await TBOTBDD.add_credit(name,credit=CREDIT)
+        await tbot_com.message("survivant_ajout_credit",credit=str(CREDIT),channel=channel,name=name)
     
             
     async def creer_raid(self,ctx: commands.Context,type_raid: str):
@@ -167,6 +181,19 @@ class TBoT(commands.Bot):
             else :
                 await tbot_com.message(key="survivant_prestige_insuffisant",channel=channel,name=name,aptitude=aptitude,tarif_level=str(tarif[level])) 
                         
+
+    @commands.command()
+    async def create_survivor(self, ctx: commands.Context):
+        """
+        Commande !create_survivor
+        -----------
+        Traite la commande twitch !create_survivor. 
+        """
+        channel = ctx.channel
+        name = ctx.author.display_name
+        await self.creation_survivant(name,channel)
+
+
     @commands.command()
     async def radio(self, ctx: commands.Context):
         """
