@@ -10,7 +10,6 @@ class Chat {
 	display() {
 		this.box.style.border = config.chat.border_size+"px solid "+config.chat.border_color;
 		this.box.style.background = config.chat.background;
-		this.box.style.opacity = config.chat.chatbox_opacity;
 		this.box.style.padding = config.chat.margin+"em";
 		this.box.style.borderRadius = config.chat.border_radius+"em";
 
