@@ -364,20 +364,21 @@ class TBOT_BDD():
         
     async def gere_fin_raid(self,db,name,type_raid,resultat,composition_butin,bonus_butin,channel):
         
-                
         gain_prestige = self.config_raid_json["raid_"+type_raid]["gain_prestige"]
         listebutin=""
         if resultat =="BUTIN":
-            gain_prestige = (gain_prestige*2)
+            gain_prestige = gain_prestige*2
             listebutin = "<br>"+await tbot_com.donne_butin(composition_butin) 
             await tbot_com.message("raid_win_butin",channel=channel,name=name,gain_prestige=str(gain_prestige),listebutin=listebutin,bonus_butin=str(bonus_butin))
             await db.execute(f'''UPDATE survivant SET prestige = prestige +{gain_prestige+bonus_butin} WHERE name = "{name}"''')
         if resultat =="BREDOUILLE":
-            await tbot_com.message("raid_win_bredouille",channel=channel,name=name,gain_prestige=str(gain_prestige//2))
+            gain_prestige =gain_prestige*1
+            
+            await tbot_com.message("raid_win_bredouille",channel=channel,name=name,gain_prestige=str(gain_prestige))
             await db.execute(f'''UPDATE survivant SET prestige = prestige +{gain_prestige} WHERE name = "{name}"''')
         if resultat =="BLESSE": 
             gain_prestige = gain_prestige//2
-            await tbot_com.message("raid_win_blesse",channel=channel,name=name,gain_prestige=str(gain_prestige//4))
+            await tbot_com.message("raid_win_blesse",channel=channel,name=name,gain_prestige=str(gain_prestige))
             await db.execute(f'''UPDATE survivant SET prestige = prestige +{gain_prestige} WHERE name = "{name}"''')
 
             
