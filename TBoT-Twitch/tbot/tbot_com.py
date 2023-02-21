@@ -8,14 +8,11 @@ import aiofiles
 from datetime import datetime
 
 
-with open('./config.json', 'r') as fichier:
-    data = json.load(fichier)
-    URLMOD = data["URLMOD"]
+with open('./config/config.json', 'r') as fichier:
+    CONFIG = json.load(fichier)
 
-langue = "french"
-
-with open (f'./TBOT-Twitch/tbot/localisation/{langue}.json', 'r',encoding="utf-8" ) as fichier:
-    localisation = json.load(fichier)
+with open (f'./TBOT-Twitch/tbot/localisation/{CONFIG["LANGUE"]}.json', 'r',encoding="utf-8" ) as fichier:
+    LOCALISATION = json.load(fichier)
 
 with open ('./TBOT-Twitch/tbot/config/config_raid.json', 'r',encoding="utf-8" ) as fichier:
     config_raid_json = json.load(fichier)
@@ -63,7 +60,7 @@ async def message(key="empty",channel=None,name="",mod="",chat="",ovl="",sound="
         bonus_butin = f" +{bonus_butin} pts de prestige pour les items ramenés."
         
     if chat == "":
-        chat= localisation[f"{key}"]["chat"]\
+        chat= LOCALISATION[f"{key}"]["chat"]\
             .replace("{name}",name)\
             .replace("{heure}",heure)\
             .replace("{minute}",minute)\
@@ -75,7 +72,7 @@ async def message(key="empty",channel=None,name="",mod="",chat="",ovl="",sound="
 
             
     if ovl == "":
-        ovl = localisation[f"{key}"]["ovl"]\
+        ovl = LOCALISATION[f"{key}"]["ovl"]\
             .replace("{name}",f"<span class='pseudo'>{name}</span>")\
             .replace("{heure}",heure)\
             .replace("{minute}",minute)\
@@ -88,7 +85,7 @@ async def message(key="empty",channel=None,name="",mod="",chat="",ovl="",sound="
 
                 
     if mod == "":
-        mod = localisation[f"{key}"]["mod"]\
+        mod = LOCALISATION[f"{key}"]["mod"]\
             .replace("{name}",name)\
             .replace("{heure}",heure)\
             .replace("{minute}",minute)\
@@ -99,14 +96,14 @@ async def message(key="empty",channel=None,name="",mod="",chat="",ovl="",sound="
             .replace("{credit}",credit)
             
     if sound == "":
-        sound = localisation[f"{key}"]["sound"]
+        sound = LOCALISATION[f"{key}"]["sound"]
     #envoyer les messages 
     if chat != "":
         await channel.send(chat)
     if ovl != "" :
         await affichage_Overlay(ovl)
     if mod != "" :
-        async with aiofiles.open(URLMOD+"texte.txt","w",encoding="utf-8") as fichier:
+        async with aiofiles.open(CONFIG["URLMOD"]+"texte.txt","w",encoding="utf-8") as fichier:
             await fichier.write(mod)
     if sound != "" :
         joue_son(sound)
@@ -135,7 +132,7 @@ async def donne_butin(butin:str) -> str:
         listefinale += '<p STYLE="padding:0 0 0 20px;">  🔸'+item[0]+'</p>'
         listeClassefinale += item[1]+"\n"
         
-    async with aiofiles.open(URLMOD+"butin.txt","w",encoding="utf-8") as fichier:
+    async with aiofiles.open(CONFIG["URLMOD"]+"butin.txt","w",encoding="utf-8") as fichier:
         await fichier.write(listeClassefinale)
     
     return listefinale

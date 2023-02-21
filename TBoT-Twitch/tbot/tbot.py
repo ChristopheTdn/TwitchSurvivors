@@ -9,38 +9,15 @@ from datetime import datetime
 import aiofiles
 from . import tbot_com
 
-with open('./config.json', 'r') as fichier:
-    data = json.load(fichier)
-    URLMOD = data["URLMOD"]
 
-    BOT_USERNAME = data["BOT-TWITCH"]["BOT_USERNAME"]
-    BOT_TOKEN = data["BOT-TWITCH"]["BOT_TOKEN"]
-    BOT_REFRESH = data["BOT-TWITCH"]["BOT_REFRESH"]
-    BOT_VALID = data["BOT-TWITCH"]["BOT_VALID"]
-    BOT_USER_ID = data["BOT-TWITCH"]["BOT_USER_ID"]
-    BOT_ID = data["BOT-TWITCH"]["BOT_ID"]
-    BOT_NICK = data["BOT-TWITCH"]["BOT_NICK"]
-    BOT_PREFIX = data["BOT-TWITCH"]["BOT_PREFIX"]
-    BOT_CHANNEL = data["BOT-TWITCH"]["BOT_CHANNEL"]
-
-    CLIENT_USERNAME = data["BOT-TWITCH"]["CLIENT_USERNAME"]
-    CLIENT_TOKEN = data["BOT-TWITCH"]["CLIENT_TOKEN"]
-    CLIENT_REFRESH = data["BOT-TWITCH"]["CLIENT_REFRESH"]
-    CLIENT_USER_ID = data["BOT-TWITCH"]["CLIENT_USER_ID"]
-    CLIENT_VALID = data["BOT-TWITCH"]["CLIENT_VALID"]
-    CLIENT_ID = data["BOT-TWITCH"]["CLIENT_ID"]
-    CLIENT_NICK = data["BOT-TWITCH"]["CLIENT_NICK"]
-    CLIENT_PREFIX = data["BOT-TWITCH"]["CLIENT_PREFIX"]
-    CLIENT_CHANNEL = data["BOT-TWITCH"]["CLIENT_CHANNEL"]
+with open('./config/config.json', 'r') as fichier:
+    CONFIG = json.load(fichier)
     
-    COUT_REVIVE = data["COUT_REVIVE"]
-    AJOUT_CREDIT = data["AJOUT_CREDIT"]
-
-
-
-langue = "french"    # A ajouter dans un fichier config
-
-        
+with open('./config/config_Token_TBoT.json', 'r') as fichier:
+    TBOT = json.load(fichier)
+    
+with open('./config/config_Token_Client.json', 'r') as fichier:
+    CLIENT = json.load(fichier)
 
 TBOTPATH, filename = os.path.split(__file__)    
 TBOTBDD= TBOT_BDD(TBOTPATH)
@@ -53,7 +30,7 @@ class TBoT(commands.Bot):
         # Initialise our Bot with our access token, prefix and a list of channels to join on boot...
         # prefix can be a callable, which returns a list of strings or a string...
         # initial_channels can also be a callable which returns a list of strings...
-        super().__init__(token=BOT_TOKEN, prefix=BOT_PREFIX, initial_channels=[CLIENT_CHANNEL])
+        super().__init__(token=TBOT["TOKEN"], prefix=TBOT["PREFIX"], initial_channels=[CLIENT["CHANNEL"]])
         TBOTBDD.initTableSql()
         with open ('./TBOT-Twitch/tbot/config/config_raid.json', 'r',encoding="utf-8" ) as fichier:
             self.config_raid_json = json.load(fichier)
@@ -68,7 +45,7 @@ class TBoT(commands.Bot):
         
 
     async def timer_Raid(self):
-        channel = self.get_channel(CLIENT_CHANNEL)
+        channel = self.get_channel(CLIENT["CHANNEL"])
         while True:
             await TBOTBDD.actualise_statRaid(channel)
             await asyncio.sleep(1)
@@ -93,28 +70,28 @@ class TBoT(commands.Bot):
         if survivant != None and survivant["alive"] == 1: #le pseudo existe deja dans la base de donnée
             await tbot_com.message("echec_creation_survivant",channel=channel,name=name)
         elif survivant != None and survivant["alive"] == 0: #le survivant doit etre ressucité
-            if survivant["credit"]<COUT_REVIVE: #pas assez de credit
-                await tbot_com.message("survivant_credit_insuffisant",channel=channel,name=name,credit=str(COUT_REVIVE))
+            if survivant["credit"]<CONFIG["COUT_REVIVE"]: #pas assez de credit
+                await tbot_com.message("survivant_credit_insuffisant",channel=channel,name=name,credit=str(CONFIG["COUT_REVIVE"]))
             else : #on peut faire revivre le survivant
                 await TBOTBDD.revive_survivant(name)
-                await tbot_com.message("revive_survivant",channel=channel,name=name,credit=str(COUT_REVIVE))
+                await tbot_com.message("revive_survivant",channel=channel,name=name,credit=str(CONFIG["COUT_REVIVE"]))
         else :
             await tbot_com.message("survivant_no_exist",channel=channel,name=name)
 
             
     async def ajout_credit(self,name: str,channel): 
 
-        CREDIT = AJOUT_CREDIT
+        CREDIT = CONFIG["AJOUT_CREDIT"]
         survivant = await TBOTBDD.get_stats_survivant(name)
         if survivant == None : #le pseudo n'existe pas dans la base de donnée
             await TBOTBDD.create_survivant(name)
             await TBOTBDD.revive_survivant(name)
-            await tbot_com.message("revive_survivant",channel=channel,name=name,credit=str(COUT_REVIVE))
-            CREDIT = CREDIT - COUT_REVIVE
+            await tbot_com.message("revive_survivant",channel=channel,name=name,credit=str(CONFIG["COUT_REVIVE"]))
+            CREDIT = CREDIT - CONFIG["COUT_REVIVE"]
         elif survivant["alive"]==False:
             await TBOTBDD.revive_survivant(name)
-            await tbot_com.message("revive_survivant",channel=channel,name=name,credit=str(COUT_REVIVE))
-            CREDIT = CREDIT - COUT_REVIVE
+            await tbot_com.message("revive_survivant",channel=channel,name=name,credit=str(CONFIG["COUT_REVIVE"]))
+            CREDIT = CREDIT - CONFIG["COUT_REVIVE"]
             
         await TBOTBDD.add_credit(name,credit=CREDIT)
         await tbot_com.message("survivant_ajout_credit",credit=str(CREDIT),channel=channel,name=name)
