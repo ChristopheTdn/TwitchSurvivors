@@ -29,7 +29,7 @@ async def msg_init_TboT():
         "date": 0,
         "message": ""
     })     
-    await message(ovl="🤖- Init TBoT Done. Enjoy...")
+    await message(ovl="🤖- Initialisation TBoT Done. Enjoy...")
 
 messageJson={}
 
