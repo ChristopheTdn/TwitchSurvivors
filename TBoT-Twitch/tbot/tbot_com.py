@@ -14,7 +14,7 @@ with open('./config/config.json', 'r') as fichier:
 with open (f'./TBOT-Twitch/tbot/localisation/{CONFIG["LANGUE"]}.json', 'r',encoding="utf-8" ) as fichier:
     LOCALISATION = json.load(fichier)
 
-with open ('./TBOT-Twitch/tbot/config/config_raid.json', 'r',encoding="utf-8" ) as fichier:
+with open ('./TBOT-Twitch/tbot/data/config_raid.json', 'r',encoding="utf-8" ) as fichier:
     config_raid_json = json.load(fichier)
     
 TBOTPATH, filename = os.path.split(__file__) 

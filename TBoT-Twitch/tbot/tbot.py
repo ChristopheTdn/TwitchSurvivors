@@ -32,7 +32,7 @@ class TBoT(commands.Bot):
         # initial_channels can also be a callable which returns a list of strings...
         super().__init__(token=TBOT["TOKEN"], prefix=TBOT["PREFIX"], initial_channels=[CLIENT["CHANNEL"]])
         TBOTBDD.initTableSql()
-        with open ('./TBOT-Twitch/tbot/config/config_raid.json', 'r',encoding="utf-8" ) as fichier:
+        with open ('./TBOT-Twitch/tbot/data/config_raid.json', 'r',encoding="utf-8" ) as fichier:
             self.config_raid_json = json.load(fichier)
             
     async def event_ready(self):

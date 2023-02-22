@@ -14,11 +14,11 @@ class TBOT_BDD():
     def __init__(self,TBOTPATH) -> None:
         self.TBOTPATH=TBOTPATH
         self.NAMEBDD = "tbot_bdd.sqlite"
-        with open ('./TBOT-Twitch/tbot/config/config_raid.json', 'r',encoding="utf-8" ) as fichier:
+        with open ('./TBOT-Twitch/tbot/data/config_raid.json', 'r',encoding="utf-8" ) as fichier:
             self.config_raid_json = json.load(fichier)
-        with open ('./TBOT-Twitch/tbot/config/config_butin.json', 'r',encoding="utf-8" ) as fichier:
+        with open ('./TBOT-Twitch/tbot/data/config_butin.json', 'r',encoding="utf-8" ) as fichier:
             self.config_butin_json = json.load(fichier)
-        with open ('./TBOT-Twitch/tbot/config/config_ratio_butin.json', 'r',encoding="utf-8" ) as fichier:
+        with open ('./TBOT-Twitch/tbot/data/config_ratio_butin.json', 'r',encoding="utf-8" ) as fichier:
             self.config_ratio_json = json.load(fichier)   
 
     def initTableSql(self):
