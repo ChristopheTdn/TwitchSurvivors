@@ -11,7 +11,7 @@ from datetime import datetime
 with open('./config/config.json', 'r') as fichier:
     CONFIG = json.load(fichier)
 
-with open (f'./TBOT-Twitch/tbot/localisation/{CONFIG["LANGUE"]}.json', 'r',encoding="utf-8" ) as fichier:
+with open (f'./TBOT-Twitch/tbot/localisation/{CONFIG["LANGUE"].lower()}.json', 'r',encoding="utf-8" ) as fichier:
     LOCALISATION = json.load(fichier)
 
 with open ('./TBOT-Twitch/tbot/data/config_raid.json', 'r',encoding="utf-8" ) as fichier:
