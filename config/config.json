@@ -2,5 +2,6 @@
     "LANGUE" : "french",
     "URLMOD" : "D:\\Christophe\\Documents\\GitHub\\TBot\\TBoT-PZ\\TBoT\\",
     "COUT_REVIVE" : 1500,
-    "AJOUT_CREDIT" : 2500
+    "AJOUT_CREDIT" : 2500,
+    "DEBUG" : true
 }

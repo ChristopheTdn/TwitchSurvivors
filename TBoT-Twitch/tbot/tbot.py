@@ -79,9 +79,15 @@ class TBoT(commands.Bot):
             await tbot_com.message("survivant_no_exist",channel=channel,name=name)
 
             
-    async def ajout_credit(self,name: str,channel): 
+    async def ajout_credit(self,name: str,channel: str,CREDIT: int= CONFIG["AJOUT_CREDIT"]): 
+        """_summary_
 
-        CREDIT = CONFIG["AJOUT_CREDIT"]
+        Args:
+            name (str): nom du survivant
+            channel (_type_): channel twitch id
+            CREDIT (_type_, optional): nombre de crédits. Default à CONFIG["AJOUT_CREDIT"].
+        """   
+
         survivant = await TBOTBDD.get_stats_survivant(name)
         if survivant == None : #le pseudo n'existe pas dans la base de donnée
             await TBOTBDD.create_survivant(name)
@@ -305,7 +311,17 @@ class TBoT(commands.Bot):
         -----------
         Traite la commande twitch !upgrade_gear. 
         """
-        await self.upgrade_aptitude(ctx,"gear")                
+        await self.upgrade_aptitude(ctx,"gear")     
+    
+    @commands.command()
+    async def add_credit(self, ctx: commands.Context):
+        """
+        Commande !ajout_credit
+        -----------
+        Traite la commande twitch !ajout_credit. 
+        """
+        if CONFIG["DEBUG"]:
+            await self.ajout_credit(ctx.author.display_name,ctx.channel)           
         
 if __name__ == '__main__': 
     print('Ne peut etre lancé directement')
