@@ -321,8 +321,38 @@ class TBoT(commands.Bot):
         Traite la commande twitch !ajout_credit. 
         """
         if CONFIG["DEBUG"]:
-            await self.ajout_credit(ctx.author.display_name,ctx.channel)           
-        
+            await self.ajout_credit(ctx.author.display_name,ctx.channel)
+
+    @commands.command()
+    async def visi_on(self, ctx: commands.Context):
+        """
+        Commande !ajout_credit
+        -----------
+        Traite la commande twitch !ajout_credit. 
+        """
+        name = ctx.author.display_name
+        channel = ctx.channel
+        survivant_stats = await TBOTBDD.get_stats_survivant(name)
+        if survivant_stats == None :
+            await tbot_com.message(key="survivant_no_exist",channel=channel,name=name)
+        else :
+            await TBOTBDD.add_visi(name)
+
+    
+                       
+    @commands.command()
+    async def help_transport(self, ctx: commands.Context):
+        """
+        Commande !help_transport
+        -----------
+        Traite la commande twitch !help_transport. 
+        """
+        name = ctx.author.display_name
+        channel = ctx.channel
+        survivant_en_raid = ctx.message.content.replace('!help_transport',"").strip()
+        print (f"{name} veut soutenir {survivant_en_raid} en transport")
+
+    
 if __name__ == '__main__': 
     print('Ne peut etre lancé directement')
     

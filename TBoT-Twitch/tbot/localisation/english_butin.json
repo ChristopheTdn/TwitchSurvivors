@@ -101,30 +101,30 @@
             "Pare Brise standard"           :	"Base.Windshield1"
         },
         "tier_2":{
-            "Batterie heavy"                    :	"Base.CarBattery2",
-            "Coffre heavy"	                    :   "Base.TrunkDoor2",
-            "Capot heavy"                       :	"Base.EngineDoor2",
-            "Frein Normal sport"                :	"Base.NormalBrake3",
-            "Frein Performant standard"	        :   "Base.ModernBrake1",
-            "Suspension normale sport"          :	"Base.NormalSuspension3",
-            "Suspension performante standard"	:   "Base.ModernSuspension1",
-            "Pneu Normal sport"                 :	"Base.NormalTire3",
-            "Pneu Performant standard"          :	"Base.ModernTire1",
-            "Pare Brise heavy"                  :	"Base.Windshield2",
-            "Cric"	                            :   "Base.Jack",
-            "Jerrican plein"                    :	"Base.PetrolCan"
+            "Battery heavy"                    :	"Base.CarBattery2",
+            "TrunkDoor heavy"	               :   "Base.TrunkDoor2",
+            "EngineDoor heavy"                 :	"Base.EngineDoor2",
+            "Modern Brake sport"               :	"Base.NormalBrake3",
+            "Modern Brake standard"	           :   "Base.ModernBrake1",
+            "Normal Suspension sport"          :	"Base.NormalSuspension3",
+            "Modern Suspension standard"	   :   "Base.ModernSuspension1",
+            "Tire sport"                       :	"Base.NormalTire3",
+            "Tire standard"                    :	"Base.ModernTire1",
+            "Windshield heavy"                  :	"Base.Windshield2",
+            "Jack"	                            :   "Base.Jack",
+            "PetrolCan"                        :	"Base.PetrolCan"
         },
         "tier_3":{
-            "Batterie sport"	                :   "Base.CarBattery3",
-            "Capot sport"                       :   "Base.EngineDoor3",
-            "Frein Performant heavy"            :   "Base.ModernBrake2",
-            "Frein Performant sport"            :   "Base.ModernBrake3",
-            "Suspension performante heavy"      :   "Base.ModernSuspension2",
-            "Suspension performante sport"      :   "Base.ModernSuspension3",
-            "Pneu Performant heavy"	            :   "Base.ModernTire2",
-            "Pneu Performant sport"	            :   "Base.ModernTire3",
-            "Pare Brise sport"	                :   "Base.Windshield3",
-            "Chargeur batterie"	                :   "Base.CarBatteryCharger"
+            "Battery sport"	                   :   "Base.CarBattery3",
+            "EngineDoor sport"                       :   "Base.EngineDoor3",
+            "Modern Brake heavy"                :   "Base.ModernBrake2",
+            "Modern Brake sport"                :   "Base.ModernBrake3",
+            "Modern Suspension heavy"      :   "Base.ModernSuspension2",
+            "Modern Suspension sport"      :   "Base.ModernSuspension3",
+            "Modern Tire heavy"	            :   "Base.ModernTire2",
+            "Modern Tire sport"	            :   "Base.ModernTire3",
+            "Windshield sport"	                :   "Base.Windshield3",
+            "Car BatteryCharger"	                :   "Base.CarBatteryCharger"
         }    
     },
     "food":{
