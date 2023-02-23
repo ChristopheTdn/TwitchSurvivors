@@ -48,7 +48,7 @@ class TBoT(commands.Bot):
         channel = self.get_channel(CLIENT["CHANNEL"])
         while True:
             await TBOTBDD.actualise_statRaid(channel)
-            await asyncio.sleep(1)
+            await asyncio.sleep(1) #defini le cycle en seconde de progression et MaJ des raids.
 
     async def event_message(self,message: twitchio.Message):
         
@@ -155,7 +155,8 @@ class TBoT(commands.Bot):
         else :
                           
             prestige = survivant["prestige"]
-            tarif=[0,1000,2500,6000,13000]
+            tarif= CONFIG["TARIF_UPGRADE"]
+
             
             if  tarif[level]<=prestige:
                 await TBOTBDD.upgrade_aptitude(name,aptitude,tarif[level])

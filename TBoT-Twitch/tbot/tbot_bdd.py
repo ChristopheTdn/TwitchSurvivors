@@ -449,6 +449,11 @@ class TBOT_BDD():
         await db.close()
         
     async def add_visi(self,name: str, duree: int=5):
+        """permet d'afficher pour une certaine durée les infos du raid
+        Args:
+            name (str): nom du survivant
+            duree (int, optional): nombre de cycle d'affichage des infos. Default à 5.
+        """        
         db = await aiosqlite.connect(os.path.join(self.TBOTPATH, self.NAMEBDD))
         await db.execute(f'''UPDATE raid SET visi = true , time_visi = {duree} WHERE name_lower = "{name.lower()}"''')
         await db.commit()
