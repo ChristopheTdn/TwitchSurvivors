@@ -1,8 +1,8 @@
 {
     "DEBUG" : true,
     "LANGUE" : "french",
-    "URLMOD" : "D:\\Christophe\\Documents\\GitHub\\TBot\\TBoT-PZ\\TBoT\\",
     "COUT_REVIVE" : 2000,
     "AJOUT_CREDIT" : 2000,
-    "TARIF_UPGRADE" : [0,1000,2500,6000,13000]
+    "TARIF_UPGRADE" : [0,1000,2500,6000,13000],
+    "MAX_TIME_RENFORT" : 20
 }
