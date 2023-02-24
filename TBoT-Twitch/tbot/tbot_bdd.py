@@ -57,7 +57,8 @@ class TBOT_BDD():
             bonus_butin INTEGER,
             gfx_car TEXT,
             visi BOOLEAN,
-            time_visi INTEGER
+            time_visi INTEGER,
+            time_renfort INTEGER
             )''')
         self.connexionSQL.commit()
         self.connexionSQL.close()
@@ -144,8 +145,9 @@ class TBOT_BDD():
             return reponse
     
     
-    async def raid_exist(self,name: str):
-        """test si le raid existe
+    async def stat_raid(self,name: str):
+        """renvois si il existe un dictionnaire du raid effectué par le survivant passé en paramètre
+
 
         Args:
             name (str): le nom du survivant
@@ -155,10 +157,45 @@ class TBOT_BDD():
 
         """        
         db = await aiosqlite.connect(os.path.join(self.TBOTPATH, self.NAMEBDD))
-        async with db.execute (f"SELECT name FROM 'raid' WHERE name_lower='{name.lower()}'") as cur :
-            reponse = await cur.fetchone()
+        async with db.execute (f'''SELECT name,
+                        name_lower,
+                        type,
+                        distance,
+                        michemin,
+                        renfort,
+                        resultat,
+                        blesse,
+                        mort,
+                        composition_butin,
+                        bonus_butin,
+                        gfx_car,
+                        visi,
+                        time_visi,
+                        time_renfort
+                        FROM 'raid'  WHERE name_lower='{name.lower()}' ''') as cur :
+            survivant = await cur.fetchone()
         await db.close()
-        return reponse
+        if survivant != None :
+            survivant_dict = {
+                "name"              : survivant[0],
+                "name_lower"        : survivant[1],
+                "type"              : survivant[2],
+                "distance"          : survivant[3],
+                "michemin"          : survivant[4],
+                "renfort"           : survivant[5],
+                "resultat"          : survivant[6],
+                "blesse"            : survivant[7],
+                "mort"              : survivant[8],
+                "composition_butin" : survivant[9],
+                "bonus_butin"       : survivant[10],
+                "gfx_car"           : survivant[11],
+                "visi"              : survivant[12],
+                "time_visi"         : survivant[13],
+                "time_renfort"      : survivant[14]
+                }
+        else :
+            survivant_dict = None
+        return survivant_dict
 
         
 
@@ -275,9 +312,10 @@ class TBOT_BDD():
                         bonus_butin,
                         gfx_car,
                         visi,
-                        time_visi
+                        time_visi,
+                        time_renfort
                         )
-                        VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?)''', (name,name.lower(),type_raid,DISTANCE,DISTANCE//2,'{}',resultat,blesse,fin,json.dumps(composition_butin),bonus_butin,gfx_car,False,0))
+                        VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)''', (name,name.lower(),type_raid,DISTANCE,DISTANCE//2,'{}',resultat,blesse,fin,json.dumps(composition_butin),bonus_butin,gfx_car,False,0,0))
                         
         await db.execute(f'''UPDATE survivant SET credit = credit - {cout_raid} WHERE name_lower = "{name.lower()}"''')
         await db.commit()
@@ -351,7 +389,8 @@ class TBOT_BDD():
                         bonus_butin,
                         gfx_car,
                         visi,
-                        time_visi
+                        time_visi,
+                        time_renfort
                         FROM 'raid' ''') as cur:
             listeRaid = await cur.fetchall()
         await db.close()  
@@ -374,12 +413,14 @@ class TBOT_BDD():
             gfx_car=raid[11]
             visi = bool(raid[12])
             time_visi = raid[13]
+            time_renfort = raid[14]
+
                 
             distance -=1
             distancepourcent = (distance*100)//(distance_total)
             stat_survivant= await self.get_stats_survivant(name)
             
-            await db.execute(f'''UPDATE raid SET distance = {distance} WHERE name_lower = "{name_lower}"''')
+            await db.execute(f'''UPDATE raid SET distance = {distance},time_renfort = time_renfort+1 WHERE name_lower = "{name_lower}"''')
             
             if time_visi > 0 :
                 await db.execute(f'''UPDATE raid SET time_visi = time_visi - 1 WHERE name_lower = "{name_lower}"''')

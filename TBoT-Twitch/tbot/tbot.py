@@ -10,6 +10,7 @@ import aiofiles
 from . import tbot_com
 
 
+
 with open('./config/config.json', 'r') as fichier:
     CONFIG = json.load(fichier)
     
@@ -65,7 +66,13 @@ class TBoT(commands.Bot):
         # We must let the bot know we want to handle and invoke our commands...
         await self.handle_commands(message)
         
-    async def creation_survivant(self,name: str,channel):
+    async def creation_survivant(self,name: str,channel: str):
+        """active le flag ALIVE du survivant apès avoir testé son existence e tsi les credits sont suffisants
+
+        Args:
+            name (str): _description_
+            channel (str): _description_
+        """        
         survivant = await TBOTBDD.get_stats_survivant(name)
         if survivant != None and survivant["alive"] == 1: #le pseudo existe deja dans la base de donnée
             await tbot_com.message("echec_creation_survivant",channel=channel,name=name)
@@ -80,7 +87,7 @@ class TBoT(commands.Bot):
 
             
     async def ajout_credit(self,name: str,channel: str,CREDIT: int= CONFIG["AJOUT_CREDIT"]): 
-        """_summary_
+        """ajoute des credits au survivant
 
         Args:
             name (str): nom du survivant
@@ -112,7 +119,7 @@ class TBoT(commands.Bot):
         name = ctx.author.display_name
         channel = ctx.channel
         survivor = await TBOTBDD.get_stats_survivant(name)
-        test_raid_exist = await TBOTBDD.raid_exist(name)
+        test_raid_exist = await TBOTBDD.stat_raid(name)
         raid_name = self.config_raid_json["raid_"+type_raid]["nom_raid"]
         gain_prestige = self.config_raid_json["raid_"+type_raid]["gain_prestige"]
         
@@ -146,7 +153,7 @@ class TBoT(commands.Bot):
             await tbot_com.message(key="survivant_max_aptitude",channel=channel,name=name,aptitude=aptitude)
             return
          
-        raid = await TBOTBDD.raid_exist(name)
+        raid = await TBOTBDD.stat_raid(name)
         
         if survivant == None or survivant["alive"] == False :
             await tbot_com.message("survivant_no_exist",channel=channel,name=name)
@@ -157,7 +164,6 @@ class TBoT(commands.Bot):
             prestige = survivant["prestige"]
             tarif= CONFIG["TARIF_UPGRADE"]
 
-            
             if  tarif[level]<=prestige:
                 await TBOTBDD.upgrade_aptitude(name,aptitude,tarif[level])
                 
@@ -350,8 +356,14 @@ class TBoT(commands.Bot):
         """
         name = ctx.author.display_name
         channel = ctx.channel
-        survivant_en_raid = ctx.message.content.replace('!help_transport',"").strip()
-        print (f"{name} veut soutenir {survivant_en_raid} en transport")
+        survivant= ctx.message.content.replace('!help_transport',"").strip()
+        if survivant != "" :
+            raid_survivant = await TBOTBDD.stat_raid(survivant)
+            if raid_survivant != None:
+                print(raid_survivant)
+            
+        
+        print (f"{name} veut soutenir {survivant} en transport")
 
     
 if __name__ == '__main__': 
