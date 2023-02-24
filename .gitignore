@@ -1,4 +1,3 @@
-Twitch/.env
 TBoT-PZ/TBoT/build.gradle
 TBoT-PZ/TBoT/Gemfile
 TBoT-PZ/TBoT/gradlew
@@ -36,3 +35,4 @@ journal.log
 message_overlay.json
 assets/chat.json
 TBoT-PZ/TBoT/butin.txt
+.vscode/
