@@ -8,7 +8,7 @@ import aiofiles
 from datetime import datetime
 
 
-with open('./config/config.json', 'r') as fichier:
+with open('./CONFIGURATION/config.json', 'r') as fichier:
     CONFIG = json.load(fichier)
 
 with open (f'./TBOT-Twitch/tbot/localisation/{CONFIG["LANGUE"].lower()}.json', 'r',encoding="utf-8" ) as fichier:
@@ -17,10 +17,10 @@ with open (f'./TBOT-Twitch/tbot/localisation/{CONFIG["LANGUE"].lower()}.json', '
 with open ('./TBOT-Twitch/tbot/data/config_raid.json', 'r',encoding="utf-8" ) as fichier:
     CONFIG_RAID = json.load(fichier)
     
-with open('./config/config_URL_Mod.json', 'r') as fichier:
-    CONFIG_URL_MOD = json.load(fichier)
+
     
 TBOTPATH, filename = os.path.split(__file__) 
+URLMOD = os.getcwd()+"\\TBoT-PZ\\TBoT\\"
 
 ligne_overlay=[]
 
@@ -106,7 +106,7 @@ async def message(key="empty",channel=None,name="",mod="",chat="",ovl="",sound="
     if ovl != "" :
         await affichage_Overlay(ovl)
     if mod != "" :
-        async with aiofiles.open(CONFIG_URL_MOD["URLMOD"]+"texte.txt","w",encoding="utf-8") as fichier:
+        async with aiofiles.open(URLMOD+"texte.txt","w",encoding="utf-8") as fichier:
             await fichier.write(mod)
     if sound != "" :
         joue_son(sound)
@@ -135,7 +135,7 @@ async def donne_butin(butin:str) -> str:
         listefinale += '<p STYLE="padding:0 0 0 20px;">  🔸'+item[0]+'</p>'
         listeClassefinale += item[1]+"\n"
         
-    async with aiofiles.open(CONFIG_URL_MOD["URLMOD"]+"butin.txt","w",encoding="utf-8") as fichier:
+    async with aiofiles.open(URLMOD+"butin.txt","w",encoding="utf-8") as fichier:
         await fichier.write(listeClassefinale)
     
     return listefinale

@@ -11,18 +11,18 @@ from . import tbot_com
 
 
 
-with open('./config/config.json', 'r') as fichier:
+with open('./CONFIGURATION/config.json', 'r') as fichier:
     CONFIG = json.load(fichier)
     
-with open('./config/config_Token_TBoT.json', 'r') as fichier:
+with open('./CONFIGURATION/config_Token_TBoT.json', 'r') as fichier:
     TBOT = json.load(fichier)
     
-with open('./config/config_Token_Client.json', 'r') as fichier:
+with open('./CONFIGURATION/config_Token_Client.json', 'r') as fichier:
     CLIENT = json.load(fichier)
     
 
     
-TBOTPATH, filename = os.path.split(__file__)    
+TBOTPATH, filename = os.path.split(__file__) 
 TBOTBDD= TBOT_BDD(TBOTPATH)
 
 class TBoT(commands.Bot):
