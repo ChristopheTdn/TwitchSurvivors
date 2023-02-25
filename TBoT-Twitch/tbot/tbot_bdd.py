@@ -7,6 +7,8 @@ import random
 from . import tbot_com  
 
 
+
+
 class TBOT_BDD():
         
     """Gestion de la base de donnée du TBOT
@@ -146,9 +148,7 @@ class TBOT_BDD():
     
     
     async def stat_raid(self,name: str):
-        """renvois si il existe un dictionnaire du raid effectué par le survivant passé en paramètre
-
-
+        """renvois un dictionnaire du raid effectué par le survivant passé en paramètre si il existe. 
         Args:
             name (str): le nom du survivant
 

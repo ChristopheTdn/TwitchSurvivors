@@ -24,7 +24,13 @@
         "sound" : "NOUVEAU SURVIVANT.mp3"
     },
     "survivant_no_exist" :{
-        "ovl"   : "❌- le survivant {name} n'existe pas encore sur le serveur ! achète des crédits avec tes points de chaine.",
+        "ovl"   : "❌- le survivant {name} n'existe pas sur le serveur ! génère le avec des crédits. commande !create_survivor",
+        "chat"  :"",
+        "mod"   : "",
+        "sound" : ""
+    },
+    "survivant_renfort_Raid_Depasse" : {
+        "ovl"   : "❌- Attention {name}, le raid est dejà trop loin pour avoir un renfort de ta part !",
         "chat"  :"",
         "mod"   : "",
         "sound" : ""
@@ -60,8 +66,8 @@
         "sound" : "" 
     },
     "raid_credit_insuffisant" :{
-        "ovl"   :"❌- Attention {name}, tu n'as pas assez de credit suffisant pour créer un raid ({gain_prestige} credits). Tu peux obtenir des credits en depensant des points de chaine",
-        "chat"  :"❌- Attention {name}, tu n'as pas assez de crédit suffisant pour créer un raid ({gain_prestige} credits). Tu peux obtenir des credits en depensant des points de chaine",
+        "ovl"   :"❌- Attention {name}, tu n'as pas assez de credit suffisant pour créer un raid ({credit} credits). Tu peux obtenir des credits en depensant des points de chaine",
+        "chat"  :"❌- Attention {name}, tu n'as pas assez de crédit suffisant pour créer un raid ({credit} credits). Tu peux obtenir des credits en depensant des points de chaine",
         "mod"   : "",
         "sound" : ""
     },

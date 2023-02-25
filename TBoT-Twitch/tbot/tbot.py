@@ -19,7 +19,9 @@ with open('./config/config_Token_TBoT.json', 'r') as fichier:
     
 with open('./config/config_Token_Client.json', 'r') as fichier:
     CLIENT = json.load(fichier)
+    
 
+    
 TBOTPATH, filename = os.path.split(__file__)    
 TBOTBDD= TBOT_BDD(TBOTPATH)
 
@@ -355,15 +357,25 @@ class TBoT(commands.Bot):
         Traite la commande twitch !help_transport. 
         """
         name = ctx.author.display_name
+        name_stats = await TBOTBDD.get_stats_survivant(name)
         channel = ctx.channel
         survivant= ctx.message.content.replace('!help_transport',"").strip()
-        if survivant != "" :
+
+        if name_stats == None :
+            await tbot_com.message(key="survivant_no_exist",channel=channel,name=name)
+        elif name_stats["alive"] == False :
+            await tbot_com.message(key="survivant_no_exist",channel=channel,name=name)
+
+        elif survivant != "" :
             raid_survivant = await TBOTBDD.stat_raid(survivant)
-            if raid_survivant != None:
-                print(raid_survivant)
-            
-        
-        print (f"{name} veut soutenir {survivant} en transport")
+            if raid_survivant != None :
+                if raid_survivant["time_renfort"]>= CONFIG["MAX_TIME_RENFORT"] :
+                    await tbot_com.message(key="survivant_renfort_Raid_Depasse",channel=channel,name=name)
+                elif TBOTBDD.stat_raid(name) != None :
+                    await tbot_com.message(key="survivant_no_exist",channel=channel,name=name)    
+                else :
+                    print (f"{name} veut soutenir {survivant} en transport")
+                
 
     
 if __name__ == '__main__': 
