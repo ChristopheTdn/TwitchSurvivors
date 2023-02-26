@@ -37,19 +37,19 @@
     },
     "survivant_upgrade_aptitude" :{
         "ovl"   :"⛹- {name} upgrade son aptitude {aptitude} pour {tarif_level}",
-        "chat"  :"⛹- {name} upgrade son aptitude {aptitude} pour {tarif_level}.",
+        "chat"  :"",
         "mod"   : "",
         "sound" : ""
     },
     "survivant_prestige_insuffisant" :{
         "ovl"   :"❌- {name} ne possède pas assez de points de prestige pour upgrade son aptitude {aptitude} (cout : {tarif_level} pts).",
-        "chat"  :"❌- {name} ne possède pas assez de points de prestige pour upgrade son aptitude {aptitude} (cout : {tarif_level} pts).",
+        "chat"  :"",
         "mod"   : "",
         "sound" : ""
     },
     "survivant_max_aptitude" :{
         "ovl"   :"❌- Attention {name}, l aptitude {aptitude} est deja à son niveau maximum. !my_survivor pour plus de renseignement.",
-        "chat"  :"❌- Attention {name}! l aptitude {aptitude} est deja à son niveau maximum. !my_survivor pour plus de renseignement.",
+        "chat"  :"",
         "mod"   : "",
         "sound" : ""
     },
@@ -61,13 +61,19 @@
     },
     "survivant_ajout_credit" : {
         "ovl"   :"💰- le survivant {name} obtient {credit} crédits !",
-        "chat"  :"💰- le survivant {name} obtient {credit} crédits !",
+        "chat"  :"",
         "mod"   : "",
         "sound" : "" 
     },
+    "survivant_no_support_when_raid":{
+        "ovl"   :"❌- Attention {name}, tu ne peux pas aider {name2}, tu es déjà parti en Raid !",
+        "chat"  :"",
+        "mod"   : "",
+        "sound" : "" 
+    },     
     "raid_credit_insuffisant" :{
         "ovl"   :"❌- Attention {name}, tu n'as pas assez de credit suffisant pour créer un raid ({credit} credits). Tu peux obtenir des credits en depensant des points de chaine",
-        "chat"  :"❌- Attention {name}, tu n'as pas assez de crédit suffisant pour créer un raid ({credit} credits). Tu peux obtenir des credits en depensant des points de chaine",
+        "chat"  :"",
         "mod"   : "",
         "sound" : ""
     },
@@ -184,5 +190,11 @@
         "chat":"",
         "mod":"",
         "sound":""
+    },
+    "error_raid_MaxSurvivor":{
+        "ovl":"❌-Attention {name}, tu ne peux aider {name2}. Son equipe est déjà au maximum de survivant possible !",
+        "chat":"",
+        "mod":"",
+        "sound":"" 
     }
 }

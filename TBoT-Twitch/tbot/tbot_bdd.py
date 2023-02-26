@@ -503,7 +503,7 @@ class TBOT_BDD():
     async def join_raid(self,raider,helper,equipe):
         db = await aiosqlite.connect(os.path.join(self.TBOTPATH, self.NAMEBDD))
         await db.execute(f'''UPDATE raid SET renfort = '{','.join([str(elem) for elem in equipe])}' WHERE name_lower = "{raider.lower()}"''')
-        await db.execute(f'''UPDATE raid SET support_raid = True WHERE name_lower = "{helper.lower()}"''') 
+        await db.execute(f'''UPDATE survivant SET support_raid = True WHERE name_lower = "{helper.lower()}"''') 
         await db.commit()
         await db.close()
 
