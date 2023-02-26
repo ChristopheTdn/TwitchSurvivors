@@ -70,6 +70,12 @@
         "chat"  :"",
         "mod"   : "",
         "sound" : "" 
+    },
+    "survivant_gain_support":{
+        "ovl"   :"💰-  {name} gagne +{gain_prestige} pts de prestige pour avoir participé au raid de {name2}",
+        "chat"  :"",
+        "mod"   : "",
+        "sound" : "" 
     },     
     "raid_credit_insuffisant" :{
         "ovl"   :"❌- Attention {name}, tu n'as pas assez de credit suffisant pour créer un raid ({credit} credits). Tu peux obtenir des credits en depensant des points de chaine",

@@ -446,7 +446,8 @@ class TBOT_BDD():
                     await db.execute(f'''DELETE from raid WHERE name_lower = "{name_lower}"''')
                     await db.execute(f'''UPDATE survivant SET alive = 0 WHERE name_lower = "{name_lower}"''')
                 else :
-                    await self.gere_fin_raid(db,name,type_raid,resultat,composition_butin,bonus_butin,channel)
+                    await self.gere_fin_raid(db,name,type_raid,resultat,composition_butin,bonus_butin,channel,renfort)
+                    
                     await db.execute(f'''DELETE from raid WHERE name_lower = "{name_lower}"''')
                     
             elif distance == michemin :
@@ -462,7 +463,9 @@ class TBOT_BDD():
         async with aiofiles.open("TBoT_Overlay/raid.json", "w",encoding="utf-8") as fichier:
             await fichier.write(json.dumps(data,indent=4,ensure_ascii=False))
         
-    async def gere_fin_raid(self,db,name,type_raid,resultat,composition_butin,bonus_butin,channel):
+    async def gere_fin_raid(self,db,name,type_raid,resultat,composition_butin,bonus_butin,channel,renfort):
+        
+        #TODO: Gere fin raid pour les support eventuels
         
         gain_prestige = self.config_raid_json["raid_"+type_raid]["gain_prestige"]
         listebutin=""
@@ -481,6 +484,16 @@ class TBOT_BDD():
             await tbot_com.message("raid_win_blesse",channel=channel,name=name,gain_prestige=str(gain_prestige))
             await db.execute(f'''UPDATE survivant SET prestige = prestige +{gain_prestige} WHERE name_lower = "{name.lower()}"''')
 
+        gain_prestige = gain_prestige//4
+        liste = renfort.split(",")
+        listefinale = []
+        for joueur in liste:
+            if joueur !="":
+                await db.execute(f'''UPDATE survivant SET prestige = prestige +{gain_prestige} , support_raid = False  WHERE name_lower = "{joueur.lower()}"''')
+                await tbot_com.message("survivant_gain_support",channel=channel,name=joueur,gain_prestige=str(gain_prestige),name2=name)
+                
+        
+            
             
     async def upgrade_aptitude(self,name,aptitude: str,cout_upgrade: int):
         db = await aiosqlite.connect(os.path.join(self.TBOTPATH, self.NAMEBDD))

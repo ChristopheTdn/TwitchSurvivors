@@ -185,6 +185,9 @@ class TBoT(commands.Bot):
                     listefinale.append(joueur)
             listefinale.append(helper)
             await TBOTBDD.join_raid(raider,helper,listefinale)
+            #TODO: Gestion du support specifique
+
+            
             break
 
     async def upgrade_aptitude(self,ctx: commands.Context ,aptitude: str):
@@ -398,10 +401,6 @@ class TBoT(commands.Bot):
         -----------
         Traite la commande twitch !help_transport. 
         """
-        
-        #TODO : tester la possibilité d'utiliser la commande!help_transport
-
-
         helper = ctx.author.display_name
         helper_stats = await TBOTBDD.get_stats_survivant(helper)
         helper_stats_raid = await TBOTBDD.stat_raid(helper)
