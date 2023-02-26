@@ -439,15 +439,15 @@ class TBOT_BDD():
                                         "HURT":(distance<=blesse),
                                         "GFX_CAR":gfx_car,
                                         "VISI":visi}
-                
+
             if distance == 0:
                 if mort >1 :
                     await tbot_com.message("raid_retour_base_mort",channel=channel,name=name)
+                    await self.gere_fin_raid(db,name,type_raid,resultat,composition_butin,bonus_butin,channel,renfort)
                     await db.execute(f'''DELETE from raid WHERE name_lower = "{name_lower}"''')
                     await db.execute(f'''UPDATE survivant SET alive = 0 WHERE name_lower = "{name_lower}"''')
                 else :
                     await self.gere_fin_raid(db,name,type_raid,resultat,composition_butin,bonus_butin,channel,renfort)
-                    
                     await db.execute(f'''DELETE from raid WHERE name_lower = "{name_lower}"''')
                     
             elif distance == michemin :
@@ -483,7 +483,9 @@ class TBOT_BDD():
             gain_prestige = gain_prestige//2
             await tbot_com.message("raid_win_blesse",channel=channel,name=name,gain_prestige=str(gain_prestige))
             await db.execute(f'''UPDATE survivant SET prestige = prestige +{gain_prestige} WHERE name_lower = "{name.lower()}"''')
-
+        if resultat =="MORT":
+            gain_prestige = 0
+            
         gain_prestige = gain_prestige//4
         liste = renfort.split(",")
         listefinale = []

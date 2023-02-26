@@ -172,8 +172,7 @@ class TBoT(commands.Bot):
                 await tbot_com.message(key="error_raid_timeOut",channel=channel,name=helper,name2=raider)
                 break
             
-            equipe = raid_stats["renfort"]
-            
+            equipe = raid_stats["renfort"]            
             liste = equipe.split(",")
             if len(liste) >= 3 :
                 await tbot_com.message(key="error_raid_MaxSurvivor",channel=channel,name=helper,name2=raider)
@@ -185,7 +184,8 @@ class TBoT(commands.Bot):
                     listefinale.append(joueur)
             listefinale.append(helper)
             await TBOTBDD.join_raid(raider,helper,listefinale)
-            #TODO: Gestion du support specifique
+            
+            #TODO: Gestion influence d un support specifique
 
             
             break
