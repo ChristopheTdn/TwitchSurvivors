@@ -47,7 +47,7 @@ def joue_son(radio = "radio1.mp3"):
     mixer.music.load(os.path.join(TBOTPATH, "sound/"+radio))
     mixer.music.play()
 
-async def message(key="empty",channel=None,name="",mod="",chat="",ovl="",sound="",gain_prestige="",listebutin="",aptitude="",tarif_level="",credit="",bonus_butin=""):
+async def message(key="empty",channel=None,name="",name2="",mod="",chat="",ovl="",sound="",gain_prestige="",listebutin="",aptitude="",tarif_level="",credit="",bonus_butin=""):
     """    envois un message vers les différentes interfaces (twitch, overlay obs, chat in game PZ)
 
     Args:
@@ -65,6 +65,7 @@ async def message(key="empty",channel=None,name="",mod="",chat="",ovl="",sound="
     if chat == "":
         chat= LOCALISATION[f"{key}"]["chat"]\
             .replace("{name}",name)\
+            .replace("{name2}",name2)\
             .replace("{heure}",heure)\
             .replace("{minute}",minute)\
             .replace("{gain_prestige}",gain_prestige)\
@@ -77,6 +78,7 @@ async def message(key="empty",channel=None,name="",mod="",chat="",ovl="",sound="
     if ovl == "":
         ovl = LOCALISATION[f"{key}"]["ovl"]\
             .replace("{name}",f"<span class='pseudo'>{name}</span>")\
+            .replace("{name2}",name2)\
             .replace("{heure}",heure)\
             .replace("{minute}",minute)\
             .replace("{gain_prestige}",gain_prestige)\
@@ -90,6 +92,7 @@ async def message(key="empty",channel=None,name="",mod="",chat="",ovl="",sound="
     if mod == "":
         mod = LOCALISATION[f"{key}"]["mod"]\
             .replace("{name}",name)\
+            .replace("{name2}",name2)\
             .replace("{heure}",heure)\
             .replace("{minute}",minute)\
             .replace("{gain_prestige}",gain_prestige)\

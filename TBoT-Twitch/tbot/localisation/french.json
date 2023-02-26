@@ -166,5 +166,23 @@
         "chat":"",
         "mod":"radio {name} : ...allo !  Je pars chercher de quoi équiper la base.",
         "sound":"DEPART RAID JOUR.mp3"
+    },
+    "error_noName":{
+        "ovl":"❌-Syntax error: Attention {name}, Le nom du joueur à aider n'est pas reconnu !",
+        "chat":"",
+        "mod":"",
+        "sound":""
+    },
+    "error_noRaid":{
+        "ovl":"❌-Syntax error: Attention {name}, il n y a pas de raid à soutenir !",
+        "chat":"",
+        "mod":"",
+        "sound":""
+    },
+    "error_raid_timeOut":{
+        "ovl":"❌-Attention {name}, le raid conduit par {name2} est parti depuis trop longtemps !",
+        "chat":"",
+        "mod":"",
+        "sound":""
     }
 }

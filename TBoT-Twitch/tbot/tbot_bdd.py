@@ -315,7 +315,7 @@ class TBOT_BDD():
                         time_visi,
                         time_renfort
                         )
-                        VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)''', (name,name.lower(),type_raid,DISTANCE,DISTANCE//2,'{}',resultat,blesse,fin,json.dumps(composition_butin),bonus_butin,gfx_car,False,0,0))
+                        VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)''', (name,name.lower(),type_raid,DISTANCE,DISTANCE//2,[],resultat,blesse,fin,json.dumps(composition_butin),bonus_butin,gfx_car,False,0,0))
                         
         await db.execute(f'''UPDATE survivant SET credit = credit - {cout_raid} WHERE name_lower = "{name.lower()}"''')
         await db.commit()
@@ -336,7 +336,7 @@ class TBOT_BDD():
             type_raid (str): type de raid
 
         Returns:
-            tuple: (dictionnaire renvoyant le nom et la class du loot,bonus_butin).
+            tuple : (dict > dict avec nom et class du loot, int -> bonus_butin).
         """        
         survivant = await self.get_stats_survivant(name)
         level_gear = survivant["level_gear"]
@@ -500,5 +500,12 @@ class TBOT_BDD():
         await db.commit()
         await db.close()
         
+    async def join_raid(self,raider,helper,equipe):
+        db = await aiosqlite.connect(os.path.join(self.TBOTPATH, self.NAMEBDD))
+        await db.execute(f'''UPDATE raid SET renfort = '{','.join([str(elem) for elem in equipe])}' WHERE name_lower = "{raider.lower()}"''')
+        await db.execute(f'''UPDATE raid SET support_raid = True WHERE name_lower = "{helper.lower()}"''') 
+        await db.commit()
+        await db.close()
+
 if __name__ == '__main__': 
     print('Ne peut etre lancé directement')

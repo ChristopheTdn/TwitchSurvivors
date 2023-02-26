@@ -2,6 +2,7 @@ import twitchio
 import json
 from twitchio.ext import commands
 
+
 CLIENT_TOKEN = "" #saisir le token du bot généré ici : https://twitchtokengenerator.com/ >> BOT CHAT TOKEN
 CHANNEL_TWITCH = "" #saisir le nom du channel twitch 
 

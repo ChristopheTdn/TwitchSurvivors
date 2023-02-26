@@ -356,28 +356,60 @@ class TBoT(commands.Bot):
         -----------
         Traite la commande twitch !help_transport. 
         """
-        name = ctx.author.display_name
-        name_stats = await TBOTBDD.get_stats_survivant(name)
+        
+        #TODO : tester la possibilité d'utiliser la commande!help_transport
+
+
+        helper = ctx.author.display_name
+        helper_stats = await TBOTBDD.get_stats_survivant(helper)
         channel = ctx.channel
-        survivant= ctx.message.content.replace('!help_transport',"").strip()
+        raider= ctx.message.content.replace('!help_transport',"").strip()
+        no_error = True
+        while no_error:
+            if helper_stats == None or helper_stats["alive"] == False :
+                await tbot_com.message(key="survivant_no_exist",channel=channel,name=helper)
+                break
+            
+            if raider == "" :
+                await tbot_com.message(key="error_noName",channel=channel,name=helper)
+                break
+            
+            raid_stats = await TBOTBDD.stat_raid(raider)
+            if raid_stats == None :
+                await tbot_com.message(key="error_noRaid",channel=channel,name=helper)
+                break
 
-        if name_stats == None :
-            await tbot_com.message(key="survivant_no_exist",channel=channel,name=name)
-        elif name_stats["alive"] == False :
-            await tbot_com.message(key="survivant_no_exist",channel=channel,name=name)
+            if raid_stats["time_renfort"] >= CONFIG["MAX_TIME_RENFORT"] :
+                await tbot_com.message(key="error_raid_timeOut",channel=channel,name=helper,name2=raider)
+                break
+            
+            #todo : ajouter l'impossibilité d'etre plus de 4 sur le RAID 
+            
+            equipe = raid_stats["renfort"]
+            liste = equipe.split(",")
+            listefinale = []
+            for joueur in liste:
+                if joueur !="":
+                    listefinale.append(joueur)
+            listefinale.append(helper)
+            await TBOTBDD.join_raid(raider,helper,listefinale)
+            break
+            
+        print ("coucou")
 
-        elif survivant != "" :
-            raid_survivant = await TBOTBDD.stat_raid(survivant)
-            if raid_survivant != None :
-                if raid_survivant["time_renfort"]>= CONFIG["MAX_TIME_RENFORT"] :
-                    await tbot_com.message(key="survivant_renfort_Raid_Depasse",channel=channel,name=name)
-                elif TBOTBDD.stat_raid(name) != None :
-                    await tbot_com.message(key="survivant_no_exist",channel=channel,name=name)    
-                else :
-                    print (f"{name} veut soutenir {survivant} en transport")
+        """         elif survivant != "" :
+        raid_survivant = await TBOTBDD.stat_raid(survivant)
+        if raid_survivant != None :
+            if raid_survivant["time_renfort"]>= CONFIG["MAX_TIME_RENFORT"] :
+                await tbot_com.message(key="survivant_renfort_Raid_Depasse",channel=channel,name=name)
+            elif TBOTBDD.stat_raid(name) != None :
+                await tbot_com.message(key="survivant_no_exist",channel=channel,name=name)    
+            else :
+                print (f"{name} veut soutenir {survivant} en transport") """
                 
 
     
 if __name__ == '__main__': 
     print('Ne peut etre lancé directement')
     
+
