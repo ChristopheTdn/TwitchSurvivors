@@ -76,7 +76,13 @@
         "chat"  :"",
         "mod"   : "",
         "sound" : "" 
-    },     
+    },  
+    "survivant_no_benef_support":{
+        "ovl"   :"🚙-  {name} a rejoins l'equipe de {name2} pour renforcer son raid. sans succés (compétences trop faible).",
+        "chat"  :"",
+        "mod"   : "",
+        "sound" : "" 
+    },    
     "raid_credit_insuffisant" :{
         "ovl"   :"❌- Attention {name}, tu n'as pas assez de credit suffisant pour créer un raid ({credit} credits). Tu peux obtenir des credits en depensant des points de chaine",
         "chat"  :"",
