@@ -146,7 +146,15 @@ class TBoT(commands.Bot):
             await tbot_com.message(f"raid_{raid_name}",channel=channel,name=name,gain_prestige=str(gain_prestige)) 
     
     async def create_support(self,helper: str,raider: str,channel: str,support: str,):
+        """Test les conditions et realise un suppport specifique d'un survivant en raid par un autres survivant.
 
+        Args:
+            helper (str): le survivant a l'initiative de la commande
+            raider (str): le survivant beneficiaire de la commande
+
+            channel (str): le channel pour envoyer les messages 
+            support (str): le type de support
+        """
         helper_stats = await TBOTBDD.get_stats_survivant(helper)
         helper_stats_raid = await TBOTBDD.stat_raid(helper)
         
@@ -164,6 +172,7 @@ class TBoT(commands.Bot):
                 break
             
             raid_stats = await TBOTBDD.stat_raid(raider)
+            
             if raid_stats == None :
                 await tbot_com.message(key="error_noRaid",channel=channel,name=helper)
                 break
@@ -183,9 +192,13 @@ class TBoT(commands.Bot):
                 if joueur !="":
                     listefinale.append(joueur)
             listefinale.append(helper)
-            await TBOTBDD.join_raid(raider,helper,listefinale)
+            await TBOTBDD.join_raid(raid_stats,helper,listefinale)
             
-            #TODO: Gestion influence d un support specifique
+            #TODO: finir Gestion influence d un support specifique            
+            if support == "transport":
+                await TBOTBDD.support_revision_transport(raider,helper,channel)
+                
+
 
             
             break

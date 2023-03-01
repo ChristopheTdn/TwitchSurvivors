@@ -315,7 +315,7 @@ class TBOT_BDD():
                         time_visi,
                         time_renfort
                         )
-                        VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)''', (name,name.lower(),type_raid,DISTANCE,DISTANCE//2,[],resultat,blesse,fin,json.dumps(composition_butin),bonus_butin,gfx_car,False,0,0))
+                        VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)''', (name,name.lower(),type_raid,DISTANCE,DISTANCE//2,"",resultat,blesse,fin,json.dumps(composition_butin),bonus_butin,gfx_car,False,0,0))
                         
         await db.execute(f'''UPDATE survivant SET credit = credit - {cout_raid} WHERE name_lower = "{name.lower()}"''')
         await db.commit()
@@ -434,7 +434,7 @@ class TBOT_BDD():
                                        "STATS": stat_survivant,
                                         "TYPE":type_raid,
                                         "DISTANCE":distancepourcent,
-                                        "RENFORT":renfort,
+                                        "RENFORT":str(renfort),
                                         "DEAD":(distance<=mort),
                                         "HURT":(distance<=blesse),
                                         "GFX_CAR":gfx_car,
@@ -465,8 +465,6 @@ class TBOT_BDD():
         
     async def gere_fin_raid(self,db,name,type_raid,resultat,composition_butin,bonus_butin,channel,renfort):
         
-        #TODO: Gere fin raid pour les support eventuels
-        
         gain_prestige = self.config_raid_json["raid_"+type_raid]["gain_prestige"]
         listebutin=""
         if resultat =="BUTIN":
@@ -485,7 +483,8 @@ class TBOT_BDD():
             await db.execute(f'''UPDATE survivant SET prestige = prestige +{gain_prestige} WHERE name_lower = "{name.lower()}"''')
         if resultat =="MORT":
             gain_prestige = 0
-            
+        
+        #Gestion renfort eventuel    
         gain_prestige = gain_prestige//4
         liste = renfort.split(",")
         listefinale = []
@@ -521,6 +520,19 @@ class TBOT_BDD():
         await db.execute(f'''UPDATE survivant SET support_raid = True WHERE name_lower = "{helper.lower()}"''') 
         await db.commit()
         await db.close()
+
+    async def support_revision_transport(self,raider: str,helper:str,channel):
+        raider_stat = await self.get_stats_survivant(raider)
+        helper_stat = await self.get_stats_survivant(helper)
+        if raider_stat["level_transport"] >= helper_stat["level_transport"]:
+            await tbot_com.message("survivant_no_benef_support",channel=channel,name=helper,name2=raider)
+        else:
+            pass
+            
+
+        
+        
+
 
 if __name__ == '__main__': 
     print('Ne peut etre lancé directement')
