@@ -51,7 +51,7 @@ class TBoT(commands.Bot):
         channel = self.get_channel(CLIENT["CHANNEL"])
         while True:
             await TBOTBDD.actualise_statRaid(channel)
-            await asyncio.sleep(1) #defini le cycle en seconde de progression et MaJ des raids.
+            await asyncio.sleep(CONFIG["TIMING"]) #defini le cycle en seconde de progression et MaJ des raids.
 
     async def event_message(self,message: twitchio.Message):
         

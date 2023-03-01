@@ -1,5 +1,6 @@
 {
     "DEBUG" : true,
+    "TIMING"  : 1,
     "LANGUE" : "french",
     "COUT_REVIVE" : 2000,
     "AJOUT_CREDIT" : 2000,
