@@ -123,13 +123,13 @@
         "ovl"   : "🩸- {name} a été attaqué durant son raid. Il est bléssé ! ",
         "chat"  :"",
         "mod"   : "radio {name} : Aidez moi! victim...zzz.. ne attaque... je suis ...gèrement bléssé... zzz..z...",
-        "sound" : "radio5.mp3"
+        "sound" : "Blesse_Pendant_Raid.mp3"
     },
     "raid_mort_enroute" :{
         "ovl"   : "☠️- {name} succombe lors d'une attaque de zombi ! son corps est ramené a la base !",
         "chat"  :"",
         "mod"   : "radio {name} :  Arggg...partout. arghh... u secours... zzz..z...",
-        "sound" : "radio2.mp3"
+        "sound" : "Mort_Pendant_Raid.mp3"
     },
     "raid_retour_base_mort" :{
         "ovl"   : "☠️-Le corps de {name} est revenu à la base ! il a tout perdu !",
@@ -204,7 +204,7 @@
         "sound":""
     },
     "error_raid_MaxSurvivor":{
-        "ovl":"❌-Attention {name}, tu ne peux aider {name2}. Son equipe est déjà au maximum de survivant possible !",
+        "ovl":"❌-Attention {name}, tu ne peux aider {name2}. Son equipe est déjà au complet !",
         "chat":"",
         "mod":"",
         "sound":"" 
