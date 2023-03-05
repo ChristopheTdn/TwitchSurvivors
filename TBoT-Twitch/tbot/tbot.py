@@ -173,32 +173,38 @@ class TBoT(commands.Bot):
                 break
             
             raid_stats = await TBOTBDD.stat_raid(raider)
-            
+
             if raid_stats == None :
                 await tbot_com.message(key="error_noRaid",channel=channel,name=helper)
                 break
-
+            
             if raid_stats["time_renfort"] >= CONFIG["MAX_TIME_RENFORT"] :
-                await tbot_com.message(key="error_raid_timeOut",channel=channel,name=helper,name2=raider)
+                await tbot_com.message(key="error_raid_timeOut",channel=channel,name=helper_stats['name'],name2=raid_stats['name'])
                 break
             
             equipe = raid_stats["renfort"]            
             liste = equipe.split(",")
             if len(liste) >= 3 :
-                await tbot_com.message(key="error_raid_MaxSurvivor",channel=channel,name=helper,name2=raider)
-                break                
+                await tbot_com.message(key="error_raid_MaxSurvivor",channel=channel,name=helper_stats['name'],name2=raid_stats['name'])
+                break
+                            
 
             listefinale = []
             for joueur in liste:
                 if joueur !="":
                     listefinale.append(joueur)
-            listefinale.append(helper)
-            await TBOTBDD.join_raid(raid_stats,helper,listefinale)
-            
+            listefinale.append(helper_stats['name'])
+
+            await TBOTBDD.join_raid(raid_stats,helper_stats,listefinale)
             #TODO: finir Gestion influence d un support specifique            
             if support == "transport":
-                await TBOTBDD.support_revision_transport(raider,helper,channel)
-                
+                await TBOTBDD.support_revision_transport(raid_stats,helper_stats,channel)
+            if support == "weapon" :
+                pass
+            if support == "combat" :
+                pass
+            if support == "gear" :
+                pass   
             break
 
     async def upgrade_aptitude(self,ctx: commands.Context ,aptitude: str):

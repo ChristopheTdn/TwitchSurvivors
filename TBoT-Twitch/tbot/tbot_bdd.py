@@ -517,22 +517,47 @@ class TBOT_BDD():
         await db.commit()
         await db.close()
         
-    async def join_raid(self,raidStat,helper,equipe):
+    async def join_raid(self,raidStats,helperStats,equipe):
         db = await aiosqlite.connect(os.path.join(self.TBOTPATH, self.NAMEBDD))
-        await db.execute(f'''UPDATE raid SET renfort = '{','.join([str(elem) for elem in equipe])}' WHERE name_lower = "{raidStat["name"].lower()}"''')
-        await db.execute(f'''UPDATE survivant SET support_raid = True WHERE name_lower = "{helper.lower()}"''') 
+        await db.execute(f'''UPDATE raid SET renfort = '{','.join([str(elem) for elem in equipe])}' WHERE name_lower = "{raidStats["name_lower"]}"''')
+        await db.execute(f'''UPDATE survivant SET support_raid = True WHERE name_lower = "{helperStats["name_lower"]}"''') 
         await db.commit()
         await db.close()
 
-    async def support_revision_transport(self,raider: str,helper:str,channel):
-        raider_stat = await self.get_stats_survivant(raider)
-        helper_stat = await self.get_stats_survivant(helper)
-        if raider_stat["level_transport"] >= helper_stat["level_transport"]:
-            await tbot_com.message("survivant_no_benef_support",channel=channel,name=helper,name2=raider)
-        else:
-            #TODO: support
-            pass
-            
+    async def support_revision_transport(self,raider_stats: dict,helper_stats: dict,channel):
+
+        raidEnCours = await self.stat_raid(raider_stats["name"])
+        level_transport_actuel = int(raidEnCours["gfx_car"][0])
+
+        await tbot_com.message(key="survivant_join_raid",channel=channel,name=helper_stats["name"],name2=raider_stats["name"])
+
+        if level_transport_actuel < helper_stats["level_transport"]: 
+                gfx_car = f'{helper_stats["level_transport"]}-{(random.randrange(4)+1)}.png'
+                DISTANCE = self.config_raid_json[f"raid_{raidEnCours['type']}"]["distance_raid"]
+                DELTA = DISTANCE
+                DISTANCE = DISTANCE - (15*helper_stats["level_transport"])+15
+                DELTA = DELTA - DISTANCE
+                MORT = raidEnCours["mort"]
+                BLESSE = raidEnCours["blesse"]
+                if MORT > 0:
+                    MORT = MORT - DELTA
+                    if MORT < 4 :
+                        MORT = 4
+                if BLESSE > 0 :
+                    BLESSE = BLESSE - DELTA
+                    if BLESSE < 6:
+                        BLESSE = 6
+                    
+                db = await aiosqlite.connect(os.path.join(self.TBOTPATH, self.NAMEBDD))
+                await db.execute(f'''UPDATE raid SET gfx_car = '{gfx_car}',
+                                 distance = {DISTANCE},
+                                 michemin = {DISTANCE//2},
+                                 mort = {MORT},
+                                 blesse = {BLESSE}
+                                 WHERE name_lower = "{raider_stats["name_lower"]}"''')
+                await db.commit()
+                await db.close()
+
 
         
         
