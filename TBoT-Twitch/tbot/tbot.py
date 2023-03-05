@@ -199,9 +199,6 @@ class TBoT(commands.Bot):
             if support == "transport":
                 await TBOTBDD.support_revision_transport(raider,helper,channel)
                 
-
-
-            
             break
 
     async def upgrade_aptitude(self,ctx: commands.Context ,aptitude: str):

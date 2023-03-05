@@ -7,7 +7,8 @@ import random
 from . import tbot_com  
 
 
-
+with open('./CONFIGURATION/config.json', 'r') as fichier:
+    CONFIG = json.load(fichier)
 
 class TBOT_BDD():
         
@@ -415,8 +416,10 @@ class TBOT_BDD():
             time_visi = raid[13]
             time_renfort = raid[14]
 
-                
-            distance -=1
+            if time_renfort > CONFIG["MAX_TIME_RENFORT"]:    
+                distance -=1
+            else :
+                distance = distance_total-2
             distancepourcent = (distance*100)//(distance_total)
             stat_survivant= await self.get_stats_survivant(name)
             
