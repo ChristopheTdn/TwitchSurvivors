@@ -108,6 +108,7 @@ class TBoT(commands.Bot):
             await tbot_com.message("revive_survivant",channel=channel,name=name,credit=str(CONFIG["COUT_REVIVE"]))
             CREDIT = CREDIT - CONFIG["COUT_REVIVE"]
             
+            
         await TBOTBDD.add_credit(name,credit=CREDIT)
         await tbot_com.message("survivant_ajout_credit",credit=str(CREDIT),channel=channel,name=name)
     

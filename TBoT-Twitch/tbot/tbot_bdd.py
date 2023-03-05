@@ -527,6 +527,7 @@ class TBOT_BDD():
         if raider_stat["level_transport"] >= helper_stat["level_transport"]:
             await tbot_com.message("survivant_no_benef_support",channel=channel,name=helper,name2=raider)
         else:
+            #TODO: support
             pass
             
 
