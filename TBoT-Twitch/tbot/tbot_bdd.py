@@ -419,7 +419,7 @@ class TBOT_BDD():
             if time_renfort > CONFIG["MAX_TIME_RENFORT"]:    
                 distance -=1
             else :
-                distance = distance_total-2
+                distance = distance_total-3
             distancepourcent = (distance*100)//(distance_total)
             stat_survivant= await self.get_stats_survivant(name)
             
@@ -517,9 +517,9 @@ class TBOT_BDD():
         await db.commit()
         await db.close()
         
-    async def join_raid(self,raider,helper,equipe):
+    async def join_raid(self,raidStat,helper,equipe):
         db = await aiosqlite.connect(os.path.join(self.TBOTPATH, self.NAMEBDD))
-        await db.execute(f'''UPDATE raid SET renfort = '{','.join([str(elem) for elem in equipe])}' WHERE name_lower = "{raider.lower()}"''')
+        await db.execute(f'''UPDATE raid SET renfort = '{','.join([str(elem) for elem in equipe])}' WHERE name_lower = "{raidStat["name"].lower()}"''')
         await db.execute(f'''UPDATE survivant SET support_raid = True WHERE name_lower = "{helper.lower()}"''') 
         await db.commit()
         await db.close()
