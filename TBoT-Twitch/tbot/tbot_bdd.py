@@ -61,7 +61,12 @@ class TBOT_BDD():
             gfx_car TEXT,
             visi BOOLEAN,
             time_visi INTEGER,
-            time_renfort INTEGER
+            time_renfort INTEGER,
+            levelRaid_weapon INTEGER,
+            levelRaid_armor INTEGER,
+            levelRaid_transport INTEGER,
+            levelRaid_gear INTEGER,
+            effectif_team INTEGER
             )''')
         self.connexionSQL.commit()
         self.connexionSQL.close()
@@ -172,27 +177,37 @@ class TBOT_BDD():
                         gfx_car,
                         visi,
                         time_visi,
-                        time_renfort
+                        time_renfort,
+                        levelRaid_weapon INTEGER,
+                        levelRaid_armor INTEGER,
+                        levelRaid_transport INTEGER,
+                        levelRaid_gear INTEGER,
+                        effectif_team INTEGER
                         FROM 'raid'  WHERE name_lower='{name.lower()}' ''') as cur :
             survivant = await cur.fetchone()
         await db.close()
         if survivant != None :
             survivant_dict = {
-                "name"              : survivant[0],
-                "name_lower"        : survivant[1],
-                "type"              : survivant[2],
-                "distance"          : survivant[3],
-                "michemin"          : survivant[4],
-                "renfort"           : survivant[5],
-                "resultat"          : survivant[6],
-                "blesse"            : survivant[7],
-                "mort"              : survivant[8],
-                "composition_butin" : survivant[9],
-                "bonus_butin"       : survivant[10],
-                "gfx_car"           : survivant[11],
-                "visi"              : survivant[12],
-                "time_visi"         : survivant[13],
-                "time_renfort"      : survivant[14]
+                "name"                : survivant[0],
+                "name_lower"          : survivant[1],
+                "type"                : survivant[2],
+                "distance"            : survivant[3],
+                "michemin"            : survivant[4],
+                "renfort"             : survivant[5],
+                "resultat"            : survivant[6],
+                "blesse"              : survivant[7],
+                "mort"                : survivant[8],
+                "composition_butin"   : survivant[9],
+                "bonus_butin"         : survivant[10],
+                "gfx_car"             : survivant[11],
+                "visi"                : survivant[12],
+                "time_visi"           : survivant[13],
+                "time_renfort"        : survivant[14],
+                "levelRaid_weapon"    : survivant[15],
+                "levelRaid_armor"     : survivant[16],
+                "levelRaid_transport" : survivant[17],
+                "levelRaid_gear"      : survivant[18],
+                "effectif_team"       : survivant[19],
                 }
         else :
             survivant_dict = None
@@ -216,31 +231,25 @@ class TBOT_BDD():
             -> BUTIN,BREDOUILLE,BLESSE,MORT,DISTANCE
         """        
         survivant_stat= await self.get_stats_survivant(name)
-        career = survivant_stat["career"]
-        credit = survivant_stat["credit"]
-        level_weapon = survivant_stat["level_weapon"]
-        level_armor=survivant_stat["level_armor"]
-        level_transport=survivant_stat["level_transport"]
-        level_gear=survivant_stat["level_gear"]
-        
-        if level_weapon>1:
-            BUTIN=BUTIN+(5*level_weapon)-5 
-            BLESSE=BLESSE-(5*level_weapon)+5 
+
+        if survivant_stat["level_weapon"]>1:
+            BUTIN=BUTIN+(5*survivant_stat["level_weapon"])-5 
+            BLESSE=BLESSE-(5*survivant_stat["level_weapon"])+5 
             if BLESSE<5:
                 delta = abs(BLESSE-5) 
                 BLESSE = 5
                 BUTIN -= delta
 
-        if level_armor>1:
-            BREDOUILLE=BREDOUILLE+(5*level_armor)-5
-            MORT=MORT-(5*level_armor)+5
+        if survivant_stat["level_armor"]>1:
+            BREDOUILLE=BREDOUILLE+(5*survivant_stat["level_armor"])-5
+            MORT=MORT-(5*survivant_stat["level_armor"])+5
             if MORT<5:
                 delta = abs(MORT-5) 
                 MORT = 5
                 BREDOUILLE-= delta 
 
-        if level_transport>1:
-            DISTANCE = DISTANCE - (15*level_transport)+15
+        if survivant_stat["level_transport"]>1:
+            DISTANCE = DISTANCE - (15*survivant_stat["level_transport"])+15
         
         await tbot_com.ecrit_log(f"Name>{name} : Butin={BUTIN}%, Bredouille={BREDOUILLE}%, Blesse={BLESSE}%,Mort={MORT}%, Distance={DISTANCE}.")
 
@@ -314,9 +323,14 @@ class TBOT_BDD():
                         gfx_car,
                         visi,
                         time_visi,
-                        time_renfort
+                        time_renfort,
+                        levelRaid_weapon,
+                        levelRaid_armor,
+                        levelRaid_transport,
+                        levelRaid_gear,
+                        effectif_team 
                         )
-                        VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)''', (name,name.lower(),type_raid,DISTANCE,DISTANCE//2,"",resultat,blesse,fin,json.dumps(composition_butin),bonus_butin,gfx_car,False,0,0))
+                        VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)''', (name,name.lower(),type_raid,DISTANCE,DISTANCE//2,"",resultat,blesse,fin,json.dumps(composition_butin),bonus_butin,gfx_car,False,0,0,1,1,1,1,1))
                         
         await db.execute(f'''UPDATE survivant SET credit = credit - {cout_raid} WHERE name_lower = "{name.lower()}"''')
         await db.commit()
@@ -339,17 +353,15 @@ class TBOT_BDD():
         Returns:
             tuple : (dict > dict avec nom et class du loot, int -> bonus_butin).
         """        
-        survivant = await self.get_stats_survivant(name)
-        level_gear = survivant["level_gear"]
-        level_weapon=survivant["level_weapon"]
+        survivant_stats = await self.get_stats_survivant(name)
         butin_final={}
         bonus_butin=0
         
-        for i in range(level_gear): # Autant de tour que le niveau d'equipement
+        for i in range(survivant["level_gear"]): # Autant de tour que le niveau d'equipement
             hasard=random.randrange(100)
-            object_tier1=self.config_ratio_json[f"objet_{i+1}"][f"armement_{level_weapon}"]["tier_1"]
-            object_tier2=self.config_ratio_json[f"objet_{i+1}"][f"armement_{level_weapon}"]["tier_2"]
-            object_tier3=self.config_ratio_json[f"objet_{i+1}"][f"armement_{level_weapon}"]["tier_3"]
+            object_tier1=self.config_ratio_json[f"objet_{i+1}"][f"armement_{survivant_stats['level_weapon']}"]["tier_1"]
+            object_tier2=self.config_ratio_json[f"objet_{i+1}"][f"armement_{survivant_stats['level_weapon']}"]["tier_2"]
+            object_tier3=self.config_ratio_json[f"objet_{i+1}"][f"armement_{survivant_stats['level_weapon']}"]["tier_3"]
             if hasard<object_tier3: #Donne un objet de Tier3
                 loot = self.config_butin_json[type_raid]["tier_3"]
                 choix_loot = random.choice(tuple(loot.keys()))
@@ -391,74 +403,66 @@ class TBOT_BDD():
                         gfx_car,
                         visi,
                         time_visi,
-                        time_renfort
+                        time_renfort,
+                        levelRaid_weapon,
+                        levelRaid_armor,
+                        levelRaid_transport,
+                        levelRaid_gear,
+                        effectif_team                   
                         FROM 'raid' ''') as cur:
             listeRaid = await cur.fetchall()
         await db.close()  
 
         db = await aiosqlite.connect(os.path.join(self.TBOTPATH, self.NAMEBDD))
         data={}
-        for raid in listeRaid:
-            name = raid[0]
-            name_lower = raid[1]
-            type_raid = raid[2]
-            distance = raid[3]
-            michemin = raid[4]
-            distance_total = michemin*2
-            renfort = raid[5]
-            resultat = raid[6]
-            blesse = raid[7]
-            mort = raid[8]
-            composition_butin = raid[9]
-            bonus_butin = raid[10]
-            gfx_car=raid[11]
-            visi = bool(raid[12])
-            time_visi = raid[13]
-            time_renfort = raid[14]
 
-            if time_renfort > CONFIG["MAX_TIME_RENFORT"]:    
-                distance -=1
+        for name in listeRaid:
+            raid= await self.stat_raid(name[0])
+            
+
+            if raid["time_renfort"] > CONFIG["MAX_TIME_RENFORT"]:    
+                raid["distance"] -=1
             else :
-                distance = distance_total-3
-            distancepourcent = (distance*100)//(distance_total)
-            stat_survivant= await self.get_stats_survivant(name)
+                raid["distance"] = (raid["michemin"]*2)-3 #pour afficher la voiture durant le temps de preparation
+
+            stat_survivant= await self.get_stats_survivant(raid["name"])
             
-            await db.execute(f'''UPDATE raid SET distance = {distance},time_renfort = time_renfort+1 WHERE name_lower = "{name_lower}"''')
+            await db.execute(f'''UPDATE raid SET distance = {raid["distance"]},time_renfort = time_renfort+1 WHERE name_lower = "{raid["name_lower"]}"''')
             
-            if time_visi > 0 :
-                await db.execute(f'''UPDATE raid SET time_visi = time_visi - 1 WHERE name_lower = "{name_lower}"''')
-            if time_visi == 0 and visi == True :    
-                await db.execute(f'''UPDATE raid SET visi = False WHERE name_lower = "{name_lower}"''')
+            if raid["time_visi"] > 0 :
+                await db.execute(f'''UPDATE raid SET time_visi = time_visi - 1 WHERE name_lower = "{raid["name_lower"]}"''')
+            if raid["time_visi"] == 0 and raid["visi"] == True :    
+                await db.execute(f'''UPDATE raid SET visi = False WHERE name_lower = "{raid["name_lower"]}"''')
             
             if len(listeRaid)<5 : #affiche toujours les infos raid si moinds de 5 raids en simultané
-                visi = True
+                raid["visi"] = True
                 
-            data[f"SURVIVANT_{name}"]={"NAME":name,
-                                       "STATS": stat_survivant,
-                                        "TYPE":type_raid,
-                                        "DISTANCE":distancepourcent,
-                                        "RENFORT":str(renfort),
-                                        "DEAD":(distance<=mort),
-                                        "HURT":(distance<=blesse),
-                                        "GFX_CAR":gfx_car,
-                                        "VISI":visi}
+            data[f'SURVIVANT_{raid["name"]}']={"NAME":raid["name"],
+                                        "STATS": stat_survivant,
+                                        "TYPE":raid["type"],
+                                        "DISTANCE":(raid["distance"]*100)//(raid["michemin"]*2),
+                                        "RENFORT":str(raid["renfort"]),
+                                        "DEAD":(raid["distance"]<=raid["mort"]),
+                                        "HURT":(raid["distance"]<=raid["blesse"]),
+                                        "GFX_CAR":raid["gfx_car"],
+                                        "VISI":raid["visi"]}
 
-            if distance == 0:
-                if mort >1 :
-                    await tbot_com.message("raid_retour_base_mort",channel=channel,name=name)
-                    await self.gere_fin_raid(db,name,type_raid,resultat,composition_butin,bonus_butin,channel,renfort)
-                    await db.execute(f'''DELETE from raid WHERE name_lower = "{name_lower}"''')
-                    await db.execute(f'''UPDATE survivant SET alive = 0 WHERE name_lower = "{name_lower}"''')
+            if raid["distance"] == 0:
+                if raid["mort"] >1 :
+                    await tbot_com.message("raid_retour_base_mort",channel=channel,name=raid["name"])
+                    await self.gere_fin_raid(db,raid["name"],raid["type"],raid["resultat"],raid["composition_butin"],raid["bonus_butin"],channel,raid["renfort"])
+                    await db.execute(f'''DELETE from raid WHERE name_lower = "{raid["name_lower"]}"''')
+                    await db.execute(f'''UPDATE survivant SET alive = 0 WHERE name_lower = "{raid["name_lower"]}"''')
                 else :
-                    await self.gere_fin_raid(db,name,type_raid,resultat,composition_butin,bonus_butin,channel,renfort)
-                    await db.execute(f'''DELETE from raid WHERE name_lower = "{name_lower}"''')
+                    await self.gere_fin_raid(db,raid["name"],raid["type"],raid["resultat"],raid["composition_butin"],raid["bonus_butin"],channel,raid["renfort"])
+                    await db.execute(f'''DELETE from raid WHERE name_lower = "{raid["name_lower"]}"''')
                     
-            elif distance == michemin :
-                await tbot_com.message("raid_mi_chemin",channel=channel,name=name)
-            elif distance == blesse : 
-                await tbot_com.message("raid_blesse",channel=channel,name=name)
-            elif distance == mort :
-                await tbot_com.message("raid_mort_enroute",channel=channel,name=name)
+            elif raid["distance"] == raid["michemin"] :
+                await tbot_com.message("raid_mi_chemin",channel=channel,name=raid["name"])
+            elif raid["distance"] == raid["blesse"] : 
+                await tbot_com.message("raid_blesse",channel=channel,name=raid["name"])
+            elif raid["distance"] == raid["mort"] :
+                await tbot_com.message("raid_mort_enroute",channel=channel,name=raid["name"])
 
         await db.commit()
         await db.close()

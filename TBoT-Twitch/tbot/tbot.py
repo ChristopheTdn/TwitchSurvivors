@@ -201,7 +201,7 @@ class TBoT(commands.Bot):
                 await TBOTBDD.support_revision_transport(raid_stats,helper_stats,channel)
             if support == "weapon" :
                 pass
-            if support == "combat" :
+            if support == "armor" :
                 pass
             if support == "gear" :
                 pass   
