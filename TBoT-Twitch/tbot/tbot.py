@@ -123,7 +123,6 @@ class TBoT(commands.Bot):
         channel = ctx.channel
         survivor = await TBOTBDD.get_stats_survivant(name)
         test_raid_exist = await TBOTBDD.stat_raid(name)
-        raid_name = self.config_raid_json["raid_"+type_raid]["nom_raid"]
         gain_prestige = self.config_raid_json["raid_"+type_raid]["gain_prestige"]
         
         if survivor == None or survivor["alive"] == False :
@@ -143,8 +142,8 @@ class TBoT(commands.Bot):
             heure =  datetime.now().hour
             minute = datetime.now().minute
             
-            await TBOTBDD.genere_raid(name,raid_name,gain_prestige,survivor["level_transport"])
-            await tbot_com.message(f"raid_{raid_name}",channel=channel,name=name,gain_prestige=str(gain_prestige)) 
+            await TBOTBDD.raid_initialise(survivor,type_raid,gain_prestige)
+            await tbot_com.message(f"raid_{type_raid}",channel=channel,name=name,gain_prestige=str(gain_prestige)) 
     
     async def create_support(self,helper: str,raider: str,channel: str,support: str,):
         """Test les conditions et realise un suppport specifique d'un survivant en raid par un autres survivant.
