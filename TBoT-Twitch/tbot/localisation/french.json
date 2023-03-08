@@ -5,9 +5,9 @@
         "mod"   : "",
         "sound" : ""
     },
-    "echec_creation_survivant" :{
-        "ovl"   : "❌- Echec de tentative de génération du joueur {name} sur le serveur !",
-        "chat"  :"❌- Echec de tentative de génération du joueur {name} sur le serveur ! Le survivant n'est pas mort. Tapes !my_survivor pour plus d'informations.",
+    "armaggedon" :{
+        "ovl"   : "☠️☠️ C'est la FIN !!! Tous les survivants sont morts ! ☠️☠️",
+        "chat"  :"",
         "mod"   : "",
         "sound" : ""
     },

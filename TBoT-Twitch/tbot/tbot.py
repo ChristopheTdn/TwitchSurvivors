@@ -193,17 +193,18 @@ class TBoT(commands.Bot):
                 if joueur !="":
                     listefinale.append(joueur)
             listefinale.append(helper_stats['name'])
+            await tbot_com.message(key="survivant_join_raid",channel=channel,name=helper_stats["name"],name2=raid_stats["name"])
 
             await TBOTBDD.join_raid(raid_stats,helper_stats,listefinale)
-            #TODO: finir Gestion influence d un support specifique            
+            # Gestion influence d un support specifique            
             if support == "transport":
-                await TBOTBDD.support_revision("transport",raid_stats,helper_stats,channel)
+                await TBOTBDD.support_revision("transport",raid_stats,helper_stats)
             if support == "weapon" :
-                await TBOTBDD.support_revision("weapon",raid_stats,helper_stats,channel)
+                await TBOTBDD.support_revision("weapon",raid_stats,helper_stats)
             if support == "armor" :
-                await TBOTBDD.support_revision("armor",raid_stats,helper_stats,channel)
+                await TBOTBDD.support_revision("armor",raid_stats,helper_stats)
             if support == "gear" :
-                await TBOTBDD.support_revision("gear",raid_stats,helper_stats,channel)
+                await TBOTBDD.support_revision("gear",raid_stats,helper_stats)
             break
 
     async def upgrade_aptitude(self,ctx: commands.Context ,aptitude: str):
@@ -234,6 +235,10 @@ class TBoT(commands.Bot):
             else :
                 await tbot_com.message(key="survivant_prestige_insuffisant",channel=channel,name=name,aptitude=aptitude,tarif_level=str(tarif[level])) 
                         
+    async def armaggedon_time(self,ctx: commands.Context):
+        await tbot_com.message(key="armaggedon",channel=ctx.channel)
+        await TBOTBDD.kill_them_all(ctx.channel)  
+
 
     @commands.command()
     async def create_survivor(self, ctx: commands.Context):
@@ -458,7 +463,17 @@ class TBoT(commands.Bot):
         raider= ctx.message.content.replace('!help_armor',"").strip()
         await self.create_support(helper,raider,channel,"armor")           
              
-
+    @commands.command()
+    async def armageddon(self, ctx: commands.Context):
+        """
+        Commande !help_armageddon
+        -----------
+        Traite la commande twitch !help_armor. 
+        """
+        name = ctx.author.display_name
+        if name.lower() == CONFIG["STREAMER"].lower() :
+            channel = ctx.channel
+            await self.armaggedon_time(ctx)
     
 if __name__ == '__main__': 
     print('Ne peut etre lancé directement')

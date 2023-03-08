@@ -92,7 +92,8 @@ class TBOT_BDD():
                             ) VALUES (?,?,?,?,?,?,?,?,?,?,?)''', (name ,name.lower(),"",0,0,1,1,1,1,False,False)) 
         await db.commit()
         await db.close()
-        
+    
+    
     async def revive_survivant(self,name: str):
         """fait revivre le survivant à la base de donnée statut alive a True
 
@@ -323,44 +324,48 @@ class TBOT_BDD():
         
         # determine si le RAID sera un succes
         
-        DISTANCE = self.config_raid_json["raid_"+raid_stat["type"]]["distance_raid"]
-        BUTIN = self.config_raid_json["raid_"+raid_stat["type"]]["stats_raid"][f"niveau-1"]["BUTIN"]
-        BREDOUILLE = self.config_raid_json["raid_"+raid_stat["type"]]["stats_raid"][f"niveau-1"]["BREDOUILLE"]
-        BLESSE = self.config_raid_json["raid_"+raid_stat["type"]]["stats_raid"][f"niveau-1"]["BLESSE"]
-        MORT = self.config_raid_json["raid_"+raid_stat["type"]]["stats_raid"][f"niveau-1"]["MORT"]
-        
-
-        BUTIN,BREDOUILLE,BLESSE,MORT,DISTANCE = await self.calcul_ratio_raid(raid_stat,BUTIN,BREDOUILLE,BLESSE,MORT,DISTANCE)
-        composition_butin={}
-        bonus_butin=0
+        DISTANCE_REF = self.config_raid_json["raid_"+raid_stat["type"]]["distance_raid"]
+        BUTIN_REF = self.config_raid_json["raid_"+raid_stat["type"]]["stats_raid"][f"niveau-1"]["BUTIN"]
+        BREDOUILLE_REF = self.config_raid_json["raid_"+raid_stat["type"]]["stats_raid"][f"niveau-1"]["BREDOUILLE"]
+        BLESSE_REF = self.config_raid_json["raid_"+raid_stat["type"]]["stats_raid"][f"niveau-1"]["BLESSE"]
+        MORT_REF = self.config_raid_json["raid_"+raid_stat["type"]]["stats_raid"][f"niveau-1"]["MORT"]
         gfx_car = f'{raid_stat["levelRaid_transport"]}-{(random.randrange(4)+1)}.png'
-
-        #determine le resultat du raid
-        resultRAID = random.randrange(100) # un nombre entre 0 et 99
-
-        if resultRAID < MORT : # Mort sans appel
-            resultat = "MORT"
-            blesse = random.randrange(DISTANCE-50,DISTANCE-10)
-            if blesse == DISTANCE//2 :
-                blesse +=2
-            fin = random.randrange(2,blesse-2)
-            
-        elif resultRAID < MORT+BLESSE :
-            resultat = 'BLESSE' 
-            blesse = random.randrange(DISTANCE-50,DISTANCE-10)
-            if blesse == DISTANCE//2 :
-                blesse +=2
-            fin = 0
-        elif resultRAID < MORT+BLESSE+BREDOUILLE:
-            resultat = 'BREDOUILLE'
-            blesse=-1
-            fin = 0 
-        else :
-            resultat = 'BUTIN' 
-            blesse=-1
-            fin = 0
-            (composition_butin,bonus_butin) = await self.genere_butin(raid_stat)     
         
+        for tentative_survie in range(raid_stat['effectif_team']): #autant de chance de ne pas mourrir 
+            BUTIN,BREDOUILLE,BLESSE,MORT,DISTANCE = await self.calcul_ratio_raid(raid_stat,BUTIN_REF,BREDOUILLE_REF,BLESSE_REF,MORT_REF,DISTANCE_REF)
+            composition_butin={}
+            bonus_butin=0
+            #determine le resultat du raid
+            resultRAID = random.randrange(100) # un nombre entre 0 et 99
+
+            if resultRAID < MORT : # Mort sans appel
+                resultat = "MORT"
+                blesse = random.randrange(DISTANCE-50,DISTANCE-10)
+                if blesse == DISTANCE//2 :
+                    blesse +=2
+                fin = random.randrange(2,blesse-2)
+                
+            elif resultRAID < MORT+BLESSE :
+                resultat = 'BLESSE' 
+                blesse = random.randrange(DISTANCE-50,DISTANCE-10)
+                if blesse == DISTANCE//2 :
+                    blesse +=2
+                fin = 0
+                break
+            elif resultRAID < MORT+BLESSE+BREDOUILLE:
+                resultat = 'BREDOUILLE'
+                blesse=-1
+                fin = 0
+                break 
+            else :
+                resultat = 'BUTIN' 
+                blesse=-1
+                fin = 0
+                for tentative_butin in range(raid_stat['effectif_team']):
+                    (composition_butin,bonus_butin) = await self.genere_butin(raid_stat)     
+                    if bonus_butin>0:
+                        break
+                    
         db = await aiosqlite.connect(os.path.join(self.TBOTPATH, self.NAMEBDD))
         await db.execute (f'''UPDATE raid SET
                         distance = {DISTANCE},
@@ -569,25 +574,34 @@ class TBOT_BDD():
         
     async def join_raid(self,raidStats,helperStats,equipe):
         db = await aiosqlite.connect(os.path.join(self.TBOTPATH, self.NAMEBDD))
-        await db.execute(f'''UPDATE raid SET renfort = '{','.join([str(elem) for elem in equipe])}' WHERE name_lower = "{raidStats["name_lower"]}"''')
+        await db.execute(f'''UPDATE raid SET
+                         renfort = '{','.join([str(elem) for elem in equipe])}',
+                         effectif_team = effectif_team + 1
+                         WHERE name_lower = "{raidStats["name_lower"]}"''')
         await db.execute(f'''UPDATE survivant SET support_raid = True WHERE name_lower = "{helperStats["name_lower"]}"''') 
         await db.commit()
         await db.close()
+        
 
-    async def support_revision(self,type: str,raider_stats: dict,helper_stats: dict,channel):
-        raidEnCours = await self.stat_raid(raider_stats["name"])    
+    async def support_revision(self,type: str,raider_stats: dict,helper_stats: dict):
+        raidEnCours = await self.stat_raid(raider_stats["name"])
+
         if helper_stats[f"level_{type}"] > raidEnCours[f"levelRaid_{type}"]:
-
-                db = await aiosqlite.connect(os.path.join(self.TBOTPATH, self.NAMEBDD))
+                db = await aiosqlite.connect(os.path.join(self.TBOTPATH, self.NAMEBDD)) 
                 await db.execute(f'''UPDATE raid SET 
-                                 levelRaid_{type}" = {helper_stats[f"level_{type}"]}
+                                 levelRaid_{type} = {helper_stats[f"level_{type}"]}
                                  WHERE name_lower = "{raider_stats["name_lower"]}"''')
                 await db.commit()
                 await db.close()
-        await tbot_com.message(key="survivant_join_raid",channel=channel,name=helper_stats["name"],name2=raider_stats["name"])
 
         
-        
+    async def kill_them_all(self,channel):
+        print ("ARMAGEDDON !!!!")
+        db = await aiosqlite.connect(os.path.join(self.TBOTPATH, self.NAMEBDD))
+        await db.execute("DELETE FROM raid")
+        await db.execute("UPDATE survivant SET alive = false")
+        await db.commit()
+        await db.close()    
 
 
 if __name__ == '__main__': 
