@@ -98,17 +98,22 @@ class TBOT_BDD():
 
         Args:
             name (str): le nom du survivant.
-        """        
+        """
+
+                 
         db = await aiosqlite.connect(os.path.join(self.TBOTPATH, self.NAMEBDD))
         await db.execute(f'''UPDATE survivant SET 
                         career          = "",
-                        prestige        = 0,
                         level_weapon    = 1,
                         level_armor     = 1,
                         level_transport = 1,
                         level_gear      = 1,
                         alive           = True, 
                         support_raid    = False                  
+                        WHERE name_lower = "{name.lower()}"''')
+        if CONFIG["RESET_PRESTIGE_AFTER_DEATH"] :
+            await db.execute(f'''UPDATE survivant SET 
+                        prestige        = 0                  
                         WHERE name_lower = "{name.lower()}"''')
         await db.commit()
         await db.close()
