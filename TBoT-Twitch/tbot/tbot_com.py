@@ -39,13 +39,13 @@ messageJson={}
 
 def joue_son(radio = "radio1.mp3"):
     """Joue un son passé en parametre 
-
     Args:
         radio (str, optional): nom du fichier se trouvant dans le repertoire /sound. Defaults > "radio1.mp3".
     """
-    mixer.init()   
-    mixer.music.load(os.path.join(TBOTPATH, "sound/"+radio))
-    mixer.music.play()
+    if CONFIG["PLAY_SOUND"] : #joue les sons du Mod en fonction de la configuration
+        mixer.init()   
+        mixer.music.load(os.path.join(TBOTPATH, "sound/"+radio))
+        mixer.music.play()
 
 async def message(key="empty",channel=None,name="",name2="",mod="",chat="",ovl="",sound="",gain_prestige="",listebutin="",aptitude="",tarif_level="",credit="",bonus_butin=""):
     """    envois un message vers les différentes interfaces (twitch, overlay obs, chat in game PZ)
