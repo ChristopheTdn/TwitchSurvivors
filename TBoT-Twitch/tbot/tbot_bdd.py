@@ -291,7 +291,7 @@ class TBOT_BDD():
                          0,
                          "{}",
                          0,
-                         "",
+                         "start.png",
                          False,
                          0,
                          0,
@@ -363,7 +363,7 @@ class TBOT_BDD():
                         resultat = '{resultat}',
                         blesse = {blesse},
                         mort = {fin},
-                        composition_butin = "{json.dumps(composition_butin)}",
+                        composition_butin = '{json.dumps(composition_butin)}',
                         bonus_butin = {bonus_butin},
                         gfx_car = '{gfx_car}'
                         WHERE name_lower = "{raid_stat["name_lower"]}"''')
@@ -569,19 +569,17 @@ class TBOT_BDD():
         await db.commit()
         await db.close()
 
-    async def support_revision_transport(self,raider_stats: dict,helper_stats: dict,channel):
-
+    async def support_revision(self,type: str,raider_stats: dict,helper_stats: dict,channel):
         raidEnCours = await self.stat_raid(raider_stats["name"])    
-        if helper_stats["level_transport"] > raidEnCours["levelRaid_transport"]:
+        if helper_stats[f"level_{type}"] > raidEnCours[f"levelRaid_{type}"]:
 
                 db = await aiosqlite.connect(os.path.join(self.TBOTPATH, self.NAMEBDD))
                 await db.execute(f'''UPDATE raid SET 
-                                 levelRaid_transport = {helper_stats["level_transport"]}
+                                 levelRaid_{type}" = {helper_stats[f"level_{type}"]}
                                  WHERE name_lower = "{raider_stats["name_lower"]}"''')
                 await db.commit()
                 await db.close()
         await tbot_com.message(key="survivant_join_raid",channel=channel,name=helper_stats["name"],name2=raider_stats["name"])
-
 
         
         

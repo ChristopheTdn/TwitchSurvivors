@@ -197,13 +197,13 @@ class TBoT(commands.Bot):
             await TBOTBDD.join_raid(raid_stats,helper_stats,listefinale)
             #TODO: finir Gestion influence d un support specifique            
             if support == "transport":
-                await TBOTBDD.support_revision_transport(raid_stats,helper_stats,channel)
+                await TBOTBDD.support_revision("transport",raid_stats,helper_stats,channel)
             if support == "weapon" :
-                pass
+                await TBOTBDD.support_revision("weapon",raid_stats,helper_stats,channel)
             if support == "armor" :
-                pass
+                await TBOTBDD.support_revision("armor",raid_stats,helper_stats,channel)
             if support == "gear" :
-                pass   
+                await TBOTBDD.support_revision("gear",raid_stats,helper_stats,channel)
             break
 
     async def upgrade_aptitude(self,ctx: commands.Context ,aptitude: str):
@@ -418,15 +418,45 @@ class TBoT(commands.Bot):
         Traite la commande twitch !help_transport. 
         """
         helper = ctx.author.display_name
-        helper_stats = await TBOTBDD.get_stats_survivant(helper)
-        helper_stats_raid = await TBOTBDD.stat_raid(helper)
         channel = ctx.channel
         raider= ctx.message.content.replace('!help_transport',"").strip()
         await self.create_support(helper,raider,channel,"transport")
 
+    @commands.command()
+    async def help_weapon(self, ctx: commands.Context):
+        """
+        Commande !help_weapon
+        -----------
+        Traite la commande twitch !help_weapon. 
+        """
+        helper = ctx.author.display_name
+        channel = ctx.channel
+        raider= ctx.message.content.replace('!help_weapon',"").strip()
+        await self.create_support(helper,raider,channel,"weapon")
 
+    @commands.command()
+    async def help_gear(self, ctx: commands.Context):
+        """
+        Commande !help_gear
+        -----------
+        Traite la commande twitch !help_gear. 
+        """
+        helper = ctx.author.display_name
+        channel = ctx.channel
+        raider= ctx.message.content.replace('!help_gear',"").strip()
+        await self.create_support(helper,raider,channel,"gear")
 
-            
+    @commands.command()
+    async def help_armor(self, ctx: commands.Context):
+        """
+        Commande !help_armor
+        -----------
+        Traite la commande twitch !help_armor. 
+        """
+        helper = ctx.author.display_name
+        channel = ctx.channel
+        raider= ctx.message.content.replace('!help_armor',"").strip()
+        await self.create_support(helper,raider,channel,"armor")           
              
 
     
