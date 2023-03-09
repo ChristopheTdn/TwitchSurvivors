@@ -364,10 +364,7 @@ class TBOT_BDD():
                 resultat = 'BUTIN' 
                 blesse=-1
                 fin = 0
-                for tentative_butin in range(ASSISTANT_BOOST):
-                    (composition_butin,bonus_butin) = await self.genere_butin(raid_stat)     
-                    if bonus_butin>0:
-                        break
+                (composition_butin,bonus_butin) = await self.genere_butin(raid_stat)     
                 break
                     
         db = await aiosqlite.connect(os.path.join(self.TBOTPATH, self.NAMEBDD))
@@ -427,8 +424,7 @@ class TBOT_BDD():
                 bonus_butin+=50
                     
             if random.randrange(100)>=CONFIG["GEAR_BOOST"] : #test si on arrete le tour (50 % de chance que oui)
-                break
-            
+                break    
         return (butin_final,bonus_butin)
     
     
