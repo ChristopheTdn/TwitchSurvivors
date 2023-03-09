@@ -426,7 +426,7 @@ class TBOT_BDD():
                 butin_final[choix_loot]=self.config_butin_json[RaidSTAT['type']][f"tier_1"][choix_loot]
                 bonus_butin+=50
                     
-            if random.randrange(100)>50 : #test si on arrete le tour (50 % de chance que oui)
+            if random.randrange(100)>=CONFIG["GEAR_BOOST"] : #test si on arrete le tour (50 % de chance que oui)
                 break
             
         return (butin_final,bonus_butin)

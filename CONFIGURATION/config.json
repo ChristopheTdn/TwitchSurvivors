@@ -11,5 +11,6 @@
     "VOLUME" : 0.5,
     "KILL_THEM_ALL" : true,
     "RESET_PRESTIGE_AFTER_DEATH" : true,
-    "ASSISTANT_BOOST" : true 
+    "ASSISTANT_BOOST" : true,
+    "GEAR_BOOST" : 66
 }
