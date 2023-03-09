@@ -364,7 +364,7 @@ class TBOT_BDD():
                 resultat = 'BUTIN' 
                 blesse=-1
                 fin = 0
-                for tentative_butin in range(raid_stat['effectif_team']):
+                for tentative_butin in range(ASSISTANT_BOOST):
                     (composition_butin,bonus_butin) = await self.genere_butin(raid_stat)     
                     if bonus_butin>0:
                         break
