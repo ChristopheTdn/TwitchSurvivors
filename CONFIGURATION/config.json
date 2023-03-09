@@ -8,6 +8,8 @@
     "TARIF_UPGRADE" : [0,1000,2500,6000,13000],
     "MAX_TIME_RENFORT" : 5,
     "PLAY_SOUND" : true,
+    "VOLUME" : 0.5,
     "KILL_THEM_ALL" : true,
-    "RESET_PRESTIGE_AFTER_DEATH" : true
+    "RESET_PRESTIGE_AFTER_DEATH" : true,
+    "ASSISTANT_BOOST" : true 
 }
