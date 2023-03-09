@@ -330,8 +330,11 @@ class TBOT_BDD():
         BLESSE_REF = self.config_raid_json["raid_"+raid_stat["type"]]["stats_raid"][f"niveau-1"]["BLESSE"]
         MORT_REF = self.config_raid_json["raid_"+raid_stat["type"]]["stats_raid"][f"niveau-1"]["MORT"]
         gfx_car = f'{raid_stat["levelRaid_transport"]}-{(random.randrange(4)+1)}.png'
-        
-        for tentative_survie in range(raid_stat['effectif_team']): #autant de chance de ne pas mourrir 
+        if CONFIG["ASSISTANT_BOOST"] :
+            ASSISTANT_BOOST = raid_stat['effectif_team']
+        else :
+            ASSISTANT_BOOST = 1
+        for tentative_survie in range(ASSISTANT_BOOST): #autant de chance de ne pas mourrir 
             BUTIN,BREDOUILLE,BLESSE,MORT,DISTANCE = await self.calcul_ratio_raid(raid_stat,BUTIN_REF,BREDOUILLE_REF,BLESSE_REF,MORT_REF,DISTANCE_REF)
             composition_butin={}
             bonus_butin=0
@@ -365,6 +368,7 @@ class TBOT_BDD():
                     (composition_butin,bonus_butin) = await self.genere_butin(raid_stat)     
                     if bonus_butin>0:
                         break
+                break
                     
         db = await aiosqlite.connect(os.path.join(self.TBOTPATH, self.NAMEBDD))
         await db.execute (f'''UPDATE raid SET

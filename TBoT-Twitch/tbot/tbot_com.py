@@ -45,6 +45,7 @@ def joue_son(radio = "radio1.mp3"):
     if CONFIG["PLAY_SOUND"] : #joue les sons du Mod en fonction de la configuration
         mixer.init()   
         mixer.music.load(os.path.join(TBOTPATH, "sound/"+radio))
+        mixer.music.set_volume(CONFIG["VOLUME"])
         mixer.music.play()
 
 async def message(key="empty",channel=None,name="",name2="",mod="",chat="",ovl="",sound="",gain_prestige="",listebutin="",aptitude="",tarif_level="",credit="",bonus_butin=""):
