@@ -456,18 +456,15 @@ class TBOT_BDD():
             listeRaid = await cur.fetchall()
         await db.close()  
 
-        db = await aiosqlite.connect(os.path.join(self.TBOTPATH, self.NAMEBDD))
         data={}
 
         for name in listeRaid:
             raid= await self.stat_raid(name[0])
-            
+
             if raid["time_renfort"] == CONFIG["MAX_TIME_RENFORT"]:
                 await self.raid_generation(raid)
                 raid= await self.stat_raid(name[0])
                 
-                
-                           
             if raid["time_renfort"] > CONFIG["MAX_TIME_RENFORT"]:
                 DISTANCE_POURCENT =  (raid["distance"]*100)//(raid["michemin"]*2)    
                 raid["distance"] -=1
@@ -477,6 +474,9 @@ class TBOT_BDD():
                 raid["distance"] =  (98 * raid["michemin"]*2)//100
 
             stat_survivant= await self.get_stats_survivant(raid["name"])
+            
+            db = await aiosqlite.connect(os.path.join(self.TBOTPATH, self.NAMEBDD))
+            
             
             await db.execute(f'''UPDATE raid SET distance = {raid["distance"]},time_renfort = time_renfort+1 WHERE name_lower = "{raid["name_lower"]}"''')
             
@@ -515,8 +515,8 @@ class TBOT_BDD():
             elif raid["distance"] == raid["mort"] :
                 await tbot_com.message("raid_mort_enroute",channel=channel,name=raid["name"])
 
-        await db.commit()
-        await db.close()
+            await db.commit()
+            await db.close()
             
         async with aiofiles.open("TBoT_Overlay/raid.json", "w",encoding="utf-8") as fichier:
             await fichier.write(json.dumps(data,indent=4,ensure_ascii=False))
