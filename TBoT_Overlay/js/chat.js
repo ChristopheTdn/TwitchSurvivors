@@ -87,7 +87,7 @@ class Message {
 			if((timestamp - this.date) < (0.66*configTime)) {
 				this.p.style.opacity = 0.6;
 			} else {
-					this.p.style.opacity = 0.3;
+					this.p.style.opacity = 0.0;
 			}
 		}
 	}
