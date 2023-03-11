@@ -265,7 +265,7 @@ class TBoT(commands.Bot):
         message=message.replace('!radio',"")
         await tbot_com.message(channel=channel,mod=f"<radio {name}> : {message}",
                         ovl=f"⚡&ltradio <span class='pseudo'>{name}</span> > : {message}",
-                        sound="radio4.mp3")
+                        sound="")
         
     @commands.command()
     async def my_survivor(self, ctx: commands.Context):
