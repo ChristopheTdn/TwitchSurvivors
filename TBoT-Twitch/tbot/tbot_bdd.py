@@ -572,13 +572,16 @@ class TBOT_BDD():
         await db.commit()
         await db.close()
         
-    async def join_raid(self,raidStats,helperStats,equipe):
+    async def join_raid(self,raidStats,helperStats,equipe,cout_renfort):
         db = await aiosqlite.connect(os.path.join(self.TBOTPATH, self.NAMEBDD))
         await db.execute(f'''UPDATE raid SET
                          renfort = '{','.join([str(elem) for elem in equipe])}',
                          effectif_team = effectif_team + 1
                          WHERE name_lower = "{raidStats["name_lower"]}"''')
-        await db.execute(f'''UPDATE survivant SET support_raid = True WHERE name_lower = "{helperStats["name_lower"]}"''') 
+        await db.execute(f'''UPDATE survivant SET
+                         support_raid = True,
+                         credit =credit - {cout_renfort}
+                         WHERE name_lower = "{helperStats["name_lower"]}"''') 
         await db.commit()
         await db.close()
         

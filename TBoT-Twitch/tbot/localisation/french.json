@@ -59,6 +59,12 @@
         "mod"   : "",
         "sound" : "" 
     },
+    "survivant_credit_insuffisant_support" : {
+        "ovl"   :"❌- Attention {name}, tu ne possedes pas assez de crédit pour apporter ton aide à {name2} (cout {credit} credits). Achete des crédits avec tes points de chaine.",
+        "chat"  :"",
+        "mod"   : "",
+        "sound" : "" 
+    },
     "survivant_ajout_credit" : {
         "ovl"   :"💰- le survivant {name} obtient {credit} crédits !",
         "chat"  :"",
@@ -66,7 +72,7 @@
         "sound" : "" 
     },
     "survivant_join_raid" : {
-        "ovl"   :"⛹- le survivant {name} rejoint l'équipe de {name2} pour partir en raid !",
+        "ovl"   :"⛹- le survivant {name} rejoint l'équipe de {name2} pour partir en raid (-{credit} credits) !",
         "chat"  :"",
         "mod"   : "",
         "sound" : "Aide_Raid.mp3" 
@@ -114,8 +120,8 @@
         "sound" : "MI-RAID.mp3"
     },
     "raid_deja_en_cours" :{
-        "ovl"   : "",
-        "chat"  :"❌- un Raid est dejà en cours pour {name} ! tapez !my_survivor pour plus d'info.",
+        "ovl"   : "❌- un Raid est dejà en cours pour {name} ! tapez !my_survivor pour plus d'info.",
+        "chat"  : "",
         "mod"   : "",
         "sound" : ""    
     },

@@ -159,6 +159,8 @@ class TBoT(commands.Bot):
         helper_stats_raid = await TBOTBDD.stat_raid(helper)
         
         while "tant_que_no_error" :
+            
+
             if helper_stats_raid != None or helper_stats["support_raid"] != False:
                 await tbot_com.message(key="survivant_no_support_when_raid",channel=channel,name=helper)
                 break
@@ -172,6 +174,8 @@ class TBoT(commands.Bot):
                 break
             
             raid_stats = await TBOTBDD.stat_raid(raider)
+            
+
 
             if raid_stats == None :
                 await tbot_com.message(key="error_noRaid",channel=channel,name=helper)
@@ -181,6 +185,11 @@ class TBoT(commands.Bot):
                 await tbot_com.message(key="error_raid_timeOut",channel=channel,name=helper_stats['name'],name2=raid_stats['name'])
                 break
             
+            cout_support = self.config_raid_json["raid_"+raid_stats["type"]]["gain_prestige"]//4
+            
+            if helper_stats["credit"] < cout_support : 
+                await tbot_com.message(key="survivant_credit_insuffisant_support",channel=channel,name=helper_stats['name'],name2=raid_stats['name'],credit=str(cout_support))
+                break
             equipe = raid_stats["renfort"]            
             liste = equipe.split(",")
             if len(liste) >= 3 :
@@ -193,9 +202,9 @@ class TBoT(commands.Bot):
                 if joueur !="":
                     listefinale.append(joueur)
             listefinale.append(helper_stats['name'])
-            await tbot_com.message(key="survivant_join_raid",channel=channel,name=helper_stats["name"],name2=raid_stats["name"])
+            await tbot_com.message(key="survivant_join_raid",channel=channel,name=helper_stats["name"],name2=raid_stats["name"],credit = str(cout_support))
 
-            await TBOTBDD.join_raid(raid_stats,helper_stats,listefinale)
+            await TBOTBDD.join_raid(raid_stats,helper_stats,listefinale,cout_support)
             # Gestion influence d un support specifique            
             if support == "transport":
                 await TBOTBDD.support_revision("transport",raid_stats,helper_stats)
