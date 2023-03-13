@@ -312,7 +312,7 @@ class TBoT(commands.Bot):
         if test_survivant_exist !=None :
             dictStat= await TBOTBDD.get_stats_survivant(name)
             message =   "{name} > 💰:{credit}   🌿{name2} "
-            message +=   f"<p>🛡️: {dictStat['level_armor']} | 🚙 : {dictStat['level_transport']} | 🗡️: {dictStat['level_weapon']} | ⚙️ : {dictStat['level_gear']}</p>"
+            message +=   f"<p>🪓: {dictStat['level_weapon']} | 🛡️: {dictStat['level_armor']} | 🚙 : {dictStat['level_transport']} | 🛠️ : {dictStat['level_gear']}</p>"
             stat_Raid = await TBOTBDD.stat_raid(name)
             if stat_Raid!= None :
                 message += f"<p>actuellement en RAID {stat_Raid['type']}</p>"
