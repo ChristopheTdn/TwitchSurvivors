@@ -313,6 +313,12 @@ class TBoT(commands.Bot):
             dictStat= await TBOTBDD.get_stats_survivant(name)
             message =   "{name} > 💰:{credit}   🌿{name2} "
             message +=   f"<p>🛡️: {dictStat['level_armor']} | 🚙 : {dictStat['level_transport']} | 🗡️: {dictStat['level_weapon']} | ⚙️ : {dictStat['level_gear']}</p>"
+            stat_Raid = await TBOTBDD.stat_raid(name)
+            if stat_Raid!= None :
+                message += f"<p>actuellement en RAID {stat_Raid['type']}</p>"
+                equipe = stat_Raid["renfort"]  
+                if equipe != "" :
+                    message += f"support : {equipe}"
 
             await tbot_com.message(channel=channel,ovl=message,name=name,name2=str(test_survivant_exist["prestige"]),credit=str(test_survivant_exist["credit"]))
         else :
