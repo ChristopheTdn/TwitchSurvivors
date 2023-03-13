@@ -110,7 +110,7 @@ async def message(key="empty",channel=None,name="",name2="",mod="",chat="",ovl="
     if ovl != "" :
         await affichage_Overlay(ovl)
     if mod != "" :
-        async with aiofiles.open(URLMOD+"texte.txt","w",encoding="utf-8") as fichier:
+        async with aiofiles.open(URLMOD+"radio.txt","w",encoding="utf-8") as fichier:
             await fichier.write(mod)
     if sound != "" :
         joue_son(sound)
