@@ -311,10 +311,8 @@ class TBoT(commands.Bot):
         test_survivant_exist = await TBOTBDD.get_stats_survivant(name)
         if test_survivant_exist !=None :
             dictStat= await TBOTBDD.get_stats_survivant(name)
-            message =   "{name} : {credit}💰 | {name2} 🌿"
-            message +=   f"<p>level 🛡️: {dictStat['level_armor']} | level 🚙 : {dictStat['level_transport']}</p>"
-            message +=   f"<p>level 🗡️: {dictStat['level_weapon']} | level ⚙️ : {dictStat['level_gear']}</p>"
-   
+            message =   "{name} > 💰:{credit}   🌿{name2} "
+            message +=   f"<p>🛡️: {dictStat['level_armor']} | 🚙 : {dictStat['level_transport']} | 🗡️: {dictStat['level_weapon']} | ⚙️ : {dictStat['level_gear']}</p>"
 
             await tbot_com.message(channel=channel,ovl=message,name=name,name2=str(test_survivant_exist["prestige"]),credit=str(test_survivant_exist["credit"]))
         else :
