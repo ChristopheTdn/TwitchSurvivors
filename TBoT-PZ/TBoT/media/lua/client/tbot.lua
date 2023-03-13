@@ -25,12 +25,12 @@ function afficheTexte()
         textebot:close()
     end
 
-    local textebot=getModFileReader("TBoT","texte.txt",true)
+    local textebot=getModFileReader("TBoT","radio.txt",true)
     local phrase = textebot:readLine()
     textebot:close()
     if phrase ~= nil then -- player:getInventory():getItemFromTypeRecurse("TBoT.Bag_TBoT")
         player:Say(phrase)
-        local textebot=getModFileWriter("TBoT","texte.txt",true, false)
+        local textebot=getModFileWriter("TBoT","radio.txt",true, false)
         textebot:write("")
         textebot:close()
     end
