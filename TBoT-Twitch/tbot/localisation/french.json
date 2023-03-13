@@ -114,7 +114,7 @@
     "sound" : "Bredouille.mp3"
     },
     "raid_win_blesse":{
-    "ovl"   : "⛹- {name} est revenu à la base. Il y a des bléssés... gain de prestige : +{gain_prestige} !!!",
+    "ovl"   : "⛹- {name} est revenu à la base. Il y a des blessés... gain de prestige : +{gain_prestige} !!!",
     "chat"  :"",
     "mod"   : "radio {name} : je suis enfin revenu à la base.",
     "sound" : "Blesse_Retour_Base.mp3"
@@ -132,9 +132,9 @@
         "sound" : ""    
     },
     "raid_blesse" :{
-        "ovl"   : "🩸- {name} a été attaqué durant son raid. Il est bléssé ! ",
+        "ovl"   : "🩸- {name} a été attaqué durant son raid. Il est blessé ! ",
         "chat"  :"",
-        "mod"   : "radio {name} : Aidez moi! victim...zzz.. ne attaque... je suis ...gèrement bléssé... zzz..z...",
+        "mod"   : "radio {name} : Aidez moi! victim...zzz.. ne attaque... je suis ...gèrement blessé... zzz..z...",
         "sound" : "Blesse_Pendant_Raid.mp3"
     },
     "raid_mort_enroute" :{
