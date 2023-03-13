@@ -62,9 +62,13 @@ async def message(key="empty",channel=None,name="",name2="",mod="",chat="",ovl="
     minute = str(datetime.now().minute)
     if bonus_butin != "":
         bonus_butin = f" +{bonus_butin} pts de prestige pour les items ramenés."
+    
+    if key !='empty':
+        chat= LOCALISATION[f"{key}"]["chat"]
+        ovl = LOCALISATION[f"{key}"]["ovl"]
+        mod = LOCALISATION[f"{key}"]["mod"]
         
-    if chat == "":
-        chat= LOCALISATION[f"{key}"]["chat"]\
+    chat= chat\
             .replace("{name}",name)\
             .replace("{name2}",name2)\
             .replace("{heure}",heure)\
@@ -74,10 +78,7 @@ async def message(key="empty",channel=None,name="",name2="",mod="",chat="",ovl="
             .replace("{aptitude}",aptitude)\
             .replace("{tarif_level}",tarif_level)\
             .replace("{credit}",credit)
-
-            
-    if ovl == "":
-        ovl = LOCALISATION[f"{key}"]["ovl"]\
+    ovl = ovl\
             .replace("{name}",f"<span class='pseudo'>{name}</span>")\
             .replace("{name2}",name2)\
             .replace("{heure}",heure)\
@@ -88,10 +89,7 @@ async def message(key="empty",channel=None,name="",name2="",mod="",chat="",ovl="
             .replace("{tarif_level}",tarif_level)\
             .replace("{credit}",credit)\
             .replace("{bonus_butin}",bonus_butin)
-
-                
-    if mod == "":
-        mod = LOCALISATION[f"{key}"]["mod"]\
+    mod = mod\
             .replace("{name}",name)\
             .replace("{name2}",name2)\
             .replace("{heure}",heure)\

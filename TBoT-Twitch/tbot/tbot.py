@@ -249,6 +249,29 @@ class TBoT(commands.Bot):
         await tbot_com.message(key="armaggedon",channel=ctx.channel)
         await TBOTBDD.kill_them_all(ctx.channel)  
 
+    async def message_radio(self,ctx: commands.Context,message: str):
+        
+        name = ctx.author.display_name
+        channel = ctx.channel
+        survivor_stats = await TBOTBDD.get_stats_survivant(name)
+        
+        while "tant_que_no_error" :
+                        
+            if survivor_stats == None or survivor_stats["alive"] == False :
+                await tbot_com.message(key="survivant_no_exist",channel=channel,name=name)
+                break
+                
+            if survivor_stats["credit"] < CONFIG["COUT_MSG_RADIO"] : 
+                await tbot_com.message(key="survivant_credit_insuffisant_radio",channel=channel,name=name,credit=str(CONFIG["COUT_MSG_RADIO"]))
+                break
+            await TBOTBDD.withdraw_credit(name,CONFIG["COUT_MSG_RADIO"])
+            await tbot_com.message(channel=channel,mod=f"<radio {name}> : {message}",
+                        ovl=f"⚡&ltradio <span class='pseudo'>{name}</span> > : {message} (- {CONFIG['COUT_MSG_RADIO']} crédits)",
+                        sound="")
+            
+            break
+        
+        
 
     @commands.command()
     async def create_survivor(self, ctx: commands.Context):
@@ -273,9 +296,8 @@ class TBoT(commands.Bot):
         message = ctx.message.content
         channel = ctx.channel
         message=message.replace('!radio',"")
-        await tbot_com.message(channel=channel,mod=f"<radio {name}> : {message}",
-                        ovl=f"⚡&ltradio <span class='pseudo'>{name}</span> > : {message}",
-                        sound="")
+        await self.message_radio(ctx,message)
+
         
     @commands.command()
     async def my_survivor(self, ctx: commands.Context):
@@ -289,13 +311,13 @@ class TBoT(commands.Bot):
         test_survivant_exist = await TBOTBDD.get_stats_survivant(name)
         if test_survivant_exist !=None :
             dictStat= await TBOTBDD.get_stats_survivant(name)
-            message = f"stat {dictStat['name']} : prestige = {dictStat['prestige']},\
-                credit = {dictStat['credit']},\
-                level weapon = {dictStat['level_weapon']} ;\
-                level transport= {dictStat['level_transport']} ;\
-                level armor= {dictStat['level_armor']} ;\
-                level gear= {dictStat['level_gear']}"
-            await tbot_com.message(channel=channel,chat=message)
+            message =   "Stat {name} : {credit} crédits"
+            message +=   f"<p STYLE='padding:0 0 0 20px;'>  🚙level transport : {dictStat['level_transport']}</p>"
+            message +=   f"<p STYLE='padding:0 0 0 20px;'>  🗡️level weapon : {dictStat['level_weapon']}</p>" 
+            message +=   f"<p STYLE='padding:0 0 0 20px;'>  🛡️level armor : {dictStat['level_armor']}</p>"
+            message +=   f"<p STYLE='padding:0 0 0 20px;'>  ⚙️level gear : {dictStat['level_gear']}</p>"      
+
+            await tbot_com.message(channel=channel,ovl=message,name=name,credit=str(test_survivant_exist["credit"]))
         else :
             await tbot_com.message(key="survivant_no_exist",channel=channel,name=name)
     

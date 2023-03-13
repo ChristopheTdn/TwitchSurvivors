@@ -390,6 +390,12 @@ class TBOT_BDD():
         await db.commit()
         await db.close()
         
+    async def withdraw_credit(self,name,credit):
+        db = await aiosqlite.connect(os.path.join(self.TBOTPATH, self.NAMEBDD))
+        await db.execute(f'''UPDATE survivant SET credit = credit-{credit} WHERE name_lower = "{name.lower()}"''')
+        await db.commit()
+        await db.close()
+            
     async def genere_butin(self,RaidSTAT: dict)->tuple:
         """Determine le Butin en fonction du level et du type de Raid
 

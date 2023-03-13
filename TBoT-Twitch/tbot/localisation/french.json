@@ -65,6 +65,12 @@
         "mod"   : "",
         "sound" : "" 
     },
+    "survivant_credit_insuffisant_radio" : {
+        "ovl"   :"❌- Attention {name}, tu ne possedes pas assez de crédit pour envoyer un message radio (cout {credit} credits). Achete des crédits avec tes points de chaine.",
+        "chat"  :"",
+        "mod"   : "",
+        "sound" : "" 
+    },
     "survivant_ajout_credit" : {
         "ovl"   :"💰- le survivant {name} obtient {credit} crédits !",
         "chat"  :"",
