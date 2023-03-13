@@ -89,13 +89,14 @@ class TBOT_BDD():
                             level_gear,
                             alive,
                             support_raid
-                            ) VALUES (?,?,?,?,?,?,?,?,?,?,?)''', (name ,name.lower(),"",0,0,1,1,1,1,False,False)) 
+                            ) VALUES (?,?,?,?,?,?,?,?,?,?,?)''', (name ,name.lower(),"",0,CONFIG["COUT_REVIVE"],1,1,1,1,False,False)) 
         await db.commit()
         await db.close()
     
     
     async def revive_survivant(self,name: str):
         """fait revivre le survivant à la base de donnée statut alive a True
+         debite les credits du cout revive
 
         Args:
             name (str): le nom du survivant.
@@ -105,6 +106,7 @@ class TBOT_BDD():
         db = await aiosqlite.connect(os.path.join(self.TBOTPATH, self.NAMEBDD))
         await db.execute(f'''UPDATE survivant SET 
                         career          = "",
+                        credit          = credit-{CONFIG["COUT_REVIVE"]},
                         level_weapon    = 1,
                         level_armor     = 1,
                         level_transport = 1,

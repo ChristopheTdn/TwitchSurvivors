@@ -69,7 +69,7 @@ class TBoT(commands.Bot):
         await self.handle_commands(message)
         
     async def creation_survivant(self,name: str,channel: str):
-        """active le flag ALIVE du survivant apès avoir testé son existence e tsi les credits sont suffisants
+        """active le flag ALIVE du survivant apès avoir testé son existence et si les credits sont suffisants
 
         Args:
             name (str): _description_
@@ -77,7 +77,7 @@ class TBoT(commands.Bot):
         """        
         survivant = await TBOTBDD.get_stats_survivant(name)
         if survivant != None and survivant["alive"] == 1: #le pseudo existe deja dans la base de donnée
-            await tbot_com.message("echec_creation_survivant",channel=channel,name=name)
+            await tbot_com.message("survivant_exist",channel=channel,name=name)
         elif survivant != None and survivant["alive"] == 0: #le survivant doit etre ressucité
             if survivant["credit"]<CONFIG["COUT_REVIVE"]: #pas assez de credit
                 await tbot_com.message("survivant_credit_insuffisant",channel=channel,name=name,credit=str(CONFIG["COUT_REVIVE"]))
@@ -102,15 +102,16 @@ class TBoT(commands.Bot):
             await TBOTBDD.create_survivant(name)
             await TBOTBDD.revive_survivant(name)
             await tbot_com.message("revive_survivant",channel=channel,name=name,credit=str(CONFIG["COUT_REVIVE"]))
-            CREDIT = CREDIT - CONFIG["COUT_REVIVE"]
-        elif survivant["alive"]==False:
+
+        else:    
+            await TBOTBDD.add_credit(name,credit=CREDIT)
+            await tbot_com.message("survivant_ajout_credit",credit=str(CREDIT),channel=channel,name=name) 
+
+        survivant = await TBOTBDD.get_stats_survivant(name)   
+        if survivant["alive"]==False:        
             await TBOTBDD.revive_survivant(name)
             await tbot_com.message("revive_survivant",channel=channel,name=name,credit=str(CONFIG["COUT_REVIVE"]))
-            CREDIT = CREDIT - CONFIG["COUT_REVIVE"]
             
-            
-        await TBOTBDD.add_credit(name,credit=CREDIT)
-        await tbot_com.message("survivant_ajout_credit",credit=str(CREDIT),channel=channel,name=name)
     
             
     async def creer_raid(self,ctx: commands.Context,type_raid: str):
@@ -405,14 +406,14 @@ class TBoT(commands.Bot):
         Traite la commande twitch !ajout_credit. 
         """
         if CONFIG["DEBUG"]:
-            await self.ajout_credit(ctx.author.display_name,ctx.channel)
+            await self.ajout_credit(ctx.author.display_name,ctx.channel,CREDIT = 2000)
 
     @commands.command()
     async def visi_on(self, ctx: commands.Context):
         """
-        Commande !ajout_credit
+        Commande !visi_on
         -----------
-        Traite la commande twitch !ajout_credit. 
+        Traite la commande twitch !visi_on. 
         """
         name = ctx.author.display_name
         channel = ctx.channel
