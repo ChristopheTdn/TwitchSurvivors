@@ -89,7 +89,7 @@ class TBOT_BDD():
                             level_gear,
                             alive,
                             support_raid
-                            ) VALUES (?,?,?,?,?,?,?,?,?,?,?)''', (name ,name.lower(),"",0,CONFIG["COUT_REVIVE"],1,1,1,1,False,False)) 
+                            ) VALUES (?,?,?,?,?,?,?,?,?,?,?)''', (name ,name.lower(),"",0,0,1,1,1,1,False,False)) 
         await db.commit()
         await db.close()
     
@@ -522,7 +522,13 @@ class TBOT_BDD():
                 await tbot_com.message("raid_blesse",channel=channel,name=raid["name"])
             elif raid["distance"] == raid["mort"] :
                 await tbot_com.message("raid_mort_enroute",channel=channel,name=raid["name"])
-
+                await db.execute(f'''UPDATE survivant SET 
+                                     prestige = 0,
+                                     level_weapon = 1,
+                                     level_armor = 1,
+                                     level_transport = 1,
+                                     level_gear = 1                                     
+                                     WHERE name_lower = "{raid["name_lower"]}"''')
             await db.commit()
             await db.close()
             

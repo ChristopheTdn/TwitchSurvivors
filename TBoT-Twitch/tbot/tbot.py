@@ -98,19 +98,18 @@ class TBoT(commands.Bot):
         """   
 
         survivant = await TBOTBDD.get_stats_survivant(name)
-        if survivant == None : #le pseudo n'existe pas dans la base de donnée
+        if survivant == None :
             await TBOTBDD.create_survivant(name)
-            await TBOTBDD.revive_survivant(name)
-            await tbot_com.message("revive_survivant",channel=channel,name=name,credit=str(CONFIG["COUT_REVIVE"]))
+            
+        await TBOTBDD.add_credit(name,credit=credit)
+        await tbot_com.message("survivant_ajout_credit",credit=str(credit),channel=channel,name=name) 
+                
+        survivant = await TBOTBDD.get_stats_survivant(name)    
 
-        else:    
-            await TBOTBDD.add_credit(name,credit=credit)
-            await tbot_com.message("survivant_ajout_credit",credit=str(credit),channel=channel,name=name) 
-
-        survivant = await TBOTBDD.get_stats_survivant(name)   
-        if survivant["alive"]==False and survivant["credit"]>=CONFIG["COUT_REVIVE"]:        
+        if survivant["alive"]==0 and survivant["credit"]>=CONFIG["COUT_REVIVE"]: 
             await TBOTBDD.revive_survivant(name)
-            await tbot_com.message("revive_survivant",channel=channel,name=name,credit=str(CONFIG["COUT_REVIVE"]))
+            await tbot_com.message("revive_survivant",channel=channel,name=name,credit=str(CONFIG["COUT_REVIVE"])) 
+
             
     
             
