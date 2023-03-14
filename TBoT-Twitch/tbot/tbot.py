@@ -88,7 +88,7 @@ class TBoT(commands.Bot):
             await tbot_com.message("survivant_no_exist",channel=channel,name=name)
 
             
-    async def ajout_credit(self,name: str,channel: str,CREDIT: int= CONFIG["AJOUT_CREDIT"]): 
+    async def ajout_credit(self,name: str,channel: str,credit: int= CONFIG["AJOUT_CREDIT"]): 
         """ajoute des credits au survivant
 
         Args:
@@ -104,11 +104,11 @@ class TBoT(commands.Bot):
             await tbot_com.message("revive_survivant",channel=channel,name=name,credit=str(CONFIG["COUT_REVIVE"]))
 
         else:    
-            await TBOTBDD.add_credit(name,credit=CREDIT)
-            await tbot_com.message("survivant_ajout_credit",credit=str(CREDIT),channel=channel,name=name) 
+            await TBOTBDD.add_credit(name,credit=credit)
+            await tbot_com.message("survivant_ajout_credit",credit=str(credit),channel=channel,name=name) 
 
         survivant = await TBOTBDD.get_stats_survivant(name)   
-        if survivant["alive"]==False:        
+        if survivant["alive"]==False and survivant["credit"]>=CONFIG["COUT_REVIVE"]:        
             await TBOTBDD.revive_survivant(name)
             await tbot_com.message("revive_survivant",channel=channel,name=name,credit=str(CONFIG["COUT_REVIVE"]))
             
@@ -431,7 +431,7 @@ class TBoT(commands.Bot):
         Traite la commande twitch !ajout_credit. 
         """
         if CONFIG["DEBUG"]:
-            await self.ajout_credit(ctx.author.display_name,ctx.channel,CREDIT = 2000)
+            await self.ajout_credit(ctx.author.display_name,ctx.channel,credit = 5000)
 
     @commands.command()
     async def visi_on(self, ctx: commands.Context):
