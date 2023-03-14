@@ -20,7 +20,7 @@ with open ('./TBOT-Twitch/tbot/data/config_raid.json', 'r',encoding="utf-8" ) as
 
     
 TBOTPATH, filename = os.path.split(__file__) 
-URLMOD = os.getcwd()+"\\TBoT-PZ\\TBoT\\"
+URLMOD = os.getcwd()+"/TBoT-PZ/"+CONFIG['MOD_NAME']+"/"
 
 ligne_overlay=[]
 
