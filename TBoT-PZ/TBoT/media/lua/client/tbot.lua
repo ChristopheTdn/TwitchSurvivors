@@ -5,7 +5,7 @@ function afficheTexte()
     TBoT = TBoTTime:getModData();
     TBoT.tbag =player:getInventory():getItemFromTypeRecurse("TBoT.Bag_TBoT")
 
-    local file=getModFileReader("TBoT","butin.txt",false)
+    local file=getModFileReader("TBoT","media/config/butin.txt",false)
     if not file then return end
     local lines = "" -- empty table for now
     local efface = false
@@ -20,17 +20,17 @@ function afficheTexte()
     end
 
     if efface == true then
-        local textebot=getModFileWriter("TBoT","butin.txt",true, false)
+        local textebot=getModFileWriter("TBoT","/media/config/butin.txt",true, false)
         textebot:write("")
         textebot:close()
     end
 
-    local textebot=getModFileReader("TBoT","radio.txt",true)
+    local textebot=getModFileReader("TBoT","/media/config/radio.txt",true)
     local phrase = textebot:readLine()
     textebot:close()
     if phrase ~= nil then -- player:getInventory():getItemFromTypeRecurse("TBoT.Bag_TBoT")
         player:Say(phrase)
-        local textebot=getModFileWriter("TBoT","radio.txt",true, false)
+        local textebot=getModFileWriter("TBoT","/media/config/radio.txt",true, false)
         textebot:write("")
         textebot:close()
     end

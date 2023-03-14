@@ -108,7 +108,7 @@ async def message(key="empty",channel=None,name="",name2="",mod="",chat="",ovl="
     if ovl != "" :
         await affichage_Overlay(ovl)
     if mod != "" :
-        async with aiofiles.open(URLMOD+"radio.txt","w",encoding="utf-8") as fichier:
+        async with aiofiles.open(URLMOD+"media/config/radio.txt","w",encoding="utf-8") as fichier:
             await fichier.write(mod)
     if sound != "" :
         joue_son(sound)
@@ -137,7 +137,7 @@ async def donne_butin(butin:str) -> str:
         listefinale += '<p STYLE="padding:0 0 0 20px;">  🔸'+item[0]+'</p>'
         listeClassefinale += item[1]+"\n"
         
-    async with aiofiles.open(URLMOD+"butin.txt","w",encoding="utf-8") as fichier:
+    async with aiofiles.open(URLMOD+"media/config/butin.txt","w",encoding="utf-8") as fichier:
         await fichier.write(listeClassefinale)
     
     return listefinale
