@@ -1,0 +1,29 @@
+    module TwitchSurvivor
+    {
+        imports
+        {
+            Base
+        }
+
+        item Bag_TwitchSurvivor
+        {
+            DisplayCategory         = Bag,
+            WeightReduction	      = 10000,
+            ClothingItemExtra       = Bag_FannyPackBack,
+            ClothingItemExtraOption = FannyPack_WearBack,
+            clothingExtraSubmenu    = FannyPack_WearFront,
+            Weight	            = 0.2,
+            Type	                  = Container,
+            Capacity	            = 20000,
+            DisplayName	            = TwitchSurvivor Bag,
+            Icon	                  = FannyPack,
+            OpenSound               = OpenBag,
+            CloseSound              = CloseBag,
+            PutInSound              = PutItemInBag,
+            BodyLocation            = FannyPackFront,
+            ClothingItem            = Bag_FannyPackFront,
+            CanBeEquipped           = FannyPackFront,
+            RunSpeedModifier        = 0.98,
+            WorldStaticModel        = FannyPack_Ground,
+         }
+    }
