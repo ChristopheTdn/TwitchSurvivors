@@ -1,5 +1,5 @@
-# TWITCH-SURVIVORS
-Systeme d integration TWITCH-PROJECT ZOMBOID
+# Twitch Survivors
+systeme d integration TWITCH-PROJECT ZOMBOID
 
 
 1 - Environnement de developpement : 
