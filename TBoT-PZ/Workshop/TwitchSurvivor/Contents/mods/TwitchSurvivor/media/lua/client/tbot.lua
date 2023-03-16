@@ -1,11 +1,11 @@
 function afficheTexte()
     local player = getSpecificPlayer(0)
 
-    TwitchSurvivorTime = GameTime:getInstance();
-    TwitchSurvivor = TwitchSurvivorTime:getModData();
-    TwitchSurvivor.TwitchSurvivorBag =player:getInventory():getItemFromTypeRecurse("TwitchSurvivor.Bag_TwitchSurvivor")
+    TwitchSurvivorsTime = GameTime:getInstance();
+    TwitchSurvivors = TwitchSurvivorsTime:getModData();
+    TwitchSurvivors.TwitchSurvivorsBag =player:getInventory():getItemFromTypeRecurse("TwitchSurvivors.Bag_TwitchSurvivors")
 
-    local file=getModFileReader("TwitchSurvivor","media/config/butin.txt",false)
+    local file=getModFileReader("TwitchSurvivors","media/config/butin.txt",false)
     if not file then return end
     local lines = "" -- empty table for now
     local efface = false
@@ -15,12 +15,12 @@ function afficheTexte()
             file:close()
             break
         end
-        TwitchSurvivor.TwitchSurvivorBag:getInventory():AddItem(line)
+        TwitchSurvivors.TwitchSurvivorsBag:getInventory():AddItem(line)
         efface=true
     end
 
     if efface == true then
-        local textebot=getModFileWriter("TwitchSurvivor","/media/config/butin.txt",true, false)
+        local textebot=getModFileWriter("TwitchSurvivors","/media/config/butin.txt",true, false)
         textebot:write("")
         textebot:close()
     end
@@ -28,9 +28,9 @@ function afficheTexte()
     local textebot=getModFileReader("TwitchSurvivor","/media/config/radio.txt",true)
     local phrase = textebot:readLine()
     textebot:close()
-    if phrase ~= nil then -- player:getInventory():getItemFromTypeRecurse("TwitchSurvivor.Bag_TwitchSurvivor")
+    if phrase ~= nil then -- player:getInventory():getItemFromTypeRecurse("TwitchSurvivors.Bag_TwitchSurvivors")
         player:Say(phrase)
-        local textebot=getModFileWriter("TwitchSurvivor","/media/config/radio.txt",true, false)
+        local textebot=getModFileWriter("TwitchSurvivors","/media/config/radio.txt",true, false)
         textebot:write("")
         textebot:close()
     end
