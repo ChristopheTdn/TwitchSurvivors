@@ -1,11 +1,11 @@
-    module TwitchSurvivor
+    module TwitchSurvivors
     {
         imports
         {
             Base
         }
 
-        item Bag_TwitchSurvivor
+        item Bag_TwitchSurvivors
         {
             DisplayCategory         = Bag,
             WeightReduction	      = 10000,
@@ -15,7 +15,7 @@
             Weight	            = 0.2,
             Type	                  = Container,
             Capacity	            = 20000,
-            DisplayName	            = TwitchSurvivor Bag,
+            DisplayName	            = TwitchSurvivors Bag,
             Icon	                  = FannyPack,
             OpenSound               = OpenBag,
             CloseSound              = CloseBag,
