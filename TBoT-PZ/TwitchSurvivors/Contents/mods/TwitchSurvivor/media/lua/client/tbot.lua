@@ -25,7 +25,7 @@ function afficheTexte()
         textebot:close()
     end
 
-    local textebot=getModFileReader("TwitchSurvivor","/media/config/radio.txt",true)
+    local textebot=getModFileReader("TwitchSurvivors","/media/config/radio.txt",true)
     local phrase = textebot:readLine()
     textebot:close()
     if phrase ~= nil then -- player:getInventory():getItemFromTypeRecurse("TwitchSurvivors.Bag_TwitchSurvivors")

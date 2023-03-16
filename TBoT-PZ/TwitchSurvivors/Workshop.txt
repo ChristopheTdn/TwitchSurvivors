@@ -1,7 +1,7 @@
 version=1
-id=2947286370
+id=2947697653
 title=Twitch Survivors Mod
-description=Original Mods for the Twitch Survivor Environment in Project Zomboid
-description=more information incoming
+description=Original Mods for the Twitch Survivors Environment in Project Zomboid
+description= more info : https://discord.com/channels/940642586958364762/1053778181485776937
 tags=
 visibility=public
