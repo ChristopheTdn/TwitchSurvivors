@@ -1,9 +1,7 @@
 function afficheTexte()
     local player = getSpecificPlayer(0)
 
-    TwitchSurvivorsTime = GameTime:getInstance();
-    TwitchSurvivors = TwitchSurvivorsTime:getModData();
-    TwitchSurvivors.TwitchSurvivorsBag =player:getInventory():getItemFromTypeRecurse("TwitchSurvivors.Bag_TwitchSurvivors")
+    TwitchSurvivorsBag =player:getInventory():getItemFromTypeRecurse("TwitchSurvivors.Bag_TwitchSurvivors")
 
     local file=getModFileReader("TwitchSurvivors","media/config/butin.txt",false)
     if not file then return end
@@ -15,7 +13,7 @@ function afficheTexte()
             file:close()
             break
         end
-        TwitchSurvivors.TwitchSurvivorsBag:getInventory():AddItem(line)
+        TwitchSurvivorsBag:getInventory():AddItem(line)
         efface=true
     end
 
