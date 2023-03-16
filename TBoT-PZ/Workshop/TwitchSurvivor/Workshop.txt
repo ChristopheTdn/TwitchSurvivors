@@ -1,6 +1,6 @@
 version=1
 id=2947286370
-title=Twitch Survivor Mods (Vanilla)
+title=Twitch Survivors Mod
 description=Original Mods for the Twitch Survivor Environment in Project Zomboid
 description=more information incoming
 tags=
