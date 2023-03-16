@@ -128,12 +128,12 @@ class TBoT(commands.Bot):
         if survivor == None or survivor["alive"] == False :
             await tbot_com.message("survivant_no_exist",channel=channel,name=name)
 
-        elif test_raid_exist != None :
+        elif test_raid_exist != None or survivor["support_raid"] :
             await tbot_com.message("raid_deja_en_cours",channel=channel,name=name)
 
         elif survivor["credit"]<gain_prestige : 
             await tbot_com.message("raid_credit_insuffisant",channel=channel,name=name,gain_prestige=str(gain_prestige))
-
+            
         else :
             """Création du Raid
             """
