@@ -68,27 +68,26 @@ class TBoT(commands.Bot):
         # We must let the bot know we want to handle and invoke our commands...
         await self.handle_commands(message)
         
-    async def creation_survivant(self,name: str,channel: str):
+    async def creation_survivant(self,ctx: commands.Context):
         """active le flag ALIVE du survivant apès avoir testé son existence et si les credits sont suffisants
 
         Args:
-            name (str): _description_
-            channel (str): _description_
+            ctx: commands.Context twitchIo 
         """        
-        survivant = await TBOTBDD.get_stats_survivant(name)
+        survivant = await TBOTBDD.get_stats_survivant(ctx.author.id)
         if survivant != None and survivant["alive"] == 1: #le pseudo existe deja dans la base de donnée
-            await tbot_com.message("survivant_exist",channel=channel,name=name)
+            await tbot_com.message("survivant_exist",channel=ctx.channel,name=survivant["name"])
         elif survivant != None and survivant["alive"] == 0: #le survivant doit etre ressucité
             if survivant["credit"]<CONFIG["COUT_REVIVE"]: #pas assez de credit
-                await tbot_com.message("survivant_credit_insuffisant",channel=channel,name=name,credit=str(CONFIG["COUT_REVIVE"]))
+                await tbot_com.message("survivant_credit_insuffisant",channel=ctx.channel,name=survivant["name"],credit=str(CONFIG["COUT_REVIVE"]))
             else : #on peut faire revivre le survivant
-                await TBOTBDD.revive_survivant(name)
-                await tbot_com.message("revive_survivant",channel=channel,name=name,credit=str(CONFIG["COUT_REVIVE"]))
+                await TBOTBDD.revive_survivant(ctx.author.id)
+                await tbot_com.message("revive_survivant",channel=ctx.channel,name=survivant["name"],credit=str(CONFIG["COUT_REVIVE"]))
         else :
-            await tbot_com.message("survivant_no_exist",channel=channel,name=name)
+            await tbot_com.message("survivant_no_exist",channel=ctx.channel,name=survivant["name"])
 
             
-    async def ajout_credit(self,name: str,channel: str,credit: int= CONFIG["AJOUT_CREDIT"]): 
+    async def ajout_credit(self,ctx: commands.Context,credit: int= CONFIG["AJOUT_CREDIT"]): 
         """ajoute des credits au survivant
 
         Args:
@@ -97,17 +96,17 @@ class TBoT(commands.Bot):
             CREDIT (_type_, optional): nombre de crédits. Default à CONFIG["AJOUT_CREDIT"].
         """   
 
-        survivant = await TBOTBDD.get_stats_survivant(name)
+        survivant = await TBOTBDD.get_stats_survivant(ctx.author.id)
         if survivant == None :
-            await TBOTBDD.create_survivant(name)
+            await TBOTBDD.create_survivant(ctx)
             
         await TBOTBDD.add_credit(name,credit=credit)
         await tbot_com.message("survivant_ajout_credit",credit=str(credit),channel=channel,name=name) 
                 
-        survivant = await TBOTBDD.get_stats_survivant(name)    
+        survivant = await TBOTBDD.get_stats_survivant(id_twitch)    
 
         if survivant["alive"]==0 and survivant["credit"]>=CONFIG["COUT_REVIVE"]: 
-            await TBOTBDD.revive_survivant(name)
+            await TBOTBDD.revive_survivant(id_twitch)
             await tbot_com.message("revive_survivant",channel=channel,name=name,credit=str(CONFIG["COUT_REVIVE"])) 
 
             
@@ -279,9 +278,7 @@ class TBoT(commands.Bot):
         -----------
         Traite la commande twitch !create_survivor. 
         """
-        channel = ctx.channel
-        name = ctx.author.display_name
-        await self.creation_survivant(name,channel)
+        await self.creation_survivant(ctx)
 
 
     @commands.command()
@@ -430,7 +427,7 @@ class TBoT(commands.Bot):
         Traite la commande twitch !ajout_credit. 
         """
         if CONFIG["DEBUG"]:
-            await self.ajout_credit(ctx.author.display_name,ctx.channel,credit = 5000)
+            await self.ajout_credit(ctx,credit = 5000)
 
     @commands.command()
     async def visi_on(self, ctx: commands.Context):
@@ -505,6 +502,7 @@ class TBoT(commands.Bot):
         Traite la commande twitch !help_armor. 
         """
         name = ctx.author.display_name
+        id= ctx.author.id
         if name.lower() == CONFIG["STREAMER"].lower() :
             channel = ctx.channel
             await self.armaggedon_time(ctx)

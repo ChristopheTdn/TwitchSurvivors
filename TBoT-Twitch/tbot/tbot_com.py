@@ -21,6 +21,7 @@ with open ('./TBOT-Twitch/tbot/data/config_raid.json', 'r',encoding="utf-8" ) as
     
 TBOTPATH, filename = os.path.split(__file__) 
 URLMOD = os.getcwd()+"/TBoT-PZ/"+CONFIG['MOD_NAME']+"/"
+#URLMOD = "F:\\SteamLibrary\\steamapps\\workshop\\content\\108600\\2947286370\\mods\\TwitchSurvivor\\"
 
 ligne_overlay=[]
 

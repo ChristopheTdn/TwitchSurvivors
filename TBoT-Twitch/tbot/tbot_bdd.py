@@ -32,8 +32,8 @@ class TBOT_BDD():
         curseur = self.connexionSQL.cursor()
         curseur.execute('''CREATE TABLE IF NOT EXISTS survivant(
             id INTEGER PRIMARY KEY AUTOINCREMENT UNIQUE,
+            id_twitch INT UNIQUE,
             name TEXT,
-            name_lower TEXT UNIQUE,
             career TEXT,
             prestige INTEGER,
             credit INTEGER,
@@ -42,13 +42,14 @@ class TBOT_BDD():
             level_transport INTEGER,
             level_gear INTEGER,
             alive BOOLEAN,
-            support_raid BOOLEAN
+            support_raid BOOLEAN,            
+            inraid BOOLEAN
             )''')
         
         curseur.execute('''CREATE TABLE IF NOT EXISTS raid(
             id INTEGER PRIMARY KEY AUTOINCREMENT UNIQUE,
+            id_twitch INT UNIQUE,
             name TEXT,
-            name_lower TEXT UNIQUE,
             type TEXT,
             distance INTEGER,
             michemin INTEGER,
@@ -71,15 +72,16 @@ class TBOT_BDD():
         self.connexionSQL.commit()
         self.connexionSQL.close()
         
-    async def create_survivant(self,name: str):
+    async def create_survivant(self,name: str,id_twitch: int):
         """ajoute le survivant à la base de donnée statut alive a False
         Args:
             name (str): le nom du survivant.
         """        
         db = await aiosqlite.connect(os.path.join(self.TBOTPATH, self.NAMEBDD))
         await db.execute('''INSERT OR IGNORE INTO survivant
-                            (name,
-                            name_lower,
+                            (
+                            id_twitch,    
+                            name,
                             career,
                             prestige,
                             credit,
@@ -88,21 +90,21 @@ class TBOT_BDD():
                             level_transport,
                             level_gear,
                             alive,
-                            support_raid
-                            ) VALUES (?,?,?,?,?,?,?,?,?,?,?)''', (name ,name.lower(),"",0,0,1,1,1,1,False,False)) 
+                            support_raid,
+                            inraid
+                            ) VALUES (?,?,?,?,?,?,?,?,?,?,?)''', (id_twitch,name,"",0,0,1,1,1,1,False,False,False)) 
         await db.commit()
         await db.close()
     
     
-    async def revive_survivant(self,name: str):
+    async def revive_survivant(self,id_twitch: int):
         """fait revivre le survivant à la base de donnée statut alive a True
          debite les credits du cout revive
 
         Args:
-            name (str): le nom du survivant.
+            id_twitch (int): id du survivant.
         """
 
-                 
         db = await aiosqlite.connect(os.path.join(self.TBOTPATH, self.NAMEBDD))
         await db.execute(f'''UPDATE survivant SET 
                         career          = "",
@@ -112,26 +114,27 @@ class TBOT_BDD():
                         level_transport = 1,
                         level_gear      = 1,
                         alive           = True, 
-                        support_raid    = False                  
-                        WHERE name_lower = "{name.lower()}"''')
+                        support_raid    = False  
+                        inraid          = False                 
+                        WHERE id_twitch = {id_twitch}''')
         if CONFIG["RESET_PRESTIGE_AFTER_DEATH"] :
             await db.execute(f'''UPDATE survivant SET 
                         prestige        = 0                  
-                        WHERE name_lower = "{name.lower()}"''')
+                        WHERE id_twitch = {id_twitch}''')
         await db.commit()
         await db.close()
         
-    async def get_stats_survivant(self,name: str)->dict:
+    async def get_stats_survivant(self,id_twitch: int)->dict:
         """Récupère les stats du survivant
         Args:
-            name (str): nom du survivant.
+            id_twitch (int): identifiant twitch du survivant
         Returns:
             dict: renvois un dictionnaire contenant les statistiques du survivant.
         """        
         reponse = {}
         db = await aiosqlite.connect(os.path.join(self.TBOTPATH, self.NAMEBDD))
         async with db.execute (f'''SELECT name,
-                            name_lower,
+                            id_twitch,
                             career,
                             prestige,
                             credit,
@@ -140,14 +143,15 @@ class TBOT_BDD():
                             level_transport,
                             level_gear,
                             alive,
-                            support_raid FROM 'survivant' WHERE name='{name}' ''') as cur:
+                            support_raid,
+                            inraid FROM 'survivant' WHERE id_twitch='{id_twitch}' ''') as cur:
             listeStat = await cur.fetchone()
         await db.close()
         if listeStat==None:
             return None
         else:                
             reponse ={"name": listeStat[0],
-                    "name_lower": listeStat[1],
+                    "id_twitch": listeStat[1],
                     "career" : listeStat[2],
                     "prestige": listeStat[3],
                     "credit" : listeStat[4],
@@ -156,12 +160,13 @@ class TBOT_BDD():
                     "level_transport":listeStat[7],
                     "level_gear":listeStat[8],
                     "alive":bool(listeStat[9]),
-                    "support_raid":bool(listeStat[10])
+                    "support_raid":bool(listeStat[10]),
+                    "inraid":bool(listeStat[11])
                     }
             return reponse
     
     
-    async def stat_raid(self,name: str):
+    async def stat_raid(self,twitch_id: int):
         """renvois un dictionnaire du raid effectué par le survivant passé en paramètre si il existe. 
         Args:
             name (str): le nom du survivant
@@ -171,33 +176,13 @@ class TBOT_BDD():
 
         """        
         db = await aiosqlite.connect(os.path.join(self.TBOTPATH, self.NAMEBDD))
-        async with db.execute (f'''SELECT name,
-                        name_lower,
-                        type,
-                        distance,
-                        michemin,
-                        renfort,
-                        resultat,
-                        blesse,
-                        mort,
-                        composition_butin,
-                        bonus_butin,
-                        gfx_car,
-                        visi,
-                        time_visi,
-                        time_renfort,
-                        levelRaid_weapon INTEGER,
-                        levelRaid_armor INTEGER,
-                        levelRaid_transport INTEGER,
-                        levelRaid_gear INTEGER,
-                        effectif_team INTEGER
-                        FROM 'raid'  WHERE name_lower='{name.lower()}' ''') as cur :
+        async with db.execute (f'''SELECT * FROM 'raid'  WHERE id_twitch='{id_twitch}' ''') as cur :
             survivant = await cur.fetchone()
         await db.close()
         if survivant != None :
             survivant_dict = {
-                "name"                : survivant[0],
-                "name_lower"          : survivant[1],
+                "id_twitch"           : survivant[0],
+                "name"                : survivant[1],
                 "type"                : survivant[2],
                 "distance"            : survivant[3],
                 "michemin"            : survivant[4],
@@ -266,8 +251,8 @@ class TBOT_BDD():
         DISTANCE = self.config_raid_json["raid_"+type_raid]["distance_raid"]
         db = await aiosqlite.connect(os.path.join(self.TBOTPATH, self.NAMEBDD))
         await db.execute ('''INSERT OR IGNORE INTO raid
-                        (name,
-                        name_lower,
+                        (id_twitch,
+                        name,
                         type,
                         distance,
                         michemin,
@@ -288,8 +273,8 @@ class TBOT_BDD():
                         effectif_team 
                         )
                         VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)''',
-                        (survivant_stat["name"],
-                         survivant_stat["name_lower"],
+                        (survivant_stat["id_twitch"],
+                         survivant_stat["name"],
                          type_raid,
                          DISTANCE,
                          DISTANCE//2,
@@ -309,7 +294,7 @@ class TBOT_BDD():
                          survivant_stat["level_gear"],
                          1))
                         
-        await db.execute(f'''UPDATE survivant SET credit = credit - {cout_raid} WHERE name_lower = "{survivant_stat["name_lower"]}"''')
+        await db.execute(f'''UPDATE survivant SET credit = credit - {cout_raid} WHERE id_twitch = {survivant_stat["id_twitch"]}''')
         await db.commit()
         await db.close()
                 
@@ -379,20 +364,20 @@ class TBOT_BDD():
                         composition_butin = '{json.dumps(composition_butin)}',
                         bonus_butin = {bonus_butin},
                         gfx_car = '{gfx_car}'
-                        WHERE name_lower = "{raid_stat["name_lower"]}"''')
+                        WHERE id_twitch = {raid_stat["id_twitch"]}''')
         await db.commit()
         await db.close()
         
-    async def add_credit(self,name,credit):
+    async def add_credit(self,id_twitch,credit):
         db = await aiosqlite.connect(os.path.join(self.TBOTPATH, self.NAMEBDD))
-        await db.execute(f'''UPDATE survivant SET credit = credit+{credit} WHERE name_lower = "{name.lower()}"''')
+        await db.execute(f'''UPDATE survivant SET credit = credit+{credit} WHERE id_twitch = {id_twitch}''')
 
         await db.commit()
         await db.close()
         
-    async def withdraw_credit(self,name,credit):
+    async def withdraw_credit(self,id_twitch,credit):
         db = await aiosqlite.connect(os.path.join(self.TBOTPATH, self.NAMEBDD))
-        await db.execute(f'''UPDATE survivant SET credit = credit-{credit} WHERE name_lower = "{name.lower()}"''')
+        await db.execute(f'''UPDATE survivant SET credit = credit-{credit} WHERE id_twitch = {id_twitch}''')
         await db.commit()
         await db.close()
             
@@ -440,95 +425,73 @@ class TBOT_BDD():
     async def actualise_statRaid(self,channel):
         
         db = await aiosqlite.connect(os.path.join(self.TBOTPATH, self.NAMEBDD))
-        async with db.execute (f'''SELECT name,
-                        name_lower,
-                        type,
-                        distance,
-                        michemin,
-                        renfort,
-                        resultat,
-                        blesse,
-                        mort,
-                        composition_butin,
-                        bonus_butin,
-                        gfx_car,
-                        visi,
-                        time_visi,
-                        time_renfort,
-                        levelRaid_weapon,
-                        levelRaid_armor,
-                        levelRaid_transport,
-                        levelRaid_gear,
-                        effectif_team                   
-                        FROM 'raid' ''') as cur:
+        async with db.execute (f'''SELECT * FROM 'raid' ''') as cur:
             listeRaid = await cur.fetchall()
         await db.close()  
 
         data={}
 
-        for name in listeRaid:
-            raid= await self.stat_raid(name[0])
-
-            if raid["time_renfort"] == CONFIG["MAX_TIME_RENFORT"]:
-                await self.raid_generation(raid)
-                raid= await self.stat_raid(name[0])
+        for raid_actif in listeRaid:
+            if raid_actif["time_renfort"] == CONFIG["MAX_TIME_RENFORT"]:
+                await self.raid_generation(raid_actif)
+                raid_actif= await self.stat_raid(raid_actif[0])
                 
-            if raid["time_renfort"] > CONFIG["MAX_TIME_RENFORT"]:
-                DISTANCE_POURCENT =  (raid["distance"]*100)//(raid["michemin"]*2)    
-                raid["distance"] -=1
+            if raid_actif["time_renfort"] > CONFIG["MAX_TIME_RENFORT"]:
+                DISTANCE_POURCENT =  (raid_actif["distance"]*100)//(raid_actif["michemin"]*2)    
+                raid_actif["distance"] -=1
             else :
                 #place la voiture au départ pour embarquement
                 DISTANCE_POURCENT =  98
-                raid["distance"] =  (98 * raid["michemin"]*2)//100
+                raid_actif["distance"] =  (98 * raid["michemin"]*2)//100
 
-            stat_survivant= await self.get_stats_survivant(raid["name"])
+            stat_survivant= await self.get_stats_survivant(raid_actif["id_twitch"])
             
             db = await aiosqlite.connect(os.path.join(self.TBOTPATH, self.NAMEBDD))
             
             
-            await db.execute(f'''UPDATE raid SET distance = {raid["distance"]},time_renfort = time_renfort+1 WHERE name_lower = "{raid["name_lower"]}"''')
+            await db.execute(f'''UPDATE raid SET distance = {raid_actif["distance"]},time_renfort = time_renfort+1 WHERE id_twitch = {raid_actif["id_twitch"]}''')
             
-            if raid["time_visi"] > 0 :
-                await db.execute(f'''UPDATE raid SET time_visi = time_visi - 1 WHERE name_lower = "{raid["name_lower"]}"''')
-            if raid["time_visi"] == 0 and raid["visi"] == True :    
-                await db.execute(f'''UPDATE raid SET visi = False WHERE name_lower = "{raid["name_lower"]}"''')
+            if raid_actif["time_visi"] > 0 :
+                await db.execute(f'''UPDATE raid SET time_visi = time_visi - 1 WHERE id_twitch = {raid_actif["id_twitch"]}''')
+            if raid_actif["time_visi"] == 0 and raid_actif["visi"] == True :    
+                await db.execute(f'''UPDATE raid SET visi = False WHERE id_twitch = {raid_actif["id_twitch"]}''')
             
             if len(listeRaid)<5 : #affiche toujours les infos raid si moinds de 5 raids en simultané
-                raid["visi"] = True
+                raid_actif["visi"] = True
                 
-            data[f'SURVIVANT_{raid["name"]}']={"NAME":raid["name"],
+            data[f'SURVIVANT_{raid_actif["name"]}']={"NAME":raid_actif["name"],
                                         "STATS": stat_survivant,
-                                        "TYPE":raid["type"],
+                                        "TYPE":raid_actif["type"],
                                         "DISTANCE":DISTANCE_POURCENT,
-                                        "RENFORT":str(raid["renfort"]),
-                                        "DEAD":(raid["distance"]<=raid["mort"]),
-                                        "HURT":(raid["distance"]<=raid["blesse"]),
-                                        "GFX_CAR":raid["gfx_car"],
-                                        "VISI":raid["visi"]}
+                                        "RENFORT":str(raid_actif["renfort"]),
+                                        "DEAD":(raid_actif["distance"]<=raid_actif["mort"]),
+                                        "HURT":(raid_actif["distance"]<=raid_actif["blesse"]),
+                                        "GFX_CAR":raid_actif["gfx_car"],
+                                        "VISI":raid_actif["visi"]}
 
-            if raid["distance"] == 0:
-                if raid["mort"] >1 :
+            if raid_actif["distance"] == 0:
+                if raid_actif["mort"] >1 :
                     await tbot_com.message("raid_retour_base_mort",channel=channel,name=raid["name"])
-                    await self.gere_fin_raid(db,raid["name"],raid["type"],raid["resultat"],raid["composition_butin"],raid["bonus_butin"],channel,raid["renfort"])
-                    await db.execute(f'''DELETE from raid WHERE name_lower = "{raid["name_lower"]}"''')
-                    await db.execute(f'''UPDATE survivant SET alive = 0 WHERE name_lower = "{raid["name_lower"]}"''')
+                    await self.gere_fin_raid(db,raid_actif["name"],raid_actif["type"],raid_actif["resultat"],raid_actif["composition_butin"],raid_actif["bonus_butin"],channel,raid_actif["renfort"])
+                    await db.execute(f'''DELETE from raid WHERE id_twitch = {raid_actif["id_twitch"]}''')
+                    await db.execute(f'''UPDATE survivant SET alive = 0 WHERE id_twitch = {raid_actif["id_twitch"]}''')
                 else :
-                    await self.gere_fin_raid(db,raid["name"],raid["type"],raid["resultat"],raid["composition_butin"],raid["bonus_butin"],channel,raid["renfort"])
-                    await db.execute(f'''DELETE from raid WHERE name_lower = "{raid["name_lower"]}"''')
+                    await self.gere_fin_raid(db,raid_actif["name"],raid_actif["type"],raid_actif["resultat"],raid_actif["composition_butin"],raid_actif["bonus_butin"],channel,raid_actif["renfort"])
+                    await db.execute(f'''DELETE from raid WHERE id_twitch = {raid_actif["id_twitch"]}''')
                     
-            elif raid["distance"] == raid["michemin"] :
-                await tbot_com.message("raid_mi_chemin",channel=channel,name=raid["name"])
-            elif raid["distance"] == raid["blesse"] : 
-                await tbot_com.message("raid_blesse",channel=channel,name=raid["name"])
-            elif raid["distance"] == raid["mort"] :
-                await tbot_com.message("raid_mort_enroute",channel=channel,name=raid["name"])
+            elif raid_actif["distance"] == raid_actif["michemin"] :
+                await tbot_com.message("raid_mi_chemin",channel=channel,name=raid_actif["name"])
+            elif raid_actif["distance"] == raid["blesse"] : 
+                await tbot_com.message("raid_blesse",channel=channel,name=raid_actif["name"])
+            elif raid_actif["distance"] == raid["mort"] :
+                await tbot_com.message("raid_mort_enroute",channel=channel,name=raid_actif["name"])
                 await db.execute(f'''UPDATE survivant SET 
                                      prestige = 0,
                                      level_weapon = 1,
                                      level_armor = 1,
                                      level_transport = 1,
                                      level_gear = 1                                     
-                                     WHERE name_lower = "{raid["name_lower"]}"''')
+                                     WHERE id_twitch = {raid_actif["id_twitch"]}''')
             await db.commit()
             await db.close()
             
@@ -543,16 +506,16 @@ class TBOT_BDD():
             gain_prestige = gain_prestige*2
             listebutin = "<br>"+await tbot_com.donne_butin(composition_butin) 
             await tbot_com.message("raid_win_butin",channel=channel,name=name,gain_prestige=str(gain_prestige),listebutin=listebutin,bonus_butin=str(bonus_butin))
-            await db.execute(f'''UPDATE survivant SET prestige = prestige +{gain_prestige+bonus_butin} WHERE name_lower = "{name.lower()}"''')
+            await db.execute(f'''UPDATE survivant SET prestige = prestige +{gain_prestige+bonus_butin} WHERE id_twitch = {id_twitch}''')
         if resultat =="BREDOUILLE":
             gain_prestige =gain_prestige*1
             
             await tbot_com.message("raid_win_bredouille",channel=channel,name=name,gain_prestige=str(gain_prestige))
-            await db.execute(f'''UPDATE survivant SET prestige = prestige +{gain_prestige} WHERE name_lower = "{name.lower()}"''')
+            await db.execute(f'''UPDATE survivant SET prestige = prestige +{gain_prestige} WHERE id_twitch = {id_twitch}''')
         if resultat =="BLESSE": 
             gain_prestige = gain_prestige//2
             await tbot_com.message("raid_win_blesse",channel=channel,name=name,gain_prestige=str(gain_prestige))
-            await db.execute(f'''UPDATE survivant SET prestige = prestige +{gain_prestige} WHERE name_lower = "{name.lower()}"''')
+            await db.execute(f'''UPDATE survivant SET prestige = prestige +{gain_prestige} WHERE id_twitch = {id_twitch}''')
         if resultat =="MORT":
             gain_prestige = 0
         
@@ -562,7 +525,7 @@ class TBOT_BDD():
         listefinale = []
         for joueur in liste:
             if joueur !="":
-                await db.execute(f'''UPDATE survivant SET prestige = prestige +{gain_prestige} , support_raid = False  WHERE name_lower = "{joueur.lower()}"''')
+                await db.execute(f'''UPDATE survivant SET prestige = prestige +{gain_prestige} , support_raid = False  WHERE id_twitch = {joueur.lower()}''')
                 await tbot_com.message("survivant_gain_support",channel=channel,name=joueur,gain_prestige=str(gain_prestige),name2=name)
                 
         
@@ -570,8 +533,8 @@ class TBOT_BDD():
             
     async def upgrade_aptitude(self,name,aptitude: str,cout_upgrade: int):
         db = await aiosqlite.connect(os.path.join(self.TBOTPATH, self.NAMEBDD))
-        await db.execute(f'''UPDATE survivant SET prestige = prestige - {cout_upgrade} WHERE name_lower = "{name.lower()}"''')
-        await db.execute(f'''UPDATE survivant SET level_{aptitude} = level_{aptitude} + 1 WHERE name_lower = "{name.lower()}"''') 
+        await db.execute(f'''UPDATE survivant SET prestige = prestige - {cout_upgrade} WHERE id_twitch = {id_twitch}''')
+        await db.execute(f'''UPDATE survivant SET level_{aptitude} = level_{aptitude} + 1 WHERE id_twitch = {id_twitch}''') 
         await db.commit()
         await db.close()
         
@@ -582,7 +545,7 @@ class TBOT_BDD():
             duree (int, optional): nombre de cycle d'affichage des infos. Default à 5.
         """        
         db = await aiosqlite.connect(os.path.join(self.TBOTPATH, self.NAMEBDD))
-        await db.execute(f'''UPDATE raid SET visi = true , time_visi = {duree} WHERE name_lower = "{name.lower()}"''')
+        await db.execute(f'''UPDATE raid SET visi = true , time_visi = {duree} WHERE id_twitch = {id_twitch}''')
         await db.commit()
         await db.close()
         
@@ -591,11 +554,11 @@ class TBOT_BDD():
         await db.execute(f'''UPDATE raid SET
                          renfort = '{','.join([str(elem) for elem in equipe])}',
                          effectif_team = effectif_team + 1
-                         WHERE name_lower = "{raidStats["name_lower"]}"''')
+                         WHERE id_twitch = {raidStats["id_twitch"]}''')
         await db.execute(f'''UPDATE survivant SET
                          support_raid = True,
                          credit =credit - {cout_renfort}
-                         WHERE name_lower = "{helperStats["name_lower"]}"''') 
+                         WHERE id_twitch = {helperStats["id_twitch"]}''') 
         await db.commit()
         await db.close()
         
@@ -607,7 +570,7 @@ class TBOT_BDD():
                 db = await aiosqlite.connect(os.path.join(self.TBOTPATH, self.NAMEBDD)) 
                 await db.execute(f'''UPDATE raid SET 
                                  levelRaid_{type} = {helper_stats[f"level_{type}"]}
-                                 WHERE name_lower = "{raider_stats["name_lower"]}"''')
+                                 WHERE id_twitch = {raider_stats["id_twitch"]}''')
                 await db.commit()
                 await db.close()
 
