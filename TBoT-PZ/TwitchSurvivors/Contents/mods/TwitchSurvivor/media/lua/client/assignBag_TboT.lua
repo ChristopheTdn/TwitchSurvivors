@@ -1,6 +1,10 @@
-function assignBag()
+local function assignBag(index,player)
 
-    local player = getSpecificPlayer(0)
-    TwitchSurvivorsBag=player:getInventory():AddItem("TwitchSurvivors.Bag_TwitchSurvivors")
+    if player:getHoursSurvived() == 0.000 then
+
+        player:getInventory():AddItem("TwitchSurvivors.Bag_TwitchSurvivors")
+
+    end
 end
-Events.OnNewGame.Add(assignBag)
+
+Events.OnCreatePlayer.Add(assignBag)
