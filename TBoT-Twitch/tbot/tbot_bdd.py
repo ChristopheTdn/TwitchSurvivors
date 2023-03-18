@@ -530,7 +530,7 @@ class TBOT_BDD():
         
             
             
-    async def upgrade_aptitude(self,name,aptitude: str,cout_upgrade: int):
+    async def upgrade_aptitude(self,id_twitch: int,aptitude: str,cout_upgrade: int):
         db = await aiosqlite.connect(os.path.join(self.TBOTPATH, self.NAMEBDD))
         await db.execute(f'''UPDATE survivant SET prestige = prestige - {cout_upgrade} WHERE id_twitch = {id_twitch}''')
         await db.execute(f'''UPDATE survivant SET level_{aptitude} = level_{aptitude} + 1 WHERE id_twitch = {id_twitch}''') 

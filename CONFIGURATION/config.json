@@ -1,8 +1,10 @@
 {
-    "STREAMER" : "TancredTerror",
-    "MOD_NAME" : "TBoT",
+    "STREAMER" : "GToF_",
+    "MOD_STEAM" : false,
+    "MOD_NAME" : "TwitchSurvivors",
+    "ID_STEAM" : "2947286370",
     "DEBUG" : false,
-    "TIMING"  : 60,
+    "TIMING"  : 1,
     "LANGUE" : "french",
     "COUT_REVIVE" : 2000,
     "COUT_MSG_RADIO" : 50,

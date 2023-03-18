@@ -14,9 +14,6 @@ from . import tbot_com
 with open('./CONFIGURATION/config.json', 'r') as fichier:
     CONFIG = json.load(fichier)
     
-with open('./CONFIGURATION/config_Token_TBoT.json', 'r') as fichier:
-    TBOT = json.load(fichier)
-    
 with open('./CONFIGURATION/config_Token_Client.json', 'r') as fichier:
     CLIENT = json.load(fichier)
     
@@ -33,7 +30,7 @@ class TBoT(commands.Bot):
         # Initialise our Bot with our access token, prefix and a list of channels to join on boot...
         # prefix can be a callable, which returns a list of strings or a string...
         # initial_channels can also be a callable which returns a list of strings...
-        super().__init__(token=TBOT["TOKEN"], prefix=TBOT["PREFIX"], initial_channels=[CLIENT["CHANNEL"]])
+        super().__init__(token=CLIENT["TOKEN"], prefix=CLIENT["PREFIX"], initial_channels=[CLIENT["CHANNEL"]])
         TBOTBDD.initTableSql()
         with open ('./TBOT-Twitch/tbot/data/config_raid.json', 'r',encoding="utf-8" ) as fichier:
             self.config_raid_json = json.load(fichier)
@@ -216,31 +213,29 @@ class TBoT(commands.Bot):
 
     async def upgrade_aptitude(self,ctx: commands.Context ,aptitude: str):
         
-        name = ctx.author.display_name
-        channel = ctx.channel
-        survivant = await TBOTBDD.get_stats_survivant(name)
+        survivant = await TBOTBDD.get_stats_survivant(ctx.author.id)
         level = survivant[f"level_{aptitude}"] 
         if level >= 5 :
-            await tbot_com.message(key="survivant_max_aptitude",channel=channel,name=name,aptitude=aptitude)
+            await tbot_com.message(key="survivant_max_aptitude",channel=ctx.channel,name=ctx.author.display_name,aptitude=aptitude)
             return
          
-        raid = await TBOTBDD.stat_raid(name)
+        raid = await TBOTBDD.stat_raid(ctx.author.id)
         
         if survivant == None or survivant["alive"] == False :
-            await tbot_com.message("survivant_no_exist",channel=channel,name=name)
+            await tbot_com.message("survivant_no_exist",channel=ctx.channel,name=ctx.author.display_name)
         elif raid != None :
-            await tbot_com.message("raid_deja_en_cours",channel=channel,name=name)
+            await tbot_com.message("raid_deja_en_cours",channel=ctx.channel,name=ctx.author.display_name)
         else :
                           
             prestige = survivant["prestige"]
             tarif= CONFIG["TARIF_UPGRADE"]
 
             if  tarif[level]<=prestige:
-                await TBOTBDD.upgrade_aptitude(name,aptitude,tarif[level])
+                await TBOTBDD.upgrade_aptitude(ctx.author.id,aptitude,tarif[level])
                 
-                await tbot_com.message(key="survivant_upgrade_aptitude",channel=channel,name=name,aptitude=aptitude,tarif_level=str(tarif[level]))
+                await tbot_com.message(key="survivant_upgrade_aptitude",channel=ctx.channel,name=ctx.author.display_name,aptitude=aptitude,tarif_level=str(tarif[level]))
             else :
-                await tbot_com.message(key="survivant_prestige_insuffisant",channel=channel,name=name,aptitude=aptitude,tarif_level=str(tarif[level])) 
+                await tbot_com.message(key="survivant_prestige_insuffisant",channel=ctx.channel,name=ctx.author.display_name,aptitude=aptitude,tarif_level=str(tarif[level])) 
                         
     async def armaggedon_time(self,ctx: commands.Context):
         await tbot_com.message(key="armaggedon",channel=ctx.channel)
