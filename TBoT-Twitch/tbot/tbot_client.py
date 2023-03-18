@@ -26,13 +26,13 @@ class TBoT_Client(commands.Cog):
         # You could do this direct in the event if you wanted to
         if event.reward.title == "Acheter 300 crédits":
             channel = self.bot.get_channel(CLIENT["CHANNEL"])
-            await self.bot.ajout_credit(event.user.name,channel,credit=300)
+            await self.bot.ajout_credit(event.user.id,event.user.name,channel,credit=300)
         if event.reward.title == "Acheter 2000 crédits":
             channel = self.bot.get_channel(CLIENT["CHANNEL"])
-            await self.bot.ajout_credit(event.user.name,channel,credit=2000)
+            await self.bot.ajout_credit(event.user.id,event.user.name,channel,credit=2000)
         if event.reward.title == "Acheter 5000 crédits":
             channel = self.bot.get_channel(CLIENT["CHANNEL"])
-            await self.bot.ajout_credit(event.user.name,channel,credit=5000)   
+            await self.bot.ajout_credit(event.user.id,event.user.name,channel,credit=5000)   
                
     @commands.Cog.event()
     async def event_message(self, message: twitchio.Message):

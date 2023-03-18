@@ -6,6 +6,7 @@ import os
 from pygame import mixer
 import aiofiles
 from datetime import datetime
+import winreg
 
 
 with open('./CONFIGURATION/config.json', 'r') as fichier:
@@ -20,13 +21,25 @@ with open ('./TBOT-Twitch/tbot/data/config_raid.json', 'r',encoding="utf-8" ) as
 
     
 TBOTPATH, filename = os.path.split(__file__) 
-URLMOD = os.getcwd()+"/TBoT-PZ/"+CONFIG['MOD_NAME']+"/"
+
 #URLMOD = "F:\\SteamLibrary\\steamapps\\workshop\\content\\108600\\2947286370\\mods\\TwitchSurvivor\\"
 
 ligne_overlay=[]
 
-
-
+def get_reg(name,reg_path):
+    try:
+        registry_key = winreg.OpenKey(winreg.HKEY_LOCAL_MACHINE, reg_path, 0,
+                                       winreg.KEY_READ)
+        value, regtype = winreg.QueryValueEx(registry_key, name)
+        winreg.CloseKey(registry_key)
+        return value
+    except WindowsError:
+        return None
+ 
+URLMOD =  get_reg("InstallLocation",r"SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\Steam App 108600").replace(r"common\ProjectZomboid",r"workshop\content\108600\2947697653\mods\TwitchSurvivor\media\config")
+if URLMOD == None or not CONFIG["MOD_STEAM"]:
+    URLMOD = os.getcwd()+"/TBoT-PZ/TwitchSurvivors/Contents/mods/TwitchSurvivors/media/config"   
+    
 async def msg_init_TboT():
     for i in range(30):
         ligne_overlay.append({
@@ -109,7 +122,7 @@ async def message(key="empty",channel=None,name="",name2="",mod="",chat="",ovl="
     if ovl != "" :
         await affichage_Overlay(ovl)
     if mod != "" :
-        async with aiofiles.open(URLMOD+"media/config/radio.txt","w",encoding="utf-8") as fichier:
+        async with aiofiles.open(URLMOD+"/radio.txt","w",encoding="utf-8") as fichier:
             await fichier.write(mod)
     if sound != "" :
         joue_son(sound)
@@ -138,7 +151,7 @@ async def donne_butin(butin:str) -> str:
         listefinale += '<p STYLE="padding:0 0 0 20px;">  🔸'+item[0]+'</p>'
         listeClassefinale += item[1]+"\n"
         
-    async with aiofiles.open(URLMOD+"media/config/butin.txt","w",encoding="utf-8") as fichier:
+    async with aiofiles.open(URLMOD+"/butin.txt","w",encoding="utf-8") as fichier:
         await fichier.write(listeClassefinale)
     
     return listefinale

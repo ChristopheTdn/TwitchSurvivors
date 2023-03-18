@@ -87,7 +87,7 @@ class TBoT(commands.Bot):
             await tbot_com.message("survivant_no_exist",channel=ctx.channel,name=survivant["name"])
 
             
-    async def ajout_credit(self,ctx: commands.Context,credit: int= CONFIG["AJOUT_CREDIT"]): 
+    async def ajout_credit(self,id_twitch,name,channel,credit: int= CONFIG["AJOUT_CREDIT"]): 
         """ajoute des credits au survivant
 
         Args:
@@ -96,11 +96,11 @@ class TBoT(commands.Bot):
             CREDIT (_type_, optional): nombre de crédits. Default à CONFIG["AJOUT_CREDIT"].
         """   
 
-        survivant = await TBOTBDD.get_stats_survivant(ctx.author.id)
+        survivant = await TBOTBDD.get_stats_survivant(id_twitch)
         if survivant == None :
-            await TBOTBDD.create_survivant(ctx)
+            await TBOTBDD.create_survivant(id_twitch,name)
             
-        await TBOTBDD.add_credit(name,credit=credit)
+        await TBOTBDD.add_credit(id_twitch,credit=credit)
         await tbot_com.message("survivant_ajout_credit",credit=str(credit),channel=channel,name=name) 
                 
         survivant = await TBOTBDD.get_stats_survivant(id_twitch)    
@@ -118,20 +118,19 @@ class TBoT(commands.Bot):
             ctx (commands.Context): environnement twitchIO pour récupérer les informations
             type_raid (str): nom du raid
         """        
-        name = ctx.author.display_name
-        channel = ctx.channel
-        survivor = await TBOTBDD.get_stats_survivant(name)
-        test_raid_exist = await TBOTBDD.stat_raid(name)
+
+        survivor = await TBOTBDD.get_stats_survivant(ctx.author.id)
+        test_raid_exist = await TBOTBDD.stat_raid(ctx.author.id)
         gain_prestige = self.config_raid_json["raid_"+type_raid]["gain_prestige"]
         
         if survivor == None or survivor["alive"] == False :
-            await tbot_com.message("survivant_no_exist",channel=channel,name=name)
+            await tbot_com.message("survivant_no_exist",channel=ctx.channel,name=ctx.author.display_name)
 
         elif test_raid_exist != None or survivor["support_raid"] :
-            await tbot_com.message("raid_deja_en_cours",channel=channel,name=name)
+            await tbot_com.message("raid_deja_en_cours",channel=ctx.channel,name=ctx.author.display_name)
 
         elif survivor["credit"]<gain_prestige : 
-            await tbot_com.message("raid_credit_insuffisant",channel=channel,name=name,gain_prestige=str(gain_prestige))
+            await tbot_com.message("raid_credit_insuffisant",channel=ctx.channel,name=ctx.author.display_name,gain_prestige=str(gain_prestige))
             
         else :
             """Création du Raid
@@ -142,7 +141,7 @@ class TBoT(commands.Bot):
             minute = datetime.now().minute
             
             await TBOTBDD.raid_initialise(survivor,type_raid,gain_prestige)
-            await tbot_com.message(f"raid_{type_raid}",channel=channel,name=name,gain_prestige=str(gain_prestige)) 
+            await tbot_com.message(f"raid_{type_raid}",channel=ctx.channel,name=ctx.author.display_name,gain_prestige=str(gain_prestige)) 
     
     async def create_support(self,helper: str,raider: str,channel: str,support: str,):
         """Test les conditions et realise un suppport specifique d'un survivant en raid par un autres survivant.
@@ -247,24 +246,26 @@ class TBoT(commands.Bot):
         await tbot_com.message(key="armaggedon",channel=ctx.channel)
         await TBOTBDD.kill_them_all(ctx.channel)  
 
-    async def message_radio(self,ctx: commands.Context,message: str):
+    async def message_radio(self,ctx: commands.Context):
         
-        name = ctx.author.display_name
-        channel = ctx.channel
-        survivor_stats = await TBOTBDD.get_stats_survivant(name)
+        
+        message = ctx.message.content
+        message=message.replace('!radio',"")
+        
+        survivor_stats = await TBOTBDD.get_stats_survivant(ctx.author.id)
         
         while "tant_que_no_error" :
                         
             if survivor_stats == None or survivor_stats["alive"] == False :
-                await tbot_com.message(key="survivant_no_exist",channel=channel,name=name)
+                await tbot_com.message(key="survivant_no_exist",channel=ctx.channel,name=ctx.author.display_name)
                 break
                 
             if survivor_stats["credit"] < CONFIG["COUT_MSG_RADIO"] : 
-                await tbot_com.message(key="survivant_credit_insuffisant_radio",channel=channel,name=name,credit=str(CONFIG["COUT_MSG_RADIO"]))
+                await tbot_com.message(key="survivant_credit_insuffisant_radio",channel=ctx.channel,name=ctx.author.display_name,credit=str(CONFIG["COUT_MSG_RADIO"]))
                 break
-            await TBOTBDD.withdraw_credit(name,CONFIG["COUT_MSG_RADIO"])
-            await tbot_com.message(channel=channel,mod=f"<radio {name}> : {message}",
-                        ovl=f"⚡&ltradio <span class='pseudo'>{name}</span> > : {message} (- {CONFIG['COUT_MSG_RADIO']} crédits)",
+            await TBOTBDD.withdraw_credit(ctx.author.id,CONFIG["COUT_MSG_RADIO"])
+            await tbot_com.message(channel=ctx.channel,mod=f"<radio {ctx.author.display_name}> : {message}",
+                        ovl=f"⚡&ltradio <span class='pseudo'>{ctx.author.display_name}</span> > : {message} (- {CONFIG['COUT_MSG_RADIO']} crédits)",
                         sound="")
             
             break
@@ -288,11 +289,8 @@ class TBoT(commands.Bot):
         -----------
         Traite la commande twitch !radio. Envois in game le message passé en parametre avec un son radio
         """
-        name = ctx.author.display_name
-        message = ctx.message.content
-        channel = ctx.channel
-        message=message.replace('!radio',"")
-        await self.message_radio(ctx,message)
+
+        await self.message_radio(ctx)
 
         
     @commands.command()
@@ -436,13 +434,12 @@ class TBoT(commands.Bot):
         -----------
         Traite la commande twitch !visi_on. 
         """
-        name = ctx.author.display_name
-        channel = ctx.channel
-        survivant_stats = await TBOTBDD.get_stats_survivant(name)
+
+        survivant_stats = await TBOTBDD.get_stats_survivant(ctx.author.id)
         if survivant_stats == None :
-            await tbot_com.message(key="survivant_no_exist",channel=channel,name=name)
+            await tbot_com.message(key="survivant_no_exist",channel=ctx.channel,name=ctx.author.display_name)
         else :
-            await TBOTBDD.add_visi(name)
+            await TBOTBDD.add_visi(ctx.author.id)
 
     
                        
