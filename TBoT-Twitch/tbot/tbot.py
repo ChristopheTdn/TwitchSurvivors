@@ -140,7 +140,7 @@ class TBoT(commands.Bot):
             await TBOTBDD.raid_initialise(survivor,type_raid,gain_prestige)
             await tbot_com.message(f"raid_{type_raid}",channel=ctx.channel,name=ctx.author.display_name,gain_prestige=str(gain_prestige)) 
     
-    async def create_support(self,helper: str,raider: str,channel: str,support: str,):
+    async def create_support(self,ctx:commands.Context,raider_name: str,channel: str,support: str,):
         """Test les conditions et realise un suppport specifique d'un survivant en raid par un autres survivant.
 
         Args:
@@ -150,45 +150,49 @@ class TBoT(commands.Bot):
             channel (str): le channel pour envoyer les messages 
             support (str): le type de support
         """
-        helper_stats = await TBOTBDD.get_stats_survivant(helper)
-        helper_stats_raid = await TBOTBDD.stat_raid(helper)
+        helper = await TBOTBDD.get_stats_survivant(ctx.author.id)
+        helper_stats_raid = await TBOTBDD.stat_raid(ctx.author.id)
+        
+        raider_id =  await TBOTBDD.get_id_survivant(raider_name.lower())
+        
         
         while "tant_que_no_error" :
             
 
-            if helper_stats_raid != None or helper_stats["support_raid"] != False:
-                await tbot_com.message(key="survivant_no_support_when_raid",channel=channel,name=helper)
+            if helper_stats_raid != None or helper["support_raid"] != False:
+                await tbot_com.message(key="survivant_no_support_when_raid",channel=channel,name=helper["name"])
                 break
             
-            if helper_stats == None or helper_stats["alive"] == False :
+            if helper == None or helper["alive"] == False :
                 await tbot_com.message(key="survivant_no_exist",channel=channel,name=helper)
                 break
             
-            if raider == "" :
-                await tbot_com.message(key="error_noName",channel=channel,name=helper)
+            if raider_id == "" :
+                await tbot_com.message(key="error_noName",channel=channel,name=helper["name"])
                 break
             
-            raid_stats = await TBOTBDD.stat_raid(raider)
+            
+            raider = await TBOTBDD.stat_raid(raider_id)
             
 
 
-            if raid_stats == None :
+            if raider == None :
                 await tbot_com.message(key="error_noRaid",channel=channel,name=helper)
                 break
             
-            if raid_stats["time_renfort"] >= CONFIG["MAX_TIME_RENFORT"] :
-                await tbot_com.message(key="error_raid_timeOut",channel=channel,name=helper_stats['name'],name2=raid_stats['name'])
+            if raider["time_renfort"] >= CONFIG["MAX_TIME_RENFORT"] :
+                await tbot_com.message(key="error_raid_timeOut",channel=channel,name=helper['name'],name2=raider['name'])
                 break
             
-            cout_support = self.config_raid_json["raid_"+raid_stats["type"]]["gain_prestige"]//4
+            cout_support = self.config_raid_json["raid_"+raider["type"]]["gain_prestige"]//4
             
-            if helper_stats["credit"] < cout_support : 
-                await tbot_com.message(key="survivant_credit_insuffisant_support",channel=channel,name=helper_stats['name'],name2=raid_stats['name'],credit=str(cout_support))
+            if helper["credit"] < cout_support : 
+                await tbot_com.message(key="survivant_credit_insuffisant_support",channel=channel,name=helper['name'],name2=raider['name'],credit=str(cout_support))
                 break
-            equipe = raid_stats["renfort"]            
+            equipe = raider["renfort"]            
             liste = equipe.split(",")
             if len(liste) >= 3 :
-                await tbot_com.message(key="error_raid_MaxSurvivor",channel=channel,name=helper_stats['name'],name2=raid_stats['name'])
+                await tbot_com.message(key="error_raid_MaxSurvivor",channel=channel,name=helper['name'],name2=raider['name'])
                 break
                             
 
@@ -196,19 +200,19 @@ class TBoT(commands.Bot):
             for joueur in liste:
                 if joueur !="":
                     listefinale.append(joueur)
-            listefinale.append(helper_stats['name'])
-            await tbot_com.message(key="survivant_join_raid",channel=channel,name=helper_stats["name"],name2=raid_stats["name"],credit = str(cout_support))
+            listefinale.append(helper['name'])
+            await tbot_com.message(key="survivant_join_raid",channel=channel,name=helper["name"],name2=raider["name"],credit = str(cout_support))
 
-            await TBOTBDD.join_raid(raid_stats,helper_stats,listefinale,cout_support)
+            await TBOTBDD.join_raid(raider,helper,listefinale,cout_support)
             # Gestion influence d un support specifique            
             if support == "transport":
-                await TBOTBDD.support_revision("transport",raid_stats,helper_stats)
+                await TBOTBDD.support_revision("transport",raider,helper)
             if support == "weapon" :
-                await TBOTBDD.support_revision("weapon",raid_stats,helper_stats)
+                await TBOTBDD.support_revision("weapon",raider,helper)
             if support == "armor" :
-                await TBOTBDD.support_revision("armor",raid_stats,helper_stats)
+                await TBOTBDD.support_revision("armor",raider,helper)
             if support == "gear" :
-                await TBOTBDD.support_revision("gear",raid_stats,helper_stats)
+                await TBOTBDD.support_revision("gear",raider,helper)
             break
 
     async def upgrade_aptitude(self,ctx: commands.Context ,aptitude: str):
@@ -239,23 +243,22 @@ class TBoT(commands.Bot):
                         
     async def armaggedon_time(self,ctx: commands.Context):
         await tbot_com.message(key="armaggedon",channel=ctx.channel)
-        await TBOTBDD.kill_them_all(ctx.channel)  
+        await TBOTBDD.kill_them_all(ctx.channel)
+          
 
     async def message_radio(self,ctx: commands.Context):
-        
-        
         message = ctx.message.content
         message=message.replace('!radio',"")
         
-        survivor_stats = await TBOTBDD.get_stats_survivant(ctx.author.id)
+        survivor = await TBOTBDD.get_stats_survivant(ctx.author.id)
         
         while "tant_que_no_error" :
                         
-            if survivor_stats == None or survivor_stats["alive"] == False :
+            if survivor == None or survivor["alive"] == False :
                 await tbot_com.message(key="survivant_no_exist",channel=ctx.channel,name=ctx.author.display_name)
                 break
                 
-            if survivor_stats["credit"] < CONFIG["COUT_MSG_RADIO"] : 
+            if survivor["credit"] < CONFIG["COUT_MSG_RADIO"] : 
                 await tbot_com.message(key="survivant_credit_insuffisant_radio",channel=ctx.channel,name=ctx.author.display_name,credit=str(CONFIG["COUT_MSG_RADIO"]))
                 break
             await TBOTBDD.withdraw_credit(ctx.author.id,CONFIG["COUT_MSG_RADIO"])
@@ -445,10 +448,9 @@ class TBoT(commands.Bot):
         -----------
         Traite la commande twitch !help_transport. 
         """
-        helper = ctx.author.display_name
         channel = ctx.channel
         raider= ctx.message.content.replace('!help_transport',"").strip()
-        await self.create_support(helper,raider,channel,"transport")
+        await self.create_support(ctx,raider,channel,"transport")
 
     @commands.command()
     async def help_weapon(self, ctx: commands.Context):
@@ -457,10 +459,9 @@ class TBoT(commands.Bot):
         -----------
         Traite la commande twitch !help_weapon. 
         """
-        helper = ctx.author.display_name
         channel = ctx.channel
         raider= ctx.message.content.replace('!help_weapon',"").strip()
-        await self.create_support(helper,raider,channel,"weapon")
+        await self.create_support(ctx,raider,channel,"weapon")
 
     @commands.command()
     async def help_gear(self, ctx: commands.Context):
@@ -469,10 +470,9 @@ class TBoT(commands.Bot):
         -----------
         Traite la commande twitch !help_gear. 
         """
-        helper = ctx.author.display_name
         channel = ctx.channel
         raider= ctx.message.content.replace('!help_gear',"").strip()
-        await self.create_support(helper,raider,channel,"gear")
+        await self.create_support(ctx,raider,channel,"gear")
 
     @commands.command()
     async def help_armor(self, ctx: commands.Context):
@@ -481,10 +481,9 @@ class TBoT(commands.Bot):
         -----------
         Traite la commande twitch !help_armor. 
         """
-        helper = ctx.author.display_name
         channel = ctx.channel
         raider= ctx.message.content.replace('!help_armor',"").strip()
-        await self.create_support(helper,raider,channel,"armor")           
+        await self.create_support(ctx,raider,channel,"armor")           
              
     @commands.command()
     async def armageddon(self, ctx: commands.Context):

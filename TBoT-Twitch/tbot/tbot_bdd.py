@@ -34,6 +34,7 @@ class TBOT_BDD():
             id INTEGER PRIMARY KEY AUTOINCREMENT UNIQUE,
             id_twitch INT UNIQUE,
             name TEXT,
+            name_lower TEXT,
             career TEXT,
             prestige INTEGER,
             credit INTEGER,
@@ -81,6 +82,7 @@ class TBOT_BDD():
         await db.execute('''INSERT OR IGNORE INTO survivant
                             (id_twitch,    
                             name,
+                            name_lower
                             career,
                             prestige,
                             credit,
@@ -90,7 +92,7 @@ class TBOT_BDD():
                             level_gear,
                             alive,
                             support_raid,
-                            inraid) VALUES (?,?,?,?,?,?,?,?,?,?,?,?)''', (id_twitch,name,"",0,0,1,1,1,1,False,False,False)) 
+                            inraid) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?)''', (id_twitch,name,name.lower(),0,0,1,1,1,1,False,False,False)) 
         await db.commit()
         await db.close()
     
@@ -122,6 +124,16 @@ class TBOT_BDD():
         await db.commit()
         await db.close()
         
+    async def get_id_survivant(self, name: str):
+        db = await aiosqlite.connect(os.path.join(self.TBOTPATH, self.NAMEBDD))
+        async with db.execute (f'''SELECT * FROM 'survivant' WHERE name_lower='{name.lower()}' ''') as cur:
+            listeStat = await cur.fetchone()
+        await db.close()
+        if listeStat is not None:
+            return listeStat[1]
+        else:
+            return None
+            
     async def get_stats_survivant(self,id_twitch: int)->dict:
         """Récupère les stats du survivant
         Args:
@@ -133,7 +145,8 @@ class TBOT_BDD():
         db = await aiosqlite.connect(os.path.join(self.TBOTPATH, self.NAMEBDD))
         async with db.execute (f'''SELECT 
                             id_twitch,
-                            name,                            
+                            name,
+                            name_lower,                            
                             career,
                             prestige,
                             credit,
@@ -150,17 +163,18 @@ class TBOT_BDD():
             return None
         else:                
             reponse ={"id_twitch": listeStat[0],
-                    "name": listeStat[1],                    
-                    "career" : listeStat[2],
-                    "prestige": listeStat[3],
-                    "credit" : listeStat[4],
-                    "level_weapon":listeStat[5],
-                    "level_armor":listeStat[6],
-                    "level_transport":listeStat[7],
-                    "level_gear":listeStat[8],
-                    "alive":bool(listeStat[9]),
-                    "support_raid":bool(listeStat[10]),
-                    "inraid":bool(listeStat[11])
+                    "name": listeStat[1], 
+                    "name_lower": listeStat[2],                   
+                    "career" : listeStat[3],
+                    "prestige": listeStat[4],
+                    "credit" : listeStat[5],
+                    "level_weapon":listeStat[6],
+                    "level_armor":listeStat[7],
+                    "level_transport":listeStat[8],
+                    "level_gear":listeStat[9],
+                    "alive":bool(listeStat[10]),
+                    "support_raid":bool(listeStat[11]),
+                    "inraid":bool(listeStat[12])
                     }
             return reponse
     
@@ -199,7 +213,7 @@ class TBOT_BDD():
                 "levelRaid_armor"     : survivant[17],
                 "levelRaid_transport" : survivant[18],
                 "levelRaid_gear"      : survivant[19],
-                "effectif_team"       : survivant[20],
+                "effectif_team"       : survivant[20]
                 }
         else :
             survivant_dict = None
@@ -293,7 +307,9 @@ class TBOT_BDD():
                          survivant_stat["level_gear"],
                          1))
                         
-        await db.execute(f'''UPDATE survivant SET credit = credit - {cout_raid} WHERE id_twitch = {survivant_stat["id_twitch"]}''')
+        await db.execute(f'''UPDATE survivant SET credit = credit - {cout_raid},
+                         inraid = 1
+                         WHERE id_twitch = {survivant_stat["id_twitch"]}''')
         await db.commit()
         await db.close()
                 
@@ -524,7 +540,10 @@ class TBOT_BDD():
         for joueur in liste:
             if joueur !="":
                 #todo: gerer les nom des support avec les id twitch
-                await db.execute(f'''UPDATE survivant SET prestige = prestige +{gain_prestige} , support_raid = False  WHERE name = {raid['name']}''')
+                await db.execute(f'''UPDATE survivant SET prestige = prestige +{gain_prestige},
+                                 support_raid = False,
+                                 inraid       = False
+                                 WHERE name = {raid['name']}''')
                 await tbot_com.message("survivant_gain_support",channel=channel,name=joueur,gain_prestige=str(gain_prestige),name2=raid['name'])
                 
         
@@ -562,14 +581,14 @@ class TBOT_BDD():
         await db.close()
         
 
-    async def support_revision(self,type: str,raider_stats: dict,helper_stats: dict):
-        raidEnCours = await self.stat_raid(raider_stats["name"])
+    async def support_revision(self,type: str,raider: dict,helper_stats: dict):
+        raidEnCours = await self.stat_raid(raider["id_twitch"])
 
         if helper_stats[f"level_{type}"] > raidEnCours[f"levelRaid_{type}"]:
                 db = await aiosqlite.connect(os.path.join(self.TBOTPATH, self.NAMEBDD)) 
                 await db.execute(f'''UPDATE raid SET 
                                  levelRaid_{type} = {helper_stats[f"level_{type}"]}
-                                 WHERE id_twitch = {raider_stats["id_twitch"]}''')
+                                 WHERE id_twitch = {raider["id_twitch"]}''')
                 await db.commit()
                 await db.close()
 
