@@ -11,10 +11,10 @@ from . import tbot_com
 
 
 
-with open('./CONFIGURATION/config.json', 'r') as fichier:
+with open('./Configuration/config.json', 'r',encoding="utf-8") as fichier:
     CONFIG = json.load(fichier)
     
-with open('./CONFIGURATION/config_Token_Client.json', 'r') as fichier:
+with open('./Configuration/Secret/config_Token_Client.json', 'r',encoding="utf-8") as fichier:
     CLIENT = json.load(fichier)
     
 
@@ -32,7 +32,7 @@ class TBoT(commands.Bot):
         # initial_channels can also be a callable which returns a list of strings...
         super().__init__(token=CLIENT["TOKEN"], prefix=CLIENT["PREFIX"], initial_channels=[CLIENT["CHANNEL"]])
         TBOTBDD.initTableSql()
-        with open ('./TBOT-Twitch/tbot/data/config_raid.json', 'r',encoding="utf-8" ) as fichier:
+        with open ('./Data/raid.json', 'r',encoding="utf-8" ) as fichier:
             self.config_raid_json = json.load(fichier)
             
     async def event_ready(self):

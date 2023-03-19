@@ -7,7 +7,7 @@ import random
 from . import tbot_com  
 
 
-with open('./CONFIGURATION/config.json', 'r') as fichier:
+with open('./Configuration/config.json', 'r') as fichier:
     CONFIG = json.load(fichier)
 
 class TBOT_BDD():
@@ -17,11 +17,11 @@ class TBOT_BDD():
     def __init__(self,TBOTPATH) -> None:
         self.TBOTPATH=TBOTPATH
         self.NAMEBDD = "tbot_bdd.sqlite"
-        with open ('./TBOT-Twitch/tbot/data/config_raid.json', 'r',encoding="utf-8" ) as fichier:
+        with open ('./Data/raid.json', 'r',encoding="utf-8" ) as fichier:
             self.config_raid_json = json.load(fichier)
-        with open ('./TBOT-Twitch/tbot/data/config_butin.json', 'r',encoding="utf-8" ) as fichier:
+        with open ('./Data/butin.json', 'r',encoding="utf-8" ) as fichier:
             self.config_butin_json = json.load(fichier)
-        with open ('./TBOT-Twitch/tbot/data/config_ratio_butin.json', 'r',encoding="utf-8" ) as fichier:
+        with open ('./Data/butin_ratio.json', 'r',encoding="utf-8" ) as fichier:
             self.config_ratio_json = json.load(fichier)   
 
     def initTableSql(self):

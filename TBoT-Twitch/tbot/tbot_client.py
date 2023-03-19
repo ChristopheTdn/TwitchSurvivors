@@ -4,10 +4,10 @@ import json
 import os
 
 
-with open('./CONFIGURATION/config.json', 'r') as fichier:
+with open('./Configuration/config.json', 'r') as fichier:
     CONFIG = json.load(fichier)
-    
-with open('./CONFIGURATION/config_Token_Client.json', 'r') as fichier:
+
+with open('./Configuration/Secret/config_Token_Client.json', 'r') as fichier:
     CLIENT = json.load(fichier)
 
 TBOTPATH, filename = os.path.split(__file__)    

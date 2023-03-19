@@ -12,13 +12,7 @@
         "sound" : ""
     },
     "revive_survivant" :{
-        "ovl"   : "⛹- Le joueur {name} vient d'apparaitre sur le serveur. (cout {credit} crédits).",
-        "chat"  :"",
-        "mod"   : "radio {name} : ...allo !  Je suis un surviva....pret a aider....d'autres messages suivront...",
-        "sound" : "Nouveau_Survivant.mp3"
-    },
-    "creation_survivant" :{
-        "ovl"   : "⛹- Le joueur {name} vient d'apparaitre sur le serveur.",
+        "ovl"   : "⛹- Le joueur {name} vient d'apparaitre sur le serveur. (-{credit} crédits).",
         "chat"  :"",
         "mod"   : "radio {name} : ...allo !  Je suis un surviva....pret a aider....d'autres messages suivront...",
         "sound" : "Nouveau_Survivant.mp3"
@@ -59,6 +53,24 @@
         "mod"   : "",
         "sound" : "" 
     },
+    "survivant_exist" : {
+        "ovl"   :"⛹- Attention {name}, ton survivant existe déjà ! !my_survivor pour plus d'info !",
+        "chat"  :"",
+        "mod"   : "",
+        "sound" : "" 
+    },
+    "survivant_credit_insuffisant_support" : {
+        "ovl"   :"❌- Attention {name}, tu ne possedes pas assez de crédit pour apporter ton aide à {name2} (cout {credit} credits). Achete des crédits avec tes points de chaine.",
+        "chat"  :"",
+        "mod"   : "",
+        "sound" : "" 
+    },
+    "survivant_credit_insuffisant_radio" : {
+        "ovl"   :"❌- Attention {name}, tu ne possedes pas assez de crédit pour envoyer un message radio (cout {credit} credits). Achete des crédits avec tes points de chaine.",
+        "chat"  :"",
+        "mod"   : "",
+        "sound" : "" 
+    },
     "survivant_ajout_credit" : {
         "ovl"   :"💰- le survivant {name} obtient {credit} crédits !",
         "chat"  :"",
@@ -66,7 +78,7 @@
         "sound" : "" 
     },
     "survivant_join_raid" : {
-        "ovl"   :"⛹- le survivant {name} rejoint l'équipe de {name2} pour partir en raid !",
+        "ovl"   :"⛹- le survivant {name} rejoint l'équipe de {name2} pour partir en raid (-{credit} credits) !",
         "chat"  :"",
         "mod"   : "",
         "sound" : "Aide_Raid.mp3" 
@@ -102,7 +114,7 @@
     "sound" : "Bredouille.mp3"
     },
     "raid_win_blesse":{
-    "ovl"   : "⛹- {name} est revenu à la base. Il y a des bléssés... gain de prestige : +{gain_prestige} !!!",
+    "ovl"   : "⛹- {name} est revenu à la base. Il y a des blessés... gain de prestige : +{gain_prestige} !!!",
     "chat"  :"",
     "mod"   : "radio {name} : je suis enfin revenu à la base.",
     "sound" : "Blesse_Retour_Base.mp3"
@@ -114,15 +126,15 @@
         "sound" : "MI-RAID.mp3"
     },
     "raid_deja_en_cours" :{
-        "ovl"   : "",
-        "chat"  :"❌- un Raid est dejà en cours pour {name} ! tapez !my_survivor pour plus d'info.",
+        "ovl"   : "❌- un Raid est dejà en cours pour {name} ! tapez !my_survivor pour plus d'info.",
+        "chat"  : "",
         "mod"   : "",
         "sound" : ""    
     },
     "raid_blesse" :{
-        "ovl"   : "🩸- {name} a été attaqué durant son raid. Il est bléssé ! ",
+        "ovl"   : "🩸- {name} a été attaqué durant son raid. Il est blessé ! ",
         "chat"  :"",
-        "mod"   : "radio {name} : Aidez moi! victim...zzz.. ne attaque... je suis ...gèrement bléssé... zzz..z...",
+        "mod"   : "radio {name} : Aidez moi! victim...zzz.. ne attaque... je suis ...gèrement blessé... zzz..z...",
         "sound" : "Blesse_Pendant_Raid.mp3"
     },
     "raid_mort_enroute" :{

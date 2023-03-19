@@ -9,20 +9,18 @@ from datetime import datetime
 import winreg
 
 
-with open('./CONFIGURATION/config.json', 'r') as fichier:
+with open('./Configuration/config.json', 'r') as fichier:
     CONFIG = json.load(fichier)
 
-with open (f'./TBOT-Twitch/tbot/localisation/{CONFIG["LANGUE"].lower()}.json', 'r',encoding="utf-8" ) as fichier:
+with open (f'./Language/{CONFIG["LANGUE"].lower()}.json', 'r',encoding="utf-8" ) as fichier:
     LOCALISATION = json.load(fichier)
 
-with open ('./TBOT-Twitch/tbot/data/config_raid.json', 'r',encoding="utf-8" ) as fichier:
+with open ('./Data/raid.json', 'r',encoding="utf-8" ) as fichier:
     CONFIG_RAID = json.load(fichier)
     
 
     
 TBOTPATH, filename = os.path.split(__file__) 
-
-#URLMOD = "F:\\SteamLibrary\\steamapps\\workshop\\content\\108600\\2947286370\\mods\\TwitchSurvivor\\"
 
 ligne_overlay=[]
 
@@ -58,7 +56,7 @@ def joue_son(radio = "radio1.mp3"):
     """
     if CONFIG["PLAY_SOUND"] : #joue les sons du Mod en fonction de la configuration
         mixer.init()   
-        mixer.music.load(os.path.join(TBOTPATH, "sound/"+radio))
+        mixer.music.load(f'./Sounds/{CONFIG["LANGUE"]}/'+radio)
         mixer.music.set_volume(CONFIG["VOLUME"])
         mixer.music.play()
 
