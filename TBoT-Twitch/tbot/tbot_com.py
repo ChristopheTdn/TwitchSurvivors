@@ -38,7 +38,7 @@ def get_reg(name,reg_path):
 
 URLMOD =  get_reg("InstallLocation",r"SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\Steam App 108600").replace(r"common\ProjectZomboid","workshop\content"+ os.sep +"108600"+ os.sep +CONFIG["STEAM_MOD_ID"]+ os.sep +"mods"+ os.sep +CONFIG["STEAM_MOD_NAME"]+ os.sep +"media\config")
 if URLMOD == None or not CONFIG["MOD_STEAM"]:
-    URLMOD = os.getcwd()+"/TBoT-PZ/TwitchSurvivors/Contents/mods/TwitchSurvivors/media/config"   
+    URLMOD = os.getcwd()+"\TBoT-PZ\TwitchSurvivors\Contents\mods\TwitchSurvivors\media\config"   
     
 async def msg_init_TboT():
     for i in range(30):
@@ -122,7 +122,7 @@ async def message(key="empty",channel=None,name="",name2="",mod="",chat="",ovl="
     if ovl != "" :
         await affichage_Overlay(ovl)
     if mod != "" :
-        async with aiofiles.open(URLMOD+"/radio.txt","w",encoding="utf-8") as fichier:
+        async with aiofiles.open(URLMOD+os.sep+"radio.txt","w",encoding="utf-8") as fichier:
             await fichier.write(mod)
     if sound != "" :
         joue_son(sound)
@@ -151,7 +151,7 @@ async def donne_butin(butin:str) -> str:
         listefinale += '<p STYLE="padding:0 0 0 20px;">  🔸'+item[0]+'</p>'
         listeClassefinale += item[1]+"\n"
         
-    async with aiofiles.open(URLMOD+"/butin.txt","w",encoding="utf-8") as fichier:
+    async with aiofiles.open(URLMOD+os.sep+"butin.txt","w",encoding="utf-8") as fichier:
         await fichier.write(listeClassefinale)
     
     return listefinale
