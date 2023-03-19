@@ -423,7 +423,7 @@ class TBoT(commands.Bot):
         Traite la commande twitch !ajout_credit. 
         """
         if CONFIG["DEBUG"]:
-            await self.ajout_credit(ctx,credit = 5000)
+            await self.ajout_credit(ctx.author.id,ctx.author.display_name,ctx.channel,credit=5000)
 
     @commands.command()
     async def visi_on(self, ctx: commands.Context):
