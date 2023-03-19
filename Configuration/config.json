@@ -1,5 +1,5 @@
 {
-    "STREAMER" : "",
+    "STREAMER" : "GToF_",
     "MOD_STEAM" : true,
     "STEAM_MOD_NAME" : "TwitchSurvivors",
     "STEAM_MOD_ID" : "2948924574",
@@ -17,5 +17,6 @@
     "KILL_THEM_ALL" : true,
     "RESET_PRESTIGE_AFTER_DEATH" : true,
     "ASSISTANT_BOOST" : true,
-    "GEAR_BOOST" : 66
+    "GEAR_BOOST" : 66,
+    "MAX_VISI" : 5
 }

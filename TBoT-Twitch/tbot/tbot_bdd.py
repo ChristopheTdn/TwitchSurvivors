@@ -470,7 +470,7 @@ class TBOT_BDD():
             if raid["time_visi"] == 0 and raid["visi"] == True :    
                 await db.execute(f'''UPDATE raid SET visi = False WHERE id_twitch = {raid["id_twitch"]}''')
             
-            if len(listeRaid)<5 : #affiche toujours les infos raid si moinds de 5 raids en simultané
+            if len(listeRaid) < CONFIG["MAX_VISI"]: #affiche toujours les infos raid si moinds de 5 raids en simultané
                 raid["visi"] = True
                 
             data[f'SURVIVANT_{raid["name"]}']={"NAME":raid["name"],
