@@ -82,7 +82,7 @@ class TBOT_BDD():
         await db.execute('''INSERT OR IGNORE INTO survivant
                             (id_twitch,    
                             name,
-                            name_lower
+                            name_lower,
                             career,
                             prestige,
                             credit,
@@ -92,7 +92,7 @@ class TBOT_BDD():
                             level_gear,
                             alive,
                             support_raid,
-                            inraid) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?)''', (id_twitch,name,name.lower(),0,0,1,1,1,1,False,False,False)) 
+                            inraid) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?)''', (id_twitch,name,name.lower(),"",0,0,1,1,1,1,False,False,False)) 
         await db.commit()
         await db.close()
     
