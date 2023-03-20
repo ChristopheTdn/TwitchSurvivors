@@ -9,7 +9,7 @@
     "LANGUE" : "french",
     "COUT_REVIVE" : 2000,
     "COUT_MSG_RADIO" : 50,
-    "AJOUT_CREDIT" : 2000,
+    "AJOUT_CREDIT" : 5000,
     "TARIF_UPGRADE" : [0,1000,2500,6000,13000],
     "MAX_TIME_RENFORT" : 5,
     "PLAY_SOUND" : true,
