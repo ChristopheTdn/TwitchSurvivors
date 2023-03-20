@@ -28,7 +28,7 @@ class TBOT_BDD():
         """
                 Initialise la base de donnée si elle n'existe pas
         """
-        self.connexionSQL = sqlite3.connect(os.path.join(self.TBOTPATH, self.NAMEBDD))
+        self.connexionSQL = sqlite3.connect(os.path.join("./Sqlite", self.NAMEBDD))
         curseur = self.connexionSQL.cursor()
         curseur.execute('''CREATE TABLE IF NOT EXISTS survivant(
             id INTEGER PRIMARY KEY AUTOINCREMENT UNIQUE,
@@ -78,7 +78,7 @@ class TBOT_BDD():
         Args:
             name (str): le nom du survivant.
         """        
-        db = await aiosqlite.connect(os.path.join(self.TBOTPATH, self.NAMEBDD))
+        db = await aiosqlite.connect(os.path.join("./Sqlite", self.NAMEBDD))
         await db.execute('''INSERT OR IGNORE INTO survivant
                             (id_twitch,    
                             name,
@@ -105,7 +105,7 @@ class TBOT_BDD():
             id_twitch (int): id du survivant.
         """
 
-        db = await aiosqlite.connect(os.path.join(self.TBOTPATH, self.NAMEBDD))
+        db = await aiosqlite.connect(os.path.join("./Sqlite", self.NAMEBDD))
         await db.execute(f'''UPDATE survivant SET 
                         career          = "",
                         credit          = credit-{CONFIG["COUT_REVIVE"]},
@@ -125,7 +125,7 @@ class TBOT_BDD():
         await db.close()
         
     async def get_id_survivant(self, name: str):
-        db = await aiosqlite.connect(os.path.join(self.TBOTPATH, self.NAMEBDD))
+        db = await aiosqlite.connect(os.path.join("./Sqlite", self.NAMEBDD))
         async with db.execute (f'''SELECT * FROM 'survivant' WHERE name_lower='{name.lower()}' ''') as cur:
             listeStat = await cur.fetchone()
         await db.close()
@@ -142,7 +142,7 @@ class TBOT_BDD():
             dict: renvois un dictionnaire contenant les statistiques du survivant.
         """        
         reponse = {}
-        db = await aiosqlite.connect(os.path.join(self.TBOTPATH, self.NAMEBDD))
+        db = await aiosqlite.connect(os.path.join("./Sqlite", self.NAMEBDD))
         async with db.execute (f'''SELECT 
                             id_twitch,
                             name,
@@ -188,7 +188,7 @@ class TBOT_BDD():
             dict : renvois un dictionnaire contenant les statistiques du raid en cours si il existe sinon none.
 
         """        
-        db = await aiosqlite.connect(os.path.join(self.TBOTPATH, self.NAMEBDD))
+        db = await aiosqlite.connect(os.path.join("./Sqlite", self.NAMEBDD))
         async with db.execute (f'''SELECT * FROM 'raid'  WHERE id_twitch='{id_twitch}' ''') as cur :
             survivant = await cur.fetchone()
         await db.close()
@@ -262,7 +262,7 @@ class TBOT_BDD():
     
     async def raid_initialise(self,survivant_stat: dict,type_raid: str,cout_raid: int) -> None:
         DISTANCE = self.config_raid_json["raid_"+type_raid]["distance_raid"]
-        db = await aiosqlite.connect(os.path.join(self.TBOTPATH, self.NAMEBDD))
+        db = await aiosqlite.connect(os.path.join("./Sqlite", self.NAMEBDD))
         await db.execute ('''INSERT OR IGNORE INTO raid
                         (id_twitch,
                         name,
@@ -367,7 +367,7 @@ class TBOT_BDD():
                 (composition_butin,bonus_butin) = await self.genere_butin(raid)     
                 break
                     
-        db = await aiosqlite.connect(os.path.join(self.TBOTPATH, self.NAMEBDD))
+        db = await aiosqlite.connect(os.path.join("./Sqlite", self.NAMEBDD))
         await db.execute (f'''UPDATE raid SET
                         distance = {DISTANCE},
                         michemin = {DISTANCE//2},
@@ -382,14 +382,14 @@ class TBOT_BDD():
         await db.close()
         
     async def add_credit(self,id_twitch,credit):
-        db = await aiosqlite.connect(os.path.join(self.TBOTPATH, self.NAMEBDD))
+        db = await aiosqlite.connect(os.path.join("./Sqlite", self.NAMEBDD))
         await db.execute(f'''UPDATE survivant SET credit = credit+{credit} WHERE id_twitch = {id_twitch}''')
 
         await db.commit()
         await db.close()
         
     async def withdraw_credit(self,id_twitch,credit):
-        db = await aiosqlite.connect(os.path.join(self.TBOTPATH, self.NAMEBDD))
+        db = await aiosqlite.connect(os.path.join("./Sqlite", self.NAMEBDD))
         await db.execute(f'''UPDATE survivant SET credit = credit-{credit} WHERE id_twitch = {id_twitch}''')
         await db.commit()
         await db.close()
@@ -437,7 +437,7 @@ class TBOT_BDD():
         
     async def actualise_statRaid(self,channel):
         
-        db = await aiosqlite.connect(os.path.join(self.TBOTPATH, self.NAMEBDD))
+        db = await aiosqlite.connect(os.path.join("./Sqlite", self.NAMEBDD))
         async with db.execute (f'''SELECT * FROM 'raid' ''') as cur:
             listeRaid = await cur.fetchall()
         await db.close()  
@@ -460,7 +460,7 @@ class TBOT_BDD():
 
             stat_survivant= await self.get_stats_survivant(raid["id_twitch"])
             
-            db = await aiosqlite.connect(os.path.join(self.TBOTPATH, self.NAMEBDD))
+            db = await aiosqlite.connect(os.path.join("./Sqlite", self.NAMEBDD))
             
             
             await db.execute(f'''UPDATE raid SET distance = {raid["distance"]},time_renfort = time_renfort+1 WHERE id_twitch = {raid["id_twitch"]}''')
@@ -550,7 +550,7 @@ class TBOT_BDD():
             
             
     async def upgrade_aptitude(self,id_twitch: int,aptitude: str,cout_upgrade: int):
-        db = await aiosqlite.connect(os.path.join(self.TBOTPATH, self.NAMEBDD))
+        db = await aiosqlite.connect(os.path.join("./Sqlite", self.NAMEBDD))
         await db.execute(f'''UPDATE survivant SET prestige = prestige - {cout_upgrade} WHERE id_twitch = {id_twitch}''')
         await db.execute(f'''UPDATE survivant SET level_{aptitude} = level_{aptitude} + 1 WHERE id_twitch = {id_twitch}''') 
         await db.commit()
@@ -562,13 +562,13 @@ class TBOT_BDD():
             name (str): nom du survivant
             duree (int, optional): nombre de cycle d'affichage des infos. Default à 5.
         """        
-        db = await aiosqlite.connect(os.path.join(self.TBOTPATH, self.NAMEBDD))
+        db = await aiosqlite.connect(os.path.join("./Sqlite", self.NAMEBDD))
         await db.execute(f'''UPDATE raid SET visi = true , time_visi = {duree} WHERE id_twitch = {id_twitch}''')
         await db.commit()
         await db.close()
         
     async def join_raid(self,raidStats,helperStats,equipe,cout_renfort):
-        db = await aiosqlite.connect(os.path.join(self.TBOTPATH, self.NAMEBDD))
+        db = await aiosqlite.connect(os.path.join("./Sqlite", self.NAMEBDD))
         await db.execute(f'''UPDATE raid SET
                          renfort = '{','.join([str(elem) for elem in equipe])}',
                          effectif_team = effectif_team + 1
@@ -585,7 +585,7 @@ class TBOT_BDD():
         raidEnCours = await self.stat_raid(raider["id_twitch"])
 
         if helper_stats[f"level_{type}"] > raidEnCours[f"levelRaid_{type}"]:
-                db = await aiosqlite.connect(os.path.join(self.TBOTPATH, self.NAMEBDD)) 
+                db = await aiosqlite.connect(os.path.join("./Sqlite", self.NAMEBDD)) 
                 await db.execute(f'''UPDATE raid SET 
                                  levelRaid_{type} = {helper_stats[f"level_{type}"]}
                                  WHERE id_twitch = {raider["id_twitch"]}''')
@@ -595,7 +595,7 @@ class TBOT_BDD():
         
     async def kill_them_all(self,channel):
         print ("ARMAGEDDON !!!!")
-        db = await aiosqlite.connect(os.path.join(self.TBOTPATH, self.NAMEBDD))
+        db = await aiosqlite.connect(os.path.join("./Sqlite", self.NAMEBDD))
         await db.execute("DELETE FROM raid")
         await db.execute("UPDATE survivant SET alive = false")
         await db.commit()
