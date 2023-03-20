@@ -416,14 +416,14 @@ class TBoT(commands.Bot):
         await self.upgrade_aptitude(ctx,"gear")     
     
     @commands.command()
-    async def add_credit(self, ctx: commands.Context):
+    async def add_credits(self, ctx: commands.Context):
         """
-        Commande !ajout_credit
+        Commande !ajout_credits
         -----------
         Traite la commande twitch !ajout_credit. 
         """
         if CONFIG["DEBUG"]:
-            await self.ajout_credit(ctx.author.id,ctx.author.display_name,ctx.channel,credit=5000)
+            await self.ajout_credit(ctx.author.id,ctx.author.display_name,ctx.channel,credit=CONFIG["AJOUT_CREDIT"])
 
     @commands.command()
     async def visi_on(self, ctx: commands.Context):
