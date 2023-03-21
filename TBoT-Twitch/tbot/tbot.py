@@ -123,7 +123,7 @@ class TBoT(commands.Bot):
         if survivor == None or survivor["alive"] == False :
             await tbot_com.message("survivant_no_exist",channel=ctx.channel,name=ctx.author.display_name)
 
-        elif test_raid_exist != None or survivor["support_raid"] :
+        elif survivor["inraid"] :
             await tbot_com.message("raid_deja_en_cours",channel=ctx.channel,name=ctx.author.display_name)
 
         elif survivor["credit"]<gain_prestige : 
