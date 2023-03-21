@@ -488,10 +488,11 @@ class TBOT_BDD():
                     await tbot_com.message("raid_retour_base_mort",channel=channel,name=raid["name"])
                     await self.gere_fin_raid(db,raid,channel)
                     await db.execute(f'''DELETE from raid WHERE id_twitch = {raid["id_twitch"]}''')
-                    await db.execute(f'''UPDATE survivant SET alive = 0 WHERE id_twitch = {raid["id_twitch"]}''')
+                    await db.execute(f'''UPDATE survivant SET alive = 0,inraid = 0 WHERE id_twitch = {raid["id_twitch"]}''')
                 else :
                     await self.gere_fin_raid(db,raid,channel)
                     await db.execute(f'''DELETE from raid WHERE id_twitch = {raid["id_twitch"]}''')
+                    await db.execute(f'''UPDATE survivant SET alive = 0,inraid = 0 WHERE id_twitch = {raid["id_twitch"]}''')
                     
             elif raid["distance"] == raid["michemin"] :
                 await tbot_com.message("raid_mi_chemin",channel=channel,name=raid["name"])
@@ -500,11 +501,7 @@ class TBOT_BDD():
             elif raid["distance"] == raid["mort"] :
                 await tbot_com.message("raid_mort_enroute",channel=channel,name=raid["name"])
                 await db.execute(f'''UPDATE survivant SET 
-                                     prestige = 0,
-                                     level_weapon = 1,
-                                     level_armor = 1,
-                                     level_transport = 1,
-                                     level_gear = 1                                     
+                                     alive=0                                     
                                      WHERE id_twitch = {raid["id_twitch"]}''')
             await db.commit()
             await db.close()
@@ -543,7 +540,7 @@ class TBOT_BDD():
                 await db.execute(f'''UPDATE survivant SET prestige = prestige +{gain_prestige},
                                  support_raid = False,
                                  inraid       = False
-                                 WHERE name = {raid['name']}''')
+                                 WHERE name_lower = "{joueur.lower()}"''')
                 await tbot_com.message("survivant_gain_support",channel=channel,name=joueur,gain_prestige=str(gain_prestige),name2=raid['name'])
                 
         
@@ -575,6 +572,7 @@ class TBOT_BDD():
                          WHERE id_twitch = {raidStats["id_twitch"]}''')
         await db.execute(f'''UPDATE survivant SET
                          support_raid = True,
+                         inraid = True,
                          credit =credit - {cout_renfort}
                          WHERE id_twitch = {helperStats["id_twitch"]}''') 
         await db.commit()

@@ -158,13 +158,12 @@ class TBoT(commands.Bot):
         
         while "tant_que_no_error" :
             
-
-            if helper_stats_raid != None or helper["support_raid"] != False:
-                await tbot_com.message(key="survivant_no_support_when_raid",channel=channel,name=helper["name"])
-                break
-            
             if helper == None or helper["alive"] == False :
                 await tbot_com.message(key="survivant_no_exist",channel=channel,name=helper)
+                break
+            
+            if helper["inraid"] ==True:
+                await tbot_com.message(key="survivant_no_support_when_raid",channel=channel,name=helper["name"])
                 break
             
             if raider_id == "" :
@@ -173,8 +172,6 @@ class TBoT(commands.Bot):
             
             
             raider = await TBOTBDD.stat_raid(raider_id)
-            
-
 
             if raider == None :
                 await tbot_com.message(key="error_noRaid",channel=channel,name=helper)
