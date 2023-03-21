@@ -1,12 +1,13 @@
 # Twitch Survivors
 
-[fr] systeme d integration TWITCH-PROJECT ZOMBOID
-[en] Foobar is a Python library for dealing with word pluralization.
+- [fr] systeme d integration TWITCH-PROJECT ZOMBOID
+- [en] Twitch project zomboid game integration for viewers
 
 ## Pré requis / prerequisite
 
 - python v3.9  minimum (python.exe need to be in path)
-### Autoriser l'exécution de scripts PowerShell
+- 
+### [fr] Autoriser l'exécution de scripts PowerShell
 - Cliquer sur le bouton Démarrer, sur Tous les programmes, sur Accessoires, sur Windows PowerShell.
 - Cliquer avec le bouton droit de la souris sur Windows PowerShell puis cliquez sur Exécuter en tant qu'administrateur.
 - Dans la fenêtre qui s'ouvre, saisissez la commande :
@@ -14,7 +15,7 @@
  Set-ExecutionPolicy RemoteSigned'
  ```
  
-### enable execution of PowerShell scripts
+### [en] enable execution of PowerShell scripts
 -Start Windows PowerShell with the "Run as Administrator" option. Only members of the Administrators group on the computer can change the execution policy.
 -Enable running unsigned scripts by entering:
 ```bash
@@ -30,7 +31,7 @@ Use the package manager [pip](https://pip.pypa.io/en/stable/) to install foobar.
 pip install foobar
 ```
 
-## Usage
+## Configuration
 
 ```python
 import foobar
