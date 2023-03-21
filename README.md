@@ -6,7 +6,7 @@
 ## PRE REQUIS / PREREQUISITE
 
 - python v3.9  minimum (python.exe need to be in path)
-- 
+
 ### [fr] Autoriser l'exécution de scripts PowerShell
 - Cliquer sur le bouton Démarrer, sur Tous les programmes, sur Accessoires, sur Windows PowerShell.
 - Cliquer avec le bouton droit de la souris sur Windows PowerShell puis cliquez sur Exécuter en tant qu'administrateur.
