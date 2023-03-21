@@ -9,8 +9,17 @@
 ### Autoriser l'exécution de scripts PowerShell
 - Cliquer sur le bouton Démarrer, sur Tous les programmes, sur Accessoires, sur Windows PowerShell.
 - Cliquer avec le bouton droit de la souris sur Windows PowerShell puis cliquez sur Exécuter en tant qu'administrateur.
-- Dans la fenêtre qui s'ouvre, saisissez la commande 'Set-ExecutionPolicy RemoteSigned' puis validez par Entrée.
-- Appuyez sur O et validez
+- Dans la fenêtre qui s'ouvre, saisissez la commande :
+ ```bash
+ Set-ExecutionPolicy RemoteSigned'
+ ```
+ 
+### enable execution of PowerShell scripts
+-Start Windows PowerShell with the "Run as Administrator" option. Only members of the Administrators group on the computer can change the execution policy.
+-Enable running unsigned scripts by entering:
+```bash
+set-executionpolicy remotesigned
+```
 
 ## Installation
 
