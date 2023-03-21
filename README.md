@@ -3,7 +3,7 @@
 - [fr] systeme d integration TWITCH-PROJECT ZOMBOID
 - [en] Twitch project zomboid game integration for viewers
 
-## Pré requis / prerequisite
+## PRE REQUIS / PREREQUISITE
 
 - python v3.9  minimum (python.exe need to be in path)
 - 
@@ -14,7 +14,6 @@
  ```bash
  Set-ExecutionPolicy RemoteSigned'
  ```
- 
 ### [en] enable execution of PowerShell scripts
 -Start Windows PowerShell with the "Run as Administrator" option. Only members of the Administrators group on the computer can change the execution policy.
 -Enable running unsigned scripts by entering:
