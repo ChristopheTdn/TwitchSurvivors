@@ -492,7 +492,7 @@ class TBOT_BDD():
                 else :
                     await self.gere_fin_raid(db,raid,channel)
                     await db.execute(f'''DELETE from raid WHERE id_twitch = {raid["id_twitch"]}''')
-                    await db.execute(f'''UPDATE survivant SET alive = 0,inraid = 0 WHERE id_twitch = {raid["id_twitch"]}''')
+                    await db.execute(f'''UPDATE survivant SET inraid = 0 WHERE id_twitch = {raid["id_twitch"]}''')
                     
             elif raid["distance"] == raid["michemin"] :
                 await tbot_com.message("raid_mi_chemin",channel=channel,name=raid["name"])
