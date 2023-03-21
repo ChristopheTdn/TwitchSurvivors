@@ -42,9 +42,9 @@ class TBOT_BDD():
             level_armor INTEGER,
             level_transport INTEGER,
             level_gear INTEGER,
-            alive BOOLEAN,
-            support_raid BOOLEAN,            
-            inraid BOOLEAN
+            alive BOOLEAN,           
+            inraid BOOLEAN,            
+            support_raid TEXT 
             )''')
         
         curseur.execute('''CREATE TABLE IF NOT EXISTS raid(
@@ -91,8 +91,8 @@ class TBOT_BDD():
                             level_transport,
                             level_gear,
                             alive,
-                            support_raid,
-                            inraid) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?)''', (id_twitch,name,name.lower(),"",0,0,1,1,1,1,False,False,False)) 
+                            inraid,
+                            support_raid) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?)''', (id_twitch,name,name.lower(),"",0,0,1,1,1,1,False,False,"")) 
         await db.commit()
         await db.close()
     
@@ -114,8 +114,8 @@ class TBOT_BDD():
                         level_transport = 1,
                         level_gear      = 1,
                         alive           = True, 
-                        support_raid    = False,  
-                        inraid          = False                 
+                        inraid          = False,
+                        support_raid    = ""                 
                         WHERE id_twitch = {id_twitch}''')
         if CONFIG["RESET_PRESTIGE_AFTER_DEATH"] :
             await db.execute(f'''UPDATE survivant SET 
@@ -155,8 +155,8 @@ class TBOT_BDD():
                             level_transport,
                             level_gear,
                             alive,
-                            support_raid,
-                            inraid FROM 'survivant' WHERE id_twitch='{id_twitch}' ''') as cur:
+                            inraid,                            
+                            support_raid FROM 'survivant' WHERE id_twitch='{id_twitch}' ''') as cur:
             listeStat = await cur.fetchone()
         await db.close()
         if listeStat==None:
@@ -173,8 +173,8 @@ class TBOT_BDD():
                     "level_transport":listeStat[8],
                     "level_gear":listeStat[9],
                     "alive":bool(listeStat[10]),
-                    "support_raid":bool(listeStat[11]),
-                    "inraid":bool(listeStat[12])
+                    "inraid":bool(listeStat[11]),
+                    "support_raid":bool(listeStat[12]),
                     }
             return reponse
     
@@ -538,7 +538,7 @@ class TBOT_BDD():
             if joueur !="":
                 #todo: gerer les nom des support avec les id twitch
                 await db.execute(f'''UPDATE survivant SET prestige = prestige +{gain_prestige},
-                                 support_raid = False,
+                                 support_raid = "",
                                  inraid       = False
                                  WHERE name_lower = "{joueur.lower()}"''')
                 await tbot_com.message("survivant_gain_support",channel=channel,name=joueur,gain_prestige=str(gain_prestige),name2=raid['name'])
@@ -571,7 +571,7 @@ class TBOT_BDD():
                          effectif_team = effectif_team + 1
                          WHERE id_twitch = {raidStats["id_twitch"]}''')
         await db.execute(f'''UPDATE survivant SET
-                         support_raid = True,
+                         support_raid = "{raidStats["name"]}",
                          inraid = True,
                          credit =credit - {cout_renfort}
                          WHERE id_twitch = {helperStats["id_twitch"]}''') 
