@@ -7,10 +7,10 @@
 
 - python v3.9  minimum (python.exe need to be in path)
 ### Autoriser l'exécution de scripts PowerShell
-[fr] 1 - Cliquer sur le bouton Démarrer, sur Tous les programmes, sur Accessoires, sur Windows PowerShell.
-     2 - Cliquer avec le bouton droit de la souris sur Windows PowerShell puis cliquez sur Exécuter en tant qu'administrateur.
-     3 - Dans la fenêtre qui s'ouvre, saisissez la commande 'Set-ExecutionPolicy RemoteSigned' puis validez par Entrée.
-     4 - Appuyez sur O et validez
+[fr] - Cliquer sur le bouton Démarrer, sur Tous les programmes, sur Accessoires, sur Windows PowerShell.
+     - Cliquer avec le bouton droit de la souris sur Windows PowerShell puis cliquez sur Exécuter en tant qu'administrateur.
+     - Dans la fenêtre qui s'ouvre, saisissez la commande 'Set-ExecutionPolicy RemoteSigned' puis validez par Entrée.
+     - Appuyez sur O et validez
 
 ## Installation
 
