@@ -102,7 +102,7 @@ class TBoT(commands.Bot):
                 
         survivant = await TBOTBDD.get_stats_survivant(id_twitch)    
 
-        if survivant["alive"]==0 and survivant["credit"]>=CONFIG["COUT_REVIVE"]: 
+        if survivant["alive"]==False and survivant["inraid"]==False and survivant["credit"]>=CONFIG["COUT_REVIVE"]: 
             await TBOTBDD.revive_survivant(id_twitch)
             await tbot_com.message("revive_survivant",channel=channel,name=name,credit=str(CONFIG["COUT_REVIVE"])) 
 
