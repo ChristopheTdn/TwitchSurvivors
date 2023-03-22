@@ -2,8 +2,7 @@
 
 Click here for [ENGLISH VERSION](Readme.English.md)
 
-- [fr] systeme d integration TWITCH-PROJECT ZOMBOID
-- [en] Twitch project zomboid game integration for viewers
+systeme d integration TWITCH-PROJECT ZOMBOID
 
 ## PRE REQUIS / PREREQUISITE
 
@@ -18,15 +17,9 @@ Click here for [ENGLISH VERSION](Readme.English.md)
  ```bash
  Set-ExecutionPolicy RemoteSigned'
  ```
-### [en] enable execution of PowerShell scripts
--Start Windows PowerShell with the "Run as Administrator" option. Only members of the Administrators group on the computer can change the execution policy.
--Enable running unsigned scripts by entering:
-```bash
-set-executionpolicy remotesigned
-```
+ - Confirmer en appuyant su O
 
 ## Installation
-
 
 Use the package manager [pip](https://pip.pypa.io/en/stable/) to install foobar.
 
