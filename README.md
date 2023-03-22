@@ -37,16 +37,17 @@ systeme d interraction entre TWITCH et PROJECT ZOMBOID au travers d'un jeu ou le
  - selectionner l ensemble des autorisations  (Bouton select all tout en bas).
  - cliquer sur generate token.
  - Entrer les informations dans le fichier config_Token_Client.json :
+ - exemple
  ```json
 {
-    "USERNAME":"",
-    "TOKEN":"",
-    "REFRESH":"",
-    "ID":"",
-    "USER_ID" : 0,
-    "NICK":"",
+    "USERNAME":"gtof_",
+    "TOKEN":"mjklgfdg54fdg524fgdfdg456fd4g415",
+    "REFRESH":"fgd6541d23g45632d1fgd63521g3fd2",
+    "ID":"f1g35fd3221fgdfdfgdrhd54d63rg",
+    "USER_ID" : 123456,
+    "NICK":"GToF_",
     "PREFIX":"!",
-    "CHANNEL":""
+    "CHANNEL":"GToF_"
 }
 ```
  
