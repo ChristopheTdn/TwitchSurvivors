@@ -50,9 +50,17 @@ systeme d interraction entre TWITCH et PROJECT ZOMBOID au travers d'un jeu ou le
     "CHANNEL":"GToF_"
 }
 ```
- ### parametrer le fonctionnement du script
+
+### Integrer les overlays dans OBS :
+ Afin de visualiser les commandes et leurs effets, il est necessaire d ajouter 2 overlay à  votre scene OBS.
+ - TBoT_Overlay/html/chat.html : taille 1000 x 2000, Rafraichissement lorsque le fichier devient actif. 
+ - TBoT_Overlay/html/cars.html : taille 1920 x 200, Rafraichissement lorsque le fichier devient actif. 
+
+## Configuration
+
+### parametrer le fonctionnement du script
   - Entrer les informations dans le fichier Configuration/config.json 
-  - Dans la pratique, seul le nom du streamer est a fournir à la premiere ligne 
+  - Dans la pratique, seul le nom du streamer est a fournir à la première ligne 
   ```json
 {
     "STREAMER" : "",
@@ -77,17 +85,6 @@ systeme d interraction entre TWITCH et PROJECT ZOMBOID au travers d'un jeu ou le
     "MAX_VISI" : 5
 }
 
- ### Integrer les overlays dans OBS :
- Afin de visualiser les commandes et leurs effets, il est necessaire d ajouter 2 overlay à  votre scene OBS.
- - TBoT_Overlay/html/chat.html : taille 1000 x 2000, Rafraichissement lorsque le fichier devient actif. 
- - TBoT_Overlay/html/cars.html : taille 1920 x 200, Rafraichissement lorsque le fichier devient actif. 
- 
-
-
-## Configuration
-
-```python
-import foobar
 
 # returns 'words'
 foobar.pluralize('word')
