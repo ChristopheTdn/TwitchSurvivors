@@ -33,10 +33,24 @@ systeme d interraction entre TWITCH et PROJECT ZOMBOID au travers d'un jeu ou le
 - 
 ### fournir les tokens necessaires a la communication entre le script et le stream TWITCH
  Sur le site [https://twitchtokengenerator.com/](https://twitchtokengenerator.com/) 
- - generer un bot tchat 
-```bash
-pip install foobar
+ - generer un bot tchat token
+ - selectionner l ensemble des autorisations  (Bouton select all tout en bas).
+ - cliquer sur generate token.
+ - Entrer les informations dans le fichier config_Token_Client.json :
+ ```json
+{
+    "USERNAME":"",
+    "TOKEN":"",
+    "REFRESH":"",
+    "ID":"",
+    "USER_ID" : 0,
+    "NICK":"",
+    "PREFIX":"!",
+    "CHANNEL":""
+}
 ```
+ 
+
 
 ## Configuration
 
