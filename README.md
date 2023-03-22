@@ -58,7 +58,8 @@ systeme d interraction entre TWITCH et PROJECT ZOMBOID au travers d'un jeu ou le
 
 ## Configuration
 
-### Ajouter 3 recompenses de point de chaine. Respecter la dénomination :
+### sur votre chaine TWITCH : 
+Ajouter 3 recompenses de point de chaine. Respecter la dénomination :
 
 - "Acheter 300 crédits"
 - "Acheter 2000 crédits"
