@@ -16,7 +16,7 @@ systeme d integration TWITCH-PROJECT ZOMBOID
  ```bash
  Set-ExecutionPolicy RemoteSigned'
  ```
- - Confirmer en appuyant su O
+ - Confirmer en appuyant sur O
 
 ## Installation
 
