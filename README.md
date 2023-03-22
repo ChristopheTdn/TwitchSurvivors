@@ -1,6 +1,6 @@
 # Twitch Survivors
 
-Click here for ENGLISH VERSION
+Click here for [ENGLISH VERSION](https://github.com/ChristopheTdn/TwitchSurvivors/blob/3b40cfff0fa15ff2248bb3c73c96d3ef8c30a41c/Readme.English.md)
 
 - [fr] systeme d integration TWITCH-PROJECT ZOMBOID
 - [en] Twitch project zomboid game integration for viewers
