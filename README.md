@@ -30,13 +30,13 @@ systeme d interraction entre TWITCH et PROJECT ZOMBOID au travers d'un jeu ou le
 
 ### executer le script settingENV.ps1
 - A la racine du projet, clique droit sur le fichier settingENV.ps1 et Executer avec powershell
-- 
+
 ### fournir les tokens necessaires a la communication entre le script et le stream TWITCH
  Sur le site [https://twitchtokengenerator.com/](https://twitchtokengenerator.com/) 
  - generer un bot tchat token
  - selectionner l ensemble des autorisations  (Bouton select all tout en bas).
  - cliquer sur generate token.
- - Entrer les informations dans le fichier config_Token_Client.json :
+ - Entrer les informations dans le fichier Configuration/Secret/config_Token_Client.json :
  - exemple
  ```json
 {
@@ -50,6 +50,37 @@ systeme d interraction entre TWITCH et PROJECT ZOMBOID au travers d'un jeu ou le
     "CHANNEL":"GToF_"
 }
 ```
+ ### parametrer le fonctionnement du script
+  - Entrer les informations dans le fichier Configuration/config.json 
+  - Dans la pratique, seul le nom du streamer est a fournir à la premiere ligne 
+  ```json
+{
+    "STREAMER" : "",
+    "MOD_STEAM" : true,
+    "STEAM_MOD_NAME" : "TwitchSurvivors",
+    "STEAM_MOD_ID" : "2948924574",
+    "MOD_PATH" : "",
+    "DEBUG" : false,
+    "TIMING"  : 60,
+    "LANGUE" : "french",
+    "COUT_REVIVE" : 2000,
+    "COUT_MSG_RADIO" : 50,
+    "AJOUT_CREDIT" : 5000,
+    "TARIF_UPGRADE" : [0,1000,2500,6000,13000],
+    "MAX_TIME_RENFORT" : 5,
+    "PLAY_SOUND" : true,
+    "VOLUME" : 0.5,
+    "KILL_THEM_ALL" : true,
+    "RESET_PRESTIGE_AFTER_DEATH" : true,
+    "ASSISTANT_BOOST" : true,
+    "GEAR_BOOST" : 66,
+    "MAX_VISI" : 5
+}
+
+ ### Integrer les overlays dans OBS :
+ Afin de visualiser les commandes et leurs effets, il est necessaire d ajouter 2 overlay à  votre scene OBS.
+ - TBoT_Overlay/html/chat.html : taille 1000 x 2000, Rafraichissement lorsque le fichier devient actif. 
+ - TBoT_Overlay/html/cars.html : taille 1920 x 200, Rafraichissement lorsque le fichier devient actif. 
  
 
 
