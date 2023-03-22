@@ -4,13 +4,12 @@ Click here for [ENGLISH VERSION](Readme.English.md)
 
 systeme d integration TWITCH-PROJECT ZOMBOID
 
-## PRE REQUIS / PREREQUISITE
-
+## PRE REQUIS
 - python v3.11  minimum (installation via [Microsoft windows store](https://apps.microsoft.com/store/detail/python-311/9NRWMJP3717K) )
 - connaitre son n° identifiant Twitch ([ID Twitch]https://streamscharts.com/tools/convert-username )
 
 
-### [fr] Autoriser l'exécution de scripts PowerShell
+### Autoriser l'exécution de scripts PowerShell
 - Cliquer sur le bouton Démarrer, sur Tous les programmes, sur Accessoires, sur Windows PowerShell.
 - Cliquer avec le bouton droit de la souris sur Windows PowerShell puis cliquez sur Exécuter en tant qu'administrateur.
 - Dans la fenêtre qui s'ouvre, saisissez la commande :
