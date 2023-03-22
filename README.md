@@ -58,6 +58,14 @@ systeme d interraction entre TWITCH et PROJECT ZOMBOID au travers d'un jeu ou le
 
 ## Configuration
 
+### Ajouter 3 recompenses de point de chaine. Respecter la dénomination :
+
+Acheter 300 crédits
+Acheter 2000 crédits
+Acheter 5000 crédits
+
+Chaque récompenses doit deduire le nombre correspondant de point de chaine.
+
 ### parametrer le fonctionnement du script
   - Entrer les informations dans le fichier Configuration/config.json 
   - Dans la pratique, seul le nom du streamer est a fournir à la première ligne 
@@ -85,6 +93,10 @@ systeme d interraction entre TWITCH et PROJECT ZOMBOID au travers d'un jeu ou le
     "MAX_VISI" : 5
 }
 ```
+
+## Lancer le programme :
+
+
 
 ## Contributing
 
