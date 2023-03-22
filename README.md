@@ -60,11 +60,11 @@ systeme d interraction entre TWITCH et PROJECT ZOMBOID au travers d'un jeu ou le
 
 ### Ajouter 3 recompenses de point de chaine. Respecter la dénomination :
 
-Acheter 300 crédits
-Acheter 2000 crédits
-Acheter 5000 crédits
+-"Acheter 300 crédits"
+-"Acheter 2000 crédits"
+-"Acheter 5000 crédits"
 
-Chaque récompenses doit deduire le nombre correspondant de point de chaine.
+Chaque récompenses doit déduire le nombre correspondant de points de chaine.
 
 ### parametrer le fonctionnement du script
   - Entrer les informations dans le fichier Configuration/config.json 
