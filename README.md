@@ -95,7 +95,7 @@ Chaque récompenses doit déduire le nombre correspondant de points de chaine.
 ```
 
 ## Lancer le programme :
-
+definir comment lancer le script
 
 
 ## Contributing
