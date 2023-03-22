@@ -43,7 +43,7 @@ systeme d interraction entre TWITCH et PROJECT ZOMBOID au travers d'un jeu ou le
     "USERNAME":"gtof_",
     "TOKEN":"mjklgfdg54fdg524fgdfdg456fd4g415",
     "REFRESH":"fgd6541d23g45632d1fgd63521g3fd2",
-    "ID":"f1g35fd3221fgdfdfgdrhd54d63rg",
+    "ID":"gp762nuuoqcoxypju8c569th9wz7q5",
     "USER_ID" : 123456,
     "NICK":"GToF_",
     "PREFIX":"!",
