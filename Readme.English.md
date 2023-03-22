@@ -1,6 +1,6 @@
 # Twitch Survivors
 
-Click here for [FRENCH VERSION](https://github.com/ChristopheTdn/TwitchSurvivors/blob/780d8efa51e89964f7d3e29ae6be2122d810a111/README.md)
+Click here for [FRENCH VERSION](README.md)
 
 - [en] Twitch integration for  project zomboid game  
 
