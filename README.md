@@ -243,6 +243,10 @@ Please make sure to update tests as appropriate.
 - **Masoht_** : interface Overlay
 - **Perralto** : Test et relecture du code
 
+## Contribution :
+- **Dane** : relecture/Debuggage LUA. 
+
+
 
 
 
