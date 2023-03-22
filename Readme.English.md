@@ -2,15 +2,14 @@
 
 Click here for [FRENCH VERSION](https://github.com/ChristopheTdn/TwitchSurvivors/blob/780d8efa51e89964f7d3e29ae6be2122d810a111/README.md)
 
-- [en] Twitch project zomboid game integration for viewers
+- [en] Twitch integration for  project zomboid game  
 
 ## PRE REQUIS / PREREQUISITE
 
 - python v3.9  minimum (python.exe need to be in path environnement variable)
-- connaitre son n° identifiant Twitch ([ID Twitch]https://streamscharts.com/tools/convert-username )
+- your personnal id Twitch ([ID Twitch]https://streamscharts.com/tools/convert-username )
 
- ```
-### [en] enable execution of PowerShell scripts
+###[en] enable execution of PowerShell scripts
 -Start Windows PowerShell with the "Run as Administrator" option. Only members of the Administrators group on the computer can change the execution policy.
 -Enable running unsigned scripts by entering:
 ```bash
