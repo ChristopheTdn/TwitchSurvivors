@@ -1,4 +1,3 @@
-
 # Twitch Survivors
 
 ![Twitch Survivors Logo](TBoT-PZ/TwitchSurvivors/Contents/mods/TwitchSurvivors/logo.png?raw=true)
@@ -31,15 +30,15 @@ systeme d interraction entre TWITCH et PROJECT ZOMBOID au travers d'un jeu ou le
 
 ### Cloner le depot sur votre disque local
 
-### executer le script settingENV.ps1
-- A la racine du projet, clique droit sur le fichier settingENV.ps1 et Executer avec powershell
+### executer le script `settingENV.ps1`
+- A la racine du projet, clique droit sur le fichier `settingENV.ps1` et Executer avec powershell
 
 ### fournir les tokens necessaires a la communication entre le script et le stream TWITCH
  Sur le site [https://twitchtokengenerator.com/](https://twitchtokengenerator.com/) 
  - generer un bot tchat token
- - selectionner l ensemble des autorisations  (Bouton select all tout en bas).
+ - sélectionner l'ensemble des autorisations  (Bouton select all tout en bas).
  - cliquer sur generate token.
- - Entrer les informations dans le fichier Configuration/Secret/config_Token_Client.json :
+ - Entrer les informations dans le fichier `Configuration/Secret/config_Token_Client.json` :
  - exemple
  ```json
 {
@@ -54,24 +53,24 @@ systeme d interraction entre TWITCH et PROJECT ZOMBOID au travers d'un jeu ou le
 }
 ```
 
-### Intégrer les overlays dans OBS :
- Afin de visualiser les commandes et leurs effets, il est nécessaire d ajouter 2 overlay à  votre scene OBS.
+### Integrer les overlays dans OBS :
+ Afin de visualiser les commandes et leurs effets, il est necessaire d ajouter 2 overlay à  votre scene OBS.
  - TBoT_Overlay/html/chat.html : taille 1000 x 2000, Rafraichissement lorsque le fichier devient actif. 
  - TBoT_Overlay/html/cars.html : taille 1920 x 200, Rafraichissement lorsque le fichier devient actif. 
 
 ## Configuration
 
 ### sur votre chaine TWITCH : 
-Ajouter 3 récompenses de point de chaine. Respecter la dénomination :
+Ajouter 3 recompenses de point de chaine. Respecter la dénomination :
 
-- "Acheter 300 crédits"
-- "Acheter 2000 crédits"
-- "Acheter 5000 crédits"
+ - "Acheter 300 crédits"
+ - "Acheter 2000 crédits"
+ - "Acheter 5000 crédits"
 
 Chaque récompenses doit déduire le nombre correspondant de points de chaine.
 
 ### parametrer le fonctionnement du script
-  - Entrer les informations dans le fichier Configuration/config.json 
+  - Entrer les informations dans le fichier `Configuration/config.json` 
   - Dans la pratique, seul le nom du streamer est a fournir à la première ligne 
   ```json
 {
@@ -99,7 +98,7 @@ Chaque récompenses doit déduire le nombre correspondant de points de chaine.
 ```
 
 ## Lancer le programme :
-definir comment lancer le script
+définir comment lancer le script
 
 
 ## Contributing
