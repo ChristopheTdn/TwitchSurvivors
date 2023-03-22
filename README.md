@@ -5,9 +5,15 @@ Click here for [ENGLISH VERSION](Readme.English.md)
 systeme d integration TWITCH-PROJECT ZOMBOID
 
 ## PRE REQUIS
-- python v3.11  minimum (installation via [Microsoft windows store](https://apps.microsoft.com/store/detail/python-311/9NRWMJP3717K) )
-- connaitre son [n° identifiant Twitch](https://streamscharts.com/tools/convert-username)
 
+### s'abonner au  mod Steam TWITCH SURVIVORS :
+-Dans le Workshop Steam de Project Zomboid s'abonner à [TWITCH SURVIVORS](https://steamcommunity.com/sharedfiles/filedetails/?id=2948924574&searchtext=twitch+survivors)
+
+### Installer python 
+- python v3.11  minimum (installation via [Microsoft windows store](https://apps.microsoft.com/store/detail/python-311/9NRWMJP3717K) )
+
+### Connaitre son ID Twitch
+- connaitre son [n° identifiant Twitch](https://streamscharts.com/tools/convert-username)
 
 ### Autoriser l'exécution de scripts PowerShell
 - Cliquer sur le bouton Démarrer, sur Tous les programmes, sur Accessoires, sur Windows PowerShell.
@@ -20,7 +26,7 @@ systeme d integration TWITCH-PROJECT ZOMBOID
 
 ## Installation
 
-Use the package manager [pip](https://pip.pypa.io/en/stable/) to install foobar.
+Cloner le depot sur votre disque local
 
 ```bash
 pip install foobar
