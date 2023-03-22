@@ -7,7 +7,7 @@ Click here for [ENGLISH VERSION](Readme.English.md)
 
 ## PRE REQUIS / PREREQUISITE
 
-- python v3.9  minimum (python.exe need to be in path environnement variable)
+- python v3.11  minimum (installation via [Microsoft windows store](https://apps.microsoft.com/store/detail/python-311/9NRWMJP3717K) )
 - connaitre son n° identifiant Twitch ([ID Twitch]https://streamscharts.com/tools/convert-username )
 
 
