@@ -14,7 +14,7 @@ systeme d integration TWITCH-PROJECT ZOMBOID
 - Cliquer avec le bouton droit de la souris sur Windows PowerShell puis cliquez sur Exécuter en tant qu'administrateur.
 - Dans la fenêtre qui s'ouvre, saisissez la commande :
  ```bash
- Set-ExecutionPolicy RemoteSigned'
+ Set-ExecutionPolicy RemoteSigned
  ```
  - Confirmer en appuyant sur O
 
