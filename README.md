@@ -12,7 +12,7 @@ systeme d interraction entre TWITCH et PROJECT ZOMBOID au travers d'un jeu ou le
 ### Installer python 
 - python v3.11  minimum (installation via [Microsoft windows store](https://apps.microsoft.com/store/detail/python-311/9NRWMJP3717K) )
 
-### Connaitre son ID Twitch
+### Connaitre son n° ID Twitch
 - connaitre son [n° identifiant Twitch](https://streamscharts.com/tools/convert-username)
 
 ### Autoriser l'exécution de scripts PowerShell
