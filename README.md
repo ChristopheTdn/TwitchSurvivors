@@ -1,12 +1,15 @@
 # Twitch Survivors
 
+Click here for ENGLISH VERSION
+
 - [fr] systeme d integration TWITCH-PROJECT ZOMBOID
 - [en] Twitch project zomboid game integration for viewers
 
 ## PRE REQUIS / PREREQUISITE
 
 - python v3.9  minimum (python.exe need to be in path environnement variable)
-- connaitre votre identifiant Twitch ([ID Twitch]https://streamscharts.com/tools/convert-username )
+- connaitre son n° identifiant Twitch ([ID Twitch]https://streamscharts.com/tools/convert-username )
+
 
 ### [fr] Autoriser l'exécution de scripts PowerShell
 - Cliquer sur le bouton Démarrer, sur Tous les programmes, sur Accessoires, sur Windows PowerShell.
