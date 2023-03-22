@@ -27,7 +27,11 @@ systeme d interraction entre TWITCH et PROJECT ZOMBOID au travers d'un jeu ou le
 ## Installation
 
 ### Cloner le depot sur votre disque local
-### executer le script 
+
+### executer le script settingENV.ps1
+- A la racine du projet, clique droit sur le fichier settingENV.ps1 et Executer avec powershell
+- 
+### fournir les tokens necessaires a la communication entre le script et le stream TWITCH
 
 ```bash
 pip install foobar
