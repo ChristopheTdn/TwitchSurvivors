@@ -32,7 +32,8 @@ systeme d interraction entre TWITCH et PROJECT ZOMBOID au travers d'un jeu ou le
 - A la racine du projet, clique droit sur le fichier settingENV.ps1 et Executer avec powershell
 - 
 ### fournir les tokens necessaires a la communication entre le script et le stream TWITCH
-
+ Sur le site [https://twitchtokengenerator.com/](https://twitchtokengenerator.com/) 
+ - generer un bot tchat 
 ```bash
 pip install foobar
 ```
