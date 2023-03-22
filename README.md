@@ -2,7 +2,7 @@
 
 Click here for [ENGLISH VERSION](Readme.English.md)
 
-systeme d integration TWITCH-PROJECT ZOMBOID
+systeme d interraction entre TWITCH et PROJECT ZOMBOID au travers d'un jeu ou les viewers assure le role de survivants et peuvent apporter leur aide au streamer en realisant des RAIDs et en se regroupant pour survivre le plus longtemps possible.
 
 ## PRE REQUIS
 
@@ -26,7 +26,8 @@ systeme d integration TWITCH-PROJECT ZOMBOID
 
 ## Installation
 
-Cloner le depot sur votre disque local
+### Cloner le depot sur votre disque local
+### executer le script 
 
 ```bash
 pip install foobar
