@@ -6,8 +6,6 @@ Click here for [FRENCH VERSION](README.md)
 
 ## PREREQUISITE
 
-## PRE REQUIS
-
 ### s'abonner au  mod Steam TWITCH SURVIVORS :
 -Dans le Workshop Steam de Project Zomboid s'abonner à [TWITCH SURVIVORS](https://steamcommunity.com/sharedfiles/filedetails/?id=2948924574&searchtext=twitch+survivors)
 
