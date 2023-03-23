@@ -125,6 +125,12 @@
         "mod"   : "radio {name} : allo... j'ai atteint mon objectif... je reviens à la base..",
         "sound" : "MI-RAID.mp3"
     },
+    "raid_embuscade" : {
+        "ovl"   : "⛹- l'equipe de {name} est tombé dans une embuscade.",
+        "chat"  : "",
+        "mod"   : "radio {name} : allo... j'ai atteint mon objectif... je reviens à la base..",
+        "sound" : "EMBUSCADE.mp3"
+    },
     "raid_deja_en_cours" :{
         "ovl"   : "❌- un Raid est dejà en cours pour {name} ! tapez !my_survivor pour plus d'info.",
         "chat"  : "",
@@ -220,5 +226,5 @@
         "chat":"",
         "mod":"",
         "sound":"" 
-    }
+    
 }

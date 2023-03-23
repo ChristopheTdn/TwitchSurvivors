@@ -68,7 +68,8 @@ class TBOT_BDD():
             levelRaid_armor INTEGER,
             levelRaid_transport INTEGER,
             levelRaid_gear INTEGER,
-            effectif_team INTEGER
+            effectif_team INTEGER,
+            embuscade TEXT
             )''')
         self.connexionSQL.commit()
         self.connexionSQL.close()
@@ -213,7 +214,8 @@ class TBOT_BDD():
                 "levelRaid_armor"     : survivant[17],
                 "levelRaid_transport" : survivant[18],
                 "levelRaid_gear"      : survivant[19],
-                "effectif_team"       : survivant[20]
+                "effectif_team"       : survivant[20],
+                "embuscade"           : survivant[21]
                 }
         else :
             survivant_dict = None
@@ -283,7 +285,9 @@ class TBOT_BDD():
                         levelRaid_armor,
                         levelRaid_transport,
                         levelRaid_gear,
-                        effectif_team 
+                        effectif_team,
+                        embuscade
+                         
                         )
                         VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)''',
                         (survivant_stat["id_twitch"],
@@ -305,7 +309,9 @@ class TBOT_BDD():
                          survivant_stat["level_armor"],
                          survivant_stat["level_transport"],
                          survivant_stat["level_gear"],
-                         1))
+                         1,
+                         ""                         
+                         ))
                         
         await db.execute(f'''UPDATE survivant SET credit = credit - {cout_raid},
                          inraid = 1
@@ -473,6 +479,12 @@ class TBOT_BDD():
             if len(listeRaid) < CONFIG["MAX_VISI"]: #affiche toujours les infos raid si moinds de 5 raids en simultané
                 raid["visi"] = True
                 
+            embuscade = list(raid["embuscade"].split(","))
+            
+            if str(raid["distance"]) in embuscade :
+                raid["gfx_car"]="embuscade.png"
+                await tbot_com.message("raid_embuscade",channel=channel,name=raid["name"])
+                   
             data[f'SURVIVANT_{raid["name"]}']={"NAME":raid["name"],
                                         "STATS": stat_survivant,
                                         "TYPE":raid["type"],
