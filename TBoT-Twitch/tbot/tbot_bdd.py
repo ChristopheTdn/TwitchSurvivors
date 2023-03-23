@@ -336,6 +336,7 @@ class TBOT_BDD():
         BLESSE_REF = self.config_raid_json["raid_"+raid["type"]]["stats_raid"][f"niveau-1"]["BLESSE"]
         MORT_REF = self.config_raid_json["raid_"+raid["type"]]["stats_raid"][f"niveau-1"]["MORT"]
         gfx_car = f'{raid["levelRaid_transport"]}-{(random.randrange(4)+1)}.png'
+        embuscade = []
         if CONFIG["ASSISTANT_BOOST"] :
             ASSISTANT_BOOST = raid['effectif_team']
         else :
@@ -352,7 +353,8 @@ class TBOT_BDD():
                 blesse = random.randrange(DISTANCE-50,DISTANCE-10)
                 if blesse == DISTANCE//2 :
                     blesse +=2
-                fin = random.randrange(2,blesse-2)
+                fin = random.randrange(2,blesse-3)
+
                 
             elif resultRAID < MORT+BLESSE :
                 resultat = 'BLESSE' 
@@ -360,6 +362,7 @@ class TBOT_BDD():
                 if blesse == DISTANCE//2 :
                     blesse +=2
                 fin = 0
+                embuscade.append(str(blesse+1))
                 break
             elif resultRAID < MORT+BLESSE+BREDOUILLE:
                 resultat = 'BREDOUILLE'
@@ -372,7 +375,18 @@ class TBOT_BDD():
                 fin = 0
                 (composition_butin,bonus_butin) = await self.genere_butin(raid)     
                 break
-                    
+        if fin>0 :    
+            embuscade.append(str(fin+1))
+        if blesse>0 :
+            embuscade.append(str(blesse+1))
+        for i in random.randrange(2):
+            proposition_ambush = random.randrange(DISTANCE-50,DISTANCE-10)
+            if proposition_ambush not in embuscade and\
+               proposition_ambush-1 != blesse and\
+               proposition_ambush-1 != fin :
+                   embuscade.append(proposition_ambush)
+        
+        
         db = await aiosqlite.connect(os.path.join("./Sqlite", self.NAMEBDD))
         await db.execute (f'''UPDATE raid SET
                         distance = {DISTANCE},
@@ -382,7 +396,8 @@ class TBOT_BDD():
                         mort = {fin},
                         composition_butin = '{json.dumps(composition_butin)}',
                         bonus_butin = {bonus_butin},
-                        gfx_car = '{gfx_car}'
+                        gfx_car = '{gfx_car}',
+                        embuscade = "{",".join(embuscade)}",
                         WHERE id_twitch = {raid["id_twitch"]}''')
         await db.commit()
         await db.close()
