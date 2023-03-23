@@ -1,5 +1,5 @@
 {
-    "empty" :{
+        "empty" :{
         "ovl"   : "",
         "chat"  : "",
         "mod"   : "",
@@ -225,6 +225,7 @@
         "ovl":"❌-Attention {name}, tu ne peux aider {name2}. Son equipe est déjà au complet !",
         "chat":"",
         "mod":"",
-        "sound":"" 
+        "sound":""
+    }
     
 }

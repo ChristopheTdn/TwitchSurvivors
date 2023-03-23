@@ -287,9 +287,8 @@ class TBOT_BDD():
                         levelRaid_gear,
                         effectif_team,
                         embuscade
-                         
                         )
-                        VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)''',
+                        VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)''',
                         (survivant_stat["id_twitch"],
                          survivant_stat["name"],
                          type_raid,
@@ -379,12 +378,15 @@ class TBOT_BDD():
             embuscade.append(str(fin+1))
         if blesse>0 :
             embuscade.append(str(blesse+1))
-        for i in random.randrange(2):
-            proposition_ambush = random.randrange(DISTANCE-50,DISTANCE-10)
-            if proposition_ambush not in embuscade and\
-               proposition_ambush-1 != blesse and\
-               proposition_ambush-1 != fin :
-                   embuscade.append(proposition_ambush)
+        for i in range(random.randrange(1,3)):
+            while "Tant que l on ne trouve pas une bonne distance":
+                proposition_ambush = random.randrange(DISTANCE-50,DISTANCE-10)
+                if proposition_ambush not in embuscade and\
+                   proposition_ambush-1 != blesse and\
+                   proposition_ambush-1 != fin and\
+                   proposition_ambush-1 > fin :
+                    embuscade.append(str(proposition_ambush))
+                    break
         
         
         db = await aiosqlite.connect(os.path.join("./Sqlite", self.NAMEBDD))
@@ -397,7 +399,7 @@ class TBOT_BDD():
                         composition_butin = '{json.dumps(composition_butin)}',
                         bonus_butin = {bonus_butin},
                         gfx_car = '{gfx_car}',
-                        embuscade = "{",".join(embuscade)}",
+                        embuscade = "{",".join(embuscade)}"
                         WHERE id_twitch = {raid["id_twitch"]}''')
         await db.commit()
         await db.close()
