@@ -9,8 +9,6 @@ from datetime import datetime
 import aiofiles
 from . import tbot_com
 
-
-
 with open('./Configuration/config.json', 'r',encoding="utf-8") as fichier:
     CONFIG = json.load(fichier)
     
@@ -312,15 +310,19 @@ class TBoT(commands.Bot):
         test_survivant_exist = await TBOTBDD.get_stats_survivant(name)
         if test_survivant_exist !=None :
             dictStat= await TBOTBDD.get_stats_survivant(name)
-            message =   "{name} > 💰:{credit}   🌿{name2} "
+            dead =''
+            if not dictStat['alive'] :
+                dead = '☠️☠️'
+            message =   "{dead}{name}{dead} > 💰:{credit}   🌿{name2} "
             message +=   f"<p>🪓: {dictStat['level_weapon']} | 🛡️: {dictStat['level_armor']} | 🚙 : {dictStat['level_transport']} | 🛠️ : {dictStat['level_gear']}</p>"
             stat_Raid = await TBOTBDD.stat_raid(name)
             if stat_Raid!= None :
-                message += f"<p>actuellement en RAID {stat_Raid['type']}</p>"
+                message += f"<p>RAID {stat_Raid['type']}</p>"
                 equipe = stat_Raid["renfort"]  
                 if equipe != "" :
                     message += f"support : {equipe}"
-
+            if dictStat['support_raid'] != "" :
+                message += f"<p>support RAID : {dictStat['support_raid']}</p>" 
             await tbot_com.message(channel=channel,ovl=message,name=name,name2=str(test_survivant_exist["prestige"]),credit=str(test_survivant_exist["credit"]))
         else :
             await tbot_com.message(key="survivant_no_exist",channel=channel,name=name)
