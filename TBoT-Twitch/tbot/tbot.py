@@ -317,14 +317,14 @@ class TBoT(commands.Bot):
             message +=   f"<p>🪓: {dictStat['level_weapon']} | 🛡️: {dictStat['level_armor']} | 🚙 : {dictStat['level_transport']} | 🛠️ : {dictStat['level_gear']}</p>"
             stat_Raid = await TBOTBDD.stat_raid(ctx.author.id)
             if stat_Raid!= None :
-                message += f"statut Raid : <span class='pseudo'>{stat_Raid['type']}</span>"
+                message += f"<p>statut Raid : {stat_Raid['type']}</p>"
                 equipe = stat_Raid["renfort"]  
                 if equipe != "" :
-                    message += f"support : <span class='pseudo'>{equipe}</span>"
+                    message += f"support : {equipe}"
                 else : 
                     message += f"support : none"
             if dictStat['support_raid'] != "" :
-                message += f"support RAID : <span class='pseudo'>{dictStat['support_raid']}</span>" 
+                message += f"<p>support RAID : {dictStat['support_raid']}</p>" 
             await tbot_com.message(channel=channel,ovl=message,name=name,name2=str(test_survivant_exist["prestige"]),credit=str(test_survivant_exist["credit"]))
         else :
             await tbot_com.message(key="survivant_no_exist",channel=channel,name=name)
