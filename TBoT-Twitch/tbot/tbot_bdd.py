@@ -361,7 +361,6 @@ class TBOT_BDD():
                 if blesse == DISTANCE//2 :
                     blesse +=2
                 fin = 0
-                embuscade.append(str(blesse+1))
                 break
             elif resultRAID < MORT+BLESSE+BREDOUILLE:
                 resultat = 'BREDOUILLE'

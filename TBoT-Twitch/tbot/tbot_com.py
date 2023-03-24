@@ -52,7 +52,7 @@ messageJson={}
 def joue_son(radio = "radio1.mp3"):
     """Joue un son passé en parametre 
     Args:
-        radio (str, optional): nom du fichier se trouvant dans le repertoire /sound. Defaults > "radio1.mp3".
+        radio (str, optional): nom du fichier se trouvant dans le repertoire /sounds. Defaults > "radio1.mp3".
     """
     if CONFIG["PLAY_SOUND"] : #joue les sons du Mod en fonction de la configuration
         mixer.init()   
