@@ -32,16 +32,16 @@ class Survivant {
 	setTemplate() {
 		this.box.classList.add("cars");
 		this.box.id = this.name;
-		this.setRenforts();
 		if(this.visi == 1) {
+			this.setRenforts();
 			this.box.appendChild(this.pseudoBox);
 			this.box.appendChild(this.line);
 			this.pseudoBox.classList.add('pseudoBox')
+			this.setPseudo();
 		}
 		this.setBadge();
 		this.setStatus();
 		this.setImg();
-		this.setPseudo();
 		this.setPosition();
 
 		document.getElementById('line').appendChild(this.box)
