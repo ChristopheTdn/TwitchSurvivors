@@ -6,7 +6,7 @@
         "sound" : ""
     },
     "armaggedon" :{
-        "ovl"   : "☠️☠️ C'est la FIN !!! Tous les survivants sont morts ! ☠️☠️",
+        "ovl"   : "☠️ C'est la FIN !!! Tous les survivants sont morts ! ☠️",
         "chat"  :"",
         "mod"   : "",
         "sound" : ""
@@ -18,7 +18,7 @@
         "sound" : "Nouveau_Survivant.mp3"
     },
     "survivant_no_exist" :{
-        "ovl"   : "❌- le survivant {name} n'existe pas sur le serveur ! génère le avec des crédits. commande !create_survivor",
+        "ovl"   : "❌- le survivant {name} n'existe pas sur le serveur ! génère le avec des crédits. commande <span style='color:rgb(230, 138, 0);'>!create_survivor</span>",
         "chat"  :"",
         "mod"   : "",
         "sound" : ""
@@ -42,7 +42,7 @@
         "sound" : ""
     },
     "survivant_max_aptitude" :{
-        "ovl"   :"❌- Attention {name}, l aptitude {aptitude} est deja à son niveau maximum. !my_survivor pour plus de renseignement.",
+        "ovl"   :"❌- Attention {name}, l aptitude {aptitude} est deja à son niveau maximum. <span style='color:rgb(230, 138, 0);'>!my_survivor</span> pour plus de renseignement.",
         "chat"  :"",
         "mod"   : "",
         "sound" : ""
@@ -54,7 +54,7 @@
         "sound" : "" 
     },
     "survivant_exist" : {
-        "ovl"   :"⛹- Attention {name}, ton survivant existe déjà ! !my_survivor pour plus d'info !",
+        "ovl"   :"⛹- Attention {name}, ton survivant existe déjà ! <span style='color:rgb(230, 138, 0);'>!my_survivor</span> pour plus d'info !",
         "chat"  :"",
         "mod"   : "",
         "sound" : "" 
@@ -90,7 +90,7 @@
         "sound" : "" 
     },
     "survivant_gain_support":{
-        "ovl"   :"💰-  {name} gagne +{gain_prestige} pts de prestige pour avoir participé au raid de {name2}",
+        "ovl"   :"💰-  {name} gagne +{gain_prestige} pts de prestige pour avoir participé au raid de <span style='color:rgb(230, 138, 0);'>{name2}</span>",
         "chat"  :"",
         "mod"   : "",
         "sound" : "" 

@@ -311,19 +311,19 @@ class TBoT(commands.Bot):
             dictStat= await TBOTBDD.get_stats_survivant(ctx.author.id)
             dead =''
             if not dictStat['alive'] :
-                dead = '☠️☠️☠️'
+                dead = '(☠️)'
             message =   f"{dead} "+"{name}"+f" {dead}"+"> 💰:{credit}   🌿{name2} "
             message +=   f"<p>🪓: {dictStat['level_weapon']} | 🛡️: {dictStat['level_armor']} | 🚙 : {dictStat['level_transport']} | 🛠️ : {dictStat['level_gear']}</p>"
             stat_Raid = await TBOTBDD.stat_raid(ctx.author.id)
             if stat_Raid!= None :
-                message += f"<p>statut Raid : {stat_Raid['type']}</p>"
+                message += f"<p>statut Raid : <span style='color:rgb(230, 138, 0);'>{stat_Raid['type']}</span></p>"
                 equipe = stat_Raid["renfort"]  
                 if equipe != "" :
-                    message += f"support : {equipe}"
+                    message += f'<p>support : <span style="color:rgb(230, 138, 0);">{equipe}</span></p>'
                 else : 
-                    message += f"support : none"
+                    message += f"<p>support : <span style='color:rgb(230, 138, 0);'>none</span></p>'"
             if dictStat['support_raid'] != "" :
-                message += f"<p>support RAID : {dictStat['support_raid']}</p>" 
+                message += f"<p>support RAID : <span style='color:rgb(230, 138, 0);'>{dictStat['support_raid']}</span></p>"
             await tbot_com.message(channel=channel,ovl=message,name=name,name2=str(test_survivant_exist["prestige"]),credit=str(test_survivant_exist["credit"]))
         else :
             await tbot_com.message(key="survivant_no_exist",channel=channel,name=name)
