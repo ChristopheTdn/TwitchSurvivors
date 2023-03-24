@@ -32,7 +32,7 @@ class Survivant {
 	setTemplate() {
 		this.box.classList.add("cars");
 		this.box.id = this.name;
-		// this.setRenforts();
+		this.setRenforts();
 		if(this.visi == 1) {
 			this.box.appendChild(this.pseudoBox);
 			this.box.appendChild(this.line);
@@ -88,21 +88,16 @@ class Survivant {
 
 	// Construction de la ligne renforts
 	setRenforts(){
-		if(Object.keys(this.aids).length > 0) {
+		if(this.aids !== "None") {
 			this.pAids.innerHTML = "( ";
-			for (var i = 0 ; i <= Object.values(this.pAids).length ; i++) {
-				this.pAids.innerHTML += Object.values(this.aids)[i];
-				if( i !== Object.values(this.aids).length -1) {
-					this.pAids.innerHTML += " - ";
-				}
-			}
+			this.pAids.innerHTML += this.aids;
 			this.pAids.innerHTML += " )";
 			this.pAids.style.fontSize = config.cars.aid_size+'em';
 			this.pAids.style.fontFamily = config.font.name;
 			this.pAids.style.color = config.cars.aid_color;
 			this.pAids.classList.add('renforts')
 			this.box.appendChild(this.pAids);
-		}
+		} 
 	}
 
 	// définition position et orientation
