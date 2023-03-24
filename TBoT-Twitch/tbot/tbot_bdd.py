@@ -488,7 +488,7 @@ class TBOT_BDD():
             await db.execute(f'''UPDATE raid SET distance = {raid["distance"]},time_renfort = time_renfort+1 WHERE id_twitch = {raid["id_twitch"]}''')
             
             if raid["time_visi"] > 0 :
-                await db.execute(f'''UPDATE raid SET time_visi = time_visi - 1 WHERE id_twitch = {raid_actif["id_twitch"]}''')
+                await db.execute(f'''UPDATE raid SET time_visi = time_visi - 1 WHERE id_twitch = {raid["id_twitch"]}''')
             if raid["time_visi"] == 0 and raid["visi"] == True :    
                 await db.execute(f'''UPDATE raid SET visi = False WHERE id_twitch = {raid["id_twitch"]}''')
             
