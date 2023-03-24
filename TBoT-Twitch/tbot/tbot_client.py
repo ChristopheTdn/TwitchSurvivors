@@ -31,9 +31,9 @@ class TBoT_Client(commands.Cog):
             channel = self.bot.get_channel(CLIENT["CHANNEL"])
             await self.bot.ajout_credit(event.user.id,event.user.name,channel,credit=5000)   
                
-    @commands.Cog.event()
-    async def event_message(self, message: twitchio.Message):
-        print(message.content)
+    #@commands.Cog.event()
+    #async def event_message(self, message: twitchio.Message):
+    #    print(message.content)
     
             
     @commands.Cog.event()

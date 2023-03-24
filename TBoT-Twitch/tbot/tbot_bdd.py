@@ -175,7 +175,7 @@ class TBOT_BDD():
                     "level_gear":listeStat[9],
                     "alive":bool(listeStat[10]),
                     "inraid":bool(listeStat[11]),
-                    "support_raid":bool(listeStat[12]),
+                    "support_raid":listeStat[12],
                     }
             return reponse
     
@@ -381,7 +381,7 @@ class TBOT_BDD():
         for i in range(random.randrange(1,3)):
             while "Tant que l on ne trouve pas une bonne distance":
                 proposition_ambush = random.randrange(DISTANCE-50,DISTANCE-10)
-                if proposition_ambush not in embuscade and\
+                if str(proposition_ambush) not in embuscade and\
                    proposition_ambush-1 != blesse and\
                    proposition_ambush-1 != fin and\
                    proposition_ambush-1 > fin :
