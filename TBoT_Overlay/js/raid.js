@@ -88,7 +88,7 @@ class Survivant {
 
 	// Construction de la ligne renforts
 	setRenforts(){
-		if(this.aids !== "None") {
+		if(this.aids !== "") {
 			this.pAids.innerHTML = "( ";
 			this.pAids.innerHTML += this.aids;
 			this.pAids.innerHTML += " )";
