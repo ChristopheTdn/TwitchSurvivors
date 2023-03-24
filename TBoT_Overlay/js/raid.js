@@ -2,7 +2,7 @@ const SURVIVORS = [];
 
 class Survivant {
 	// JSON to Object
-	constructor(name, career, prestige, credit, levelWeapon, levelArmor, levelTransport, levelGear, raidType, raidDistance, aids, dead, hurt, imgCar) {
+	constructor(name, career, prestige, credit, levelWeapon, levelArmor, levelTransport, levelGear, raidType, raidDistance, aids, dead, hurt, visi, imgCar) {
 		this.name = name;
 		this.career = career;
 		this.prestige = prestige;
@@ -16,6 +16,7 @@ class Survivant {
 		this.aids = aids;
 		this.dead = dead;
 		this.hurt = hurt;
+		this.visi = visi;
 		this.imgCar = imgCar;
 		this.gap = 0;
 		this.box = document.createElement('div');
@@ -32,9 +33,11 @@ class Survivant {
 		this.box.classList.add("cars");
 		this.box.id = this.name;
 		// this.setRenforts();
-		this.box.appendChild(this.pseudoBox);
-		this.box.appendChild(this.line);
-		this.pseudoBox.classList.add('pseudoBox')
+		if(this.visi == 1) {
+			this.box.appendChild(this.pseudoBox);
+			this.box.appendChild(this.line);
+			this.pseudoBox.classList.add('pseudoBox')
+		}
 		this.setBadge();
 		this.setStatus();
 		this.setImg();
@@ -84,23 +87,23 @@ class Survivant {
 	}
 
 	// Construction de la ligne renforts
-	// setRenforts(){
-	// 	if(Object.keys(this.aids).length > 0) {
-	// 		this.pAids.innerHTML = "( ";
-	// 		for (var i = 0 ; i <= Object.values(this.pAids).length ; i++) {
-	// 			this.pAids.innerHTML += Object.values(this.aids)[i];
-	// 			if( i !== Object.values(this.aids).length -1) {
-	// 				this.pAids.innerHTML += " - ";
-	// 			}
-	// 		}
-	// 		this.pAids.innerHTML += " )";
-	// 		this.pAids.style.fontSize = config.cars.aid_size+'em';
-	// 		this.pAids.style.fontFamily = config.font.name;
-	// 		this.pAids.style.color = config.cars.aid_color;
-	// 		this.pAids.classList.add('renforts')
-	// 		this.box.appendChild(this.pAids);
-	// 	}
-	// }
+	setRenforts(){
+		if(Object.keys(this.aids).length > 0) {
+			this.pAids.innerHTML = "( ";
+			for (var i = 0 ; i <= Object.values(this.pAids).length ; i++) {
+				this.pAids.innerHTML += Object.values(this.aids)[i];
+				if( i !== Object.values(this.aids).length -1) {
+					this.pAids.innerHTML += " - ";
+				}
+			}
+			this.pAids.innerHTML += " )";
+			this.pAids.style.fontSize = config.cars.aid_size+'em';
+			this.pAids.style.fontFamily = config.font.name;
+			this.pAids.style.color = config.cars.aid_color;
+			this.pAids.classList.add('renforts')
+			this.box.appendChild(this.pAids);
+		}
+	}
 
 	// définition position et orientation
 	setPosition(){
@@ -120,14 +123,16 @@ class Survivant {
 	setSuperposition() {
 		for (let survivor in SURVIVORS) {
 			if(this.name !== SURVIVORS[survivor].name) {
-				if((this.raidDistance - SURVIVORS[survivor].raidDistance) <= 2 || (SURVIVORS[survivor].raidDistance - this.raidDistance) <= 2 ) {
+				if((this.raidDistance - SURVIVORS[survivor].raidDistance) <= 2 && (SURVIVORS[survivor].raidDistance - this.raidDistance) <= 2 ) {
 					if(this.gap === SURVIVORS[survivor].gap) {
-						this.gap +=2;
-						this.line.style.height = this.gap+"em";
-						this.line.style.height = this.gap+"em";
-						this.line.classList.add('car-line');
-						this.line.style.background = config.cars.line_color;
-						this.pseudoBox.style.paddingBottom = "0em";
+						if(SURVIVORS[survivor].visi) {
+							this.gap +=2;
+							this.line.style.height = this.gap+"em";
+							this.line.style.height = this.gap+"em";
+							this.line.classList.add('car-line');
+							this.line.style.background = config.cars.line_color;
+							this.pseudoBox.style.paddingBottom = "0em";
+						}
 					}
 				}
 			}
@@ -160,6 +165,7 @@ window.addEventListener('load', (event) => {
 				jsonSurvivants[jsonSurvivant].RENFORT,
 				jsonSurvivants[jsonSurvivant].DEAD,
 				jsonSurvivants[jsonSurvivant].HURT,
+				jsonSurvivants[jsonSurvivant].VISI,
 				jsonSurvivants[jsonSurvivant].GFX_CAR,
 			)
 			SURVIVORS[survivant.name] = survivant;

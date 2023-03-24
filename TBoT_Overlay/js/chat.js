@@ -55,6 +55,7 @@ class Message {
 		this.p.innerHTML = this.content;
 		this.p.style.fontFamily = config.font.name;
 		this.p.style.fontSize = config.chat.text_size+"em";
+		this.p.style.lineHeight = config.chat.line_spacing+"em";
 		if(this.isInDelay) {
 			this.setOpacity();
 			chat.insert(this.p);
