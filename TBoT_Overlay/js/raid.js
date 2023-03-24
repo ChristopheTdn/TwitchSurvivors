@@ -128,7 +128,7 @@ class Survivant {
 
 					if(this.gap === SURVIVORS[survivor].gap) {
 						if(SURVIVORS[survivor].visi) {
-							this.gap +=3;
+							this.gap += config.cars.gap_size;
 							this.line.style.height = this.gap+"em";
 							this.line.style.height = this.gap+"em";
 							this.line.classList.add('car-line');
