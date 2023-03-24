@@ -118,7 +118,14 @@ class Survivant {
 	setSuperposition() {
 		for (let survivor in SURVIVORS) {
 			if(this.name !== SURVIVORS[survivor].name) {
-				if((this.raidDistance - SURVIVORS[survivor].raidDistance) <= 2 && (SURVIVORS[survivor].raidDistance - this.raidDistance) <= 2 ) {
+				let raiderOneDistance = this.raidDistance;
+				let raiderTwoDistance = SURVIVORS[survivor].raidDistance;
+				if( 
+					((raiderOneDistance - raiderTwoDistance) <= 2 && (raiderTwoDistance - raiderOneDistance) <= 2) 
+				|| 
+					((raiderOneDistance + raiderTwoDistance) >= 98 && (raiderOneDistance + raiderTwoDistance) <= 102)
+					) {
+
 					if(this.gap === SURVIVORS[survivor].gap) {
 						if(SURVIVORS[survivor].visi) {
 							this.gap +=2;
