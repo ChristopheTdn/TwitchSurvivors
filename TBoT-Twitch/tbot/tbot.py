@@ -160,9 +160,8 @@ class TBoT(commands.Bot):
             channel (str): le channel pour envoyer les messages 
             support (str): le type de support
         """
-        helper = await TBOTBDD.get_stats_survivant(ctx.author.id)
-        helper_stats_raid = await TBOTBDD.stat_raid(ctx.author.id)
-        
+        helper = await TBOTBDD.get_stats_survivant(ctx.author.id)        
+        raider_name = raider_name.lower().replace('@',"").strip()
         raider_id =  await TBOTBDD.get_id_survivant(raider_name.lower())
         
         
