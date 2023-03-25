@@ -7,6 +7,7 @@ from pygame import mixer
 import aiofiles
 from datetime import datetime
 import winreg
+from pathlib import Path, PureWindowsPath
 
 
 with open('./Configuration/config.json', 'r') as fichier:
@@ -34,9 +35,12 @@ def get_reg(name,reg_path):
     except WindowsError:
         return None
 
-URLMOD =  get_reg("InstallLocation",r"SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\Steam App 108600").replace(r"common\ProjectZomboid","workshop\content"+ os.sep +"108600"+ os.sep +CONFIG["STEAM_MOD_ID"]+ os.sep +"mods"+ os.sep +CONFIG["STEAM_MOD_NAME"]+ os.sep +"media\config")
+URLMOD =  get_reg("InstallLocation",r"SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\Steam App 108601")
+if URLMOD != None :
+    URLMOD = URLMOD.replace(r"common\ProjectZomboid","workshop\content"+ os.sep +"108600"+ os.sep +CONFIG["STEAM_MOD_ID"]+ os.sep +"mods"+ os.sep +CONFIG["STEAM_MOD_NAME"]+ os.sep +"media\config")
+
 if URLMOD == None or not CONFIG["MOD_STEAM"]:
-    URLMOD = CONFIG["MOD_PATH"]   
+    URLMOD = CONFIG["MOD_PATH"]
     
 async def msg_init_TboT():
     for i in range(30):
