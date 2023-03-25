@@ -71,6 +71,13 @@ class TBOT_BDD():
             effectif_team INTEGER,
             embuscade TEXT
             )''')
+        
+        curseur.execute('''CREATE TABLE IF NOT EXISTS HallOfFame(
+            id INTEGER PRIMARY KEY AUTOINCREMENT UNIQUE,
+            id_twitch INT UNIQUE,
+            name TEXT,
+            score INTEGER
+            )''')
         self.connexionSQL.commit()
         self.connexionSQL.close()
         
