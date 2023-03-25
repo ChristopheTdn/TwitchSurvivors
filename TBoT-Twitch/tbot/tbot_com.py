@@ -36,7 +36,7 @@ def get_reg(name,reg_path):
 
 URLMOD =  get_reg("InstallLocation",r"SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\Steam App 108600").replace(r"common\ProjectZomboid","workshop\content"+ os.sep +"108600"+ os.sep +CONFIG["STEAM_MOD_ID"]+ os.sep +"mods"+ os.sep +CONFIG["STEAM_MOD_NAME"]+ os.sep +"media\config")
 if URLMOD == None or not CONFIG["MOD_STEAM"]:
-    URLMOD = os.getcwd()+"\TBoT-PZ\TwitchSurvivors\Contents\mods\TwitchSurvivors\media\config"   
+    URLMOD = CONFIG["MOD_PATH"]   
     
 async def msg_init_TboT():
     for i in range(30):
