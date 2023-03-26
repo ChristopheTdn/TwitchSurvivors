@@ -35,7 +35,7 @@ def get_reg(name,reg_path):
     except WindowsError:
         return None
 
-URLMOD =  get_reg("InstallLocation",r"SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\Steam App 108601")
+URLMOD =  get_reg("InstallLocation",r"SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\Steam App 108600")
 if URLMOD != None :
     URLMOD = URLMOD.replace(r"common\ProjectZomboid","workshop\content"+ os.sep +"108600"+ os.sep +CONFIG["STEAM_MOD_ID"]+ os.sep +"mods"+ os.sep +CONFIG["STEAM_MOD_NAME"]+ os.sep +"media\config")
 
