@@ -449,7 +449,10 @@ class TBoT(commands.Bot):
         if survivant_stats == None :
             await tbot_com.message(key="survivant_no_exist",channel=ctx.channel,name=ctx.author.display_name)
         else :
-            await TBOTBDD.add_visi(ctx.author.id)
+            if survivant_stats['support_raid'] != "" :
+                await TBOTBDD.add_visi(await TBOTBDD.get_id_survivant(survivant_stats['support_raid']))
+            else:
+                await TBOTBDD.add_visi(ctx.author.id)
 
     
                        
