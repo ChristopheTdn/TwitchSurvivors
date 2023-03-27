@@ -128,7 +128,7 @@
     "raid_embuscade" : {
         "ovl"   : "⛹- l'equipe de {name} est tombée dans une embuscade.",
         "chat"  : "",
-        "mod"   : "radio {name} : allo... j'ai atteint mon objectif... je reviens à la base..",
+        "mod"   : "",
         "sound" : "EMBUSCADE.mp3"
     },
     "raid_deja_en_cours" :{
