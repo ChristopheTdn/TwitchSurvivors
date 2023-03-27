@@ -18,5 +18,6 @@
     "RESET_PRESTIGE_AFTER_DEATH" : true,
     "ASSISTANT_BOOST" : true,
     "GEAR_BOOST" : 66,
-    "MAX_VISI" : 5
+    "MAX_VISI" : 5,
+    "TIME_VISI" :5
 }
