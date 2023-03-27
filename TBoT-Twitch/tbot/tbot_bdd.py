@@ -492,7 +492,7 @@ class TBOT_BDD():
             if raid["time_visi"] == 0 and raid["visi"] == True :    
                 await db.execute(f'''UPDATE raid SET visi = False WHERE id_twitch = {raid["id_twitch"]}''')
             
-            if len(listeRaid) < CONFIG["MAX_VISI"]: #affiche toujours les infos raid si moinds de 5 raids en simultané
+            if len(listeRaid) < CONFIG["MAX_VISI"]: #affiche toujours les infos raid si moins de 5 raids en simultané
                 raid["visi"] = True
                 
             embuscade = list(raid["embuscade"].split(","))
@@ -581,14 +581,13 @@ class TBOT_BDD():
         await db.commit()
         await db.close()
         
-    async def add_visi(self,id_twitch: str, duree: int=5):
+    async def add_visi(self,id_twitch: str):
         """permet d'afficher pour une certaine durée les infos du raid
         Args:
             name (str): nom du survivant
-            duree (int, optional): nombre de cycle d'affichage des infos. Default à 5.
         """        
         db = await aiosqlite.connect(os.path.join("./Sqlite", self.NAMEBDD))
-        await db.execute(f'''UPDATE raid SET visi = true , time_visi = {duree} WHERE id_twitch = {id_twitch}''')
+        await db.execute(f'''UPDATE raid SET visi = true , time_visi = {CONFIG["TIME_VISI"]} WHERE id_twitch = {id_twitch}''')
         await db.commit()
         await db.close()
         

@@ -148,7 +148,7 @@ class TBoT(commands.Bot):
             minute = datetime.now().minute
             
             await TBOTBDD.raid_initialise(survivor,type_raid,gain_prestige)
-            await tbot_com.message(f"raid_{type_raid}",channel=ctx.channel,name=ctx.author.display_name,gain_prestige=str(gain_prestige)) 
+            await tbot_com.message(f"raid_{type_raid}",channel=ctx.channel,name=ctx.author.display_name,credit=str(gain_prestige)) 
     
     async def create_support(self,ctx:commands.Context,raider_name: str,channel: str,support: str,):
         """Test les conditions et realise un suppport specifique d'un survivant en raid par un autres survivant.

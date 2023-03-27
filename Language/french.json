@@ -126,7 +126,7 @@
         "sound" : "MI-RAID.mp3"
     },
     "raid_embuscade" : {
-        "ovl"   : "⛹- l'equipe de {name} est tombée dans une embuscade.",
+        "ovl"   : "⛹- l'équipe de {name} est tombée dans une embuscade.",
         "chat"  : "",
         "mod"   : "",
         "sound" : "EMBUSCADE.mp3"
@@ -156,49 +156,49 @@
         "sound" : "mort.mp3"
     },
     "raid_weapon" : {
-        "ovl":"🗡️- radio {name} : allo ! ici {name}... Je pars chercher des armes et des munitions. (-{gain_prestige} crédits)",
+        "ovl":"🗡️- radio {name} : allo ! ici {name}... Je pars chercher des armes et des munitions. (<span style='color:rgb(230, 138, 0);'>-{credit}</span> crédits)",
         "chat":"",
         "mod":"radio {name} :  Je pars chercher des armes et des munitions.",
         "sound":"Départ_Raid_Jour.mp3"
     },
     "raid_tool" : {
-        "ovl":"🔨- radio {name} : allo ! ici {name}... Je pars chercher du materiel et des outils. (-{gain_prestige} crédits)",
+        "ovl":"🔨- radio {name} : allo ! ici {name}... Je pars chercher du materiel et des outils. (<span style='color:rgb(230, 138, 0);'>-{credit}</span> crédits)",
         "chat":"",
         "mod":"radio {name} :  Je pars chercher du materiel et des outils.",
         "sound":"Départ_Raid_Jour.mp3"
     },
     "raid_medic" : {
-        "ovl":"☣️- radio {name} : allo ! ici {name}...... Je pars chercher... des..medicaments et des pansements. (-{gain_prestige} crédits)",
+        "ovl":"☣️- radio {name} : allo ! ici {name}...... Je pars chercher... des..medicaments et des pansements. (<span style='color:rgb(230, 138, 0);'>-{credit}</span> crédits)",
         "chat":"",
         "mod":"radio {name} :  Je pars chercher des médicaments et des pansements.",
         "sound":"Départ_Raid_Jour.mp3"
     },
     "raid_food":{
-        "ovl":"🍖- radio {name} : allo ! ici {name}...... Je pars chercher...de..la nourriture. (-{gain_prestige} crédits)",
+        "ovl":"🍖- radio {name} : allo ! ici {name}...... Je pars chercher...de..la nourriture. (<span style='color:rgb(230, 138, 0);'>-{credit}</span> crédits)",
         "chat":"",
         "mod":"radio {name} : Je pars chercher de la nourriture.",
         "sound":"Départ_Raid_Jour.mp3"
     },
     "raid_car":{
-        "ovl":"🚙- radio {name} : allo ! ici {name}...... Je pars chercher de quoi réparer ma caisse. (-{gain_prestige} crédits)",
+        "ovl":"🚙- radio {name} : allo ! ici {name}...... Je pars chercher de quoi réparer ma caisse. (<span style='color:rgb(230, 138, 0);'>-{credit}</span> crédits)",
         "chat":"",
         "mod":"radio {name} : Je pars chercher de quoi réparer ma caisse.",
         "sound":"Départ_Raid_Jour.mp3"
     },
     "raid_alcohol":{
-        "ovl":"🍹- radio {name} : allo ! ici {name}... Je pars chercher de quoi faire la fete. (-{gain_prestige} crédits)",
+        "ovl":"🍹- radio {name} : allo ! ici {name}... Je pars chercher de quoi faire la fete. (<span style='color:rgb(230, 138, 0);'>-{credit}</span> crédits)",
         "chat":"",
         "mod":"radio {name} :...allo ! Je pars chercher.. de quoi faire la fete.",
         "sound":"Départ_Raid_Jour.mp3"
     },
     "raid_agriculture":{
-        "ovl":"🌿- radio {name} : allo ! ici {name}...... Je pars chercher...de quoi ..jardiner. (-{gain_prestige} crédits)",
+        "ovl":"🌿- radio {name} : allo ! ici {name}...... Je pars chercher...de quoi ..jardiner. (<span style='color:rgb(230, 138, 0);'>-{credit}</span> crédits)",
         "chat":"",
         "mod":"radio {name} : ...allo ! Je pars chercher... de quoi ..jardiner.",
         "sound":"Départ_Raid_Jour.mp3"
     },
     "raid_furniture":{
-        "ovl":"🗄️- radio {name} : allo ! ici {name}... Je pars chercher de quoi équiper la base. (-{gain_prestige} crédits)",
+        "ovl":"🗄️- radio {name} : allo ! ici {name}... Je pars chercher de quoi équiper la base. (<span style='color:rgb(230, 138, 0);'>-{credit}</span> crédits)",
         "chat":"",
         "mod":"radio {name} : ...allo !  Je pars chercher de quoi équiper la base.",
         "sound":"Départ_Raid_Jour.mp3"
