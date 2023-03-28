@@ -5,7 +5,7 @@ import json
 import aiofiles
 import random
 from . import tbot_com  
-
+from . import tbot_classement
 
 with open('./Configuration/config.json', 'r') as fichier:
     CONFIG = json.load(fichier)
@@ -470,7 +470,9 @@ class TBOT_BDD():
         async with db.execute (f'''SELECT * FROM 'raid' ''') as cur:
             listeRaid = await cur.fetchall()
         await db.close()  
-
+      
+        tbot_classement.Add_Classement(self,123456)
+        
         data={}
 
         for raid_actif in listeRaid:
