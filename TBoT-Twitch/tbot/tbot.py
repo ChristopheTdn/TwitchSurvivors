@@ -511,6 +511,36 @@ class TBoT(commands.Bot):
             channel = ctx.channel
             await self.armaggedon_time(ctx)
     
+    @commands.command()
+    async def top_score(self, ctx: commands.Context):
+        """
+        Commande !help_armageddon
+        -----------
+        Traite la commande twitch !help_armor. 
+        """
+        test_survivant_exist = await TBOTBDD.get_stats_survivant(ctx.author.id)
+        if test_survivant_exist !=None :
+            TopScore = await TBOTBDD.Get_TopScore() 
+            message = "<p>🏆 HALL OF FAMES 🏆</p>" 
+            if TopScore != None :
+                for i in range(len(TopScore)):
+                    if i > 4 :
+                        break
+                    classement = str(i+1)
+                    if i+1 ==1 :
+                        classement = "🥇"
+                    if i+1 == 2 :
+                        classement = "🥈"
+                    if i+1 == 5 :
+                        classement = "🥉"    
+                    message +=  f'<p>{classement} : <span style="color:rgb(230, 138, 0);">{TopScore[i][2]}</span> - <span style="color:rgb(230, 138, 0);">{TopScore[i][3]}</span> Pts</p>'
+
+            else :
+                message += '<p>none</p>'
+            await tbot_com.message(channel=ctx.channel,ovl=message)
+
+            
+    
 if __name__ == '__main__': 
     print('Ne peut etre lancé directement')
     

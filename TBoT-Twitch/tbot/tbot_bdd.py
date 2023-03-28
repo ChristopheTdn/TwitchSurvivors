@@ -684,7 +684,14 @@ class TBOT_BDD():
             await db.commit()
             await db.close()
             await tbot_com.message("survivant_better_score",channel=channel,name=survivant['name'],gain_prestige = str(score))  
-
+            
+            
+    async def Get_TopScore(self):
+        db = await aiosqlite.connect(os.path.join("./Sqlite", self.NAMEBDD))
+        async with db.execute ('''SELECT * FROM 'HallOfFame' ORDER BY score DESC''') as cur :
+            liste = await cur.fetchall()
+        await db.close()          
+        return liste
 
 if __name__ == '__main__': 
     print('Ne peut etre lancé directement')
