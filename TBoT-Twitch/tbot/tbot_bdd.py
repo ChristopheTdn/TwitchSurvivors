@@ -336,30 +336,30 @@ class TBOT_BDD():
         MORT_REF = self.config_raid_json["raid_"+raid["type"]]["stats_raid"][f"niveau-1"]["MORT"]
         gfx_car = f'{raid["levelRaid_transport"]}-{(random.randrange(4)+1)}.png'
         embuscade = []
-        if CONFIG["ASSISTANT_BOOST"] :
-            ASSISTANT_BOOST = raid['effectif_team']
-        else :
-            ASSISTANT_BOOST = 1
-        for tentative_survie in range(ASSISTANT_BOOST): #autant de chance de ne pas mourrir 
+        
+        #gestion nombre de chance pour ne pas mourrir
+        tentative = 1
+        if CONFIG['ASSISTANT_BOOST'] :
+            if raid['effectif_team'] >1:
+                tentative = raid['levelRaid_gear']
+        #Boucle pour définir le resultat du RAID
+        for tentative_survie in range(tentative): #autant de chance de ne pas mourrir 
             BUTIN,BREDOUILLE,BLESSE,MORT,DISTANCE = await self.calcul_ratio_raid(raid,BUTIN_REF,BREDOUILLE_REF,BLESSE_REF,MORT_REF,DISTANCE_REF)
             composition_butin={}
             bonus_butin=0
             #determine le resultat du raid
             resultRAID = random.randrange(100) # un nombre entre 0 et 99
-
             if resultRAID < MORT : # Mort sans appel
                 resultat = "MORT"
-                blesse = random.randrange(DISTANCE-50,DISTANCE-10)
+                fin = random.randrange(2,DISTANCE-20)
+                blesse = random.randrange(fin+2,DISTANCE-5)
                 if blesse == DISTANCE//2 :
-                    blesse +=2
-                fin = random.randrange(2,blesse-3)
-
-                
+                    blesse +=1
             elif resultRAID < MORT+BLESSE :
                 resultat = 'BLESSE' 
-                blesse = random.randrange(DISTANCE-50,DISTANCE-10)
+                blesse = random.randrange(2,DISTANCE-5)
                 if blesse == DISTANCE//2 :
-                    blesse +=2
+                    blesse +=1
                 fin = 0
                 break
             elif resultRAID < MORT+BLESSE+BREDOUILLE:
@@ -451,7 +451,7 @@ class TBOT_BDD():
                 butin_final[choix_loot]=self.config_butin_json[raid['type']][f"tier_1"][choix_loot]
                 bonus_butin+=50
                     
-            if random.randrange(100)>=CONFIG["GEAR_BOOST"] : #test si on arrete le tour (50 % de chance que oui)
+            if random.randrange(100)>=CONFIG["GEAR_BOOST"] : #test si on arrete le tour (100-CONFIG["GEAR_BOOST"] que oui)
                 break    
         return (butin_final,bonus_butin)
     
