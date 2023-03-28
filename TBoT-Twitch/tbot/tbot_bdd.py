@@ -6,7 +6,6 @@ import aiofiles
 import random
 from . import tbot_com  
 
-
 with open('./Configuration/config.json', 'r') as fichier:
     CONFIG = json.load(fichier)
 
@@ -70,6 +69,13 @@ class TBOT_BDD():
             levelRaid_gear INTEGER,
             effectif_team INTEGER,
             embuscade TEXT
+            )''')
+        
+        curseur.execute('''CREATE TABLE IF NOT EXISTS HallOfFame(
+            id INTEGER PRIMARY KEY AUTOINCREMENT UNIQUE,
+            id_twitch INT UNIQUE,
+            name TEXT,
+            score INTEGER
             )''')
         self.connexionSQL.commit()
         self.connexionSQL.close()
@@ -463,7 +469,7 @@ class TBOT_BDD():
         async with db.execute (f'''SELECT * FROM 'raid' ''') as cur:
             listeRaid = await cur.fetchall()
         await db.close()  
-
+        
         data={}
 
         for raid_actif in listeRaid:
@@ -511,7 +517,7 @@ class TBOT_BDD():
                                         "GFX_CAR":raid["gfx_car"],
                                         "VISI":raid["visi"]}
 
-            if raid["distance"] == 0:
+            if raid["distance"] == 0:    
                 if raid["mort"] >1 :
                     await tbot_com.message("raid_retour_base_mort",channel=channel,name=raid["name"])
                     await self.gere_fin_raid(db,raid,channel)
@@ -521,6 +527,9 @@ class TBOT_BDD():
                     await self.gere_fin_raid(db,raid,channel)
                     await db.execute(f'''DELETE from raid WHERE id_twitch = {raid["id_twitch"]}''')
                     await db.execute(f'''UPDATE survivant SET inraid = 0 WHERE id_twitch = {raid["id_twitch"]}''')
+
+                    
+                
                     
             elif raid["distance"] == raid["michemin"] :
                 await tbot_com.message("raid_mi_chemin",channel=channel,name=raid["name"])
@@ -533,6 +542,18 @@ class TBOT_BDD():
                                      WHERE id_twitch = {raid["id_twitch"]}''')
             await db.commit()
             await db.close()
+            #gestion score
+            if raid["distance"] == 0 and raid["mort"] == 0 :
+                await self.add_score(raid["id_twitch"],channel)
+                liste = raid['renfort'].split(",")
+                for renfort in liste:
+                    if renfort !="":
+                        renfort_id = await self.get_id_survivant(renfort)
+                        await self.add_score(renfort_id,channel)
+
+
+                
+            
             
         async with aiofiles.open("TBoT_Overlay/raid.json", "w",encoding="utf-8") as fichier:
             await fichier.write(json.dumps(data,indent=4,ensure_ascii=False))
@@ -557,6 +578,8 @@ class TBOT_BDD():
             await db.execute(f'''UPDATE survivant SET prestige = prestige +{gain_prestige} WHERE id_twitch = {raid['id_twitch']}''')
         if raid['resultat'] =="MORT":
             gain_prestige = 0
+        
+
         
         #Gestion renfort eventuel    
         gain_prestige = gain_prestige//4
@@ -624,7 +647,43 @@ class TBOT_BDD():
         await db.execute("DELETE FROM raid")
         await db.execute("UPDATE survivant SET alive = false")
         await db.commit()
-        await db.close()    
+        await db.close()  
+        
+    async def add_score(self,id_twitch,channel):
+        
+        survivant = await self.get_stats_survivant(id_twitch)
+        score =  survivant["prestige"]
+        cout_prestige = CONFIG["TARIF_UPGRADE"] 
+        score += cout_prestige[survivant['level_weapon']-1]
+        score += cout_prestige[survivant['level_armor']-1]
+        score += cout_prestige[survivant['level_transport']-1]
+        score += cout_prestige[survivant['level_gear']-1]
+        
+        db = await aiosqlite.connect(os.path.join("./Sqlite", self.NAMEBDD))
+        async with db.execute (f'''SELECT * FROM 'HallOfFame'  WHERE id_twitch='{id_twitch}' ''') as cur :
+            scoreHaF = await cur.fetchone()
+        await db.close()
+        if scoreHaF == None :
+            db = await aiosqlite.connect(os.path.join("./Sqlite", self.NAMEBDD))
+            await db.execute ('''INSERT OR IGNORE INTO HallOfFame 
+                        (id_twitch,
+                        name,
+                        score)
+                        VALUES (?,?,?)''',
+                        (id_twitch,
+                         survivant["name"],
+                         score))
+            await db.commit()
+            await db.close()
+            await tbot_com.message("survivant_better_score",channel=channel,name=survivant['name'],gain_prestige = str(score))
+            
+        elif scoreHaF[3]<score:
+            db = await aiosqlite.connect(os.path.join("./Sqlite", self.NAMEBDD))
+            await db.execute (f'''UPDATE HallOfFame SET score = {score}
+                              WHERE id_twitch = {id_twitch}''')
+            await db.commit()
+            await db.close()
+            await tbot_com.message("survivant_better_score",channel=channel,name=survivant['name'],gain_prestige = str(score))  
 
 
 if __name__ == '__main__': 

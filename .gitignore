@@ -20,3 +20,5 @@ Configuration/Secret/config_Token_Client copy.json
 Configuration/config.json
 Sqlite/tbot_bdd.sqlite
 Sqlite/tbot_bdd copy.sqlite
+Configuration/config.json
+Configuration/Secret/config_Token_Client.json
