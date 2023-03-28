@@ -14,9 +14,7 @@ with open('./Configuration/config.json', 'r',encoding="utf-8") as fichier:
     
 with open('./Configuration/Secret/config_Token_Client.json', 'r',encoding="utf-8") as fichier:
     CLIENT = json.load(fichier)
-    
 
-    
 TBOTPATH, filename = os.path.split(__file__) 
 TBOTBDD= TBOT_BDD(TBOTPATH)
 
