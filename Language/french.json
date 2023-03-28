@@ -94,7 +94,13 @@
         "chat"  :"",
         "mod"   : "",
         "sound" : "" 
-    },  
+    },
+    "survivant_better_score":{
+        "ovl"   :"🏆- {name} améliore son meilleur score : <span style='color:rgb(230, 138, 0);'>{gain_prestige}</span> pts.",
+        "chat"  :"",
+        "mod"   : "",
+        "sound" : "" 
+    },          
     "raid_credit_insuffisant" :{
         "ovl"   :"❌- Attention {name}, tu n'as pas assez de credit suffisant pour créer un raid ({credit} credits). Tu peux obtenir des credits en depensant des points de chaine",
         "chat"  :"",
