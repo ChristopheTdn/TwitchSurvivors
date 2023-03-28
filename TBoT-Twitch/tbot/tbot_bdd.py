@@ -470,8 +470,6 @@ class TBOT_BDD():
         async with db.execute (f'''SELECT * FROM 'raid' ''') as cur:
             listeRaid = await cur.fetchall()
         await db.close()  
-      
-        tbot_classement.Add_Classement(self,123456)
         
         data={}
 
@@ -634,7 +632,25 @@ class TBOT_BDD():
         await db.execute("DELETE FROM raid")
         await db.execute("UPDATE survivant SET alive = false")
         await db.commit()
-        await db.close()    
+        await db.close()  
+        
+    async def add_classement(self,id_twitch,channel):
+        
+        survivant = self.get_stats_survivant(id_twitch)
+        score =  survivant["prestige"]
+        cout_prestige = CONFIG["TARIF_UPGRADE"] 
+        score += cout_prestige[survivant['level_weapon']-1]
+        score += cout_prestige[survivant['level_armor']-1]
+        score += cout_prestige[survivant['level_transport']-1]
+        score += cout_prestige[survivant['level_gear']-1]
+        
+        db = await aiosqlite.connect(os.path.join("./Sqlite", self.NAMEBDD))
+        async with db.execute (f'''SELECT * FROM 'survivant' ''') as cur:
+            listesurvivant = await cur.fetchall()
+            await db.close() 
+    
+        for i in listesurvivant:
+            print (i)
 
 
 if __name__ == '__main__': 
