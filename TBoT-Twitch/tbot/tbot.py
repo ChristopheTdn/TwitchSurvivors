@@ -85,6 +85,8 @@ class TBoT(commands.Bot):
         elif survivant != None and survivant["alive"] == 0: #le survivant doit etre ressucité
             if survivant["credit"]<CONFIG["COUT_REVIVE"]: #pas assez de credit
                 await tbot_com.message("survivant_credit_insuffisant",channel=ctx.channel,name=survivant["name"],credit=str(CONFIG["COUT_REVIVE"]))
+            elif survivant["inraid"] == 1 : #mort en raid
+                await tbot_com.message("survivant_revive_impossible_en_raid",channel=ctx.channel,name=survivant["name"])          
             else : #on peut faire revivre le survivant
                 await TBOTBDD.revive_survivant(ctx.author.id)
                 await tbot_com.message("revive_survivant",channel=ctx.channel,name=survivant["name"],credit=str(CONFIG["COUT_REVIVE"]))
@@ -319,7 +321,7 @@ class TBoT(commands.Bot):
                 if equipe != "" :
                     message += f'<p>support : <span style="color:rgb(230, 138, 0);">{equipe}</span></p>'
                 else : 
-                    message += f"<p>support : <span style='color:rgb(230, 138, 0);'>none</span></p>'"
+                    message += f'<p>support : <span style="color:rgb(230, 138, 0);">none</span></p>'
             if dictStat['support_raid'] != "" :
                 message += f"<p>support RAID : <span style='color:rgb(230, 138, 0);'>{dictStat['support_raid']}</span></p>"
             await tbot_com.message(channel=channel,ovl=message,name=name,name2=str(test_survivant_exist["prestige"]),credit=str(test_survivant_exist["credit"]))
