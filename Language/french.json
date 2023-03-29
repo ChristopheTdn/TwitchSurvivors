@@ -100,7 +100,13 @@
         "chat"  :"",
         "mod"   : "",
         "sound" : "" 
-    },          
+    },
+    "survivant_revive_impossible_en_raid" :{
+        "ovl"   :"☠️- Attention {name},  tu ne peux être réanimé tant que ton corps n'est pas revenu à la base.",
+        "chat"  :"",
+        "mod"   : "",
+        "sound" : "" 
+    },         
     "raid_credit_insuffisant" :{
         "ovl"   :"❌- Attention {name}, tu n'as pas assez de crédits pour créer un raid ({credit} credits). Tu peux obtenir des crédits en dépensant des points de chaine",
         "chat"  :"",
