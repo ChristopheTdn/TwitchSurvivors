@@ -531,7 +531,7 @@ class TBoT(commands.Bot):
                         classement = "🥇"
                     if i+1 == 2 :
                         classement = "🥈"
-                    if i+1 == 5 :
+                    if i+1 == 3 :
                         classement = "🥉"    
                     message +=  f'<p>{classement} : <span style="color:rgb(230, 138, 0);">{TopScore[i][2]}</span> - <span style="color:rgb(230, 138, 0);">{TopScore[i][3]}</span> Pts</p>'
 

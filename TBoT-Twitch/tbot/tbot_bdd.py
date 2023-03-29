@@ -653,7 +653,10 @@ class TBOT_BDD():
         
         survivant = await self.get_stats_survivant(id_twitch)
         score =  survivant["prestige"]
-        cout_prestige = CONFIG["TARIF_UPGRADE"] 
+        cout_prestige = CONFIG["TARIF_UPGRADE"]
+        cout_prestige[2]=cout_prestige[2]+cout_prestige[1]
+        cout_prestige[3]=cout_prestige[3]+cout_prestige[2]
+        cout_prestige[4]=cout_prestige[4]+cout_prestige[3]
         score += cout_prestige[survivant['level_weapon']-1]
         score += cout_prestige[survivant['level_armor']-1]
         score += cout_prestige[survivant['level_transport']-1]
