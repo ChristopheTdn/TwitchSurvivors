@@ -228,12 +228,10 @@ class TBoT(commands.Bot):
         if level >= 5 :
             await tbot_com.message(key="survivant_max_aptitude",channel=ctx.channel,name=ctx.author.display_name,aptitude=aptitude)
             return
-         
-        raid = await TBOTBDD.stat_raid(ctx.author.id)
-        
+
         if survivant == None or survivant["alive"] == False :
             await tbot_com.message("survivant_no_exist",channel=ctx.channel,name=ctx.author.display_name)
-        elif raid != None :
+        elif survivant["inraid"] == True :
             await tbot_com.message("raid_deja_en_cours",channel=ctx.channel,name=ctx.author.display_name)
         else :
                           
