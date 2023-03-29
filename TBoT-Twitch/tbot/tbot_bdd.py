@@ -483,8 +483,8 @@ class TBOT_BDD():
                 raid["distance"] -=1
             else :
                 #place la voiture au départ pour embarquement
-                DISTANCE_POURCENT =  98
-                raid["distance"] =  (98 * raid["michemin"]*2)//100
+                DISTANCE_POURCENT =  97
+                raid["distance"] =  (100 * raid["michemin"]*2)//100
 
             stat_survivant= await self.get_stats_survivant(raid["id_twitch"])
             
@@ -498,7 +498,7 @@ class TBOT_BDD():
             if raid["time_visi"] == 0 and raid["visi"] == True :    
                 await db.execute(f'''UPDATE raid SET visi = False WHERE id_twitch = {raid["id_twitch"]}''')
             
-            if len(listeRaid) < CONFIG["MAX_VISI"]: #affiche toujours les infos raid si moins de 5 raids en simultané
+            if len(listeRaid) < CONFIG["MAX_VISI"] or raid["time_renfort"] < CONFIG["MAX_TIME_RENFORT"]: #affiche toujours les infos raid si moins de 5 raids en simultané
                 raid["visi"] = True
                 
             embuscade = list(raid["embuscade"].split(","))
