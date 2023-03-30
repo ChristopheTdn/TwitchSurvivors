@@ -15,7 +15,7 @@
         "ovl"   : "⛹- Le joueur {name} vient d'apparaitre sur le serveur. (-{credit} crédits).",
         "chat"  :"",
         "mod"   : "radio {name} : ...allo !  Je suis un surviva....prêt a aider....d'autres messages suivront...",
-        "sound" : "Nouveau_Survivant.mp3"
+        "sound" : "Nouveau_Survivant.wav"
     },
     "survivant_no_exist" :{
         "ovl"   : "❌- le survivant {name} n'existe pas sur le serveur ! génère le avec des crédits. commande <span style='color:rgb(230, 138, 0);'>!create_survivor</span>",
@@ -33,7 +33,7 @@
         "ovl"   :"⛹- {name} upgrade son aptitude {aptitude} pour {tarif_level}",
         "chat"  :"",
         "mod"   : "",
-        "sound" : "Upgrade.mp3"
+        "sound" : "Upgrade.wav"
     },
     "survivant_prestige_insuffisant" :{
         "ovl"   :"❌- {name} ne possède pas assez de points de prestiges pour upgrade son aptitude {aptitude} (coût : {tarif_level} pts).",
@@ -81,7 +81,7 @@
         "ovl"   :"⛹- le survivant {name} rejoint l'équipe de {name2} pour partir en raid (-{credit} credits) !",
         "chat"  :"",
         "mod"   : "",
-        "sound" : "Aide_Raid.mp3" 
+        "sound" : "Aide_Raid.wav" 
     },
     "survivant_no_support_when_raid":{
         "ovl"   :"❌- Attention {name}, tu ne peux pas aider {name2}, tu es déjà parti en raid !",
@@ -117,31 +117,31 @@
         "ovl"   : "⛹- {name} est revenu à la base. gain de prestige : +{gain_prestige} !!!{bonus_butin}{listebutin}",
         "chat"  :"",
         "mod"   : "radio {name} : je suis ...enfin revenu.. à la base...",
-        "sound" : "Butin.mp3"
+        "sound" : "Butin.wav"
     },
     "raid_win_bredouille":{
     "ovl"   : "⛹- {name} est revenu à la base sans avoir trouvé grand chose. gain de prestige : +{gain_prestige} !!!",
     "chat"  :"",
     "mod"   : "radio {name} : je suis enfin revenu à la base.",
-    "sound" : "Bredouille.mp3"
+    "sound" : "Bredouille.wav"
     },
     "raid_win_blesse":{
     "ovl"   : "⛹- {name} est revenu à la base. Il y a des blessés... gain de prestige : +{gain_prestige} !!!",
     "chat"  :"",
     "mod"   : "radio {name} : je suis enfin revenu à la base.",
-    "sound" : "Blesse_Retour_Base.mp3"
+    "sound" : "Blesse_Retour_Base.wav"
     },
     "raid_mi_chemin" :{
         "ovl"   : "⛹- {name} commence à faire demi-tour.",
         "chat"  :"",
         "mod"   : "radio {name} : allo... j'ai atteint mon objectif... je reviens à la base..",
-        "sound" : "MI-RAID.mp3"
+        "sound" : ""
     },
     "raid_embuscade" : {
         "ovl"   : "⛹- l'équipe de {name} est tombée dans une embuscade.",
         "chat"  : "",
         "mod"   : "",
-        "sound" : "EMBUSCADE.mp3"
+        "sound" : "EMBUSCADE.wav"
     },
     "raid_deja_en_cours" :{
         "ovl"   : "❌- un raid est dejà en cours pour {name} ! tapez !my_survivor pour plus d'infos.",
@@ -153,67 +153,67 @@
         "ovl"   : "🩸- {name} a été attaqué durant son raid. Il est blessé !",
         "chat"  :"",
         "mod"   : "radio {name} : Aidez moi! victim...zzz.. ne attaque... je suis ...gèrement blessé... zzz..z...",
-        "sound" : "Blesse_Pendant_Raid.mp3"
+        "sound" : ""
     },
     "raid_mort_enroute" :{
         "ovl"   : "☠️- {name} succombe lors d'une attaque de zombies ! son corps est ramené à la base !",
         "chat"  :"",
         "mod"   : "radio {name} :  Arggg...partout. arghh... u secours... zzz..z...",
-        "sound" : "Mort_Pendant_Raid.mp3"
+        "sound" : "Mort_Pendant_Raid.wav"
     },
     "raid_retour_base_mort" :{
         "ovl"   : "☠️-Le corps de {name} a été ramené à la base ! il a tout perdu !",
         "chat"  :"",
         "mod"   : "",
-        "sound" : "mort.mp3"
+        "sound" : ""
     },
     "raid_weapon" : {
         "ovl":"🗡️- radio {name} : allo ! ici {name}... Je pars chercher des armes et des munitions. (<span style='color:rgb(230, 138, 0);'>-{credit}</span> crédits)",
         "chat":"",
         "mod":"radio {name} :  Je pars chercher des armes et des munitions.",
-        "sound":"Départ_Raid_Jour.mp3"
+        "sound":"Depart_Raid_Jour.wav"
     },
     "raid_tool" : {
         "ovl":"🔨- radio {name} : allo ! ici {name}... Je pars chercher du materiel et des outils. (<span style='color:rgb(230, 138, 0);'>-{credit}</span> crédits)",
         "chat":"",
         "mod":"radio {name} :  Je pars chercher du materiel et des outils.",
-        "sound":"Départ_Raid_Jour.mp3"
+        "sound":"Depart_Raid_Jour.wav"
     },
     "raid_medic" : {
         "ovl":"☣️- radio {name} : allo ! ici {name}...... Je pars chercher... des..medicaments et des pansements. (<span style='color:rgb(230, 138, 0);'>-{credit}</span> crédits)",
         "chat":"",
         "mod":"radio {name} :  Je pars chercher des médicaments et des pansements.",
-        "sound":"Départ_Raid_Jour.mp3"
+        "sound":"Depart_Raid_Jour.wav"
     },
     "raid_food":{
         "ovl":"🍖- radio {name} : allo ! ici {name}...... Je pars chercher...de..la nourriture. (<span style='color:rgb(230, 138, 0);'>-{credit}</span> crédits)",
         "chat":"",
         "mod":"radio {name} : Je pars chercher de la nourriture.",
-        "sound":"Départ_Raid_Jour.mp3"
+        "sound":"Depart_Raid_Jour.wav"
     },
     "raid_car":{
         "ovl":"🚙- radio {name} : allo ! ici {name}...... Je pars chercher de quoi réparer ma caisse. (<span style='color:rgb(230, 138, 0);'>-{credit}</span> crédits)",
         "chat":"",
         "mod":"radio {name} : Je pars chercher de quoi réparer ma caisse.",
-        "sound":"Départ_Raid_Jour.mp3"
+        "sound":"Depart_Raid_Jour.wav"
     },
     "raid_alcohol":{
         "ovl":"🍹- radio {name} : allo ! ici {name}... Je pars chercher de quoi faire la fete. (<span style='color:rgb(230, 138, 0);'>-{credit}</span> crédits)",
         "chat":"",
         "mod":"radio {name} :...allo ! Je pars chercher.. de quoi faire la fete.",
-        "sound":"Départ_Raid_Jour.mp3"
+        "sound":"Depart_Raid_Jour.wav"
     },
     "raid_agriculture":{
         "ovl":"🌿- radio {name} : allo ! ici {name}...... Je pars chercher...de quoi ..jardiner. (<span style='color:rgb(230, 138, 0);'>-{credit}</span> crédits)",
         "chat":"",
         "mod":"radio {name} : ...allo ! Je pars chercher... de quoi ..jardiner.",
-        "sound":"Départ_Raid_Jour.mp3"
+        "sound":"Depart_Raid_Jour.wav"
     },
     "raid_furniture":{
         "ovl":"🗄️- radio {name} : allo ! ici {name}... Je pars chercher de quoi équiper la base. (<span style='color:rgb(230, 138, 0);'>-{credit}</span> crédits)",
         "chat":"",
         "mod":"radio {name} : ...allo !  Je pars chercher de quoi équiper la base.",
-        "sound":"Départ_Raid_Jour.mp3"
+        "sound":"Depart_Raid_Jour.wav"
     },
     "error_noName":{
         "ovl":"❌-Syntax error: Attention {name}, Le nom du joueur à aider n'est pas reconnu !",
