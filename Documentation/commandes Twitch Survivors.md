@@ -12,7 +12,9 @@
 * !raid_weapon
   !raid_tool
   !raid_medic
+  !raid_food
   !raid_car
+  !raid_alcohol
   !raid_agriculture
 
     *Lance un Raid avec le survivant du viewer. Chaque raid presente plus ou moins de risque defini dans le [raid.json](Data/raid.json)*
