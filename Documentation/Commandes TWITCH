@@ -1,28 +1,17 @@
-!new_survivant
+!create_survivor
 Génère un survivant pour un viewer
 
-!mon_survivant
+!my_survivor
 Indiques les statistiques du survivant du viewer : réputation, niveau arme, niveau vêtement, niveau voiture, niveau stockage
 
-!raid_arme (ou !raid-outils etc...)
-Lance un Raid avec le survivant du viewer
+!raid_weapon
+!raid_tool
+!raid_medic
+!raid_car
+!raid_agriculture
+
+Lance un Raid avec le survivant du viewer. Chaque raid presente plus ou moins de risque defini dans le [raid.json](Data/raid.json)
 
 !upgrade_arme (ou !upgrade-vetement etc...)
 Améliore la caractéristique du survivant du viewer
 
-(🚧 projet 🚧 )
-!defi nom_du_viewer montant_réputation 
-Lance un défi de combat à mains nues au survivant d'un autre viewer. Cooldown de plusieurs minutes avant que ce même viewer ne puisse relancer un défi.
-Cet autre viewer doit être de niveau égal ou supérieur au lanceur du défi. Le montant indiqué correspond à la somme mise en jeu (le viewer visé par le défi doit avoir cette même somme à mettre en jeu, sans quoi le défi est annulé).
-!accepter-defi
-Accepte le défi lancé par un autre viewer à votre survivant
-!refuser-defi
-Annule le défi lancé par un autre viewer à votre survivant
-!parier
-Parie de la réputation sur un combat entre deux viewers ( @ToF n'importe quel viewer peut parier sur n'importe qui, qu'il soit dans le combat ou non)
-------------------------------------------------------------------
-Pour ce projet de défi, l'idée est la suivante :
-En gros les viewers peuvent se challenger entre eux pour jouer de la réputation et en gagner mais aussi en perdre.
-Le résultat final est un jet de dé influencé par quelques modifications en fonction des upgrades du personnage de chaque viewers.
-Le but c'est que ça reste assez 50% 50% pour que les plus faibles aient quand même des chances de réussir des défis 😉
------------------------------------------------------------------- 
