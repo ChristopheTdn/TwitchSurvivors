@@ -506,9 +506,7 @@ class TBoT(commands.Bot):
         Traite la commande twitch !help_armor. 
         """
         name = ctx.author.display_name
-        id= ctx.author.id
-        if name.lower() == CONFIG["STREAMER"].lower() :
-            channel = ctx.channel
+        if name.lower() == CLIENT["USERNAME"].lower() :
             await self.armaggedon_time(ctx)
     
     @commands.command()
