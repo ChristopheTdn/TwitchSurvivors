@@ -542,6 +542,9 @@ class TBOT_BDD():
                                      WHERE id_twitch = {raid["id_twitch"]}''')
             await db.commit()
             await db.close()
+            
+            
+            
             #gestion score
             if raid["distance"] == 0 and raid["mort"] == 0 :
                 await self.add_score(raid["id_twitch"],channel)
