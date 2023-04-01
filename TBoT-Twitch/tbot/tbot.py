@@ -522,8 +522,6 @@ class TBoT(commands.Bot):
             message = "<p>🏆 HALL OF FAMES 🏆</p>" 
             if TopScore != None :
                 for i in range(len(TopScore)):
-                    if i > 4 :
-                        break
                     classement = str(i+1)
                     if i+1 ==1 :
                         classement = "🥇"
