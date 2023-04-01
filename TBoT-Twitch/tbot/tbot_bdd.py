@@ -655,15 +655,20 @@ class TBOT_BDD():
     async def add_score(self,id_twitch,channel):
         
         survivant = await self.get_stats_survivant(id_twitch)
-        score =  survivant["prestige"]
+
         cout_prestige = CONFIG["TARIF_UPGRADE"]
-        cout_prestige[2]=cout_prestige[2]+cout_prestige[1]
-        cout_prestige[3]=cout_prestige[3]+cout_prestige[2]
-        cout_prestige[4]=cout_prestige[4]+cout_prestige[3]
-        score += cout_prestige[survivant['level_weapon']-1]
-        score += cout_prestige[survivant['level_armor']-1]
-        score += cout_prestige[survivant['level_transport']-1]
-        score += cout_prestige[survivant['level_gear']-1]
+        
+        tableScore = [0,
+                    cout_prestige[1],
+                    cout_prestige[1]+cout_prestige[2],
+                    cout_prestige[1]+cout_prestige[2]+cout_prestige[3],
+                    cout_prestige[1]+cout_prestige[2]+cout_prestige[3]+cout_prestige[4]]
+        
+        score =  survivant["prestige"]                       \
+            + tableScore[survivant['level_weapon']-1]     \
+            + tableScore[survivant['level_armor']-1]      \
+            + tableScore[survivant['level_transport']-1]  \
+            + tableScore[survivant['level_gear']-1]
         
         db = await aiosqlite.connect(os.path.join("./Sqlite", self.NAMEBDD))
         async with db.execute (f'''SELECT * FROM 'HallOfFame'  WHERE id_twitch='{id_twitch}' ''') as cur :
@@ -699,5 +704,31 @@ class TBOT_BDD():
         await db.close()          
         return liste
 
+    async def init_score(self):
+        db = await aiosqlite.connect(os.path.join("./Sqlite", self.NAMEBDD))
+        async with db.execute ('''SELECT * FROM 'HallOfFame' ORDER BY score DESC LIMIT 5''') as cur :
+            liste = await cur.fetchall()
+        await db.close()
+        cout_prestige = CONFIG["TARIF_UPGRADE"]
+        tableScore = [0,
+                    cout_prestige[1],
+                    cout_prestige[1]+cout_prestige[2],
+                    cout_prestige[1]+cout_prestige[2]+cout_prestige[3],
+                    cout_prestige[1]+cout_prestige[2]+cout_prestige[3]+cout_prestige[4]]
+        
+        for joueur in liste:
+            survivant = await self.get_stats_survivant(joueur[1])
+            score =  survivant["prestige"]                    \
+                + tableScore[survivant['level_weapon']-1]     \
+                + tableScore[survivant['level_armor']-1]      \
+                + tableScore[survivant['level_transport']-1]  \
+                + tableScore[survivant['level_gear']-1]
+
+            db = await aiosqlite.connect(os.path.join("./Sqlite", self.NAMEBDD))
+            await db.execute (f'''UPDATE HallOfFame SET score = {score}
+                              WHERE id_twitch = {joueur[1]}''')
+            await db.commit()
+            await db.close()
+            
 if __name__ == '__main__': 
     print('Ne peut etre lancé directement')

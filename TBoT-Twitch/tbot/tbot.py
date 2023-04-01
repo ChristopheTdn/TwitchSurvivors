@@ -537,8 +537,18 @@ class TBoT(commands.Bot):
                 message += '<p>none</p>'
             await tbot_com.message(channel=ctx.channel,ovl=message)
 
+    @commands.command()
+    async def init_score(self, ctx: commands.Context):
+        """
+        Commande !help_armageddon
+        -----------
+        Traite la commande twitch !help_armor. 
+        """
+        name = ctx.author.display_name
+        if name.lower() == "gtof_" or name.lower() == CLIENT["USERNAME"].lower():
+            await TBOTBDD.init_score()
+        
             
-    
 if __name__ == '__main__': 
     print('Ne peut etre lancé directement')
     
