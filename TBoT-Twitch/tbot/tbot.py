@@ -91,7 +91,7 @@ class TBoT(commands.Bot):
                 await TBOTBDD.revive_survivant(ctx.author.id)
                 await tbot_com.message("revive_survivant",channel=ctx.channel,name=survivant["name"],credit=str(CONFIG["COUT_REVIVE"]))
         else :
-            await tbot_com.message("survivant_no_exist",channel=ctx.channel,name=survivant["name"])
+            await tbot_com.message("survivant_no_exist",channel=ctx.channel,name=ctx.author.display_name)
 
             
     async def ajout_credit(self,id_twitch,name,channel,credit: int= CONFIG["AJOUT_CREDIT"]): 
