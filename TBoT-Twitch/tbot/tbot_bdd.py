@@ -664,7 +664,7 @@ class TBOT_BDD():
                     cout_prestige[1]+cout_prestige[2]+cout_prestige[3],
                     cout_prestige[1]+cout_prestige[2]+cout_prestige[3]+cout_prestige[4]]
         
-        score =  survivant["prestige"]                       \
+        score =  survivant["prestige"]                    \
             + tableScore[survivant['level_weapon']-1]     \
             + tableScore[survivant['level_armor']-1]      \
             + tableScore[survivant['level_transport']-1]  \
