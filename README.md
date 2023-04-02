@@ -89,7 +89,6 @@ Chaque récompenses doit déduire le nombre correspondant de points de chaine.
 
 ```json
 {
-    "STREAMER" : "",
     "MOD_STEAM" : true,
     "STEAM_MOD_NAME" : "TwitchSurvivors",
     "STEAM_MOD_ID" : "2948924574",
