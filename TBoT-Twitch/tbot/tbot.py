@@ -52,6 +52,9 @@ class TBoT(commands.Bot):
         await tbot_com.msg_init_TboT()
         if not self.BASE_READY: 
             await tbot_com.message(key="error_no_base",channel=self.get_channel(CLIENT["NICK"]),name=CLIENT["NICK"]) 
+        else:
+            await tbot_com.message(key="base_in_place",channel=self.get_channel(CLIENT["NICK"]),name=CLIENT["NICK"])
+
         await self.timer_Raid()
         
 
