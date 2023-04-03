@@ -238,6 +238,18 @@
     "chat":"",
     "mod":"",
     "sound":""
+},
+"error_no_base":{
+    "ovl":"❌-Attention !!! La base de départ n'a pas été déployée par {name} (commande <span style='color:rgb(230, 138, 0);'>!base_on</span>). Il n'est plus possible de réaliser un raid, upgrade ou support.",
+    "chat":"",
+    "mod":"",
+    "sound":""
+},
+"base_in_place":{
+    "ovl":"⛹-La base de départ a été créée par {name}. Les raids sont maintenant possibles.",
+    "chat":"",
+    "mod":"",
+    "sound":""
 }
 
 }

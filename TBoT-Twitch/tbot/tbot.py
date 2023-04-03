@@ -11,7 +11,7 @@ from . import tbot_com
 
 with open('./Configuration/config.json', 'r',encoding="utf-8") as fichier:
     CONFIG = json.load(fichier)
-    
+
 with open('./Configuration/Secret/config_Token_Client.json', 'r',encoding="utf-8") as fichier:
     CLIENT = json.load(fichier)
 
@@ -30,6 +30,7 @@ class TBoT(commands.Bot):
         TBOTBDD.initTableSql()
         with open ('./Data/raid.json', 'r',encoding="utf-8" ) as fichier:
             self.config_raid_json = json.load(fichier)
+        self.BASE_READY = bool(CONFIG['BASE_READY'])
             
     async def event_ready(self):
         # Notify us when everything is ready!
@@ -49,6 +50,8 @@ class TBoT(commands.Bot):
         print(f'Logged in as : {self.nick}')
         print(f'User id is : {self.user_id}')
         await tbot_com.msg_init_TboT()
+        if not self.BASE_READY: 
+            await tbot_com.message(key="error_no_base",channel=self.get_channel(CLIENT["NICK"]),name=CLIENT["NICK"]) 
         await self.timer_Raid()
         
 
@@ -292,7 +295,8 @@ class TBoT(commands.Bot):
         Traite la commande twitch !radio. Envois in game le message passé en parametre avec un son radio
         """
 
-        await self.message_radio(ctx)
+        if self.BASE_READY :
+            await self.message_radio(ctx)
 
         
     @commands.command()
@@ -333,7 +337,10 @@ class TBoT(commands.Bot):
         -----------
         Traite la commande twitch !raid_weapons
         """
-        await self.creer_raid(ctx,"weapon")
+        if self.BASE_READY :
+            await self.creer_raid(ctx,"weapon")
+        else :
+            await tbot_com.message(key="error_no_base",channel=ctx.channel,name=CLIENT["NICK"]) 
 
     @commands.command()
     async def raid_tool(self, ctx: commands.Context):
@@ -342,7 +349,10 @@ class TBoT(commands.Bot):
         -----------
         Traite la commande twitch !raid_outil. 
         """
-        await self.creer_raid(ctx,"tool")
+        if self.BASE_READY :
+            await self.creer_raid(ctx,"tool")
+        else :
+            await tbot_com.message(key="error_no_base",channel=ctx.channel,name=CLIENT["NICK"]) 
 
     @commands.command()
     async def raid_medic(self, ctx: commands.Context):
@@ -351,7 +361,10 @@ class TBoT(commands.Bot):
         -----------
         Traite la commande twitch !raid_medic. 
         """
-        await self.creer_raid(ctx,"medic")
+        if self.BASE_READY :
+            await self.creer_raid(ctx,"medic")
+        else :
+            await tbot_com.message(key="error_no_base",channel=ctx.channel,name=CLIENT["NICK"]) 
         
     @commands.command()
     async def raid_food(self, ctx: commands.Context):
@@ -360,7 +373,10 @@ class TBoT(commands.Bot):
         -----------
         Traite la commande twitch !raid_food. 
         """
-        await self.creer_raid(ctx,"food")
+        if self.BASE_READY :
+            await self.creer_raid(ctx,"food")
+        else :
+            await tbot_com.message(key="error_no_base",channel=ctx.channel,name=CLIENT["NICK"]) 
         
     @commands.command()
     async def raid_car(self, ctx: commands.Context):
@@ -369,7 +385,10 @@ class TBoT(commands.Bot):
         -----------
         Traite la commande twitch !raid_car. 
         """
-        await self.creer_raid(ctx,"car")
+        if self.BASE_READY :
+            await self.creer_raid(ctx,"car")
+        else :
+            await tbot_com.message(key="error_no_base",channel=ctx.channel,name=CLIENT["NICK"]) 
         
     @commands.command()
     async def raid_alcohol(self, ctx: commands.Context):
@@ -378,7 +397,10 @@ class TBoT(commands.Bot):
         -----------
         Traite la commande twitch !raid_alcohol. 
         """
-        await self.creer_raid(ctx,"alcohol")
+        if self.BASE_READY :
+            await self.creer_raid(ctx,"alcohol")
+        else :
+            await tbot_com.message(key="error_no_base",channel=ctx.channel,name=CLIENT["NICK"]) 
 
     @commands.command()
     async def raid_agriculture(self, ctx: commands.Context):
@@ -387,8 +409,11 @@ class TBoT(commands.Bot):
         -----------
         Traite la commande twitch !raid_agriculture. 
         """
-        await self.creer_raid(ctx,"agriculture")
-        
+        if self.BASE_READY :
+            await self.creer_raid(ctx,"agriculture")
+        else :
+            await tbot_com.message(key="error_no_base",channel=ctx.channel,name=CLIENT["NICK"]) 
+                    
     @commands.command()
     async def upgrade_weapon(self, ctx: commands.Context):
         """
@@ -396,8 +421,11 @@ class TBoT(commands.Bot):
         -----------
         Traite la commande twitch !upgrade_weapon. 
         """
-        await self.upgrade_aptitude(ctx,"weapon")
-                 
+        if self.BASE_READY :
+            await self.upgrade_aptitude(ctx,"weapon")
+        else :
+            await tbot_com.message(key="error_no_base",channel=ctx.channel,name=CLIENT["NICK"]) 
+                             
     @commands.command()
     async def upgrade_armor(self, ctx: commands.Context):
         """
@@ -405,8 +433,11 @@ class TBoT(commands.Bot):
         -----------
         Traite la commande twitch !upgrade_armor. 
         """
-        await self.upgrade_aptitude(ctx,"armor") 
-        
+        if self.BASE_READY :
+            await self.upgrade_aptitude(ctx,"armor") 
+        else :
+            await tbot_com.message(key="error_no_base",channel=ctx.channel,name=CLIENT["NICK"]) 
+                    
     @commands.command()
     async def upgrade_transport(self, ctx: commands.Context):
         """
@@ -414,8 +445,11 @@ class TBoT(commands.Bot):
         -----------
         Traite la commande twitch !upgrade_transport. 
         """
-        await self.upgrade_aptitude(ctx,"transport") 
-
+        if self.BASE_READY :
+            await self.upgrade_aptitude(ctx,"transport") 
+        else :
+            await tbot_com.message(key="error_no_base",channel=ctx.channel,name=CLIENT["NICK"]) 
+            
     @commands.command()
     async def upgrade_gear(self, ctx: commands.Context):
         """
@@ -423,8 +457,11 @@ class TBoT(commands.Bot):
         -----------
         Traite la commande twitch !upgrade_gear. 
         """
-        await self.upgrade_aptitude(ctx,"gear")     
-    
+        if self.BASE_READY :
+            await self.upgrade_aptitude(ctx,"gear")     
+        else :
+            await tbot_com.message(key="error_no_base",channel=ctx.channel,name=CLIENT["NICK"]) 
+                
     @commands.command()
     async def add_credits(self, ctx: commands.Context):
         """
@@ -435,6 +472,7 @@ class TBoT(commands.Bot):
         if CONFIG["DEBUG"]:
             await self.ajout_credit(ctx.author.id,ctx.author.display_name,ctx.channel,credit=CONFIG["AJOUT_CREDIT"])
 
+            
     @commands.command()
     async def visi_on(self, ctx: commands.Context):
         """
@@ -463,8 +501,11 @@ class TBoT(commands.Bot):
         """
         channel = ctx.channel
         raider= ctx.message.content.replace('!help_transport',"").strip()
-        await self.create_support(ctx,raider,channel,"transport")
-
+        if self.BASE_READY :
+            await self.create_support(ctx,raider,channel,"transport")
+        else :
+            await tbot_com.message(key="error_no_base",channel=ctx.channel,name=CLIENT["NICK"]) 
+            
     @commands.command()
     async def help_weapon(self, ctx: commands.Context):
         """
@@ -474,7 +515,10 @@ class TBoT(commands.Bot):
         """
         channel = ctx.channel
         raider= ctx.message.content.replace('!help_weapon',"").strip()
-        await self.create_support(ctx,raider,channel,"weapon")
+        if self.BASE_READY :
+            await self.create_support(ctx,raider,channel,"weapon")
+        else :
+            await tbot_com.message(key="error_no_base",channel=ctx.channel,name=CLIENT["NICK"])
 
     @commands.command()
     async def help_gear(self, ctx: commands.Context):
@@ -485,7 +529,10 @@ class TBoT(commands.Bot):
         """
         channel = ctx.channel
         raider= ctx.message.content.replace('!help_gear',"").strip()
-        await self.create_support(ctx,raider,channel,"gear")
+        if self.BASE_READY :
+            await self.create_support(ctx,raider,channel,"gear")
+        else :
+            await tbot_com.message(key="error_no_base",channel=ctx.channel,name=CLIENT["NICK"]) 
 
     @commands.command()
     async def help_armor(self, ctx: commands.Context):
@@ -496,14 +543,15 @@ class TBoT(commands.Bot):
         """
         channel = ctx.channel
         raider= ctx.message.content.replace('!help_armor',"").strip()
-        await self.create_support(ctx,raider,channel,"armor")           
+        if self.BASE_READY :
+            await self.create_support(ctx,raider,channel,"armor")           
              
     @commands.command()
     async def armageddon(self, ctx: commands.Context):
         """
         Commande !help_armageddon
         -----------
-        Traite la commande twitch !help_armor. 
+        Traite la commande twitch !help_armageddon. 
         """
         name = ctx.author.display_name
         if name.lower() == CLIENT["USERNAME"].lower() :
@@ -512,9 +560,9 @@ class TBoT(commands.Bot):
     @commands.command()
     async def top_score(self, ctx: commands.Context):
         """
-        Commande !help_armageddon
+        Commande !top_score
         -----------
-        Traite la commande twitch !help_armor. 
+        Traite la commande twitch !top_score. 
         """
         test_survivant_exist = await TBOTBDD.get_stats_survivant(ctx.author.id)
         if test_survivant_exist !=None :
@@ -538,15 +586,40 @@ class TBoT(commands.Bot):
     @commands.command()
     async def init_score(self, ctx: commands.Context):
         """
-        Commande !help_armageddon
+        Commande !init_score
         -----------
-        Traite la commande twitch !help_armor. 
+        Traite la commande twitch !init_score. 
         """
         name = ctx.author.display_name
-        if name.lower() == "gtof_" or name.lower() == CLIENT["USERNAME"].lower():
+        if name.lower() == CLIENT["USERNAME"].lower():
             await TBOTBDD.init_score()
         
-            
+    @commands.command()
+    async def base_on(self, ctx: commands.Context):
+        """
+        Commande !base_on
+        -----------
+        Traite la commande twitch !base_on. 
+        """
+        name = ctx.author.display_name
+        
+        if name.lower() == CLIENT["USERNAME"].lower():
+            self.BASE_READY=True
+            await tbot_com.message(key="base_in_place",channel=ctx.channel,name=CLIENT["NICK"])
+    
+    @commands.command()
+    async def base_off(self, ctx: commands.Context):
+        """
+        Commande !base_on
+        -----------
+        Traite la commande twitch !base_on. 
+        """
+        name = ctx.author.display_name
+        
+        if name.lower() == CLIENT["USERNAME"].lower():
+            self.BASE_READY=False
+            await tbot_com.message(key="error_no_base",channel=ctx.channel,name=CLIENT["NICK"])      
+      
 if __name__ == '__main__': 
     print('Ne peut etre lancé directement')
     
