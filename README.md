@@ -108,7 +108,8 @@ Chaque récompenses doit déduire le nombre correspondant de points de chaine.
     "ASSISTANT_BOOST" : true,
     "GEAR_BOOST" : 66,
     "MAX_VISI" : 5,
-    "TIME_VISI" :5
+    "TIME_VISI" :5,
+    "BASE_READY" : false
 }
 ```
 
