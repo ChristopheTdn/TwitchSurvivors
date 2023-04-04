@@ -4,7 +4,7 @@
 
 Click here for [ENGLISH VERSION](Readme.English.md)
 
-systeme d interraction entre TWITCH et PROJECT ZOMBOID au travers d'un jeu ou les viewers assure le role de survivants et peuvent apporter leur aide au streamer en realisant des RAIDs et en se regroupant pour survivre le plus longtemps possible.
+Système d'interaction entre TWITCH et PROJECT ZOMBOID au travers d'un jeu où les viewers assurent le rôle de survivants et peuvent apporter leur aide au streamer en réalisant des RAIDs et en se regroupant pour survivre le plus longtemps possible.
 
 ## PRE REQUIS
 
