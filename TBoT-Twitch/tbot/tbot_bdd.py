@@ -43,9 +43,9 @@ class TBOT_BDD:
             level_armor INTEGER,
             level_transport INTEGER,
             level_gear INTEGER,
-            alive BOOLEAN,           
-            inraid BOOLEAN,            
-            support_raid TEXT 
+            alive BOOLEAN,
+            inraid BOOLEAN,
+            support_raid TEXT
             )"""
         )
 
@@ -95,7 +95,7 @@ class TBOT_BDD:
         db = await aiosqlite.connect(os.path.join("./Sqlite", self.NAMEBDD))
         await db.execute(
             """INSERT OR IGNORE INTO survivant
-                            (id_twitch,    
+                            (id_twitch,
                             name,
                             name_lower,
                             career,
@@ -123,22 +123,22 @@ class TBOT_BDD:
 
         db = await aiosqlite.connect(os.path.join("./Sqlite", self.NAMEBDD))
         await db.execute(
-            f"""UPDATE survivant SET 
+            f"""UPDATE survivant SET
                         career          = "",
                         credit          = credit-{CONFIG["COUT_REVIVE"]},
                         level_weapon    = 1,
                         level_armor     = 1,
                         level_transport = 1,
                         level_gear      = 1,
-                        alive           = True, 
+                        alive           = True,
                         inraid          = False,
-                        support_raid    = ""                 
+                        support_raid    = ""
                         WHERE id_twitch = {id_twitch}"""
         )
         if CONFIG["RESET_PRESTIGE_AFTER_DEATH"]:
             await db.execute(
-                f"""UPDATE survivant SET 
-                        prestige        = 0                  
+                f"""UPDATE survivant SET
+                        prestige        = 0
                         WHERE id_twitch = {id_twitch}"""
             )
         await db.commit()
@@ -166,10 +166,10 @@ class TBOT_BDD:
         reponse = {}
         db = await aiosqlite.connect(os.path.join("./Sqlite", self.NAMEBDD))
         async with db.execute(
-            f"""SELECT 
+            f"""SELECT
                             id_twitch,
                             name,
-                            name_lower,                            
+                            name_lower,
                             career,
                             prestige,
                             credit,
@@ -178,7 +178,7 @@ class TBOT_BDD:
                             level_transport,
                             level_gear,
                             alive,
-                            inraid,                            
+                            inraid,
                             support_raid FROM 'survivant' WHERE id_twitch='{id_twitch}' """
         ) as cur:
             listeStat = await cur.fetchone()
@@ -502,7 +502,7 @@ class TBOT_BDD:
                 loot = self.config_butin_json[raid["type"]]["tier_3"]
                 choix_loot = random.choice(tuple(loot.keys()))
                 butin_final[choix_loot] = self.config_butin_json[raid["type"]][
-                    f"tier_3"
+                    "tier_3"
                 ][choix_loot]
                 bonus_butin += 200
             elif hasard < object_tier2 + object_tier3:
@@ -510,14 +510,14 @@ class TBOT_BDD:
                 loot = self.config_butin_json[raid["type"]]["tier_2"]
                 choix_loot = random.choice(tuple(loot.keys()))
                 butin_final[choix_loot] = self.config_butin_json[raid["type"]][
-                    f"tier_2"
+                    "tier_2"
                 ][choix_loot]
                 bonus_butin += 100
             else:  # Donne un objet de Tier1
                 loot = self.config_butin_json[raid["type"]]["tier_1"]
                 choix_loot = random.choice(tuple(loot.keys()))
                 butin_final[choix_loot] = self.config_butin_json[raid["type"]][
-                    f"tier_1"
+                    "tier_1"
                 ][choix_loot]
                 bonus_butin += 50
 
@@ -529,7 +529,7 @@ class TBOT_BDD:
 
     async def actualise_statRaid(self, channel):
         db = await aiosqlite.connect(os.path.join("./Sqlite", self.NAMEBDD))
-        async with db.execute(f"""SELECT * FROM 'raid' """) as cur:
+        async with db.execute("""SELECT * FROM 'raid' """) as cur:
             listeRaid = await cur.fetchall()
         await db.close()
 
@@ -561,7 +561,7 @@ class TBOT_BDD:
                 await db.execute(
                     f"""UPDATE raid SET time_visi = time_visi - 1 WHERE id_twitch = {raid["id_twitch"]}"""
                 )
-            if raid["time_visi"] == 0 and raid["visi"] == True:
+            if raid["time_visi"] == 0 and raid["visi"] is True:
                 await db.execute(
                     f"""UPDATE raid SET visi = False WHERE id_twitch = {raid["id_twitch"]}"""
                 )
@@ -626,8 +626,8 @@ class TBOT_BDD:
                     "raid_mort_enroute", channel=channel, name=raid["name"]
                 )
                 await db.execute(
-                    f"""UPDATE survivant SET 
-                                     alive=0                                     
+                    f"""UPDATE survivant SET
+                                     alive=0
                                      WHERE id_twitch = {raid["id_twitch"]}"""
                 )
             await db.commit()
@@ -693,7 +693,6 @@ class TBOT_BDD:
         # Gestion renfort eventuel
         gain_prestige = gain_prestige // 4
         liste = raid["renfort"].split(",")
-        listefinale = []
         for joueur in liste:
             if joueur != "":
                 # todo: gerer les nom des support avec les id twitch
@@ -758,7 +757,7 @@ class TBOT_BDD:
         if helper_stats[f"level_{type}"] > raidEnCours[f"levelRaid_{type}"]:
             db = await aiosqlite.connect(os.path.join("./Sqlite", self.NAMEBDD))
             await db.execute(
-                f"""UPDATE raid SET 
+                f"""UPDATE raid SET
                                  levelRaid_{type} = {helper_stats[f"level_{type}"]}
                                  WHERE id_twitch = {raider["id_twitch"]}"""
             )
@@ -800,10 +799,10 @@ class TBOT_BDD:
         ) as cur:
             scoreHaF = await cur.fetchone()
         await db.close()
-        if scoreHaF == None:
+        if scoreHaF is None:
             db = await aiosqlite.connect(os.path.join("./Sqlite", self.NAMEBDD))
             await db.execute(
-                """INSERT OR IGNORE INTO HallOfFame 
+                """INSERT OR IGNORE INTO HallOfFame
                         (id_twitch,
                         name,
                         score)
