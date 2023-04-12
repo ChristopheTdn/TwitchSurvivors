@@ -255,7 +255,7 @@ class TBoT(commands.Bot):
                 )
                 break
 
-            if helper["inraid"] == True:
+            if helper["inraid"] is True:
                 await tbot_com.message(
                     key="survivant_no_support_when_raid",
                     channel=channel,
@@ -271,8 +271,10 @@ class TBoT(commands.Bot):
 
             raider = await TBOTBDD.stat_raid(raider_id)
 
-            if raider == None:
-                await tbot_com.message(key="error_noRaid", channel=channel, name=helper)
+            if raider is None:
+                await tbot_com.message(key="error_noRaid",
+                                       channel=channel,
+                                       name=helper["name"])
                 break
 
             if raider["time_renfort"] >= CONFIG["MAX_TIME_RENFORT"]:
@@ -347,11 +349,14 @@ class TBoT(commands.Bot):
 
         if survivant is None or survivant["alive"] is False:
             await tbot_com.message(
-                "survivant_no_exist", channel=ctx.channel, name=ctx.author.display_name
-            )
+                "survivant_no_exist",
+                channel=ctx.channel,
+                name=ctx.author.display_name)
         elif survivant["inraid"] is True:
             await tbot_com.message(
-                "raid_deja_en_cours", channel=ctx.channel, name=ctx.author.display_name
+                "raid_deja_en_cours",
+                channel=ctx.channel,
+                name=ctx.author.display_name
             )
         else:
             prestige = survivant["prestige"]
