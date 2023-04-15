@@ -22,25 +22,31 @@ Interaction system between TWITCH and PROJECT ZOMBOID through a game where viewe
 
 ### Autoriser l'exécution de scripts PowerShell
 
-- Cliquer sur le bouton Démarrer, sur Tous les programmes, sur Accessoires, sur Windows PowerShell.
-- Cliquer avec le bouton droit de la souris sur Windows PowerShell puis cliquez sur Exécuter en tant qu'administrateur.
-- Dans la fenêtre qui s'ouvre, saisissez la commande :
+- Start Windows PowerShell with the "Run as Administrator" option. Only members of the Administrators group on the computer can change the execution policy.
+- Enable running unsigned scripts by entering:
+
+```csharp
+set-executionpolicy remotesigned
+```
+
 
 ```bash
  Set-ExecutionPolicy RemoteSigned
 ```
 
-- Confirmer en appuyant sur O
+- Confirm (press Y)
 
 ## Installation
 
-### Cloner le depot sur votre disque local
+### Get last release :
 
-### executer le script `settingENV.ps1`
+[Releases · ChristopheTdn/TwitchSurvivors (github.com)](https://github.com/ChristopheTdn/TwitchSurvivors/releases)
 
-- A la racine du projet, clique droit sur le fichier `settingENV.ps1` et Executer avec powershell
+### Setting Python virtual environment : 
 
-### fournir les tokens necessaires a la communication entre le script et le stream TWITCH
+At the root of the project, right click on the file **settingENV.ps1** and Run with powershell
+
+### Get necessary tokens to validate communication between the python script and  TWITCH
 
  Sur le site [https://twitchtokengenerator.com/](https://twitchtokengenerator.com/)
 
