@@ -19,5 +19,5 @@
     "GEAR_BOOST" : 66,
     "MAX_VISI" : 5,
     "TIME_VISI" :5,
-    "BASE_READY" : false
+    "BASE_READY" : true
 }
