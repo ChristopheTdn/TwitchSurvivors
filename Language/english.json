@@ -228,25 +228,25 @@
     "sound":""
 },
 "error_raid_timeOut":{
-    "ovl":"❌-Attention {name}, le raid conduit par {name2} est parti depuis trop longtemps !",
+    "ovl":"❌-Attention {name}, the raid led by {name2} has been gone for too long !",
     "chat":"",
     "mod":"",
     "sound":""
 },
 "error_raid_MaxSurvivor":{
-    "ovl":"❌-Attention {name}, tu ne peux aider {name2}. Son equipe est déjà au complet !",
+    "ovl":"❌-Attention {name}, you can't help {name2}. His team is already complete !",
     "chat":"",
     "mod":"",
     "sound":""
 },
 "error_no_base":{
-    "ovl":"❌-Attention !!! La base de départ n'a pas été déployée par {name} (commande <span style='color:rgb(230, 138, 0);'>!base_on</span>). Il n'est plus possible de réaliser un raid, upgrade ou support.",
+    "ovl":"❌-Careful!!! The starting base was not deployed by {name}(command <span style='color:rgb(230, 138, 0);'>!base_on</span>). It is no longer possible to perform a raid, upgrade or support.",
     "chat":"",
     "mod":"",
     "sound":""
 },
 "base_in_place":{
-    "ovl":"⛹-La base de départ a été créée par {name}. Les raids sont maintenant possibles.",
+    "ovl":"⛹-The starting base was created by {name}. Raids are now possible.",
     "chat":"",
     "mod":"",
     "sound":""
