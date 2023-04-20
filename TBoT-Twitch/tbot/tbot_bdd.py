@@ -19,7 +19,7 @@ class TBOT_BDD:
         self.NAMEBDD = "tbot_bdd.sqlite"
         with open("./Data/raid.json", "r", encoding="utf-8") as fichier:
             self.config_raid_json = json.load(fichier)
-        with open("./Data/butin.json", "r", encoding="utf-8") as fichier:
+        with open(f"./Language/{CONFIG['LANGUE']}_butin.json", "r", encoding="utf-8") as fichier :
             self.config_butin_json = json.load(fichier)
         with open("./Data/butin_ratio.json", "r", encoding="utf-8") as fichier:
             self.config_ratio_json = json.load(fichier)

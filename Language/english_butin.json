@@ -253,9 +253,9 @@
             "Strawberry seed bag"	:   "Base.StrewberrieBagSeed"
         },
         "tier_2":{
-            "Carrot seed bag"	    :   "Base.CarrotBagSeed",
-            "tomatoes seed bag"	    :   "Base.TomatoBagSeed",
-            "Potatoes seed bag"	    :   "Base.PotatoBagSeed",
+            "Carrot seed bag"	    :   "farming.CarrotBagSeed",
+            "tomatoes seed bag"	    :   "farming.TomatoBagSeed",
+            "Potatoes seed bag"	    :   "farming.PotatoBagSeed",
             "WateredCan"	        :   "farming.WateredCan",
             "Shovel"	            :   "farming.Shovel"
         },
@@ -263,8 +263,8 @@
             "Gardening Spray Cigarettes":   "farming.GardeningSprayCigarettes",
             "Gardening Spray Milk"	    :   "farming.GardeningSprayMilk",
             "Fertilizer"	            :   "Base.Fertilizer",
-            "Cabbage seed Bag"	        :   "Base.CabbageBagSeed",
-            "Brocoli seed Bag"	        :   "Base.BroccoliBagSeed"
+            "Cabbage seed Bag"	        :   "farming.CabbageBagSeed",
+            "Brocoli seed Bag"	        :   "farming.BroccoliBagSeed"
         }    
     }
 }

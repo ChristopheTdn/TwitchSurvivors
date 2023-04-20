@@ -193,7 +193,7 @@
             "Wasabi"	            :   "Base.Wasabi",
             "Soda Orange"	        :   "Base.Pop2",
             "Lait"	                :   "Base.Milk",
-            "Mangue"	                :   "Base.Mango",
+            "Mange"	                :   "Base.Mango",
             "Ananas"	            :   "Base.Pineapple",
             "Pâtes"	                :   "Base.Pasta",
             "Riz"	                :   "Base.Rice",
@@ -249,23 +249,22 @@
         "tier_1":{
             "Truelle"	        :   "farming.HandShovel",
             "Sac compost"	    :   "Base.CompostBag",
-            "Graines radis"	    :   "Base.RedRadishBagSeed",
-            "Graines fraises"	:   "Base.StrewberrieBagSeed"
+            "Graines radis"	    :   "farming.RedRadishBagSeed",
+            "Graines fraises"	:   "farming.StrewberrieBagSeed"
         },
         "tier_2":{
-            "Graines carrotes"	:   "Base.CarrotBagSeed",
-            "Graines tomates"	:   "Base.TomatoBagSeed",
-            "Graines patates"	:   "Base.PotatoBagSeed",
+            "Graines carrotes"	:   "farming.CarrotBagSeed",
+            "Graines tomates"	:   "farming.TomatoBagSeed",
+            "Graines patates"	:   "farming.PotatoBagSeed",
             "Arrosoir"	        :   "farming.WateredCan",
             "Pelle"	            :   "farming.Shovel"
         },
         "tier_3":{
             "Insecticide"	    :   "farming.GardeningSprayCigarettes",
-            "Spray Mildiou"	    :   "farming.GardeningSprayMilk",
+            "Spray Milidou"	    :   "farming.GardeningSprayMilk",
             "Fertilisant"	    :   "Base.Fertilizer",
-            "Graines choux"	    :   "Base.CabbageBagSeed",
-            "Graines Brocoli"	:   "Base.BroccoliBagSeed"
+            "Graines choux"	    :   "farming.CabbageBagSeed",
+            "Graines Brocoli"	:   "farming.BroccoliBagSeed"
         }    
     }
 }
-
