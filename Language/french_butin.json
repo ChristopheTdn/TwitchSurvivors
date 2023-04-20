@@ -261,37 +261,11 @@
         },
         "tier_3":{
             "Insecticide"	    :   "farming.GardeningSprayCigarettes",
-            "Spray Milidou"	    :   "farming.GardeningSprayMilk",
+            "Spray Mildiou"	    :   "farming.GardeningSprayMilk",
             "Fertilisant"	    :   "Base.Fertilizer",
             "Graines choux"	    :   "Base.CabbageBagSeed",
             "Graines Brocoli"	:   "Base.BroccoliBagSeed"
         }    
-    },
-    "furniture":{
-        "tier_1":{
-            "Bouteille biere"   :   "Base.BeerBottle",
-            "Truelle"	        :   "farming.HandShovel",
-            "Sac compost"	    :   "Base.CompostBag",
-            "Graines radis"	    :   "Base.RedRadishBagSeed",
-            "Graines fraises"	:   "Base.StrewberrieBagSeed"
-        },
-        "tier_2":{
-            "Graines carrotes"	:   "Base.CarrotBagSeed",
-            "Graines tomates"	:   "Base.TomatoBagSeed",
-            "Bouteille desinfectant":	"Base.Disinfectant",
-            "Graines patates"	:   "Base.PotatoBagSeed",
-            "Arrosoir"	        :   "farming.WateredCan",
-            "Pelle"	            :   "farming.Shovel"
-        },
-        "tier_3":{
-            "Insecticide"	    :   "farming.GardeningSprayCigarettes",
-            "Spray Milidou"	    :   "farming.GardeningSprayMilk",
-            "Fertilisant"	    :   "Base.Fertilizer",
-            "Graines choux"	    :   "Base.CabbageBagSeed",
-            "Graines Brocoli"	:   "Base.BroccoliBagSeed",
-            "Haricots secs"	    :   "Base.DriedBlackBeans"
-        }    
     }
-
 }
 

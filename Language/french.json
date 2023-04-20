@@ -141,7 +141,7 @@
         "ovl"   : "⛹- l'équipe de {name} est tombée dans une embuscade.",
         "chat"  : "",
         "mod"   : "",
-        "sound" : "EMBUSCADE.mp3"
+        "sound" : "Embuscade.mp3"
     },
     "raid_deja_en_cours" :{
         "ovl"   : "❌- un raid est dejà en cours pour {name} ! tapez !my_survivor pour plus d'infos.",

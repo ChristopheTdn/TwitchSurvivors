@@ -200,98 +200,72 @@
             "OatsRaw"	            :   "Base.OatsRaw",
             "Cereal"	            :   "Base.Cereal",
             "Guacamole"	            :   "Base.Guacamole",
-            "DriedBlackBeans"	    :   "Base.DriedBlackBeans"
+            "Dried Black Beans"	    :   "Base.DriedBlackBeans"
         }    
     },
     "medic":{
         "tier_1":{
-            "Pansement"             :	"Base.Bandaid",
-            "Balle coton"           :	"Base.AlcoholedCottonBalls",
-            "Tissu"                 :	"Base.Tissue",
-            "Pince epiler"          :	"Base.Tweezers",
-            "Serviette bain"        :	"Base.BathTowel",
-            "Attelle"               :	"Base.Splint",
-            "Tissu dechire"         :	"Base.RippedSheets",
-            "Lingette desinfectante":   "Base.AlcoholWipes"
+            "Bandaid"               :	"Base.Bandaid",
+            "Alcoholed Cotton Balls":	"Base.AlcoholedCottonBalls",
+            "Tissue"                :	"Base.Tissue",
+            "Tweezers"              :	"Base.Tweezers",
+            "Bath Towel"            :	"Base.BathTowel",
+            "Splint"                :	"Base.Splint",
+            "Ripped Sheets"         :	"Base.RippedSheets",
+            "Alcohol Wipes"         :   "Base.AlcoholWipes"
         },
         "tier_2":{
             "Bandage"	            :   "Base.Bandage",
-            "Bouteille desinfectant":	"Base.Disinfectant",
-            "Pince suture"	        :   "Base.SutureNeedleHolder",
-            "Antidepresseur"	    :   "Base.PillsAntiDep",
-            "Beta bloquant"	        :   "Base.PillsBeta",
-            "Antidouleur"	        :   "Base.Pills",
-            "Somnifere"	            :   "Base.PillsSleepingTablets"
+            "Disinfectant"          :	"Base.Disinfectant",
+            "Suture Needle Holder"	:   "Base.SutureNeedleHolder",
+            "Pills AntiDep"	        :   "Base.PillsAntiDep",
+            "Pills Beta"	        :   "Base.PillsBeta",
+            "Pills"	                :   "Base.Pills",
+            "Pills Sleeping Tablets":   "Base.PillsSleepingTablets"
             
         },
         "tier_3":{
             "Antibiotics"	    :   "Base.Antibiotics",
-            "Bandage sterile"	:   "Base.AlcoholBandage",
-            "Aiguille suture"	:   "Base.SutureNeedle",
-            "Vitamines"	        :   "Base.PillsVitamins"
+            "Alcohol Bandage"	:   "Base.AlcoholBandage",
+            "Suture Needle"	    :   "Base.SutureNeedle",
+            "Pills Vitamins"	:   "Base.PillsVitamins"
         }    
     },
     "alcohol":{
         "tier_1":{
-            "Bouteille biere"   :   "Base.BeerBottle",	
+            "Beer Bottle"       :   "Base.BeerBottle",	
             "Cannette biere"    :   "Base.BeerCan"
             
         },
         "tier_2":{
-            "Bouteille Vin Rouge"         :   "Base.Wine2",	
-            "Bouteille Vin Blanc"         :   "Base.Wine"	
+            "Bottle Red Wine"         :   "Base.Wine2",	
+            "Bottle white Wine"       :   "Base.Wine"	
         },
         "tier_3":{
-            "Bouteille Whisky"            :   "Base.WhiskeyFull"	
+            "Bottle Whisky"            :   "Base.WhiskeyFull"	
         }    
     },
     "agriculture":{
         "tier_1":{
-            "Truelle"	        :   "farming.HandShovel",
-            "Sac compost"	    :   "Base.CompostBag",
-            "Graines radis"	    :   "Base.RedRadishBagSeed",
-            "Graines fraises"	:   "Base.StrewberrieBagSeed"
+            "HandShovel"	        :   "farming.HandShovel",
+            "Compost Bag"	        :   "Base.CompostBag",
+            "RedRadish seed bag"	:   "Base.RedRadishBagSeed",
+            "Strawberry seed bag"	:   "Base.StrewberrieBagSeed"
         },
         "tier_2":{
-            "Graines carrotes"	:   "Base.CarrotBagSeed",
-            "Graines tomates"	:   "Base.TomatoBagSeed",
-            "Graines patates"	:   "Base.PotatoBagSeed",
-            "Arrosoir"	        :   "farming.WateredCan",
-            "Pelle"	            :   "farming.Shovel"
+            "Carrot seed bag"	    :   "Base.CarrotBagSeed",
+            "tomatoes seed bag"	    :   "Base.TomatoBagSeed",
+            "Potatoes seed bag"	    :   "Base.PotatoBagSeed",
+            "WateredCan"	        :   "farming.WateredCan",
+            "Shovel"	            :   "farming.Shovel"
         },
         "tier_3":{
-            "Insecticide"	    :   "farming.GardeningSprayCigarettes",
-            "Spray Milidou"	    :   "farming.GardeningSprayMilk",
-            "Fertilisant"	    :   "Base.Fertilizer",
-            "Graines choux"	    :   "Base.CabbageBagSeed",
-            "Graines Brocoli"	:   "Base.BroccoliBagSeed"
-        }    
-    },
-    "furniture":{
-        "tier_1":{
-            "Bouteille biere"   :   "Base.BeerBottle",
-            "Truelle"	        :   "farming.HandShovel",
-            "Sac compost"	    :   "Base.CompostBag",
-            "Graines radis"	    :   "Base.RedRadishBagSeed",
-            "Graines fraises"	:   "Base.StrewberrieBagSeed"
-        },
-        "tier_2":{
-            "Graines carrotes"	:   "Base.CarrotBagSeed",
-            "Graines tomates"	:   "Base.TomatoBagSeed",
-            "Bouteille desinfectant":	"Base.Disinfectant",
-            "Graines patates"	:   "Base.PotatoBagSeed",
-            "Arrosoir"	        :   "farming.WateredCan",
-            "Pelle"	            :   "farming.Shovel"
-        },
-        "tier_3":{
-            "Insecticide"	    :   "farming.GardeningSprayCigarettes",
-            "Spray Milidou"	    :   "farming.GardeningSprayMilk",
-            "Fertilisant"	    :   "Base.Fertilizer",
-            "Graines choux"	    :   "Base.CabbageBagSeed",
-            "Graines Brocoli"	:   "Base.BroccoliBagSeed",
-            "Haricots secs"	    :   "Base.DriedBlackBeans"
+            "Gardening Spray Cigarettes":   "farming.GardeningSprayCigarettes",
+            "Gardening Spray Milk"	    :   "farming.GardeningSprayMilk",
+            "Fertilizer"	            :   "Base.Fertilizer",
+            "Cabbage seed Bag"	        :   "Base.CabbageBagSeed",
+            "Brocoli seed Bag"	        :   "Base.BroccoliBagSeed"
         }    
     }
-
 }
 
