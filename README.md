@@ -34,13 +34,16 @@ Vous pouvez lire le [manuel de jeu](manual/fr/manual_fr.md) basé sur le [serveu
 
 - Confirmer en appuyant sur O
 
-## Installation
+## Installation  
 
-### Cloner le depot sur votre disque local
+### Recuperer la derniere release :
+
+* [Releases : ChristopheTdn/TwitchSurvivors (github.com)](https://github.com/ChristopheTdn/TwitchSurvivors/releases)
+* Decompresser sur votre disque dur.
 
 ### executer le script `settingENV.ps1`
 
-- A la racine du projet, clique droit sur le fichier `settingENV.ps1` et Executer avec powershell
+- A la racine du projet, clique droit sur le fichier `settingENV.ps1` et "*Executer avec powershell*"
 
 ### fournir les tokens necessaires a la communication entre le script et le stream TWITCH
 
