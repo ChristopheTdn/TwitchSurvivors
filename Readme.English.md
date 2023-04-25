@@ -6,6 +6,8 @@ Click here for [FRENCH VERSION](README.md)
 
 Interaction system between TWITCH and PROJECT ZOMBOID through a game where viewers assume the role of survivors and can help the streamer by performing RAIDs and regrouping to survive as long as possible.
 
+You can read the [game manual](manual/fr/manual_fr.md) (french only at this time) based on the [TancredTerror twitch server](https://www.twitch.tv/tancredterror)
+
 ## PRE REQUIS
 
 ### subscribe to the Steam mod TWITCH SURVIVORS :
@@ -49,12 +51,11 @@ At the root of the project, right click on the file **settingENV.ps1** and Run w
 
  go to the site [https://twitchtokengenerator.com/](https://twitchtokengenerator.com/)
 
-
 - generate a bot chat token
 - select all permissions (Select all button at the bottom).
 - Click on Generate Token.
 - Put informations in the file `Configuration/Secret/config_Token_Client.json` :
-- "USER_ID" is the [Twitch ID number](https://streamscharts.com/tools/convert-username). 
+- "USER_ID" is the [Twitch ID number](https://streamscharts.com/tools/convert-username).
 - sample :
 
 ```json
