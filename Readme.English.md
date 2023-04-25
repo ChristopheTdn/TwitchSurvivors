@@ -29,7 +29,6 @@ Interaction system between TWITCH and PROJECT ZOMBOID through a game where viewe
 set-executionpolicy remotesigned
 ```
 
-
 ```bash
  Set-ExecutionPolicy RemoteSigned
 ```
@@ -42,19 +41,21 @@ set-executionpolicy remotesigned
 
 [Releases · ChristopheTdn/TwitchSurvivors (github.com)](https://github.com/ChristopheTdn/TwitchSurvivors/releases)
 
-### Setting Python virtual environment : 
+### Setting Python virtual environment :
 
 At the root of the project, right click on the file **settingENV.ps1** and Run with powershell
 
 ### Get necessary tokens to validate communication between the python script and  TWITCH
 
- Sur le site [https://twitchtokengenerator.com/](https://twitchtokengenerator.com/)
+ go to the site [https://twitchtokengenerator.com/](https://twitchtokengenerator.com/)
 
-- generer un bot tchat token
-- sélectionner l'ensemble des autorisations  (Bouton select all tout en bas).
-- cliquer sur generate token.
-- Entrer les informations dans le fichier `Configuration/Secret/config_Token_Client.json` :
-- exemple
+
+- generate a bot chat token
+- select all permissions (Select all button at the bottom).
+- Click on Generate Token.
+- Put informations in the file `Configuration/Secret/config_Token_Client.json` :
+- "USER_ID" is the [Twitch ID number](https://streamscharts.com/tools/convert-username). 
+- sample :
 
 ```json
 {
@@ -69,29 +70,28 @@ At the root of the project, right click on the file **settingENV.ps1** and Run w
 }
 ```
 
-### Integrer les overlays dans OBS :
+### Integrate overlays in OBS :
 
- Afin de visualiser les commandes et leurs effets, il est necessaire d ajouter 2 overlay à  votre scene OBS.
+ In order to visualize the controls and their effects, it is necessary to add 2 overlays to your OBS scene.
 
-- TBoT_Overlay/html/chat.html : taille 1000 x 2000, Rafraichissement lorsque le fichier devient actif.
-- TBoT_Overlay/html/cars.html : taille 1920 x 200, Rafraichissement lorsque le fichier devient actif.
+- TBoT_Overlay/html/chat.html : size 1000 x 2000, Refresh when the file becomes active.
+- TBoT_Overlay/html/cars.html : size 1920 x 200, Refresh when the file becomes active.
 
 ## Configuration
 
 ### sur votre chaine TWITCH :
 
-Ajouter 3 recompenses de point de chaine. Respecter la dénomination :
+Add 3 chain point rewards. Respect the name :
 
-- "Acheter 300 crédits"
-- "Acheter 2000 crédits"
-- "Acheter 5000 crédits"
+- "Get 300 credits"
+- "Get 2000 credits"
+- "Get 5000 credits"
 
-Chaque récompenses doit déduire le nombre correspondant de points de chaine.
+Each reward must deduct the corresponding number of chain points.
 
-### parametrer le fonctionnement du script
+### Configure how the script works
 
-- Entrer les informations dans le fichier `Configuration/config.json`
-- Dans la pratique, seul le nom du streamer est a fournir à la première ligne
+- Enter information in the file  `Configuration/config.json`
 
 ```json
 {
@@ -119,15 +119,15 @@ Chaque récompenses doit déduire le nombre correspondant de points de chaine.
 }
 ```
 
-## Lancer le programme :
+## Launch the program: :
 
-pour lancer le script à la racine du projet :
+to run the script. At the root of the project:
 
 ```
 TWITCH SURVIVOR.ps1
 ```
 
-*clic droit* et *Executer avec powershell*
+*right-click* and *Run with powershell*
 
 ## Contributing
 

@@ -1,5 +1,9 @@
 {
-        "empty" :{
+    "buy_300_credit" : "Acheter 300 crédits",
+    "buy_2000_credit" : "Acheter 2000 crédits",
+    "buy_5000_credit" : "Acheter 5000 crédits",
+    
+    "empty" :{
         "ovl"   : "",
         "chat"  : "",
         "mod"   : "",
@@ -250,5 +254,5 @@
         "chat":"",
         "mod":"",
         "sound":""
-    }  
+    }
 }

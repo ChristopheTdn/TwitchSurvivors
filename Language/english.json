@@ -1,4 +1,8 @@
 {
+    "buy_300_credit" : "Get 300 credits",
+    "buy_2000_credit" : "Get 2000 credits",
+    "buy_5000_credit" : "Get 5000 credits",
+
     "empty" :{
     "ovl"   : "",
     "chat"  : "",

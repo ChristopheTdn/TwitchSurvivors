@@ -6,6 +6,8 @@ Click here for [ENGLISH VERSION](Readme.English.md)
 
 Système d'interaction entre TWITCH et PROJECT ZOMBOID au travers d'un jeu où les viewers assurent le rôle de survivants et peuvent apporter leur aide au streamer en réalisant des RAIDs et en se regroupant pour survivre le plus longtemps possible.
 
+Vous pouvez lire le [manuel de jeu](manual/fr/manual_fr.md) basé sur le [serveur twitch de TancredTerror](https://www.twitch.tv/tancredterror)
+
 ## PRE REQUIS
 
 ### s'abonner au  mod Steam TWITCH SURVIVORS :
