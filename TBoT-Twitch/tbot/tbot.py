@@ -13,8 +13,8 @@
 Game integration in twitch and project zomboid
 
 Idea : Thibaud "TancredTerror"
-code : Christophe 'GToF_'
-Overlay : Thomas 'Masohté'
+code : Christophe 'GToF_' Tdn
+Overlay : Thomas 'Masoht_'
 Github : https://github.com/ChristopheTdn/TwitchSurvivors
 
 """
