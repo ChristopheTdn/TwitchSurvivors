@@ -19,16 +19,22 @@ class TBOT_BDD:
         self.NAMEBDD = "tbot_bdd.sqlite"
         with open("./Data/raid.json", "r", encoding="utf-8") as fichier:
             self.config_raid_json = json.load(fichier)
-        with open(f"./Language/{CONFIG['LANGUE']}_butin.json", "r", encoding="utf-8") as fichier :
+        with open(f"./Language/{CONFIG['LANGUE']}_butin.json",
+                  "r",
+                  encoding="utf-8") as fichier:
             self.config_butin_json = json.load(fichier)
-        with open("./Data/butin_ratio.json", "r", encoding="utf-8") as fichier:
+            
+        with open("./Data/butin_ratio.json",
+                  "r",
+                  encoding="utf-8") as fichier:
             self.config_ratio_json = json.load(fichier)
 
     def initTableSql(self):
         """
         Initialise la base de donnée si elle n'existe pas
         """
-        self.connexionSQL = sqlite3.connect(os.path.join("./Sqlite", self.NAMEBDD))
+        self.connexionSQL = sqlite3.connect(os.path.join("./Sqlite",
+                                                         self.NAMEBDD))
         curseur = self.connexionSQL.cursor()
         curseur.execute(
             """CREATE TABLE IF NOT EXISTS survivant(
@@ -107,8 +113,21 @@ class TBOT_BDD:
                             level_gear,
                             alive,
                             inraid,
-                            support_raid) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?)""",
-            (id_twitch, name, name.lower(), "", 0, 0, 1, 1, 1, 1, False, False, ""),
+                            support_raid)
+                            VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?)""",
+            (id_twitch,
+             name,
+             name.lower(),
+             "",
+             0,
+             0,
+             1,
+             1,
+             1,
+             1,
+             False,
+             False,
+             ""),
         )
         await db.commit()
         await db.close()
@@ -179,11 +198,13 @@ class TBOT_BDD:
                             level_gear,
                             alive,
                             inraid,
-                            support_raid FROM 'survivant' WHERE id_twitch='{id_twitch}' """
+                            support_raid
+                            FROM 'survivant'
+                            WHERE id_twitch='{id_twitch}' """
         ) as cur:
             listeStat = await cur.fetchone()
         await db.close()
-        if listeStat == None:
+        if listeStat is None:
             return None
         else:
             reponse = {
@@ -218,7 +239,7 @@ class TBOT_BDD:
         ) as cur:
             survivant = await cur.fetchone()
         await db.close()
-        if survivant != None:
+        if survivant is not None:
             survivant_dict = {
                 "id_twitch": survivant[1],
                 "name": survivant[2],
@@ -369,18 +390,10 @@ class TBOT_BDD:
         # determine si le RAID sera un succes
 
         DISTANCE_REF = self.config_raid_json["raid_" + raid["type"]]["distance_raid"]
-        BUTIN_REF = self.config_raid_json["raid_" + raid["type"]]["stats_raid"][
-            f"niveau-1"
-        ]["BUTIN"]
-        BREDOUILLE_REF = self.config_raid_json["raid_" + raid["type"]]["stats_raid"][
-            f"niveau-1"
-        ]["BREDOUILLE"]
-        BLESSE_REF = self.config_raid_json["raid_" + raid["type"]]["stats_raid"][
-            f"niveau-1"
-        ]["BLESSE"]
-        MORT_REF = self.config_raid_json["raid_" + raid["type"]]["stats_raid"][
-            f"niveau-1"
-        ]["MORT"]
+        BUTIN_REF = self.config_raid_json["raid_" + raid["type"]]["stats_raid"]["niveau-1"]["BUTIN"]
+        BREDOUILLE_REF = self.config_raid_json["raid_" + raid["type"]]["stats_raid"]["niveau-1"]["BREDOUILLE"]
+        BLESSE_REF = self.config_raid_json["raid_" + raid["type"]]["stats_raid"]["niveau-1"]["BLESSE"]
+        MORT_REF = self.config_raid_json["raid_" + raid["type"]]["stats_raid"]["niveau-1"]["MORT"]
         gfx_car = f'{raid["levelRaid_transport"]}-{(random.randrange(4)+1)}.png'
         embuscade = []
 
@@ -390,9 +403,15 @@ class TBOT_BDD:
             if raid["effectif_team"] > 1:
                 tentative = raid["levelRaid_gear"]
         # Boucle pour définir le resultat du RAID
-        for tentative_survie in range(tentative):  # autant de chance de ne pas mourrir
+        # autant de chance de ne pas mourrir
+        for tentative_survie in range(tentative):
             BUTIN, BREDOUILLE, BLESSE, MORT, DISTANCE = await self.calcul_ratio_raid(
-                raid, BUTIN_REF, BREDOUILLE_REF, BLESSE_REF, MORT_REF, DISTANCE_REF
+                raid,
+                BUTIN_REF,
+                BREDOUILLE_REF,
+                BLESSE_REF,
+                MORT_REF,
+                DISTANCE_REF
             )
             composition_butin = {}
             bonus_butin = 0
