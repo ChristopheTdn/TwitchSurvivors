@@ -225,12 +225,14 @@ class TBOT_BDD:
             return reponse
 
     async def stat_raid(self, id_twitch: int):
-        """renvois un dictionnaire du raid effectué par le survivant passé en paramètre si il existe.
+        """renvois un dictionnaire du raid effectué par le survivant passé en
+        paramètre si il existe.
         Args:
             name (str): le nom du survivant
 
         Returns:
-            dict : renvois un dictionnaire contenant les statistiques du raid en cours si il existe sinon none.
+            dict : renvois un dictionnaire contenant les statistiques du raid
+            en cours si il existe sinon none.
 
         """
         db = await aiosqlite.connect(os.path.join("./Sqlite", self.NAMEBDD))
@@ -240,7 +242,7 @@ class TBOT_BDD:
             survivant = await cur.fetchone()
         await db.close()
         if survivant is not None:
-            survivant_dict = {
+            return {
                 "id_twitch": survivant[1],
                 "name": survivant[2],
                 "type": survivant[3],
@@ -264,8 +266,7 @@ class TBOT_BDD:
                 "embuscade": survivant[21],
             }
         else:
-            survivant_dict = None
-        return survivant_dict
+            return None
 
     async def calcul_ratio_raid(
         self,
@@ -405,14 +406,15 @@ class TBOT_BDD:
         # Boucle pour définir le resultat du RAID
         # autant de chance de ne pas mourrir
         for tentative_survie in range(tentative):
-            BUTIN, BREDOUILLE, BLESSE, MORT, DISTANCE = await self.calcul_ratio_raid(
-                raid,
-                BUTIN_REF,
-                BREDOUILLE_REF,
-                BLESSE_REF,
-                MORT_REF,
-                DISTANCE_REF
-            )
+            BUTIN, BREDOUILLE, BLESSE, MORT, DISTANCE = \
+                await self.calcul_ratio_raid(
+                        raid,
+                        BUTIN_REF,
+                        BREDOUILLE_REF,
+                        BLESSE_REF,
+                        MORT_REF,
+                        DISTANCE_REF
+                    )
             composition_butin = {}
             bonus_butin = 0
             # determine le resultat du raid
