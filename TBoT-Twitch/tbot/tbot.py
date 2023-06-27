@@ -476,7 +476,7 @@ class TBoT(commands.Bot):
         channel = ctx.channel
         test_survivant_exist = await TBOTBDD.get_stats_survivant(ctx.author.id)
         if test_survivant_exist is not None:
-            dictStat,score  = await TBOTBDD.Get_CurScore(ctx.author.id)
+            dictStat, score = await TBOTBDD.Get_CurScore(ctx.author.id)
             if score is None:
                 score = 0
             dead = ""

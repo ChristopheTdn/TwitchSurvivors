@@ -795,7 +795,7 @@ class TBOT_BDD:
 
     async def add_score(self, id_twitch, channel):
         survivant,score  = await self.Get_CurScore(id_twitch)
-        scoreHaF = await self.Get_Hiscore(self, id_twitch)
+        scoreHaF = await self.Get_Hiscore(id_twitch)
 
         if scoreHaF is None:
             db = await aiosqlite.connect(os.path.join("./Sqlite", self.NAMEBDD))
