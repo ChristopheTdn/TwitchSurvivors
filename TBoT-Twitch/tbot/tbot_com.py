@@ -1,5 +1,6 @@
 """
-Module de gestion des communication twitch chat, Mod, overlay Obs pour le Projet TBoT_Terror
+Module de gestion des communication twitch chat, Mod,
+overlay Obs pour le Projet TBoT_Terror
 """
 import json
 import os
@@ -7,8 +8,6 @@ from pygame import mixer
 import aiofiles
 from datetime import datetime
 import winreg
-from pathlib import Path, PureWindowsPath
-
 
 with open("./Configuration/config.json", "r") as fichier:
     CONFIG = json.load(fichier)
@@ -43,10 +42,14 @@ URLMOD = get_reg(
     "InstallLocation",
     r"SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\Steam App 108600",
 )
-if URLMOD != None:
+if URLMOD is not None:
     URLMOD = URLMOD.replace(
-        r"common\ProjectZomboid",
-        "workshop\content"
+        "common"
+        + os.sep
+        + "ProjectZomboid",
+        "workshop"
+        + os.sep
+        + "content"
         + os.sep
         + "108600"
         + os.sep
@@ -56,7 +59,9 @@ if URLMOD != None:
         + os.sep
         + CONFIG["STEAM_MOD_NAME"]
         + os.sep
-        + "media\config",
+        + "media"
+        + os.sep
+        + "config",
     )
 
 if URLMOD is None or not CONFIG["MOD_STEAM"]:
@@ -75,9 +80,11 @@ messageJson = {}
 def joue_son(radio="radio1.mp3"):
     """Joue un son passé en parametre
     Args:
-        radio (str, optional): nom du fichier se trouvant dans le repertoire /sounds. Defaults > "radio1.mp3".
+        radio (str, optional): nom du fichier se trouvant dans le
+        repertoire /sounds. Defaults > "radio1.mp3".
     """
-    if CONFIG["PLAY_SOUND"]:  # joue les sons du Mod en fonction de la configuration
+    # joue les sons du Mod en fonction de la configuration
+    if CONFIG["PLAY_SOUND"]:
         mixer.init()
         mixer.music.load(f'./Sounds/{CONFIG["LANGUE"]}/' + radio)
         mixer.music.set_volume(CONFIG["VOLUME"])
@@ -100,14 +107,24 @@ async def message(
     credit="",
     bonus_butin="",
 ):
-    """envois un message vers les différentes interfaces (twitch, overlay obs, chat in game PZ)
+    """envois un message vers les différentes interfaces
+    (twitch, overlay obs, chat in game PZ)
 
     Args:
-        channel (_type_, optional): Donne l'objet channel pour envoyer un message sur le chat twitch. Defaults > None.
-        overlay (str, optional): message devant etre affiché sur l'overlay. Defaults > "".
-        chat (str, optional): message devant afficher le message dans le chat twitch. Defaults to "".
-        mod (str, optional): message devant afficher le message dans le jeu via le Mod. Defaults to "".
-        son (str, optional): nom du fichier se trouvant dans /sound a jouer. Defaults to "".
+        channel (_type_, optional): Donne l'objet channel
+                pour envoyer un message sur le chat twitch.
+            Defaults > None.
+        overlay (str, optional): message devant etre affiché
+                sur l'overlay.
+            Defaults > "".
+        chat (str, optional): message devant afficher le message dans le chat
+                        twitch.
+            Defaults to "".
+        mod (str, optional): message devant afficher le message dans le jeu
+                        via le Mod.
+            Defaults to "".
+        son (str, optional): nom du fichier se trouvant dans /sound a jouer.
+            Defaults to "".
     """
     heure = str(datetime.now().hour)
     minute = str(datetime.now().minute)
@@ -201,14 +218,17 @@ async def donne_butin(butin: str) -> str:
 
 
 async def affichage_Overlay(message: str):
-    """Genere un fichier JSON utilisable comme OVERLAY dans OBS via les scripts dans TBot_Overlay
+    """Genere un fichier JSON utilisable comme OVERLAY dans OBS via
+        les scripts dans TBot_Overlay
 
     Args:
         message (str): message à ajouter au fichier JSON
     """
     global ligne_overlay
     ligne_overlay.insert(
-        0, {"date": int(round(datetime.now().timestamp() * 1000)), "message": message}
+        0,
+        {"date": int(round(datetime.now().timestamp() * 1000)),
+            "message": message}
     )
 
     ligne_overlay = ligne_overlay[:30]
@@ -221,8 +241,10 @@ async def affichage_Overlay(message: str):
     async with aiofiles.open(
         "TBoT_Overlay/chat.json", "w", encoding="utf-8"
     ) as fichier:
-        await fichier.write(json.dumps(messageJson, indent=4, ensure_ascii=False))
-
+        await fichier.write(json.dumps(messageJson,
+                                       indent=4,
+                                       ensure_ascii=False)
+                            )
 
 async def ecrit_log(msg: str):
     heure = datetime.now().hour
