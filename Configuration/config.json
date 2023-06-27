@@ -4,7 +4,7 @@
     "STEAM_MOD_ID" : "2953058959",
     "MOD_PATH" : "",
     "DEBUG" : true,
-    "TIMING"  : 1,
+    "TIMING"  : 60,
     "LANGUE" : "french",
     "COUT_REVIVE" : 2000,
     "COUT_MSG_RADIO" : 50,
