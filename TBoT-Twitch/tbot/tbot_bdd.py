@@ -794,32 +794,9 @@ class TBOT_BDD:
         await db.close()
 
     async def add_score(self, id_twitch, channel):
-        survivant = await self.get_stats_survivant(id_twitch)
+        survivant,score  = await self.Get_CurScore(id_twitch)
+        scoreHaF = await self.Get_Hiscore(self, id_twitch)
 
-        cout_prestige = CONFIG["TARIF_UPGRADE"]
-
-        tableScore = [
-            0,
-            cout_prestige[1],
-            cout_prestige[1] + cout_prestige[2],
-            cout_prestige[1] + cout_prestige[2] + cout_prestige[3],
-            cout_prestige[1] + cout_prestige[2] + cout_prestige[3] + cout_prestige[4],
-        ]
-
-        score = (
-            survivant["prestige"]
-            + tableScore[survivant["level_weapon"] - 1]
-            + tableScore[survivant["level_armor"] - 1]
-            + tableScore[survivant["level_transport"] - 1]
-            + tableScore[survivant["level_gear"] - 1]
-        )
-
-        db = await aiosqlite.connect(os.path.join("./Sqlite", self.NAMEBDD))
-        async with db.execute(
-            f"""SELECT * FROM 'HallOfFame'  WHERE id_twitch='{id_twitch}' """
-        ) as cur:
-            scoreHaF = await cur.fetchone()
-        await db.close()
         if scoreHaF is None:
             db = await aiosqlite.connect(os.path.join("./Sqlite", self.NAMEBDD))
             await db.execute(
@@ -862,7 +839,49 @@ class TBOT_BDD:
             liste = await cur.fetchall()
         await db.close()
         return liste
+    
+    async def Get_Hiscore(self, id_twitch):
+        """renvois le Hiscore du joueur
 
+        Returns:
+            Tableau: score en point du joueur
+        """        
+        db = await aiosqlite.connect(os.path.join("./Sqlite", self.NAMEBDD))
+        async with db.execute(
+            f"""SELECT * FROM 'HallOfFame'  WHERE id_twitch='{id_twitch}' """
+        ) as cur:
+            score = await cur.fetchone()
+        await db.close()
+        return score
+    
+    async def Get_CurScore(self, id_twitch):
+        """renvois le score du joueur
+
+        Returns:
+            (survivant,score): score en point du joueur
+        """        
+        survivant = await self.get_stats_survivant(id_twitch)
+        cout_prestige = CONFIG["TARIF_UPGRADE"]
+
+        tableScore = [
+            0,
+            cout_prestige[1],
+            cout_prestige[1] + cout_prestige[2],
+            cout_prestige[1] + cout_prestige[2] + cout_prestige[3],
+            cout_prestige[1] + cout_prestige[2] + cout_prestige[3] + cout_prestige[4],
+        ]
+
+        score = (
+            survivant["prestige"]
+            + tableScore[survivant["level_weapon"] - 1]
+            + tableScore[survivant["level_armor"] - 1]
+            + tableScore[survivant["level_transport"] - 1]
+            + tableScore[survivant["level_gear"] - 1]
+        )
+        return survivant,score
+    
+    
+      
     async def init_score(self):
         db = await aiosqlite.connect(os.path.join("./Sqlite", self.NAMEBDD))
         async with db.execute(

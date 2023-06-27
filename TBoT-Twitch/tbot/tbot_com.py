@@ -59,7 +59,7 @@ if URLMOD != None:
         + "media\config",
     )
 
-if URLMOD == None or not CONFIG["MOD_STEAM"]:
+if URLMOD is None or not CONFIG["MOD_STEAM"]:
     URLMOD = CONFIG["MOD_PATH"]
 
 

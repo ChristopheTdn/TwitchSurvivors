@@ -475,13 +475,16 @@ class TBoT(commands.Bot):
         name = ctx.author.display_name
         channel = ctx.channel
         test_survivant_exist = await TBOTBDD.get_stats_survivant(ctx.author.id)
-        if test_survivant_exist != None:
-            dictStat = await TBOTBDD.get_stats_survivant(ctx.author.id)
+        if test_survivant_exist is not None:
+            dictStat,score  = await TBOTBDD.Get_CurScore(ctx.author.id)
+            if score is None:
+                score = 0
             dead = ""
             if not dictStat["alive"]:
                 dead = "(☠️)"
             message = f"{dead} " + "{name}" + f" {dead}" + "> 💰:{credit}   🌿{name2} "
             message += f"<p>🪓: {dictStat['level_weapon']} | 🛡️: {dictStat['level_armor']} | 🚙 : {dictStat['level_transport']} | 🛠️ : {dictStat['level_gear']}</p>"
+            message += f"<p>score : <span style='color:rgb(230, 138, 0);'>{str(score)} pts.</span></p>"
             stat_Raid = await TBOTBDD.stat_raid(ctx.author.id)
             if stat_Raid is not None:
                 message += f"<p>statut Raid : <span style='color:rgb(230, 138, 0);'>{stat_Raid['type']}</span></p>"
