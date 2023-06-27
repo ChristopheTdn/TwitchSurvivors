@@ -794,7 +794,7 @@ class TBOT_BDD:
         await db.close()
 
     async def add_score(self, id_twitch, channel):
-        survivant,score  = await self.Get_CurScore(id_twitch)
+        survivant, score = await self.Get_CurScore(id_twitch)
         scoreHaF = await self.Get_Hiscore(id_twitch)
 
         if scoreHaF is None:
