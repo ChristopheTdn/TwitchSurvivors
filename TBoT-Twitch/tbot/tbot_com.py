@@ -129,7 +129,8 @@ async def message(
     heure = str(datetime.now().hour)
     minute = str(datetime.now().minute)
     if bonus_butin != "":
-        bonus_butin = f" +{bonus_butin} pts de prestige pour les items ramenés."
+        bonus_butin = f" +{bonus_butin} pts de prestige pour\
+            les items ramenés."
 
     if key != "empty":
         chat = LOCALISATION[f"{key}"]["chat"]
@@ -245,6 +246,7 @@ async def affichage_Overlay(message: str):
                                        indent=4,
                                        ensure_ascii=False)
                             )
+
 
 async def ecrit_log(msg: str):
     heure = datetime.now().hour

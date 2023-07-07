@@ -211,7 +211,10 @@ class TBoT(commands.Bot):
         """
 
         survivor = await TBOTBDD.get_stats_survivant(ctx.author.id)
-        gain_prestige = self.config_raid_json["raid_" + type_raid]["gain_prestige"]
+        gain_prestige = self.config_raid_json[
+            "raid_" + type_raid
+            ][
+            "gain_prestige"]
 
         if survivor is None or survivor["alive"] is False:
             await tbot_com.message(
@@ -307,9 +310,9 @@ class TBoT(commands.Bot):
                     name2=raider["name"],
                 )
                 break
-
+            type_raid = "raid_"+raider["type"]
             cout_support = (
-                self.config_raid_json["raid_" + raider["type"]]["gain_prestige"] // 4
+                self.config_raid_json[type_raid]["gain_prestige"]//4
             )
 
             if helper["credit"] < cout_support:
@@ -435,11 +438,14 @@ class TBoT(commands.Bot):
                     credit=str(CONFIG["COUT_MSG_RADIO"]),
                 )
                 break
-            await TBOTBDD.withdraw_credit(ctx.author.id, CONFIG["COUT_MSG_RADIO"])
+            await TBOTBDD.withdraw_credit(ctx.author.id,
+                                          CONFIG["COUT_MSG_RADIO"])
             await tbot_com.message(
                 channel=ctx.channel,
                 mod=f"<radio {ctx.author.display_name}> : {message}",
-                ovl=f"⚡&ltradio <span class='pseudo'>{ctx.author.display_name}</span> > : {message} (- {CONFIG['COUT_MSG_RADIO']} crédits)",
+                ovl=f"⚡&ltradio <span class='pseudo'>{ctx.author.display_name}\
+                    </span> > : {message} (- {CONFIG['COUT_MSG_RADIO']} \
+                    crédits)",
                 sound="",
             )
 
@@ -459,7 +465,8 @@ class TBoT(commands.Bot):
         """
         Commande !radio <message>
         -----------
-        Traite la commande twitch !radio. Envois in game le message passé en parametre avec un son radio
+        Traite la commande twitch !radio. Envois in game le message passé
+        en parametre avec un son radio
         """
 
         if self.BASE_READY:
@@ -470,7 +477,8 @@ class TBoT(commands.Bot):
         """
         Commande !my_survivor
         -----------
-        Traite la commande twitch !my_survivor. retourne les stats du joueurs dans le chat Twitch
+        Traite la commande twitch !my_survivor. retourne les stats
+        du joueurs dans le chat Twitch
         """
         name = ctx.author.display_name
         channel = ctx.channel
@@ -482,19 +490,33 @@ class TBoT(commands.Bot):
             dead = ""
             if not dictStat["alive"]:
                 dead = "(☠️)"
-            message = f"{dead} " + "{name}" + f" {dead}" + "> 💰:{credit}   🌿{name2} "
-            message += f"<p>🪓: {dictStat['level_weapon']} | 🛡️: {dictStat['level_armor']} | 🚙 : {dictStat['level_transport']} | 🛠️ : {dictStat['level_gear']}</p>"
-            message += f"<p>score : <span style='color:rgb(230, 138, 0);'>{str(score)} pts.</span></p>"
+            message = (f"{dead} " + "{name}" +
+                       f" {dead}" +
+                       "> 💰:{credit}   🌿{name2} ")
+            message += f"<p>🪓: {dictStat['level_weapon']} | \
+                🛡️: {dictStat['level_armor']} | \
+                🚙 : {dictStat['level_transport']} | \
+                🛠️ : {dictStat['level_gear']}</p>"
+            message += f"<p>score : <span style='color:rgb(230, 138, 0);'>\
+                {str(score)} pts.</span></p>"
             stat_Raid = await TBOTBDD.stat_raid(ctx.author.id)
             if stat_Raid is not None:
-                message += f"<p>statut Raid : <span style='color:rgb(230, 138, 0);'>{stat_Raid['type']}</span></p>"
+                message += f"<p>statut Raid : \
+                    <span style='color:rgb(230, 138, 0);'>\
+                    {stat_Raid['type']}</span></p>"
                 equipe = stat_Raid["renfort"]
                 if equipe != "":
-                    message += f'<p>support : <span style="color:rgb(230, 138, 0);">{equipe}</span></p>'
+                    message += f'<p>support : \
+                        <span style="color:rgb(230, 138, 0);">\
+                        {equipe}</span></p>'
                 else:
-                    message += '<p>support : <span style="color:rgb(230, 138, 0);">none</span></p>'
+                    message += '<p>support : \
+                        <span style="color:rgb(230, 138, 0);">\
+                        none</span></p>'
             if dictStat["support_raid"] != "":
-                message += f"<p>support RAID : <span style='color:rgb(230, 138, 0);'>{dictStat['support_raid']}</span></p>"
+                message += f"<p>support RAID : \
+                    <span style='color:rgb(230, 138, 0);'>\
+                    {dictStat['support_raid']}</span></p>"
             await tbot_com.message(
                 channel=channel,
                 ovl=message,
@@ -503,7 +525,9 @@ class TBoT(commands.Bot):
                 credit=str(test_survivant_exist["credit"]),
             )
         else:
-            await tbot_com.message(key="survivant_no_exist", channel=channel, name=name)
+            await tbot_com.message(key="survivant_no_exist",
+                                   channel=channel,
+                                   name=name)
 
     @commands.command()
     async def raid_weapon(self, ctx: commands.Context):
@@ -692,7 +716,8 @@ class TBoT(commands.Bot):
         else:
             if survivant_stats["support_raid"] != "":
                 await TBOTBDD.add_visi(
-                    await TBOTBDD.get_id_survivant(survivant_stats["support_raid"])
+                    await TBOTBDD.get_id_survivant(
+                        survivant_stats["support_raid"])
                 )
             else:
                 await TBOTBDD.add_visi(ctx.author.id)
@@ -788,7 +813,10 @@ class TBoT(commands.Bot):
                         classement = "🥈"
                     if i + 1 == 3:
                         classement = "🥉"
-                    message += f'<p>{classement} : <span style="color:rgb(230, 138, 0);">{TopScore[i][2]}</span> - <span style="color:rgb(230, 138, 0);">{TopScore[i][3]}</span> Pts</p>'
+                    message += f'<p>{classement} : \
+                        <span style="color:rgb(230, 138, 0);">\
+                        {TopScore[i][2]}</span> - <span style="color:rgb(230,\
+                        138, 0);">{TopScore[i][3]}</span> Pts</p>'
 
             else:
                 message += "<p>none</p>"
@@ -823,9 +851,9 @@ class TBoT(commands.Bot):
     @commands.command()
     async def base_off(self, ctx: commands.Context):
         """
-        Commande !base_on
+        Commande !base_off
         -----------
-        Traite la commande twitch !base_on.
+        Traite la commande twitch !base_off.
         """
         name = ctx.author.display_name
 
