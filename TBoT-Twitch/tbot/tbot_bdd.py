@@ -883,7 +883,7 @@ class TBOT_BDD:
     async def Get_TopScore(self):
         db = await aiosqlite.connect(os.path.join("./Sqlite", self.NAMEBDD))
         async with db.execute(
-            """SELECT * FROM 'HallOfFame' ORDER BY score DESC LIMIT 5"""
+            """SELECT * FROM 'HallOfFame' ORDER BY score DESC LIMIT 10"""
         ) as cur:
             liste = await cur.fetchall()
         await db.close()

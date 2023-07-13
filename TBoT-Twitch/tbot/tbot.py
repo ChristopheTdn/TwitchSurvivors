@@ -866,7 +866,7 @@ class TBoT(commands.Bot):
     @commands.command()
     async def my_raid(self, ctx: commands.Context):
         """
-        Commande !my_
+        Commande !my_raid
         -----------
         Traite la commande twitch !my_raid
         """
