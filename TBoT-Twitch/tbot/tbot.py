@@ -276,7 +276,7 @@ class TBoT(commands.Bot):
                 await tbot_com.message(
                     key="survivant_no_exist",
                     channel=channel,
-                    name=helper
+                    name=helper["name"]
                 )
                 break
 
@@ -284,7 +284,7 @@ class TBoT(commands.Bot):
                 await tbot_com.message(
                     key="survivant_no_support_when_raid",
                     channel=channel,
-                    name=helper["name"],
+                    name=helper["name"]
                 )
                 break
 
@@ -803,7 +803,7 @@ class TBoT(commands.Bot):
         test_survivant_exist = await TBOTBDD.get_stats_survivant(ctx.author.id)
         if test_survivant_exist is not None:
             TopScore = await TBOTBDD.Get_TopScore()
-            message = "<p>🏆 HALL OF FAMES 🏆</p>"
+            message = "<p>   🏆 HALL OF FAMES 🏆  </p>"
             if TopScore is not None:
                 for i in range(len(TopScore)):
                     classement = str(i + 1)
@@ -862,6 +862,31 @@ class TBoT(commands.Bot):
             await tbot_com.message(
                 key="error_no_base", channel=ctx.channel, name=CLIENT["NICK"]
             )
+
+    @commands.command()
+    async def my_raid(self, ctx: commands.Context):
+        """
+        Commande !my_
+        -----------
+        Traite la commande twitch !my_raid
+        """
+        survivant_stats = await TBOTBDD.get_stats_survivant(ctx.author.id)
+        if survivant_stats is None:
+            await tbot_com.message(
+                key="survivant_no_exist",
+                channel=ctx.channel,
+                name=ctx.author.display_name,
+            )
+        elif survivant_stats["inraid"] is False:
+            await tbot_com.message(
+                key="error_raid_NoExist",
+                channel=ctx.channel,
+                name=ctx.author.display_name,
+            )
+        raid_stats = await TBOTBDD.stat_raid(ctx.author.id)
+
+        if raid_stats is None:
+            print("pas de raid a ton nom")
 
 
 if __name__ == "__main__":

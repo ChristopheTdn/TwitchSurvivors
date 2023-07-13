@@ -630,8 +630,8 @@ class TBOT_BDD:
                 "GFX_CAR": raid["gfx_car"],
                 "VISI": raid["visi"],
             }
-
-            if raid["distance"] == 0:
+            #todo verifier si la modif <=0 solutionne le bug     
+            if raid["distance"] <= 0:
                 if raid["mort"] > 1:
                     await tbot_com.message(
                         "raid_retour_base_mort",
@@ -695,6 +695,13 @@ class TBOT_BDD:
             await fichier.write(json.dumps(data, indent=4, ensure_ascii=False))
 
     async def gere_fin_raid(self, db, raid, channel):
+        """Gestion fin du Raid
+        
+        Args:
+            db (_type_): _description_
+            raid (_type_): _description_
+            channel (_type_): _description_
+        """        
         gain_prestige = self.config_raid_json["raid_" + raid["type"]]["gain_prestige"]
         listebutin = ""
         if raid["resultat"] == "BUTIN":
