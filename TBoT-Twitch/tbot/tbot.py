@@ -884,7 +884,7 @@ class TBoT(commands.Bot):
                 name=ctx.author.display_name,
             )
         raid_stats = await TBOTBDD.stat_raid(ctx.author.id)
-
+        #todo: Finir de gerer la commande !my_raid
         if raid_stats is None:
             print("pas de raid a ton nom")
 

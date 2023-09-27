@@ -254,5 +254,11 @@
         "chat":"",
         "mod":"",
         "sound":""
+    },
+    "error_myraid_NoExist":{
+        "ovl":"❌-Attention {name}, aucune d'info disponible, tu n'es pas en RAID !",
+        "chat":"",
+        "mod":"",
+        "sound":""
     }
 }

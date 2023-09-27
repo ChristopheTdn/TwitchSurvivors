@@ -1,259 +1,264 @@
 {
-    "buy_300_credit" : "Get 300 credits",
-    "buy_2000_credit" : "Get 2000 credits",
-    "buy_5000_credit" : "Get 5000 credits",
+        "buy_300_credit" : "Get 300 credits",
+        "buy_2000_credit" : "Get 2000 credits",
+        "buy_5000_credit" : "Get 5000 credits",
 
-    "empty" :{
-    "ovl"   : "",
-    "chat"  : "",
-    "mod"   : "",
-    "sound" : ""
-},
-"armaggedon" :{
-    "ovl"   : "☠️ This is the END !!! All the survivors are dead! ☠️",
-    "chat"  :"",
-    "mod"   : "",
-    "sound" : ""
-},
-"revive_survivant" :{
-    "ovl"   : "⛹ - The player {name} has just appeared on the server. (-{credit} credits).",
-    "chat"  :"",
-    "mod"   : "radio {name} : ...allo !  i'm a surviv....ready to help....More messages to follow...",
-    "sound" : "Nouveau_Survivant.mp3"
-},
-"survivant_no_exist" :{
-    "ovl"   : "❌- The survivor {name} does not exist on the server! Generates it with credits. command <span style='color:rgb(230, 138, 0);'>!create_survivor</span>",
-    "chat"  :"",
-    "mod"   : "",
-    "sound" : ""
-},
-"survivant_renfort_Raid_Depasse" : {
-    "ovl"   : "❌- Attention {name}, the raid is already too far away to have a reinforcement from you !",
-    "chat"  :"",
-    "mod"   : "",
-    "sound" : ""
-},
-"survivant_upgrade_aptitude" :{
-    "ovl"   :"⛹- {name} upgrade its ability {aptitude} for {tarif_level}",
-    "chat"  :"",
-    "mod"   : "",
-    "sound" : "Upgrade.mp3"
-},
-"survivant_prestige_insuffisant" :{
-    "ovl"   :"❌- {name} does not have enough prestige points to upgrade its ability {aptitude} (cost: {tarif_level} pts).",
-    "chat"  :"",
-    "mod"   : "",
-    "sound" : ""
-},
-"survivant_max_aptitude" :{
-    "ovl"   :"❌- Attention {name}, the ability {aptitude} is already at its maximum level. <span style='color:rgb(230, 138, 0);'>!my_survivor</span> for more info !",
-    "chat"  :"",
-    "mod"   : "",
-    "sound" : ""
-},
-"survivant_credit_insuffisant" : {
-    "ovl"   :"❌- Be careful {name}, you do not have enough credits to generate your survivor (cost: {credit} credits). Buy credits with your chain points.",
-    "chat"  :"",
-    "mod"   : "",
-    "sound" : "" 
-},
-"survivant_exist" : {
-    "ovl"   :"⛹- Attention {name}, your survivor already exists! <span style='color:rgb(230, 138, 0);'>!my_survivor</span> for more info!",
-    "chat"  :"",
-    "mod"   : "",
-    "sound" : "" 
-},
-"survivant_credit_insuffisant_support" : {
-    "ovl"   :"❌- Be careful {name}, you don't have enough credits to help {name2} (cost: {credit} credits). Buy credits with your chain points.",
-    "chat"  :"",
-    "mod"   : "",
-    "sound" : "" 
-},
-"survivant_credit_insuffisant_radio" : {
-    "ovl"   :"❌- Attention {name}, you do not have enough credits to send a radio message (cost: {credit} credits). Buy credits with your chain points.",
-    "chat"  :"",
-    "mod"   : "",
-    "sound" : "" 
-},
-"survivant_ajout_credit" : {
-    "ovl"   :"💰- The survivor {name} gets {credit} credits!",
-    "chat"  :"",
-    "mod"   : "",
-    "sound" : "" 
-},
-"survivant_join_raid" : {
-    "ovl"   :"⛹- The survivor {name} joins the {name2} team to go on a raid (-{credit} credits) !",
-    "chat"  :"",
-    "mod"   : "",
-    "sound" : "Aide_Raid.mp3" 
-},
-"survivant_no_support_when_raid":{
-    "ovl"   :"❌- Attention {name}, you can't help {name2}, you've already gone on a raid !",
-    "chat"  :"",
-    "mod"   : "",
-    "sound" : "" 
-},
-"survivant_gain_support":{
-    "ovl"   :"💰- {name} wins +{gain_prestige} prestige pts for participating in the raid of <span style='color:rgb(230, 138, 0);'>{name2}</span>.",
-    "chat"  :"",
-    "mod"   : "",
-    "sound" : "" 
-},
-"survivant_better_score":{
-    "ovl"   :"🏆- {name} improves its best score: <span style='color:rgb(230, 138, 0);'>{gain_prestige}</span> pts.",
-    "chat"  :"",
-    "mod"   : "",
-    "sound" : "" 
-},
-"survivant_revive_impossible_en_raid" :{
-    "ovl"   :"☠️- Be careful {name}, you cannot be resuscitated until your body is back to base.",
-    "chat"  :"",
-    "mod"   : "",
-    "sound" : "" 
-},         
-"raid_credit_insuffisant" :{
-    "ovl"   :"❌- Attention {name}, you don't have enough credits to create a raid ({credit} credits). You can get credits by spending chain points.",
-    "chat"  :"",
-    "mod"   : "",
-    "sound" : ""
-},
-"raid_win_butin" :{
-    "ovl"   : "⛹- {name} has returned to the base. Gain in prestige: +{gain_prestige} !!!{bonus_butin}{listebutin}",
+        "empty" :{
+        "ovl"   : "",
+        "chat"  : "",
+        "mod"   : "",
+        "sound" : ""
+    },
+    "armaggedon" :{
+        "ovl"   : "☠️ This is the END !!! All the survivors are dead! ☠️",
+        "chat"  :"",
+        "mod"   : "",
+        "sound" : ""
+    },
+    "revive_survivant" :{
+        "ovl"   : "⛹ - The player {name} has just appeared on the server. (-{credit} credits).",
+        "chat"  :"",
+        "mod"   : "radio {name} : ...allo !  i'm a surviv....ready to help....More messages to follow...",
+        "sound" : "Nouveau_Survivant.mp3"
+    },
+    "survivant_no_exist" :{
+        "ovl"   : "❌- The survivor {name} does not exist on the server! Generates it with credits. command <span style='color:rgb(230, 138, 0);'>!create_survivor</span>",
+        "chat"  :"",
+        "mod"   : "",
+        "sound" : ""
+    },
+    "survivant_renfort_Raid_Depasse" : {
+        "ovl"   : "❌- Attention {name}, the raid is already too far away to have a reinforcement from you !",
+        "chat"  :"",
+        "mod"   : "",
+        "sound" : ""
+    },
+    "survivant_upgrade_aptitude" :{
+        "ovl"   :"⛹- {name} upgrade its ability {aptitude} for {tarif_level}",
+        "chat"  :"",
+        "mod"   : "",
+        "sound" : "Upgrade.mp3"
+    },
+    "survivant_prestige_insuffisant" :{
+        "ovl"   :"❌- {name} does not have enough prestige points to upgrade its ability {aptitude} (cost: {tarif_level} pts).",
+        "chat"  :"",
+        "mod"   : "",
+        "sound" : ""
+    },
+    "survivant_max_aptitude" :{
+        "ovl"   :"❌- Attention {name}, the ability {aptitude} is already at its maximum level. <span style='color:rgb(230, 138, 0);'>!my_survivor</span> for more info !",
+        "chat"  :"",
+        "mod"   : "",
+        "sound" : ""
+    },
+    "survivant_credit_insuffisant" : {
+        "ovl"   :"❌- Be careful {name}, you do not have enough credits to generate your survivor (cost: {credit} credits). Buy credits with your chain points.",
+        "chat"  :"",
+        "mod"   : "",
+        "sound" : "" 
+    },
+    "survivant_exist" : {
+        "ovl"   :"⛹- Attention {name}, your survivor already exists! <span style='color:rgb(230, 138, 0);'>!my_survivor</span> for more info!",
+        "chat"  :"",
+        "mod"   : "",
+        "sound" : "" 
+    },
+    "survivant_credit_insuffisant_support" : {
+        "ovl"   :"❌- Be careful {name}, you don't have enough credits to help {name2} (cost: {credit} credits). Buy credits with your chain points.",
+        "chat"  :"",
+        "mod"   : "",
+        "sound" : "" 
+    },
+    "survivant_credit_insuffisant_radio" : {
+        "ovl"   :"❌- Attention {name}, you do not have enough credits to send a radio message (cost: {credit} credits). Buy credits with your chain points.",
+        "chat"  :"",
+        "mod"   : "",
+        "sound" : "" 
+    },
+    "survivant_ajout_credit" : {
+        "ovl"   :"💰- The survivor {name} gets {credit} credits!",
+        "chat"  :"",
+        "mod"   : "",
+        "sound" : "" 
+    },
+    "survivant_join_raid" : {
+        "ovl"   :"⛹- The survivor {name} joins the {name2} team to go on a raid (-{credit} credits) !",
+        "chat"  :"",
+        "mod"   : "",
+        "sound" : "Aide_Raid.mp3" 
+    },
+    "survivant_no_support_when_raid":{
+        "ovl"   :"❌- Attention {name}, you can't help {name2}, you've already gone on a raid !",
+        "chat"  :"",
+        "mod"   : "",
+        "sound" : "" 
+    },
+    "survivant_gain_support":{
+        "ovl"   :"💰- {name} wins +{gain_prestige} prestige pts for participating in the raid of <span style='color:rgb(230, 138, 0);'>{name2}</span>.",
+        "chat"  :"",
+        "mod"   : "",
+        "sound" : "" 
+    },
+    "survivant_better_score":{
+        "ovl"   :"🏆- {name} improves its best score: <span style='color:rgb(230, 138, 0);'>{gain_prestige}</span> pts.",
+        "chat"  :"",
+        "mod"   : "",
+        "sound" : "" 
+    },
+    "survivant_revive_impossible_en_raid" :{
+        "ovl"   :"☠️- Be careful {name}, you cannot be resuscitated until your body is back to base.",
+        "chat"  :"",
+        "mod"   : "",
+        "sound" : "" 
+    },         
+    "raid_credit_insuffisant" :{
+        "ovl"   :"❌- Attention {name}, you don't have enough credits to create a raid ({credit} credits). You can get credits by spending chain points.",
+        "chat"  :"",
+        "mod"   : "",
+        "sound" : ""
+    },
+    "raid_win_butin" :{
+        "ovl"   : "⛹- {name} has returned to the base. Gain in prestige: +{gain_prestige} !!!{bonus_butin}{listebutin}",
+        "chat"  :"",
+        "mod"   : "radio {name} : I 'm finaly back.. to the base...",
+        "sound" : "Butin.mp3"
+    },
+    "raid_win_bredouille":{
+    "ovl"   : "⛹- {name} went back to the base without finding much. Gain in prestige: +{gain_prestige} !!!",
     "chat"  :"",
     "mod"   : "radio {name} : I 'm finaly back.. to the base...",
-    "sound" : "Butin.mp3"
-},
-"raid_win_bredouille":{
-"ovl"   : "⛹- {name} went back to the base without finding much. Gain in prestige: +{gain_prestige} !!!",
-"chat"  :"",
-"mod"   : "radio {name} : I 'm finaly back.. to the base...",
-"sound" : "Bredouille.mp3"
-},
-"raid_win_blesse":{
-"ovl"   : "⛹- {name} has returned to the base. There are wounded... Gain in prestige: +{gain_prestige} !!!",
-"chat"  :"",
-"mod"   : "radio {name} : I 'm finaly back.. to the base...",
-"sound" : "Blesse_Retour_Base.mp3"
-},
-"raid_mi_chemin" :{
-    "ovl"   : "⛹- {name} begins to turn around.",
+    "sound" : "Bredouille.mp3"
+    },
+    "raid_win_blesse":{
+    "ovl"   : "⛹- {name} has returned to the base. There are wounded... Gain in prestige: +{gain_prestige} !!!",
     "chat"  :"",
-    "mod"   : "radio {name} : Hey... I achieved my goal... I go back to the base...",
-    "sound" : ""
-},
-"raid_embuscade" : {
-    "ovl"   : "⛹- {name}'s team was ambushed.",
-    "chat"  : "",
-    "mod"   : "",
-    "sound" : "Embuscade.mp3"
-},
-"raid_deja_en_cours" :{
-    "ovl"   : "❌- A raid is already underway for {name}! Type !my_survivor for more info.",
-    "chat"  : "",
-    "mod"   : "",
-    "sound" : ""    
-},
-"raid_blesse" :{
-    "ovl"   : "🩸- {name} was attacked during its raid. He's injured !",
-    "chat"  :"",
-    "mod"   : "radio {name} : Help me! Victim... zzz.. an attack...I am... severely injured... zzz..z...",
-    "sound" : ""
-},
-"raid_mort_enroute" :{
-    "ovl"   : "☠️- {name} succumbs to a zombie attack! His body is brought back to the base !",
-    "chat"  :"",
-    "mod"   : "radio {name} :  Arggg...everywhere. arghh... help... zzz..z...",
-    "sound" : "Mort_Pendant_Raid.mp3"
-},
-"raid_retour_base_mort" :{
-    "ovl"   : "The body of {name} has been brought back to the base! He lost everything !",
-    "chat"  :"",
-    "mod"   : "",
-    "sound" : ""
-},
-"raid_weapon" : {
-    "ovl":"🗡️- radio {name} : Hello! here {name}... I go to get weapons and ammunition. (<span style='color:rgb(230, 138, 0);'>-{credit}</span> credits)",
-    "chat":"",
-    "mod":"radio {name} :  I go to get weapons and ammunition.",
-    "sound":"Depart_Raid_Jour.mp3"
-},
-"raid_tool" : {
-    "ovl":"🔨- radio {name} : Hello! here {name}... I go looking for equipment and tools. (<span style='color:rgb(230, 138, 0);'>-{credit}</span> credits)",
-    "chat":"",
-    "mod":"radio {name} : I go to get equipment and tools.",
-    "sound":"Depart_Raid_Jour.mp3"
-},
-"raid_medic" : {
-    "ovl":"☣️- radio {name} : Hello! here {name}...... I'm going to look for... some.. medications and dressings. (<span style='color:rgb(230, 138, 0);'>-{credit}</span> credits)",
-    "chat":"",
-    "mod":"radio {name} :  I go to get some medications and dressings.",
-    "sound":"Depart_Raid_Jour.mp3"
-},
-"raid_food":{
-    "ovl":"🍖- Radio {name}: hello! here {name}...... I'm going to get food. (<span style='color:rgb(230, 138, 0);'>-{credit}</span> credits)",
-    "chat":"",
-    "mod":"radio {name} : I go to get food.",
-    "sound":"Depart_Raid_Jour.mp3"
-},
-"raid_car":{
-    "ovl":"🚙- radio {name} : Hello! here {name}...... I go to get something to repair my car. (<span style='color:rgb(230, 138, 0);'>-{credit}</span> credits)",
-    "chat":"",
-    "mod":"radio {name} : I go to get something to repair my car.",
-    "sound":"Depart_Raid_Jour.mp3"
-},
-"raid_alcohol":{
-    "ovl":"🍹- radio {name} : Hello! here {name}... I'm going to get alcohol. (<span style='color:rgb(230, 138, 0);'>-{credit}</span> credits)",
-    "chat":"",
-    "mod":"radio {name} : I go to get alcohol.",
-    "sound":"Depart_Raid_Jour.mp3"
-},
-"raid_agriculture":{
-    "ovl":"🌿- radio {name} : Hello! here {name}... I'm going to get something to garden. (<span style='color:rgb(230, 138, 0);'>-{credit}</span> credits)",
-    "chat":"",
-    "mod":"radio {name} : I'm going to look for something to garden.",
-    "sound":"Depart_Raid_Jour.mp3"
-},
-"raid_furniture":{
-    "ovl":"🗄️- radio {name} : Hello! here {name}... I'm going to get something to equip the base. (<span style='color:rgb(230, 138, 0);'>-{credit}</span> credits)",
-    "chat":"",
-    "mod":"radio {name} : I go to get something to equip the base.",
-    "sound":"Depart_Raid_Jour.mp3"
-},
-"error_noName":{
-    "ovl":"❌-Syntax error: Caution {name}, The name of the player to be helped is not recognized!",
-    "chat":"",
-    "mod":"",
-    "sound":""
-},
-"error_noRaid":{
-    "ovl":"❌-Syntax error: Caution {name}, there is no raid to support!",
-    "chat":"",
-    "mod":"",
-    "sound":""
-},
-"error_raid_timeOut":{
-    "ovl":"❌-Attention {name}, the raid led by {name2} has been gone for too long !",
-    "chat":"",
-    "mod":"",
-    "sound":""
-},
-"error_raid_MaxSurvivor":{
-    "ovl":"❌-Attention {name}, you can't help {name2}. His team is already complete !",
-    "chat":"",
-    "mod":"",
-    "sound":""
-},
-"error_no_base":{
-    "ovl":"❌-Careful!!! The starting base was not deployed by {name}(command <span style='color:rgb(230, 138, 0);'>!base_on</span>). It is no longer possible to perform a raid, upgrade or support.",
-    "chat":"",
-    "mod":"",
-    "sound":""
-},
-"base_in_place":{
-    "ovl":"⛹-The starting base was created by {name}. Raids are now possible.",
-    "chat":"",
-    "mod":"",
-    "sound":""
-}
-
+    "mod"   : "radio {name} : I 'm finaly back.. to the base...",
+    "sound" : "Blesse_Retour_Base.mp3"
+    },
+    "raid_mi_chemin" :{
+        "ovl"   : "⛹- {name} begins to turn around.",
+        "chat"  :"",
+        "mod"   : "radio {name} : Hey... I achieved my goal... I go back to the base...",
+        "sound" : ""
+    },
+    "raid_embuscade" : {
+        "ovl"   : "⛹- {name}'s team was ambushed.",
+        "chat"  : "",
+        "mod"   : "",
+        "sound" : "Embuscade.mp3"
+    },
+    "raid_deja_en_cours" :{
+        "ovl"   : "❌- A raid is already underway for {name}! Type !my_survivor for more info.",
+        "chat"  : "",
+        "mod"   : "",
+        "sound" : ""    
+    },
+    "raid_blesse" :{
+        "ovl"   : "🩸- {name} was attacked during its raid. He's injured !",
+        "chat"  :"",
+        "mod"   : "radio {name} : Help me! Victim... zzz.. an attack...I am... severely injured... zzz..z...",
+        "sound" : ""
+    },
+    "raid_mort_enroute" :{
+        "ovl"   : "☠️- {name} succumbs to a zombie attack! His body is brought back to the base !",
+        "chat"  :"",
+        "mod"   : "radio {name} :  Arggg...everywhere. arghh... help... zzz..z...",
+        "sound" : "Mort_Pendant_Raid.mp3"
+    },
+    "raid_retour_base_mort" :{
+        "ovl"   : "The body of {name} has been brought back to the base! He lost everything !",
+        "chat"  :"",
+        "mod"   : "",
+        "sound" : ""
+    },
+    "raid_weapon" : {
+        "ovl":"🗡️- radio {name} : Hello! here {name}... I go to get weapons and ammunition. (<span style='color:rgb(230, 138, 0);'>-{credit}</span> credits)",
+        "chat":"",
+        "mod":"radio {name} :  I go to get weapons and ammunition.",
+        "sound":"Depart_Raid_Jour.mp3"
+    },
+    "raid_tool" : {
+        "ovl":"🔨- radio {name} : Hello! here {name}... I go looking for equipment and tools. (<span style='color:rgb(230, 138, 0);'>-{credit}</span> credits)",
+        "chat":"",
+        "mod":"radio {name} : I go to get equipment and tools.",
+        "sound":"Depart_Raid_Jour.mp3"
+    },
+    "raid_medic" : {
+        "ovl":"☣️- radio {name} : Hello! here {name}...... I'm going to look for... some.. medications and dressings. (<span style='color:rgb(230, 138, 0);'>-{credit}</span> credits)",
+        "chat":"",
+        "mod":"radio {name} :  I go to get some medications and dressings.",
+        "sound":"Depart_Raid_Jour.mp3"
+    },
+    "raid_food":{
+        "ovl":"🍖- Radio {name}: hello! here {name}...... I'm going to get food. (<span style='color:rgb(230, 138, 0);'>-{credit}</span> credits)",
+        "chat":"",
+        "mod":"radio {name} : I go to get food.",
+        "sound":"Depart_Raid_Jour.mp3"
+    },
+    "raid_car":{
+        "ovl":"🚙- radio {name} : Hello! here {name}...... I go to get something to repair my car. (<span style='color:rgb(230, 138, 0);'>-{credit}</span> credits)",
+        "chat":"",
+        "mod":"radio {name} : I go to get something to repair my car.",
+        "sound":"Depart_Raid_Jour.mp3"
+    },
+    "raid_alcohol":{
+        "ovl":"🍹- radio {name} : Hello! here {name}... I'm going to get alcohol. (<span style='color:rgb(230, 138, 0);'>-{credit}</span> credits)",
+        "chat":"",
+        "mod":"radio {name} : I go to get alcohol.",
+        "sound":"Depart_Raid_Jour.mp3"
+    },
+    "raid_agriculture":{
+        "ovl":"🌿- radio {name} : Hello! here {name}... I'm going to get something to garden. (<span style='color:rgb(230, 138, 0);'>-{credit}</span> credits)",
+        "chat":"",
+        "mod":"radio {name} : I'm going to look for something to garden.",
+        "sound":"Depart_Raid_Jour.mp3"
+    },
+    "raid_furniture":{
+        "ovl":"🗄️- radio {name} : Hello! here {name}... I'm going to get something to equip the base. (<span style='color:rgb(230, 138, 0);'>-{credit}</span> credits)",
+        "chat":"",
+        "mod":"radio {name} : I go to get something to equip the base.",
+        "sound":"Depart_Raid_Jour.mp3"
+    },
+    "error_noName":{
+        "ovl":"❌-Syntax error: Caution {name}, The name of the player to be helped is not recognized!",
+        "chat":"",
+        "mod":"",
+        "sound":""
+    },
+    "error_noRaid":{
+        "ovl":"❌-Syntax error: Caution {name}, there is no raid to support!",
+        "chat":"",
+        "mod":"",
+        "sound":""
+    },
+    "error_raid_timeOut":{
+        "ovl":"❌-Attention {name}, the raid led by {name2} has been gone for too long !",
+        "chat":"",
+        "mod":"",
+        "sound":""
+    },
+    "error_raid_MaxSurvivor":{
+        "ovl":"❌-Attention {name}, you can't help {name2}. His team is already complete !",
+        "chat":"",
+        "mod":"",
+        "sound":""
+    },
+    "error_no_base":{
+        "ovl":"❌-Careful!!! The starting base was not deployed by {name}(command <span style='color:rgb(230, 138, 0);'>!base_on</span>). It is no longer possible to perform a raid, upgrade or support.",
+        "chat":"",
+        "mod":"",
+        "sound":""
+    },
+    "base_in_place":{
+        "ovl":"⛹-The starting base was created by {name}. Raids are now possible.",
+        "chat":"",
+        "mod":"",
+        "sound":""
+    },
+    "error_myraid_NoExist":{
+        "ovl":"❌-Attention {name}, you're not on raid actually !",
+        "chat":"",
+        "mod":"",
+        "sound":""
+    }
 }
