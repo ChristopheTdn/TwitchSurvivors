@@ -12,7 +12,7 @@ Vous pouvez lire le [manuel de jeu](manual/fr/manual_fr.md) basé sur le [serveu
 
 ### s'abonner au  mod Steam TWITCH SURVIVORS :
 
--Dans le Workshop Steam de Project Zomboid s'abonner à [TWITCH SURVIVORS](https://steamcommunity.com/sharedfiles/filedetails/?id=2948924574&searchtext=twitch+survivors)
+-Dans le Workshop Steam de Project Zomboid s'abonner à [TWITCH SURVIVORS](https://steamcommunity.com/sharedfiles/filedetails/?id=2953058959&searchtext=twitch)
 
 ### Installer python
 
