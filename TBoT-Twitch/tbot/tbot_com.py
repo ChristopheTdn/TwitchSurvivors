@@ -7,7 +7,6 @@ import os
 from pygame import mixer
 import aiofiles
 from datetime import datetime
-import winreg
 
 with open("./Configuration/config.json", "r") as fichier:
     CONFIG = json.load(fichier)
@@ -27,15 +26,17 @@ ligne_overlay = []
 
 
 def get_reg(name, reg_path):
-    try:
-        registry_key = winreg.OpenKey(
-            winreg.HKEY_LOCAL_MACHINE, reg_path, 0, winreg.KEY_READ
-        )
-        value, regtype = winreg.QueryValueEx(registry_key, name)
-        winreg.CloseKey(registry_key)
-        return value
-    except WindowsError:
-        return None
+    if os.name == "nt":
+        import winreg
+        try:
+            registry_key = winreg.OpenKey(
+                winreg.HKEY_LOCAL_MACHINE, reg_path, 0, winreg.KEY_READ
+            )
+            value, regtype = winreg.QueryValueEx(registry_key, name)
+            winreg.CloseKey(registry_key)
+            return value
+        except WindowsError:
+            return None
 
 
 URLMOD = get_reg(
