@@ -1,12 +1,117 @@
-<link rel="stylesheet" href="../css/reset.css">
-<link rel="stylesheet" href="../css/chat.css">
-<meta http-equiv="cache-control" content="no-cache" />
-<meta http-equiv="pragma" content="no-cache" />
-<meta http-equiv="refresh" content="1">
-
-    <div id="box">
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Affichage JSON en temps réel</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end; /* Aligner le contenu en bas */
+        }
+        #jsonContainer {
+            flex: 1;
+            display: flex;
+            flex-direction: column-reverse; /* Affichage du bas vers le haut */
+            overflow-y: auto;
+        }
+        #jsonContent {
+            font-family: Arial, sans-serif;
+            background-color: #000000;
+            color: #FFFFFF;
+            padding: 10px;
+            border-radius: 5px;
+        }
+        #jsonContent p {
+            margin: 2px 0; /* Réduction de l'espace entre les lignes */
+        }
+        .invisible {
+            opacity: 0.0;;
+        }
+        .moyen {
+        /* On peut mieux discerner le texte */
+        opacity: 0.5;
+        }
+        .lourd {
+        /* Le texte est clairement visible */
+        opacity: 1;
+        }
+        .pseudo {
+            font-weight: bold;
+            color: rgb(194, 109, 13);
+        }
+    </style>
+</head>
+<body>
+    <h1>Affichage en temps réel du fichier JSON</h1>
+    <div id="jsonContainer">
+        <div id="jsonContent"></div>
     </div>
 
-    <script type="text/javascript" src="../front.ini"></script>
-    <script src="../chat.json"></script>
-    <script src="../js/chat.js"></script>
+    <script>
+        // URL de votre fichier JSON
+        const jsonUrl = '../chat.json';
+
+        // Fonction pour charger le contenu JSON
+        async function loadJson() {
+            try {
+                const response = await fetch(jsonUrl);
+                const jsonData = await response.json();
+                
+                let messagesArray = [];
+                for (const key in jsonData) {
+                    const messageObject = jsonData[key];
+                    messagesArray.push({ key, messageObject });
+                }
+
+                messagesArray.reverse();
+
+                // Inverser l'ordre des messages
+                let formattedContent = '';
+                messagesArray.forEach(item => {
+
+                //
+                // determine l opacite
+                let opacite = "";
+                let currentDate = new Date();
+                let timestamp = currentDate.getTime();
+                let configTime = 300*1000;
+                if((timestamp - item.messageObject.date) < (0.33*configTime)) {
+                    opacite = "lourd";
+
+                } else {
+                    if((timestamp - item.messageObject.date) < (0.66*configTime)) {
+                        opacite = "moyen";
+                    } else {
+                        opacite = "invisible"; // on ne voit pas le message
+                    }
+                }
+
+                //
+
+                    if(item.messageObject.message !=="" && opacite !== "invisible") {
+
+                
+                // affiche le message
+                    formattedContent += `<div class ="${opacite}">${item.messageObject.message}</div>`;
+                    }
+                });
+
+                document.getElementById('jsonContent').innerHTML = formattedContent;
+            } catch (error) {
+                console.error('Erreur lors du chargement du JSON:', error);
+                document.getElementById('jsonContent').textContent = 'Erreur lors du chargement du fichier JSON';
+            }
+        }
+
+        // Rafraîchir le JSON toutes les secondes
+        setInterval(loadJson, 1000);
+        
+        // Charger le JSON au démarrage
+        loadJson();
+    </script>
+</body>
