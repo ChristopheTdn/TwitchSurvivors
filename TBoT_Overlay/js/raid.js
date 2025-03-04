@@ -143,8 +143,8 @@ class Survivant {
 } 
 
 // Requête au JSON et construction de Survivant
-window.addEventListener('load', (event) => {
-
+async function afficheRaid() {
+	document.getElementById("line").innerHTML = "";
 	// Import the font define in front.ini
 	let font = new FontFace(config.font.name, "url(../assets/fonts/"+config.font.file+")");
 	document.fonts.add(font);
@@ -174,4 +174,6 @@ window.addEventListener('load', (event) => {
 			survivant.setTemplate();
 		}
 	});
-})
+}
+setInterval(afficheRaid, 10000);
+afficheRaid();
